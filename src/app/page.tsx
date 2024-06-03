@@ -1,113 +1,322 @@
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+import { Button } from "@/components/ui/button";
+import React from "react";
 import Image from "next/image";
+import uber from "../../public/images/uber.png";
+import mtn from "../../public/images/mtn.png";
+import pigg from "../../public/images/pigg.png";
+import microsoft from "../../public/images/microsoft.png";
+import wise from "../../public/images/wise.png";
+import chipper from "../../public/images/chipper.png";
+import fr1 from "../../public/images/fr1.png";
+import fr2 from "../../public/images/fr2.png";
+import fr3 from "../../public/images/fr3.png";
+import fr4 from "../../public/images/fr4.png";
+import offer1 from "../../public/images/offer1.png";
+import track from "../../public/images/track.png";
+import smile from "../../public/images/smileman.png";
+import send1 from "../../public/images/send1.png";
+import send2 from "../../public/images/send2.png";
+import oval from "../../public/images/oval.png";
+import curvedImg from "../../public/images/rect1.png";
+import Link from "next/link";
+import phone from "../../public/images/phone.png";
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+const Home = () => {
+   return (
+      <>
+         <Navbar />
+         <div>
+            {/* ===============HERO SECTION================== */}
+            <div className='flex items-center mx-auto text-center flex-col py-4 prose container min-h-[60vh] justify-center'>
+               <Image
+                  src={oval}
+                  alt='oval'
+                  className='absolute top-[100px] -left-10 -z-10'
+               />
+               <h4>
+                  Introducing Ziba <span className='text-main'>Pay</span>
+               </h4>
+               <h2 className='my-2'>
+                  <span className='text-main'>Simplifying Payments</span> for{" "}
+                  <br />
+                  Businesses in Africa
+               </h2>
+               <p>
+                  Ziba Pay offers businesses a streamlined and effective online
+                  payment collection solution
+               </p>
+               <div className='flex gap-2 my-4'>
+                  <Button variant='outline'>Login</Button>
+                  <Button>Create Account</Button>
+               </div>
+            </div>
+            <div className='flex flex-col container'>
+               <p>We are trusted by 1Million+ businesses</p>
+               <div className='flex gap-12 flex-wrap items-center my-10'>
+                  <Image
+                     src={uber}
+                     alt='uber'
+                  />
+                  <Image
+                     src={mtn}
+                     alt='mtn'
+                  />
+                  <Image
+                     src={chipper}
+                     alt='chipper'
+                  />
+                  <Image
+                     src={pigg}
+                     alt='pigg'
+                  />
+                  <Image
+                     src={wise}
+                     alt='wise'
+                  />
+                  <Image
+                     src={microsoft}
+                     alt='microsoft'
+                  />
+               </div>
+            </div>
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+            {/* =====FEATURES===== */}
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+            <div className='py-12 bg-br relative'>
+               <Image
+                  src={curvedImg}
+                  alt='rect'
+                  className='w-full absolute top-0 '
+               />
+               <div className='pt-40 flex items-center flex-col gap-6 container'>
+                  <h1>Our Features</h1>
+                  <p className='text-center'>
+                     With features like customizable dashboards, real-time
+                     alerts, and secure data encryption, you can effortlessly
+                     manage your <br />
+                     transactions and take control of your financial life.
+                  </p>
+                  <div className='flex items-center'>
+                     <div className='flex flex-wrap w-5/6 gap-5 mx-auto items-end'>
+                        <div className='flex flex-row gap-2 bg-submain p-8 h-fit rounded-lg text-white w-full md:w-[500px]'>
+                           <div>
+                              <h3 className='my-2'>Real-time Alerts</h3>
+                              <p>
+                                 Stay on top of your finances with our real-time
+                                 alert feature! Get instant notifications about
+                                 account activity, upcoming bills, and
+                                 suspicious transactions so you can take action
+                                 right away.
+                              </p>
+                           </div>
+                           <Image
+                              src={fr1}
+                              alt='fr1'
+                              width={200}
+                              height={200}
+                              className='ml-2'
+                           />
+                        </div>
+                        <div className='flex flex-row gap-2 bg-submain p-8 h-fit rounded-lg text-white w-full md:w-[500px]'>
+                           <div>
+                              <h3 className='my-2'>Customizable Dashboard</h3>
+                              <p>
+                                 Easily track spending, monitor balances, and
+                                 view transaction history all in one place. Take
+                                 control of your finances and see the
+                                 information that matters most to you.
+                              </p>
+                           </div>
+                           <Image
+                              src={fr2}
+                              alt='fr1'
+                              width={200}
+                              height={200}
+                              className='ml-2'
+                           />
+                        </div>
+                        <div className='flex flex-col gap-2 bg-submain p-8 h-fit rounded-lg text-white w-full md:w-[300px]'>
+                           <Image
+                              src={fr3}
+                              alt='fr1'
+                              width={90}
+                              height={90}
+                              className='ml-2'
+                           />
+                           <div>
+                              <h3 className='my-2'>Ziba pay fraud detection</h3>
+                              <p>
+                                 Your money is 100% safe and secure on Ziba pay.
+                                 No hassles, no glitches, get access to your
+                                 money anytime.
+                              </p>
+                           </div>
+                        </div>
+                        <div className='flex flex-row gap-2 bg-submain p-6 h-fit rounded-xl text-white w-full md:w-[700px] items-center'>
+                           <div>
+                              <h3 className='my-2'>Friendly Interface</h3>
+                              <p>
+                                 Navigating through Ziba Pay is a breeze, thanks
+                                 to our clean and clutter-free interface.
+                                 Whether you're setting up payment workflows,
+                                 customizing branding elements, or analyzing
+                                 transaction data, you'll find everything you
+                                 need right at your fingertips.
+                              </p>
+                           </div>
+                           <Image
+                              src={fr4}
+                              alt='fr1'
+                              width={200}
+                              height={200}
+                              className='ml-2 w-[80px] md:w-[200px]'
+                           />
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            {/* =======OFFERS=========== */}
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+            <div className='py-12 relative'>
+               <Image
+                  src={curvedImg}
+                  alt='rect'
+                  className=' absolute left-0  top-0  -z-20 w-screen'
+               />
+               <h1 className='text-center mt-[7rem] mb-20'>
+                  We have more offers for you
+               </h1>
+               <div className='flex flex-col gap-12 md:gap-5 md:flex-row items-center justify-center'>
+                  <div>
+                     <h2>Simplifying Payment Collection</h2>
+                     <p>
+                        Because starting a business is tough enough, but
+                        collecting
+                        <br /> money should be the easy part! At Ziba Pay, we're
+                        here to <br />
+                        streamline the process and make getting paid a breeze.
+                     </p>
+                  </div>
+                  <Image
+                     src={offer1}
+                     alt='offers'
+                     className='w-[200px] md:w-[500px]'
+                  />
+               </div>
+            </div>
+            {/* =======TRACKING=========== */}
+            <div className=' py-6 relative'>
+               <Image
+                  src={curvedImg}
+                  alt='rect'
+                  className=' absolute left-0  top-0  -z-20 w-screen'
+               />
+               <div className='flex flex-col gap-12 md:gap-5 md:flex-row items-center justify-center mt-[8rem]'>
+                  <div>
+                     <h2 className='my-4'>Easy tracking</h2>
+                     <p>
+                        Easily track your payments with our payment tracking{" "}
+                        <br />
+                        feature. Monitor your bills and payments in one place,
+                        and
+                        <br /> get alerts when bills are due, so you never miss
+                        a payment again.
+                     </p>
+                  </div>
+                  <Image
+                     src={track}
+                     alt='offers'
+                     className='w-[200px] md:w-[500px]'
+                  />
+               </div>
+            </div>
+            <div className='container py-6 '>
+               <div className='flex flex-col gap-12 md:gap-5 md:flex-row items-center justify-center bg-submain text-white p-8'>
+                  <div>
+                     <h2 className='my-3'>
+                        Ziba Pay offers well-documented and easy-to-use{" "}
+                        <span className='text-main'>APIs for developers</span>{" "}
+                     </h2>
+                     <p>
+                        Our comprehensive documentation and user-friendly APIs
+                        empower developers to seamlessly integrate Ziba Pay's
+                        payment solutions into their applications and platforms.
+                        With clear and detailed documentation, developers can
+                        quickly understand how to leverage our APIs to enhance
+                        their payment experiences.
+                     </p>
+                     <ul className='mt-6'>
+                        <li>Rapid Fund Transfers</li>
+                        <li>Simple and Recurring Payment Setup</li>
+                        <li>Transaction Authetication</li>
+                        <li>Customer Identity Verification</li>
+                     </ul>
+                  </div>
+                  <Image
+                     src={smile}
+                     alt='offers'
+                     className='hidden md:block w-[500px]'
+                  />
+               </div>
+            </div>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
+            <div className='bg-br py-3'>
+               <div className='flex gap-4 mx-auto items-center justify-center container'>
+                  <div className='flex-col gap-4 items-center justify-center bg-white w-fit rounded-2xl p-2'>
+                     <h4 className='my-4'>
+                        Send and receive without borders with Mobile Money
+                     </h4>
+                     <Image
+                        src={send1}
+                        alt='momo'
+                     />
+                  </div>
+                  <div className='flex-col gap-4 items-center justify-center rounded-2xl bg-submain w-fit p-2 text-white '>
+                     <h4 className='my-4'>Invoices that work smarter</h4>
+                     <p className='my-4'>Learn more about invoices</p>
+                     <Image
+                        src={send2}
+                        alt='smarter'
+                     />
+                  </div>
+               </div>
+            </div>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
-}
+            {/* ===MOBILE MONEY INTEGRATION==== */}
+
+            <div className='bg-main text-white flex flex-col gap-6 py-6'>
+               <div className='container'>
+                  <div>
+                     <h2 className="my-4">Mobile Money Integration</h2>
+                     <p className="my-4">
+                        Expand your payment options with Ziba Pay by integrating
+                        <span className='text-black'>
+                           MTN Mobile Money
+                        </span> and <span className="text-black">Airtel Mobile Money</span>. Offer your
+                        customers the convenience of paying directly from their
+                        mobile wallets.
+                     </p>
+                  </div>
+                  <Link
+                     href=''
+                     className='underline text-black'
+                  >
+                     Learn more about MoMo{" "}
+                  </Link>
+                  <Image
+                     src={phone}
+                     alt='mobile integration'
+                     className=" mx-auto"
+                  />
+               </div>
+            </div>
+         </div>
+         <Footer />
+      </>
+   );
+};
+
+export default Home;
