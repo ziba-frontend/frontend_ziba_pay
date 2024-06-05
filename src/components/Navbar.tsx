@@ -10,17 +10,29 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { FiMenu } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai";
-import logo from "../../public/svg/logo.svg"
+import logo from "../../public/svg/logo.svg";
 import Image from "next/image";
 
 type MenuItems = { [key: string]: { label: string; href: string }[] };
 
 const menuItems: MenuItems = {
    Products: [
-      { label: "Profile", href: "/profile" },
-      { label: "Billing", href: "/billing" },
-      { label: "Team", href: "/team" },
-      { label: "Subscription", href: "/subscription" },
+      { label: "Payment processing solutions", href: "/payment-processing" },
+      {
+         label: "Financial management tool",
+         href: "/financial-management-tool",
+      },
+      {
+         label: "Custom Solution For your business",
+         href: "/custom-solution-for-business",
+      },
+      { label: "Ecommerce solutions", href: "/ecommerce-solutions" },
+      {
+         label: "Healthcare Payment Solutions",
+         href: "/health-care-payment-solutions",
+      },
+      { label: "Hospitality", href: "/hospitality" },
+      { label: "Education", href: "/education" },
    ],
    Company: [
       { label: "About Us", href: "/about" },
@@ -29,7 +41,7 @@ const menuItems: MenuItems = {
       { label: "Partnership", href: "/partnership" },
    ],
    Support: [
-      { label: "Help Center", href: "/help" },
+      { label: "Help Center", href: "/help-center" },
       { label: "Contact Us", href: "/contact" },
       { label: "FAQ", href: "/faq" },
    ],
@@ -69,7 +81,10 @@ const Navbar: React.FC = () => {
                href='/'
                className=''
             >
-               <Image src={logo} alt="ZibaPay"/>
+               <Image
+                  src={logo}
+                  alt='ZibaPay'
+               />
             </Link>
             <div className='hidden md:flex w-1/2 gap-12 ml-8'>
                {Object.entries(menuItems).map(([title, items]) => (
@@ -83,8 +98,12 @@ const Navbar: React.FC = () => {
             </div>
          </div>
          <div className='hidden md:flex gap-3'>
-            <Button variant='outline'>Login</Button>
-            <Button>Create Account</Button>
+            <Link href='/login'>
+               <Button variant='outline'>Login</Button>
+            </Link>
+            <Link href='/sign-up'>
+               <Button>Create Account</Button>
+            </Link>
          </div>
          <div className='md:hidden flex items-center'>
             <button
@@ -111,13 +130,17 @@ const Navbar: React.FC = () => {
                      Developer
                   </Link>
                   <div className='flex flex-col gap-3 mt-4 '>
-                     <Button
-                        variant='outline'
-                        className='w-full'
-                     >
-                        Login
-                     </Button>
-                     <Button className='w-full'>Create Account</Button>
+                     <Link href='/login'>
+                        <Button
+                           variant='outline'
+                           className='w-full'
+                        >
+                           Login
+                        </Button>
+                     </Link>
+                     <Link href='/sign-up'>
+                        <Button className='w-full'>Create Account</Button>
+                     </Link>
                   </div>
                </div>
             </div>

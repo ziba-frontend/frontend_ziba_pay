@@ -72,7 +72,7 @@ const Footer = () => {
    ];
    return (
       <div
-         className='bg-center  bg-cover'
+         className='bg-center  bg-cover mt-40'
          style={{
             backgroundImage: "url('/images/footerImg.png')",
          }}
