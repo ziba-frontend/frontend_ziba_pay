@@ -23,6 +23,7 @@ const formSchema = z.object({
 });
 import login from "../../../../public/images/login.png";
 import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
 
 const Login = () => {
    const form = useForm({
@@ -101,7 +102,9 @@ const Login = () => {
                      >
                         Log In
                      </Button>
-                     <p className='text-center'>Create Account</p>
+                     <p className='text-center'>
+                        <Link href='/sign-up'>Create Account</Link>
+                     </p>
                   </form>
                </Form>
             </div>

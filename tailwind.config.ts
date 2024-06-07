@@ -22,6 +22,7 @@ const config = {
         border: "hsl(var(--border))",
         main:" #3BD64A",
         submain:"#030A11",
+        subbr:"#F4F4F4",
         br:"#E0E0E0",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
