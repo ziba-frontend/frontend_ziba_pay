@@ -22,6 +22,13 @@ import oval from "../../public/images/oval.png";
 import curvedImg from "../../public/images/rect1.png";
 import Link from "next/link";
 import phone from "../../public/images/phone.png";
+import {
+   Accordion,
+   AccordionContent,
+   AccordionItem,
+   AccordionTrigger,
+} from "@/components/ui/accordion";
+import CheckList from "@/components/CheckList";
 
 const Home = () => {
    return (
@@ -115,7 +122,6 @@ const Home = () => {
                               src={fr1}
                               alt='fr1'
                               width={200}
-                              height={200}
                               className='ml-2'
                            />
                         </div>
@@ -248,12 +254,16 @@ const Home = () => {
                         quickly understand how to leverage our APIs to enhance
                         their payment experiences.
                      </p>
-                     <ul className='mt-6'>
-                        <li>Rapid Fund Transfers</li>
-                        <li>Simple and Recurring Payment Setup</li>
-                        <li>Transaction Authetication</li>
-                        <li>Customer Identity Verification</li>
-                     </ul>
+                     <div className='mt-6'>
+                        <CheckList
+                           items={[
+                              "Rapid Fund Transfers",
+                              "Simple and Recurring Payment Setup",
+                              "Transaction Authetication",
+                              "Customer Identity Verification",
+                           ]}
+                        />
+                     </div>
                   </div>
                   <Image
                      src={smile}
@@ -290,14 +300,15 @@ const Home = () => {
             <div className='bg-main text-white flex flex-col gap-6 py-6'>
                <div className='container'>
                   <div>
-                     <h2 className="my-4">Mobile Money Integration</h2>
-                     <p className="my-4">
+                     <h2 className='my-4'>Mobile Money Integration</h2>
+                     <p className='my-4'>
                         Expand your payment options with Ziba Pay by integrating
                         <span className='text-black'>
                            MTN Mobile Money
-                        </span> and <span className="text-black">Airtel Mobile Money</span>. Offer your
-                        customers the convenience of paying directly from their
-                        mobile wallets.
+                        </span> and{" "}
+                        <span className='text-black'>Airtel Mobile Money</span>.
+                        Offer your customers the convenience of paying directly
+                        from their mobile wallets.
                      </p>
                   </div>
                   <Link
@@ -309,8 +320,90 @@ const Home = () => {
                   <Image
                      src={phone}
                      alt='mobile integration'
-                     className=" mx-auto"
+                     className=' mx-auto'
                   />
+               </div>
+            </div>
+
+            {/* =======REVIEWS=========== */}
+            <div className=' py-6 relative'>
+               <Image
+                  src={curvedImg}
+                  alt='rect'
+                  className=' absolute left-0  top-0  -z-20 w-screen'
+               />
+
+               <div className='flex flex-col gap-6 container items-center justify-center py-40'>
+                  <p className='mt-20'>5000+ Happy Ziba pay Users</p>
+                  <h2>Don’t just take our words</h2>
+                  {/* reviews */}
+               </div>
+            </div>
+
+            {/* =======FAQs=========== */}
+            <div className='bg-br'>
+               <div className='container  flex gap-6 justify-between items-center flex-col md:flex-row'>
+                  <h2>FAQ's</h2>
+                  <div className='flex flex-col gap-4 items-center justify-center py-10 w-full md:w-3/4'>
+                     <h3>Got questions?</h3>
+                     <p>Get the answers to your questions about Ziba pay.</p>
+
+                     <Accordion
+                        type='single'
+                        collapsible
+                        className='w-full'
+                     >
+                        <AccordionItem
+                           value='item-1'
+                           className='border-b border-black/30 py-4'
+                        >
+                           <AccordionTrigger>
+                              What is Ziba pay?
+                           </AccordionTrigger>
+                           <AccordionContent>
+                              Ziba Pay is a payment processing platform designed
+                              to streamline payment collection for businesses of
+                              all sizes
+                           </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem
+                           value='item-2'
+                           className='border-b border-black/30 py-4'
+                        >
+                           <AccordionTrigger>
+                              How does Ziba Pay work ?
+                           </AccordionTrigger>
+                           <AccordionContent>
+                              Yes. It comes with default styles that matches the
+                              other components&apos; aesthetic.
+                           </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem
+                           value='item-3'
+                           className='border-b border-black/30 py-4'
+                        >
+                           <AccordionTrigger>
+                              What payment methods does Ziba Pay support?
+                           </AccordionTrigger>
+                           <AccordionContent>
+                              Yes. It's animated by default, but you can disable
+                              it if you prefer.
+                           </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem
+                           value='item-3'
+                           className='border-b border-black/30 py-4'
+                        >
+                           <AccordionTrigger>
+                              Is Ziba Pay secure?
+                           </AccordionTrigger>
+                           <AccordionContent>
+                              Yes. It's animated by default, but you can disable
+                              it if you prefer.
+                           </AccordionContent>
+                        </AccordionItem>
+                     </Accordion>
+                  </div>
                </div>
             </div>
          </div>

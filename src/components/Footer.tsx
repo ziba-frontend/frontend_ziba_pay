@@ -3,6 +3,8 @@ import Link from "next/link";
 import { FaFacebook, FaGithub, FaInstagram } from "react-icons/fa";
 import { url } from "inspector";
 import { Button } from "./ui/button";
+import Image from "next/image";
+import logo from "../../public/svg/logo.svg";
 
 const Footer = () => {
    const Links = [
@@ -86,15 +88,22 @@ const Footer = () => {
                   specifically for your business needs.
                </p>
                <div className='flex gap-2 py-2'>
-                  <Button variant='outline'>Login</Button>
-                  <Button>Create Account</Button>
+                  <Link href='/login'>
+                     <Button variant='outline'>Login</Button>
+                  </Link>
+                  <Link href='/sign-up'>
+                     <Button>Create Account</Button>
+                  </Link>
                </div>
             </div>
             <div className='container mx-auto px-4 border-b py-6'>
                <div className='grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 xl:grid-cols-5 gap-6'>
                   <div className='flex flex-col justify-between'>
                      <div>
-                        <p>Logo</p>
+                        <Image
+                           src={logo}
+                           alt='zibaPay'
+                        />
                         <p>Simplifying payments for Businesses in Africa</p>
                      </div>
                      <div className='flex gap-2'>
