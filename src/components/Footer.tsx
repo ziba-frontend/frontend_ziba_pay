@@ -96,8 +96,8 @@ const Footer = () => {
                   </Link>
                </div>
             </div>
-            <div className="container mx-auto px-4 border-b py-6">
-               <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            <div className="container mx-auto px-4 border-b py-6 flex justify-center items-center">
+               <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-center items-center">
                   <div className="flex flex-col justify-between">
                      <div>
                         <Image

@@ -35,6 +35,7 @@ const menuItems: MenuItems = {
       },
       { label: "Hospitality", href: "/hospitality" },
       { label: "Education", href: "/education" },
+      { label: "Invoicing and billing", href: "/billing" },
    ],
    Company: [
       { label: "About Us", href: "/about" },

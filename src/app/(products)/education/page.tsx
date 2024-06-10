@@ -9,6 +9,7 @@ import hospi4 from "../../../../public/images/hospi4.png";
 import edu1 from "../../../../public/images/edu1.png";
 import edu2 from "../../../../public/images/edu2.png";
 import edu3 from "../../../../public/images/edu3.png";
+import Link from "next/link";
 
 const Education = () => {
    return (
@@ -24,7 +25,10 @@ const Education = () => {
                      process of collecting tuition and managing fees for
                      educational institutions.
                   </p>
-                  <Button className="w-fit my-6">Get Started</Button>
+                  <Link href="/sign-up">
+                     {" "}
+                     <Button className="w-fit my-6">Get Started</Button>
+                  </Link>
                </div>
                <Image
                   src={edu1}

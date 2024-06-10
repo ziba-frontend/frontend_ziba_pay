@@ -172,10 +172,10 @@ const Home = () => {
                               <p>
                                  Navigating through Ziba Pay is a breeze, thanks
                                  to our clean and clutter-free interface.
-                                 Whether you&apos;re setting up payment workflows,
-                                 customizing branding elements, or analyzing
-                                 transaction data, you&apos;ll find everything you
-                                 need right at your fingertips.
+                                 Whether you&apos;re setting up payment
+                                 workflows, customizing branding elements, or
+                                 analyzing transaction data, you&apos;ll find
+                                 everything you need right at your fingertips.
                               </p>
                            </div>
                            <Image
@@ -207,8 +207,8 @@ const Home = () => {
                      <p>
                         Because starting a business is tough enough, but
                         collecting
-                        <br /> money should be the easy part! At Ziba Pay, we&apos;re
-                        here to <br />
+                        <br /> money should be the easy part! At Ziba Pay,
+                        we&apos;re here to <br />
                         streamline the process and make getting paid a breeze.
                      </p>
                   </div>
@@ -254,11 +254,11 @@ const Home = () => {
                      </h2>
                      <p>
                         Our comprehensive documentation and user-friendly APIs
-                        empower developers to seamlessly integrate Ziba Pay&apos;s
-                        payment solutions into their applications and platforms.
-                        With clear and detailed documentation, developers can
-                        quickly understand how to leverage our APIs to enhance
-                        their payment experiences.
+                        empower developers to seamlessly integrate Ziba
+                        Pay&apos;s payment solutions into their applications and
+                        platforms. With clear and detailed documentation,
+                        developers can quickly understand how to leverage our
+                        APIs to enhance their payment experiences.
                      </p>
                      <div className="mt-6">
                         <CheckList
@@ -292,7 +292,9 @@ const Home = () => {
                   </div>
                   <div className=" md:h-[600px] justify-center rounded-2xl bg-submain w-fit p-2 text-white ">
                      <h4 className="my-4">Invoices that work smarter</h4>
+
                      <p className="my-4">Learn more about invoices</p>
+
                      <Image
                         src={send2}
                         alt="smarter"
@@ -318,7 +320,7 @@ const Home = () => {
                      </p>
                   </div>
                   <Link
-                     href=""
+                     href="/mobile-money-integration"
                      className="underline text-black"
                   >
                      Learn more about MoMo{" "}
@@ -393,8 +395,8 @@ const Home = () => {
                               What payment methods does Ziba Pay support?
                            </AccordionTrigger>
                            <AccordionContent>
-                              Yes. It&apos;s animated by default, but you can disable
-                              it if you prefer.
+                              Yes. It&apos;s animated by default, but you can
+                              disable it if you prefer.
                            </AccordionContent>
                         </AccordionItem>
                         <AccordionItem
@@ -405,8 +407,8 @@ const Home = () => {
                               Is Ziba Pay secure?
                            </AccordionTrigger>
                            <AccordionContent>
-                              Yes. It&apos;s animated by default, but you can disable
-                              it if you prefer.
+                              Yes. It&apos;s animated by default, but you can
+                              disable it if you prefer.
                            </AccordionContent>
                         </AccordionItem>
                      </Accordion>

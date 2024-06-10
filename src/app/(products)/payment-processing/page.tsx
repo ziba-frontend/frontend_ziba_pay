@@ -6,6 +6,7 @@ import paypro3 from "../../../../public/images/processing3.png";
 import paypro4 from "../../../../public/images/processing4.png";
 import rect from "../../../../public/images/rect1.png";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const PaymentProcessing = () => {
    return (
@@ -62,11 +63,11 @@ const PaymentProcessing = () => {
                <div className="flex flex-col gap-4">
                   <h2>Mobile Payment Solutions</h2>
                   <p>
-                     Ziba Pay&apos;s mobile payment solutions enable businesses to
-                     easily accept payments on-the-go using a mobile device or
-                     smartphone. Whether you&apos;re at a trade show, a pop-up event,
-                     or making deliveries, our mobile app provides a convenient
-                     way to process transactions anytime, anywhere.
+                     Ziba Pay&apos;s mobile payment solutions enable businesses
+                     to easily accept payments on-the-go using a mobile device
+                     or smartphone. Whether you&apos;re at a trade show, a
+                     pop-up event, or making deliveries, our mobile app provides
+                     a convenient way to process transactions anytime, anywhere.
                   </p>
                </div>
                <Image
@@ -106,7 +107,10 @@ const PaymentProcessing = () => {
                Get started with Ziba Pay&apos;s online payment processing <br />{" "}
                solution today!
             </h2>
-            <Button className="w-fit">Create Account</Button>
+            <Link href="/sign-up">
+               {" "}
+               <Button className="w-fit">Create Account</Button>
+            </Link>
          </div>
       </div>
    );

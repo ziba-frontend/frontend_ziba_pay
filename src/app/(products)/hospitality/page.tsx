@@ -27,11 +27,13 @@ const Healthcare = () => {
                <Image
                   src={hospi1}
                   alt="ziba pay"
+                  width={500}
+                  
                />
             </div>
          </div>
 
-         <div className="flex flex-col items-center justify-center gap-20 md:flex-row py-6 container">
+         <div className="flex items-center justify-center gap-20 md:flex-row py-6 container flex-col-reverse">
             <Image
                src={hospi2}
                alt="ziba pay"
@@ -76,6 +78,7 @@ const Healthcare = () => {
                   <Image
                      src={hospi3}
                      alt="ziba"
+                     className="sm:w-[300px] lg:w-[400px]"
                   />
                   <div className="">
                      <h3 className="my-2">
@@ -83,9 +86,9 @@ const Healthcare = () => {
                      </h3>
                      <p>
                         We strategically position Ziba pay POS Terminals to make
-                        paying in person a breeze. Whether you&apos;re at reception,
-                        the spa, restaurant, bar, or elsewhere, making payments
-                        is quick and easy.
+                        paying in person a breeze. Whether you&apos;re at
+                        reception, the spa, restaurant, bar, or elsewhere,
+                        making payments is quick and easy.
                      </p>
                   </div>
                </div>

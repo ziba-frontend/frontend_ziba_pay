@@ -25,107 +25,109 @@ const Blogs = () => {
          </div>
 
          <h1 className="my-4">All Articles</h1>
-         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 p-2 gap-8 items-center justify-center mx-auto ">
-            <div className="flex flex-col gap-2 bg-white w-5/6 sm:w-[300px] md:w-[320px] lg:w-[380px]  h-[450px] shadow-sm rounded ">
-               <Image
-                  src={blog1}
-                  alt="blog1"
-                  className="w-full"
-               />
-               <div className="p-4">
-                  <h3 className="my-2">
-                     The Future of Online Payments in Africa
-                  </h3>
-                  <p>
-                     Discover the latest trends and innovations shaping the
-                     future of online payments in Africa. Learn how Ziba Pay is
-                     at the forefront of this exciting transformation
-                  </p>
+         <div className="flex items-center justify-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 p-2 gap-8 items-center justify-center mx-auto ">
+               <div className="flex flex-col gap-2 bg-white w-5/6 sm:w-[300px] md:w-[320px] lg:w-[380px]  h-[450px] shadow-sm rounded ">
+                  <Image
+                     src={blog1}
+                     alt="blog1"
+                     className="w-full"
+                  />
+                  <div className="p-4">
+                     <h3 className="my-2">
+                        The Future of Online Payments in Africa
+                     </h3>
+                     <p>
+                        Discover the latest trends and innovations shaping the
+                        future of online payments in Africa. Learn how Ziba Pay
+                        is at the forefront of this exciting transformation
+                     </p>
+                  </div>
                </div>
-            </div>
-            <div className="flex flex-col gap-2 bg-white w-5/6 sm:w-[300px] md:w-[320px] lg:w-[380px]  h-[450px] shadow-sm rounded">
-               <Image
-                  src={blog1}
-                  alt="blog1"
-                  className="w-full"
-               />
-               <div className="p-4">
-                  <h3 className="my-2">
-                     The Future of Online Payments in Africa
-                  </h3>
-                  <p>
-                     Discover the latest trends and innovations shaping the
-                     future of online payments in Africa. Learn how Ziba Pay is
-                     at the forefront of this exciting transformation
-                  </p>
+               <div className="flex flex-col gap-2 bg-white w-5/6 sm:w-[300px] md:w-[320px] lg:w-[380px]  h-[450px] shadow-sm rounded">
+                  <Image
+                     src={blog1}
+                     alt="blog1"
+                     className="w-full"
+                  />
+                  <div className="p-4">
+                     <h3 className="my-2">
+                        The Future of Online Payments in Africa
+                     </h3>
+                     <p>
+                        Discover the latest trends and innovations shaping the
+                        future of online payments in Africa. Learn how Ziba Pay
+                        is at the forefront of this exciting transformation
+                     </p>
+                  </div>
                </div>
-            </div>
-            <div className="flex flex-col gap-2 bg-white w-5/6 sm:w-[300px] md:w-[320px] lg:w-[380px]  h-[450px] shadow-sm rounded">
-               <Image
-                  src={blog1}
-                  alt="blog1"
-                  className="w-full"
-               />
-               <div className="p-4">
-                  <h3 className="my-2">
-                     The Future of Online Payments in Africa
-                  </h3>
-                  <p>
-                     Discover the latest trends and innovations shaping the
-                     future of online payments in Africa. Learn how Ziba Pay is
-                     at the forefront of this exciting transformation
-                  </p>
+               <div className="flex flex-col gap-2 bg-white w-5/6 sm:w-[300px] md:w-[320px] lg:w-[380px]  h-[450px] shadow-sm rounded">
+                  <Image
+                     src={blog1}
+                     alt="blog1"
+                     className="w-full"
+                  />
+                  <div className="p-4">
+                     <h3 className="my-2">
+                        The Future of Online Payments in Africa
+                     </h3>
+                     <p>
+                        Discover the latest trends and innovations shaping the
+                        future of online payments in Africa. Learn how Ziba Pay
+                        is at the forefront of this exciting transformation
+                     </p>
+                  </div>
                </div>
-            </div>
-            <div className="flex flex-col gap-2 bg-white w-5/6 sm:w-[300px] md:w-[320px] lg:w-[380px]  h-[450px] shadow-sm rounded">
-               <Image
-                  src={blog1}
-                  alt="blog1"
-                  className="w-full"
-               />
-               <div className="p-4">
-                  <h3 className="my-2">
-                     The Future of Online Payments in Africa
-                  </h3>
-                  <p>
-                     Discover the latest trends and innovations shaping the
-                     future of online payments in Africa. Learn how Ziba Pay is
-                     at the forefront of this exciting transformation
-                  </p>
+               <div className="flex flex-col gap-2 bg-white w-5/6 sm:w-[300px] md:w-[320px] lg:w-[380px]  h-[450px] shadow-sm rounded">
+                  <Image
+                     src={blog1}
+                     alt="blog1"
+                     className="w-full"
+                  />
+                  <div className="p-4">
+                     <h3 className="my-2">
+                        The Future of Online Payments in Africa
+                     </h3>
+                     <p>
+                        Discover the latest trends and innovations shaping the
+                        future of online payments in Africa. Learn how Ziba Pay
+                        is at the forefront of this exciting transformation
+                     </p>
+                  </div>
                </div>
-            </div>
-            <div className="flex flex-col gap-2 bg-white w-5/6 sm:w-[300px] md:w-[320px] lg:w-[380px]  h-[450px] shadow-sm rounded">
-               <Image
-                  src={blog1}
-                  alt="blog1"
-                  className="w-full"
-               />
-               <div className="p-4">
-                  <h3 className="my-2">
-                     The Future of Online Payments in Africa
-                  </h3>
-                  <p>
-                     Discover the latest trends and innovations shaping the
-                     future of online payments in Africa. Learn how Ziba Pay is
-                     at the forefront of this exciting transformation
-                  </p>
+               <div className="flex flex-col gap-2 bg-white w-5/6 sm:w-[300px] md:w-[320px] lg:w-[380px]  h-[450px] shadow-sm rounded">
+                  <Image
+                     src={blog1}
+                     alt="blog1"
+                     className="w-full"
+                  />
+                  <div className="p-4">
+                     <h3 className="my-2">
+                        The Future of Online Payments in Africa
+                     </h3>
+                     <p>
+                        Discover the latest trends and innovations shaping the
+                        future of online payments in Africa. Learn how Ziba Pay
+                        is at the forefront of this exciting transformation
+                     </p>
+                  </div>
                </div>
-            </div>
-            <div className="flex flex-col gap-2 bg-white w-5/6 sm:w-[300px] md:w-[320px] lg:w-[380px]  h-[450px] shadow-sm rounded">
-               <Image
-                  src={blog1}
-                  alt="blog1"
-                  className="w-full"
-               />
-               <div className="p-4">
-                  <h3 className="my-2">
-                     The Future of Online Payments in Africa
-                  </h3>
-                  <p>
-                     Discover the latest trends and innovations shaping the
-                     future of online payments in Africa. Learn how Ziba Pay is
-                     at the forefront of this exciting transformation
-                  </p>
+               <div className="flex flex-col gap-2 bg-white w-5/6 sm:w-[300px] md:w-[320px] lg:w-[380px]  h-[450px] shadow-sm rounded">
+                  <Image
+                     src={blog1}
+                     alt="blog1"
+                     className="w-full"
+                  />
+                  <div className="p-4">
+                     <h3 className="my-2">
+                        The Future of Online Payments in Africa
+                     </h3>
+                     <p>
+                        Discover the latest trends and innovations shaping the
+                        future of online payments in Africa. Learn how Ziba Pay
+                        is at the forefront of this exciting transformation
+                     </p>
+                  </div>
                </div>
             </div>
          </div>
@@ -133,9 +135,9 @@ const Blogs = () => {
          <div className="py-40">
             <h1 className="my-3">Subscribe to Our Newsletter</h1>
             <p className="mb-6">
-               Don&apos;t miss out on the latest updates from Ziba Pay. Subscribe to
-               our newsletter to receive our <br /> latest blog posts, news, and
-               special offers directly in your inbox
+               Don&apos;t miss out on the latest updates from Ziba Pay.
+               Subscribe to our newsletter to receive our <br /> latest blog
+               posts, news, and special offers directly in your inbox
             </p>
             <Button>
                Email <FaArrowRight className="ml-2" />

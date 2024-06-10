@@ -6,6 +6,7 @@ import health1 from "../../../../public/images/health1.png";
 import health2 from "../../../../public/images/health2.png";
 import health3 from "../../../../public/images/health3.png";
 import health4 from "../../../../public/images/health4.png";
+import Link from "next/link";
 
 const Healthcare = () => {
    return (
@@ -19,7 +20,9 @@ const Healthcare = () => {
                      compliance and enhancing efficiency for providers,
                      resulting in improved patient satisfaction.
                   </p>
-                  <Button className="w-fit my-6">Get Started</Button>
+                  <Link href="/sign-up">
+                     <Button className="w-fit my-6">Get Started</Button>
+                  </Link>
                </div>
                <Image
                   src={health1}
@@ -67,9 +70,9 @@ const Healthcare = () => {
                </h3>
                <p>
                   Expedite reimbursements and optimize revenue cycles with Ziba
-                  Pay&apos;s efficient payment processing capabilities. By automating
-                  billing and payment workflows, healthcare providers can
-                  minimize delays, reduce administrative overhead, and
+                  Pay&apos;s efficient payment processing capabilities. By
+                  automating billing and payment workflows, healthcare providers
+                  can minimize delays, reduce administrative overhead, and
                   accelerate cash flow.
                </p>
             </div>

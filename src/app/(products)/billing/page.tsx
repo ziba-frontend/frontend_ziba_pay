@@ -2,6 +2,8 @@ import Image from "next/image";
 import React from "react";
 import rect from "../../../../public/images/rect1.png";
 import billing1 from "../../../../public/images/billing1.png";
+import billing2 from "../../../../public/images/billing2.png";
+import billing3 from "../../../../public/images/billing3.png";
 
 const Billing = () => {
    return (
@@ -42,6 +44,7 @@ const Billing = () => {
                <Image
                   src={billing1}
                   alt="ziba billing"
+                  width={500}
                />
             </div>
          </div>
@@ -59,8 +62,9 @@ const Billing = () => {
                </p>
             </div>
             <Image
-               src={billing1}
+               src={billing2}
                alt="ziba billing"
+               width={500}
             />
          </div>
 
@@ -84,8 +88,9 @@ const Billing = () => {
                   </p>
                </div>
                <Image
-                  src={billing1}
+                  src={billing3}
                   alt="ziba billing"
+                  width={500}
                />
             </div>
          </div>
