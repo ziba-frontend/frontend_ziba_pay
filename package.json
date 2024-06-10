@@ -30,7 +30,6 @@
     "fumadocs-ui": "^11.3.2",
     "lucide-react": "^0.379.0",
     "next": "14.2.3",
-    "next-docs-zeta": "^7.1.2",
     "nextra-theme-docs": "^2.13.4",
     "react": "^18",
     "react-dom": "^18",
