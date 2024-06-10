@@ -12,6 +12,8 @@ import { FiMenu } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai";
 import logo from "../../public/svg/logo.svg";
 import Image from "next/image";
+import drop1 from "../../public/images/drop1.png";
+import drop2 from "../../public/images/drop2.png";
 
 type MenuItems = { [key: string]: { label: string; href: string }[] };
 
@@ -57,7 +59,21 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items }) => (
       <DropdownMenuTrigger className='cursor-pointer'>
          {title}
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className='bg-white p-6 relative'>
+         <Image
+            src={drop1}
+            alt='ziba'
+            className='absolute top-0 left-0'
+            height={40}
+            width={40}
+         />
+         <Image
+            src={drop2}
+            alt='ziba'
+            className='absolute bottom-0 right-0'
+            height={40}
+            width={40}
+         />
          {items.map((item, index) => (
             <DropdownMenuItem key={index}>
                <Link href={item.href}>{item.label}</Link>
@@ -115,7 +131,7 @@ const Navbar: React.FC = () => {
          </div>
          {isOpen && (
             <div className='absolute top-[100px] left-0 w-full  bg-white md:hidden '>
-               <div className='flex flex-col items-center p-4  gap-5 text-2xl'>
+               <div className='flex flex-col items-center p-4  gap-5 text-2xl '>
                   {Object.entries(menuItems).map(([title, items]) => (
                      <Dropdown
                         key={title}

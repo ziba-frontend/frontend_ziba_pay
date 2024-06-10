@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "swiper/css";
 
 @layer base {
    :root {
@@ -34,8 +35,6 @@
 
       --radius: 0.5rem;
    }
-
-  
 }
 
 @layer base {
@@ -70,4 +69,10 @@
       @apply text-sm font-medium leading-normal;
    }
 
+   .swiper-pagination-bullet {
+      background-color: #e0e0e0 !important;
+   }
+   .swiper-pagination-bullet-active {
+      background-color: #030a11 !important;
+   }
 }

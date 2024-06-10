@@ -29,6 +29,7 @@ import {
    AccordionTrigger,
 } from "@/components/ui/accordion";
 import CheckList from "@/components/CheckList";
+import Slider from "@/components/Slider";
 
 const Home = () => {
    return (
@@ -273,9 +274,9 @@ const Home = () => {
                </div>
             </div>
 
-            <div className='bg-br py-3'>
+            <div className='bg-br py-6'>
                <div className='flex gap-4 mx-auto items-center justify-center container'>
-                  <div className='flex-col gap-4 items-center justify-center bg-white w-fit rounded-2xl p-2'>
+                  <div className=' md:h-[600px] justify-center bg-white w-fit rounded-2xl p-2'>
                      <h4 className='my-4'>
                         Send and receive without borders with Mobile Money
                      </h4>
@@ -284,7 +285,7 @@ const Home = () => {
                         alt='momo'
                      />
                   </div>
-                  <div className='flex-col gap-4 items-center justify-center rounded-2xl bg-submain w-fit p-2 text-white '>
+                  <div className=' md:h-[600px] justify-center rounded-2xl bg-submain w-fit p-2 text-white '>
                      <h4 className='my-4'>Invoices that work smarter</h4>
                      <p className='my-4'>Learn more about invoices</p>
                      <Image
@@ -337,6 +338,7 @@ const Home = () => {
                   <p className='mt-20'>5000+ Happy Ziba pay Users</p>
                   <h2>Don’t just take our words</h2>
                   {/* reviews */}
+                  <Slider />
                </div>
             </div>
 
