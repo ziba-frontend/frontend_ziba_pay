@@ -56,8 +56,9 @@ const Home = () => {
                   payment collection solution
                </p>
                <div className='flex gap-2 my-4'>
-                  <Button variant='outline'>Login</Button>
-                  <Button>Create Account</Button>
+                  <Link href="/login"><Button variant='outline'>Login</Button></Link>
+                  <Link href="/sign-up">  <Button>Create Account</Button></Link>
+                
                </div>
             </div>
             <div className='flex flex-col container'>
