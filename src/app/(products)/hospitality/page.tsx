@@ -6,13 +6,14 @@ import hospi1 from "../../../../public/images/hospi1.png";
 import hospi2 from "../../../../public/images/hospi2.png";
 import hospi3 from "../../../../public/images/hospi3.png";
 import hospi4 from "../../../../public/images/hospi4.png";
+import Link from "next/link";
 
 const Healthcare = () => {
    return (
       <div>
          <div className="my-10 container">
             <div className="flex-col flex md:flex-row items-center justify-center gap-6">
-               <div className="">
+               <div className="md:w-1/2">
                   <h1 className="my-4">
                      The Payment platform for Travel and Hotels
                   </h1>
@@ -22,13 +23,13 @@ const Healthcare = () => {
                      booking flights and hotels to dining, spa visits, and
                      check-out.
                   </p>
-                  <Button className="w-fit my-6">Get Started</Button>
+                  <Link href="/sign-up"><Button className="w-fit my-6">Get Started</Button></Link>
+                  
                </div>
                <Image
                   src={hospi1}
                   alt="ziba pay"
                   width={500}
-                  
                />
             </div>
          </div>

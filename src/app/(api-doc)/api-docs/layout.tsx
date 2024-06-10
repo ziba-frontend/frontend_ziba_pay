@@ -7,7 +7,11 @@ import DocsNavbar from "@/components/DocsNavbar";
 
 export default function RootDocsLayout({ children }: { children: ReactNode }) {
    return (
-      <RootProvider>
+      <RootProvider
+         theme={{
+            enabled: false,
+         }}
+      >
          <DocsNavbar />
          <DocsLayout
             tree={pageTree}
