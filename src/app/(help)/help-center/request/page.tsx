@@ -38,22 +38,22 @@ const Request = () => {
    };
 
    return (
-      <div className='container mt-20 flex items-center justify-center'>
+      <div className="container mt-20 flex items-center justify-center">
          <Form {...form}>
             <form
                onSubmit={form.handleSubmit(onSubmit)}
-               className='space-y-8 w-5/6 md:w-3/4 p-6'
+               className="space-y-8 w-5/6 md:w-3/4 p-6"
             >
                <FormField
                   control={form.control}
-                  name='issue'
+                  name="issue"
                   render={({ field }) => (
                      <FormItem>
                         <FormLabel>Write your issue below</FormLabel>
                         <FormControl>
                            <Input
-                              className='bg-white p-6 outline-none border'
-                              placeholder='issue'
+                              className="bg-white p-6 outline-none border"
+                              placeholder="issue"
                               {...field}
                            />
                         </FormControl>
@@ -63,14 +63,14 @@ const Request = () => {
                />
                <FormField
                   control={form.control}
-                  name='email'
+                  name="email"
                   render={({ field }) => (
                      <FormItem>
                         <FormLabel>Your email</FormLabel>
                         <FormControl>
                            <Input
-                              className='bg-white p-6 outline-none border '
-                              placeholder='email'
+                              className="bg-white p-6 outline-none border "
+                              placeholder="email"
                               {...field}
                            />
                         </FormControl>
@@ -80,14 +80,14 @@ const Request = () => {
                />
                <FormField
                   control={form.control}
-                  name='subject'
+                  name="subject"
                   render={({ field }) => (
                      <FormItem>
                         <FormLabel>Subject</FormLabel>
                         <FormControl>
                            <Input
-                              className='bg-white p-6  border'
-                              placeholder='subject'
+                              className="bg-white p-6  border"
+                              placeholder="subject"
                               {...field}
                            />
                         </FormControl>
@@ -95,7 +95,7 @@ const Request = () => {
                      </FormItem>
                   )}
                />
-               <Button type='submit'>Submit</Button>
+               <Button type="submit">Submit</Button>
             </form>
          </Form>
       </div>

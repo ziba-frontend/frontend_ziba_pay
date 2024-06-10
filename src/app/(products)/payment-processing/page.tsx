@@ -9,16 +9,16 @@ import { Button } from "@/components/ui/button";
 
 const PaymentProcessing = () => {
    return (
-      <div className='py-10'>
-         <div className='container flex items-center justify-center flex-col gap-4 pt-6'>
+      <div className="py-10">
+         <div className="container flex items-center justify-center flex-col gap-4 pt-6">
             <h4>
-               At Ziba <span className='text-main'>Pay</span>
+               At Ziba <span className="text-main">Pay</span>
             </h4>
-            <h1 className='text-center'>
+            <h1 className="text-center">
                We are dedicated to simplifying payments for <br />
                businesses in Africa.{" "}
             </h1>
-            <p className='text-center'>
+            <p className="text-center">
                Our comprehensive payment processing solutions empower businesses
                of all sizes to streamline operations and drive
                <br /> growth. From online transactions to mobile payments and
@@ -26,20 +26,20 @@ const PaymentProcessing = () => {
             </p>
             <Image
                src={paypro1}
-               alt='ziba'
+               alt="ziba"
             />
-            <h2 className='text-center'>
+            <h2 className="text-center">
                Let’s Explore how Ziba pay can transform <br /> your business
             </h2>
          </div>
-         <div className='relative py-10 my-10'>
+         <div className="relative py-10 my-10">
             <Image
                src={rect}
-               alt='ziba pay'
-               className='absolute left-0 top-0 w-full'
+               alt="ziba pay"
+               className="absolute left-0 top-0 w-full"
             />
-            <div className='flex flex-col md:flex-row gap-6 items-center justify-center pt-20 container'>
-               <div className='flex flex-col gap-4'>
+            <div className="flex flex-col md:flex-row gap-6 items-center justify-center pt-20 container">
+               <div className="flex flex-col gap-4">
                   <h2>
                      Let’s Explore how Ziba pay can transform your business
                   </h2>
@@ -53,40 +53,40 @@ const PaymentProcessing = () => {
                </div>
                <Image
                   src={paypro2}
-                  alt='ziba'
+                  alt="ziba"
                />
             </div>
          </div>
-         <div className='bg-white'>
-            <div className='flex flex-col md:flex-row gap-6 items-center justify-center pt-20 container '>
-               <div className='flex flex-col gap-4'>
+         <div className="bg-white">
+            <div className="flex flex-col md:flex-row gap-6 items-center justify-center pt-20 container ">
+               <div className="flex flex-col gap-4">
                   <h2>Mobile Payment Solutions</h2>
                   <p>
-                     Ziba Pay's mobile payment solutions enable businesses to
+                     Ziba Pay&apos;s mobile payment solutions enable businesses to
                      easily accept payments on-the-go using a mobile device or
-                     smartphone. Whether you're at a trade show, a pop-up event,
+                     smartphone. Whether you&apos;re at a trade show, a pop-up event,
                      or making deliveries, our mobile app provides a convenient
                      way to process transactions anytime, anywhere.
                   </p>
                </div>
                <Image
                   src={paypro3}
-                  alt='ziba'
+                  alt="ziba"
                />
             </div>
          </div>
 
-         <div className='relative py-10 my-10'>
+         <div className="relative py-10 my-10">
             <Image
                src={rect}
-               alt='ziba pay'
-               className='absolute left-0 top-0 w-full'
+               alt="ziba pay"
+               className="absolute left-0 top-0 w-full"
             />
-            <div className='flex flex-col md:flex-row gap-6 items-center justify-center pt-20 container'>
-               <div className='flex flex-col gap-4'>
+            <div className="flex flex-col md:flex-row gap-6 items-center justify-center pt-20 container">
+               <div className="flex flex-col gap-4">
                   <h2>Point-of-Sale (POS) Systems</h2>
                   <p>
-                     Ziba Pay's point-of-sale (POS) systems are designed to
+                     Ziba Pay&apos;s point-of-sale (POS) systems are designed to
                      streamline in-person transactions with integrated POS
                      solutions. Whether you operate a retail store, a
                      restaurant, or a salon, our POS systems provide a
@@ -96,17 +96,17 @@ const PaymentProcessing = () => {
                </div>
                <Image
                   src={paypro4}
-                  alt='ziba'
+                  alt="ziba"
                />
             </div>
          </div>
 
-         <div className='container flex flex-col gap-4  justify-center min-h-[40vh]'>
+         <div className="container flex flex-col gap-4  justify-center min-h-[40vh]">
             <h2>
-               Get started with Ziba Pay's online payment processing <br />{" "}
+               Get started with Ziba Pay&apos;s online payment processing <br />{" "}
                solution today!
             </h2>
-            <Button className='w-fit'>Create Account</Button>
+            <Button className="w-fit">Create Account</Button>
          </div>
       </div>
    );

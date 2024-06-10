@@ -8,16 +8,16 @@ interface CheckListProps {
 
 const CheckList: React.FC<CheckListProps> = ({ items }) => {
    return (
-      <ul className='list-none space-y-2'>
+      <ul className="list-none space-y-2">
          {items.map((item, index) => (
             <li
                key={index}
-               className='flex items-start'
+               className="flex items-start"
             >
-               <span className='text-main mr-2 mt-1.5'>
+               <span className="text-main mr-2 mt-1.5">
                   <Image
                      src={tick}
-                     alt='check mark'
+                     alt="check mark"
                   />
                </span>
                <span>{item}</span>

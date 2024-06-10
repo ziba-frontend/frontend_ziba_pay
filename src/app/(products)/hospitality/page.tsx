@@ -10,10 +10,10 @@ import hospi4 from "../../../../public/images/hospi4.png";
 const Healthcare = () => {
    return (
       <div>
-         <div className='my-10 container'>
-            <div className='flex-col flex md:flex-row items-center justify-center gap-6'>
-               <div className=''>
-                  <h1 className='my-4'>
+         <div className="my-10 container">
+            <div className="flex-col flex md:flex-row items-center justify-center gap-6">
+               <div className="">
+                  <h1 className="my-4">
                      The Payment platform for Travel and Hotels
                   </h1>
                   <p>
@@ -22,23 +22,23 @@ const Healthcare = () => {
                      booking flights and hotels to dining, spa visits, and
                      check-out.
                   </p>
-                  <Button className='w-fit my-6'>Get Started</Button>
+                  <Button className="w-fit my-6">Get Started</Button>
                </div>
                <Image
                   src={hospi1}
-                  alt='ziba pay'
+                  alt="ziba pay"
                />
             </div>
          </div>
 
-         <div className='flex flex-col items-center justify-center gap-20 md:flex-row py-6 container'>
+         <div className="flex flex-col items-center justify-center gap-20 md:flex-row py-6 container">
             <Image
                src={hospi2}
-               alt='ziba pay'
-               className='w-[400px]'
+               alt="ziba pay"
+               className="w-[400px]"
             />
-            <div className='w-full md:w-1/2'>
-               <h3 className='my-2'>Welcome Guests Worldwide</h3>
+            <div className="w-full md:w-1/2">
+               <h3 className="my-2">Welcome Guests Worldwide</h3>
                <p>
                   Welcome guests from around the globe and accept payments in
                   both local and international currencies. Seamlessly integrate
@@ -47,16 +47,16 @@ const Healthcare = () => {
             </div>
          </div>
 
-         <div className='bg-br pt-40 relative mt-10'>
+         <div className="bg-br pt-40 relative mt-10">
             <Image
                src={rect}
-               alt='ziba pay'
-               className='absolute left-0 top-0 w-full'
+               alt="ziba pay"
+               className="absolute left-0 top-0 w-full"
             />
-            <div className='mt-10 py-20'>
-               <div className=' py-6 container'>
-                  <div className='w-full md:w-1/2'>
-                     <h3 className='my-2'>
+            <div className="mt-10 py-20">
+               <div className=" py-6 container">
+                  <div className="w-full md:w-1/2">
+                     <h3 className="my-2">
                         Enhance Passenger Payment Experience
                      </h3>
                      <p>
@@ -70,20 +70,20 @@ const Healthcare = () => {
             </div>
          </div>
 
-         <div className=' py-10  mt-10'>
-            <div className='mt-10'>
-               <div className='flex flex-col items-center  justify-center gap-20 md:flex-row py-6 container'>
+         <div className=" py-10  mt-10">
+            <div className="mt-10">
+               <div className="flex flex-col items-center  justify-center gap-20 md:flex-row py-6 container">
                   <Image
                      src={hospi3}
-                     alt='ziba'
+                     alt="ziba"
                   />
-                  <div className=''>
-                     <h3 className='my-2'>
+                  <div className="">
+                     <h3 className="my-2">
                         For a Smooth In-Person Payment Experience
                      </h3>
                      <p>
                         We strategically position Ziba pay POS Terminals to make
-                        paying in person a breeze. Whether you're at reception,
+                        paying in person a breeze. Whether you&apos;re at reception,
                         the spa, restaurant, bar, or elsewhere, making payments
                         is quick and easy.
                      </p>
@@ -92,16 +92,16 @@ const Healthcare = () => {
             </div>
          </div>
 
-         <div className='bg-br pt-40 relative mt-10'>
+         <div className="bg-br pt-40 relative mt-10">
             <Image
                src={rect}
-               alt='ziba pay'
-               className='absolute left-0 top-0 w-full'
+               alt="ziba pay"
+               className="absolute left-0 top-0 w-full"
             />
-            <div className='mt-10'>
-               <div className='flex flex-col items-center justify-center gap-20 md:flex-row py-6 container'>
-                  <div className='w-full md:w-1/2'>
-                     <h3 className='my-2'>
+            <div className="mt-10">
+               <div className="flex flex-col items-center justify-center gap-20 md:flex-row py-6 container">
+                  <div className="w-full md:w-1/2">
+                     <h3 className="my-2">
                         Handle Different Currencies and Send Money Back Home
                      </h3>
                      <p>
@@ -112,8 +112,8 @@ const Healthcare = () => {
                   </div>
                   <Image
                      src={hospi4}
-                     alt='ziba pay'
-                     className='w-[400px]'
+                     alt="ziba pay"
+                     className="w-[400px]"
                   />
                </div>
             </div>

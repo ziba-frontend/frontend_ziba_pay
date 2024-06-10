@@ -35,7 +35,7 @@ const reviews = [
 
 const Slider = () => {
    return (
-      <section className='container mt-5 text-light'>
+      <section className="container mt-5 text-light">
          <SwiperType
             pagination={{ dynamicBullets: true, clickable: true }}
             modules={[Pagination]}
@@ -60,21 +60,21 @@ const Slider = () => {
             {reviews.map((review, index) => (
                <SwiperSlide
                   key={index}
-                  className='py-4'
+                  className="py-4"
                >
-                  <div className='flex gap-4 flex-col items-center md:items-start justify-center md:flex-row '>
-                     <div className='w-48 h-48 md:w-96'>
+                  <div className="flex gap-4 flex-col items-center md:items-start justify-center md:flex-row ">
+                     <div className="w-48 h-48 md:w-96">
                         <Image
                            src={review.image}
                            alt={review.alt}
-                           layout='responsive'
-                           className='object-cover w-full h-full'
+                           layout="responsive"
+                           className="object-cover w-full h-full"
                         />
                      </div>
 
                      <div>
-                        <p className='mb-6'>{review.text}</p>
-                        <div className='flex gap-2'>
+                        <p className="mb-6">{review.text}</p>
+                        <div className="flex gap-2">
                            <h4>{review.name}</h4>
                            <p>{review.title}</p>
                         </div>

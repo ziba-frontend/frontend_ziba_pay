@@ -64,12 +64,12 @@ const uesrSalesData: SalesProps[] = [
 
 export default function Dashboard() {
    return (
-      <div className='flex flex-col gap-5  w-full  pr-10'>
-         <div className='mb-6'>
+      <div className="flex flex-col gap-5  w-full  pr-10">
+         <div className="mb-6">
             <h3>Welcome back, Chris 🖐️</h3>
             <p>Here’s what’s happening with your store today.</p>
          </div>
-         <section className='grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-2 xl:grid-cols-4'>
+         <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-2 xl:grid-cols-4">
             {cardData.map((d, i) => (
                <Card
                   key={i}
@@ -80,9 +80,9 @@ export default function Dashboard() {
                />
             ))}
          </section>
-         <section className=''>
+         <section className="">
             <CardContent>
-               <p className='p-4 font-semibold'>Sales Details</p>
+               <p className="p-4 font-semibold">Sales Details</p>
 
                <BarChart />
             </CardContent>

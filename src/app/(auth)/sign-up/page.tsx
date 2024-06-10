@@ -41,43 +41,43 @@ const SignUp = () => {
       console.log(data);
    };
    return (
-      <div className='bg-main/40'>
+      <div className="bg-main/40">
          <Image
             src={signup}
-            alt='signup ziba'
-            className='fixed top-0 left-0 bottom-0 w-[350px] z-10'
+            alt="signup ziba"
+            className="fixed top-0 left-0 bottom-0 w-[350px] z-10"
          />
          <Image
             src={signup2}
-            alt='ziba'
-            className='fixed top-0 right-0'
+            alt="ziba"
+            className="fixed top-0 right-0"
          />
-         <div className='flex flex-col gap-6 items-center justify-center min-h-screen'>
+         <div className="flex flex-col gap-6 items-center justify-center min-h-screen">
             <Image
                src={logo}
-               alt='zibaPay'
-               className='z-30'
+               alt="zibaPay"
+               className="z-30"
             />
 
             <Form {...form}>
                <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className='space-y-8 w-full sm:w-5/6 md:w-[70%] lg:w-[60%]  z-20 container p-10 shadow bg-white'
+                  className="space-y-8 w-full sm:w-5/6 md:w-[70%] lg:w-[60%]  z-20 container p-10 shadow bg-white"
                >
-                  <h4 className='text-center my-6'>
+                  <h4 className="text-center my-6">
                      Create your Ziba pay Account
                   </h4>
-                  <div className=' grid grid-cols-1 md:grid-cols-2 gap-8'>
+                  <div className=" grid grid-cols-1 md:grid-cols-2 gap-8">
                      <FormField
                         control={form.control}
-                        name='email'
+                        name="email"
                         render={({ field }) => (
                            <FormItem>
                               <FormLabel>Name *</FormLabel>
                               <FormControl>
                                  <Input
-                                    className='bg-white p-6 outline-none border '
-                                    placeholder='Enter your name'
+                                    className="bg-white p-6 outline-none border "
+                                    placeholder="Enter your name"
                                     {...field}
                                  />
                               </FormControl>
@@ -88,14 +88,14 @@ const SignUp = () => {
 
                      <FormField
                         control={form.control}
-                        name='email'
+                        name="email"
                         render={({ field }) => (
                            <FormItem>
                               <FormLabel>Business Email *</FormLabel>
                               <FormControl>
                                  <Input
-                                    className='bg-white p-6  border '
-                                    placeholder='email@tech.com'
+                                    className="bg-white p-6  border "
+                                    placeholder="email@tech.com"
                                     {...field}
                                  />
                               </FormControl>
@@ -105,14 +105,14 @@ const SignUp = () => {
                      />
                      <FormField
                         control={form.control}
-                        name='password'
+                        name="password"
                         render={({ field }) => (
                            <FormItem>
                               <FormLabel>Password*</FormLabel>
                               <FormControl>
                                  <Input
-                                    className='bg-white p-6  border '
-                                    placeholder='Enter your password'
+                                    className="bg-white p-6  border "
+                                    placeholder="Enter your password"
                                     {...field}
                                  />
                               </FormControl>
@@ -122,14 +122,14 @@ const SignUp = () => {
                      />
                      <FormField
                         control={form.control}
-                        name='business-name'
+                        name="business-name"
                         render={({ field }) => (
                            <FormItem>
                               <FormLabel>Registered Business Name *</FormLabel>
                               <FormControl>
                                  <Input
-                                    className='bg-white p-6  border '
-                                    placeholder='Registered business name'
+                                    className="bg-white p-6  border "
+                                    placeholder="Registered business name"
                                     {...field}
                                  />
                               </FormControl>
@@ -139,14 +139,14 @@ const SignUp = () => {
                      />
                      <FormField
                         control={form.control}
-                        name='number'
+                        name="number"
                         render={({ field }) => (
                            <FormItem>
                               <FormLabel>Incorporation Number *</FormLabel>
                               <FormControl>
                                  <Input
-                                    className='bg-white p-6  border '
-                                    placeholder='Incorporation Number'
+                                    className="bg-white p-6  border "
+                                    placeholder="Incorporation Number"
                                     {...field}
                                  />
                               </FormControl>
@@ -156,14 +156,14 @@ const SignUp = () => {
                      />
                      <FormField
                         control={form.control}
-                        name='Business Type *'
+                        name="Business Type *"
                         render={({ field }) => (
                            <FormItem>
                               <FormLabel>Incorporation Number *</FormLabel>
                               <FormControl>
                                  <Input
-                                    className='bg-white p-6  border '
-                                    placeholder='Business Type*'
+                                    className="bg-white p-6  border "
+                                    placeholder="Business Type*"
                                     {...field}
                                  />
                               </FormControl>
@@ -174,26 +174,26 @@ const SignUp = () => {
 
                      <FormField
                         control={form.control}
-                        name='country'
+                        name="country"
                         render={({ field }) => (
                            <FormItem>
                               <FormLabel>Country*</FormLabel>
                               <FormControl>
                                  <Select>
-                                    <SelectTrigger className=''>
-                                       <SelectValue placeholder='Country' />
+                                    <SelectTrigger className="">
+                                       <SelectValue placeholder="Country" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                       <SelectItem value='Nigeria'>
+                                       <SelectItem value="Nigeria">
                                           Nigeria
                                        </SelectItem>
-                                       <SelectItem value='Ghana'>
+                                       <SelectItem value="Ghana">
                                           Ghana
                                        </SelectItem>
-                                       <SelectItem value='Rwanda'>
+                                       <SelectItem value="Rwanda">
                                           Rwanda
                                        </SelectItem>
-                                       <SelectItem value='Kenya'>
+                                       <SelectItem value="Kenya">
                                           Kenya
                                        </SelectItem>
                                     </SelectContent>
@@ -206,7 +206,7 @@ const SignUp = () => {
 
                      <FormField
                         control={form.control}
-                        name='how-hear'
+                        name="how-hear"
                         render={({ field }) => (
                            <FormItem>
                               <FormLabel>
@@ -214,20 +214,20 @@ const SignUp = () => {
                               </FormLabel>
                               <FormControl>
                                  <Select>
-                                    <SelectTrigger className=''>
-                                       <SelectValue placeholder='Select One or more options' />
+                                    <SelectTrigger className="">
+                                       <SelectValue placeholder="Select One or more options" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                       <SelectItem value='Nigeria'>
+                                       <SelectItem value="Nigeria">
                                           Nigeria
                                        </SelectItem>
-                                       <SelectItem value='Ghana'>
+                                       <SelectItem value="Ghana">
                                           Ghana
                                        </SelectItem>
-                                       <SelectItem value='Rwanda'>
+                                       <SelectItem value="Rwanda">
                                           Rwanda
                                        </SelectItem>
-                                       <SelectItem value='Kenya'>
+                                       <SelectItem value="Kenya">
                                           Kenya
                                        </SelectItem>
                                     </SelectContent>
@@ -238,22 +238,22 @@ const SignUp = () => {
                         )}
                      />
                   </div>
-                  <div className='flex gap-4'>
+                  <div className="flex gap-4">
                      {" "}
                      <Checkbox />
                      <p>
                         I hereby consent to the{" "}
                         <Link
-                           href='#'
-                           className='text-main underline'
+                           href="#"
+                           className="text-main underline"
                         >
                            Terms of Use
                         </Link>{" "}
                         and give consent to Ziba pay to process my data in line
                         with Ziba pay’s
                         <Link
-                           href='#'
-                           className='text-main underline ml-1'
+                           href="#"
+                           className="text-main underline ml-1"
                         >
                            Privacy Policy
                         </Link>
@@ -264,13 +264,13 @@ const SignUp = () => {
                   </div>
 
                   <Button
-                     type='submit'
-                     className='w-full my-6 p-7'
+                     type="submit"
+                     className="w-full my-6 p-7"
                   >
                      Create Account
                   </Button>
-                  <p className='text-center'>
-                     Already have account ? <Link href='/login'>Login</Link>
+                  <p className="text-center">
+                     Already have account ? <Link href="/login">Login</Link>
                   </p>
                </form>
             </Form>

@@ -4,38 +4,38 @@ import React from "react";
 
 const VAccounts = () => {
    return (
-      <div className='container '>
-         <div className='mt-6 mb-6'>
+      <div className="container ">
+         <div className="mt-6 mb-6">
             <p>
-               <span className='mr-2'> Ziba pay</span>
+               <span className="mr-2"> Ziba pay</span>
                {">"}
-               <span className='mx-2'>General</span>
+               <span className="mx-2">General</span>
                {">"}
-               <span className='ml-2'>FAQ</span>
+               <span className="ml-2">FAQ</span>
             </p>
          </div>
          <div>
-            <div className='my-4 mt-20 flex gap-20 flex-col md:flex-row'>
+            <div className="my-4 mt-20 flex gap-20 flex-col md:flex-row">
                <div>
                   <h4>Articles in this section</h4>
-                  <Link href='./ziba-pay-security'>
+                  <Link href="./ziba-pay-security">
                      <p>How secure is Ziba pay?</p>
                   </Link>
-                  <Link href='./virtual-accounts'>
+                  <Link href="./virtual-accounts">
                      <p>Virtual Accounts</p>
                   </Link>
-                  <Link href='./ziba-pay-apis'>
+                  <Link href="./ziba-pay-apis">
                      {" "}
                      <p>Ziba pay APIs</p>
                   </Link>
                </div>
-               <div className='w-full md:w-3/4'>
-                  <div className=' border-b pb-40'>
+               <div className="w-full md:w-3/4">
+                  <div className=" border-b pb-40">
                      <h2>Virtual Account?</h2>
-                     <span className='mx-2 text-blue-400'>1 months ago</span>
-                     <span className='mx-2 text-blue-400'>Updated</span>
-                     <div className='mt-10'>
-                        <ul className='flex flex-col gap-6'>
+                     <span className="mx-2 text-blue-400">1 months ago</span>
+                     <span className="mx-2 text-blue-400">Updated</span>
+                     <div className="mt-10">
+                        <ul className="flex flex-col gap-6">
                            <li>
                               <h4>What is a Virtual Account?</h4>
                               <p>
@@ -44,7 +44,7 @@ const VAccounts = () => {
                                  specific purposes such as receiving payments,
                                  making transactions, or managing funds online.
                                  Unlike traditional bank accounts, virtual
-                                 accounts often don't have physical counterparts
+                                 accounts often don&apos;t have physical counterparts
                                  like debit cards or checkbooks.
                               </p>
                            </li>
@@ -72,7 +72,7 @@ const VAccounts = () => {
                                  secure, with advanced security measures such as
                                  encryption, two-factor authentication, and
                                  real-time transaction monitoring to protect
-                                 users' funds from unauthorized access and
+                                 users&apos; funds from unauthorized access and
                                  fraudulent activity.
                               </p>
                            </li>
@@ -150,18 +150,18 @@ const VAccounts = () => {
                      </div>
                   </div>
 
-                  <div className='flex flex-col gap-4 items-center justify-center py-10 border-b'>
+                  <div className="flex flex-col gap-4 items-center justify-center py-10 border-b">
                      <p>Was this article helpful?</p>
                      <div>
                         <Button
-                           variant='outline'
-                           className='mx-2'
+                           variant="outline"
+                           className="mx-2"
                         >
                            Yes
                         </Button>
                         <Button
-                           variant='outline'
-                           className='mx-2'
+                           variant="outline"
+                           className="mx-2"
                         >
                            No
                         </Button>
@@ -169,15 +169,15 @@ const VAccounts = () => {
                      <p>0 out of 0 found it helpful</p>
                      <p>
                         Have more questions ?{" "}
-                        <Link href='request-form'>Submit a request</Link>
+                        <Link href="request-form">Submit a request</Link>
                      </p>
                   </div>
-                  <div className='flex flex-col gap-2'>
+                  <div className="flex flex-col gap-2">
                      <h3>Related article</h3>
-                     <Link href='/ziba-pay-apis'>Ziba pay APIs</Link>
-                     <Link href='/ziba-pay-apis'>Getting Started</Link>
-                     <Link href='/ziba-pay-apis'>Pricing </Link>
-                     <Link href='/ziba-pay-apis'>Disputes</Link>
+                     <Link href="/ziba-pay-apis">Ziba pay APIs</Link>
+                     <Link href="/ziba-pay-apis">Getting Started</Link>
+                     <Link href="/ziba-pay-apis">Pricing </Link>
+                     <Link href="/ziba-pay-apis">Disputes</Link>
                   </div>
                </div>
             </div>
