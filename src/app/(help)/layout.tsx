@@ -36,7 +36,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                </Link>
 
                <Button>
-                  <Link href="/request">Submit a Request</Link>
+                  <Link href="/help-center/request">Submit a Request</Link>
                </Button>
             </div>
          </div>

@@ -53,11 +53,14 @@ const SignUp = () => {
             className="fixed top-0 right-0"
          />
          <div className="flex flex-col gap-6 items-center justify-center min-h-screen">
-            <Image
-               src={logo}
-               alt="zibaPay"
-               className="z-30"
-            />
+            <Link href="/" className="mt-6">
+               {" "}
+               <Image
+                  src={logo}
+                  alt="zibaPay"
+                  className="z-30"
+               />
+            </Link>
 
             <Form {...form}>
                <form

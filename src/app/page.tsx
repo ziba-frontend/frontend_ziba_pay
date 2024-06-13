@@ -30,6 +30,8 @@ import {
 } from "@/components/ui/accordion";
 import CheckList from "@/components/CheckList";
 import Slider from "@/components/Slider";
+import momo1 from "../../public/images/momo1.png";
+import signup2 from "../../public/images/signup2.png";
 
 const Home = () => {
    return (
@@ -112,8 +114,9 @@ const Home = () => {
                      transactions and take control of your financial life.
                   </p>
                   <div className="flex items-center">
-                     <div className="flex flex-wrap w-5/6 gap-5 mx-auto items-end">
-                        <div className="flex flex-row gap-2 bg-submain p-8 h-fit rounded-lg text-white w-full md:w-[500px]">
+
+                     <div className="flex flex-wrap w-5/6 gap-5 mx-auto items-center md:items-start justify-center">
+                        <div className="flex flex-row gap-2 bg-submain p-8 h-fit rounded-lg text-white w-full   lg:w-[400px] xl:w-[500px]">
                            <div>
                               <h3 className="my-2">Real-time Alerts</h3>
                               <p>
@@ -127,11 +130,12 @@ const Home = () => {
                            <Image
                               src={fr1}
                               alt="fr1"
-                              width={200}
-                              className="ml-2"
+                              width={100}
+                              style={{ objectFit: "contain" }}
+                              className="ml-2 hidden sm:block"
                            />
                         </div>
-                        <div className="flex flex-row gap-2 bg-submain p-8 h-fit rounded-lg text-white w-full md:w-[500px]">
+                        <div className="flex flex-row gap-2 bg-submain p-8 h-fit rounded-lg text-white w-full lg:w-[400px] xl:w-[500px]">
                            <div>
                               <h3 className="my-2">Customizable Dashboard</h3>
                               <p>
@@ -143,19 +147,19 @@ const Home = () => {
                            </div>
                            <Image
                               src={fr2}
-                              alt="fr1"
-                              width={200}
-                              height={200}
-                              className="ml-2"
+                              alt="fr2"
+                              width={100}
+                              style={{ objectFit: "contain" }}
+                              className="ml-2 hidden sm:block"
                            />
                         </div>
-                        <div className="flex flex-col gap-2 bg-submain p-8 h-fit rounded-lg text-white w-full md:w-[300px]">
+                        <div className="flex flex-col gap-2 bg-submain p-8 h-fit rounded-lg text-white w-full  lg:w-[250px] xl:w-[300px]">
                            <Image
                               src={fr3}
-                              alt="fr1"
-                              width={90}
-                              height={90}
-                              className="ml-2"
+                              alt="fr3"
+                              width={100}
+                              style={{ objectFit: "contain" }}
+                              className="ml-2 hidden sm:block"
                            />
                            <div>
                               <h3 className="my-2">Ziba pay fraud detection</h3>
@@ -166,7 +170,7 @@ const Home = () => {
                               </p>
                            </div>
                         </div>
-                        <div className="flex flex-row gap-2 bg-submain p-6 h-fit rounded-xl text-white w-full md:w-[700px] items-center">
+                        <div className="flex flex-row gap-2 bg-submain p-6 h-fit rounded-xl text-white w-full lg:w-[520px] xl:w-[700px] items-center">
                            <div>
                               <h3 className="my-2">Friendly Interface</h3>
                               <p>
@@ -180,10 +184,10 @@ const Home = () => {
                            </div>
                            <Image
                               src={fr4}
-                              alt="fr1"
-                              width={200}
-                              height={200}
-                              className="ml-2 w-[80px] md:w-[200px]"
+                              alt="fr4"
+                              width={100}
+                              style={{ objectFit: "contain" }}
+                              className="ml-2 hidden sm:block "
                            />
                         </div>
                      </div>
@@ -305,7 +309,7 @@ const Home = () => {
 
             {/* ===MOBILE MONEY INTEGRATION==== */}
 
-            <div className="bg-main text-white flex flex-col gap-6 py-6">
+            <div className="bg-main text-white flex flex-col gap-6 py-6 relative">
                <div className="container">
                   <div>
                      <h2 className="my-4">Mobile Money Integration</h2>
@@ -329,6 +333,11 @@ const Home = () => {
                      src={phone}
                      alt="mobile integration"
                      className=" mx-auto"
+                  />
+                  <Image
+                     src={momo1}
+                     alt="mobile integration"
+                     className=" absolute top-[40%] right-0 "
                   />
                </div>
             </div>
