@@ -284,7 +284,7 @@ const Home = () => {
             </div>
 
             <div className="bg-br py-6">
-               <div className="flex gap-4 mx-auto items-center justify-center container">
+               <div className="flex flex-col md:flex-row gap-4 mx-auto items-center justify-center container">
                   <div className=" md:h-[600px] justify-center bg-white w-fit rounded-2xl p-2">
                      <h4 className="my-4">
                         Send and receive without borders with Mobile Money
