@@ -1,0 +1,5 @@
+{
+    "title":"Core Resources",
+    "pages":["payment","overview","accept-payment","subscription","payout","refund","split-payment","transaction-search","orders","invoicing"]
+  
+}
