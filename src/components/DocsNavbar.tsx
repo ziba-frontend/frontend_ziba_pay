@@ -10,8 +10,6 @@ import {
    Drawer,
    DrawerClose,
    DrawerContent,
-   DrawerDescription,
-   DrawerFooter,
    DrawerHeader,
    DrawerTitle,
    DrawerTrigger,
@@ -92,6 +90,11 @@ const DocsNavbar = () => {
       };
    }, [isDrawerOpen]);
 
+   // Function to toggle mobile menu
+   const toggleMenu = () => {
+      setIsMenuOpen(!isMenuOpen);
+   };
+
    return (
       <div className="bg-white">
          <div className="container mx-auto p-4 flex items-center justify-between h-[100px]">
@@ -121,13 +124,14 @@ const DocsNavbar = () => {
             </div>
             <div className="md:hidden">
                <button
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  onClick={toggleMenu}
                   className="text-main"
                >
                   <FaBars size={24} />
                </button>
             </div>
          </div>
+         {/* Mobile menu */}
          {isMenuOpen && (
             <div className="md:hidden bg-white shadow-lg p-4 absolute top-[100px] left-0 right-0">
                <form
@@ -166,6 +170,7 @@ const DocsNavbar = () => {
                </div>
             </div>
          )}
+         {/* Drawer for search results */}
          <Drawer open={isDrawerOpen}>
             <FocusLock>
                <DrawerTrigger></DrawerTrigger>

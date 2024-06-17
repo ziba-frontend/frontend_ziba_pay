@@ -65,45 +65,28 @@ const uesrSalesData: SalesProps[] = [
 export default function Dashboard() {
    return (
       <div className="flex flex-col gap-5  w-full  pr-10">
-         <div className="mb-6">
-            <h3>Welcome back, Chris 🖐️</h3>
-            <p>Here’s what’s happening with your store today.</p>
-         </div>
-         <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-2 xl:grid-cols-4">
-            {cardData.map((d, i) => (
-               <Card
-                  key={i}
-                  amount={d.amount}
-                  discription={d.discription}
-                  icon={d.icon}
-                  label={d.label}
-               />
-            ))}
-         </section>
-         <section className="">
+         <h2>Dashboard</h2>
+         <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <CardContent>
-               <p className="p-4 font-semibold">Sales Details</p>
+               <p className="p-4 font-semibold">Transaction Rate</p>
 
                <BarChart />
             </CardContent>
-            {/* <CardContent className='flex justify-between gap-4'>
-               <section>
-                  <p>Recent Sales</p>
-                  <p className='text-sm text-gray-400'>
-                     You made 265 sales this month.
-                  </p>
-               </section>
-               {uesrSalesData.map((d, i) => (
-                  <SalesCard
-                     key={i}
-                     email={d.email}
-                     name={d.name}
-                     saleAmount={d.saleAmount}
-                  />
-               ))}
-            </CardContent> */}
+            <CardContent>
+               <p className="p-4 font-semibold">Total fees</p>
 
-            {/*  */}
+               <BarChart />
+            </CardContent>
+            <CardContent>
+               <p className="p-4 font-semibold">Cash-in Account</p>
+
+               <BarChart />
+            </CardContent>
+            <CardContent>
+               <p className="p-4 font-semibold">Cash-out Account</p>
+
+               <BarChart />
+            </CardContent>
          </section>
       </div>
    );

@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 import { FaBars, FaBell, FaSearch } from "react-icons/fa";
 import logo from "../../public/svg/logo.svg";
-import { Bell } from "lucide-react";
+import { Bell, LogOut } from "lucide-react";
 import Link from "next/link";
 
 const DashboardNav = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
@@ -23,18 +23,17 @@ const DashboardNav = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
                   onClick={toggleSidebar}
                   className="cursor-pointer"
                />
-               <form className="flex gap-4 bg-br items-center p-2 rounded-full w-[200px] md:w-[300px]">
-                  <FaSearch color="gray" />
-                  <input className="outline-none w-5/6 bg-transparent" />
-               </form>
+               <h1 className="ml-6 hidden sm:text-sm md:text-xl">
+                  Welcome Back Chris 🖐️
+               </h1>
             </div>
          </div>
-         <div className="flex gap-4 items-center">
-            <Bell />
-            <div className="w-10 h-10 rounded-full flex items-center justify-center border">
-               I
+         <Link href="/login">
+            <div className="flex gap-2 items-center">
+               <LogOut />
+               Logout
             </div>
-         </div>
+         </Link>
       </div>
    );
 };

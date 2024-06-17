@@ -32,11 +32,12 @@ export function Nav({ links, isCollapsed }: NavProps) {
       <TooltipProvider>
          <div
             data-collapsed={isCollapsed}
-            className='group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2'
+            className="group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2"
          >
-            <nav className='grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2'>
-               {links.map((link, index) =>
-                  isCollapsed ? (
+            <nav className="grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
+               {links.map((link, index) => {
+                  const isActive = link.href === pathName;
+                  return isCollapsed ? (
                      <Tooltip
                         key={index}
                         delayDuration={0}
@@ -46,28 +47,25 @@ export function Nav({ links, isCollapsed }: NavProps) {
                               href={link.href}
                               className={cn(
                                  buttonVariants({
-                                    variant:
-                                       link.href === pathName
-                                          ? "default"
-                                          : "ghost",
+                                    variant: isActive ? "default" : "ghost",
                                     size: "icon",
                                  }),
                                  "h-9 w-9 hover:bg-main",
-                                 link.variant === "default" &&
-                                    "dark:bg-muted dark:text-muted-foreground dark:hover:bg-main "
+                                 isActive &&
+                                    "bg-muted text-muted-foreground hover:bg-main"
                               )}
                            >
-                              <link.icon className='h-4 w-4' />
-                              <span className='sr-only'>{link.title}</span>
+                              <link.icon className="h-4 w-4" />
+                              <span className="sr-only">{link.title}</span>
                            </Link>
                         </TooltipTrigger>
                         <TooltipContent
-                           side='right'
-                           className='flex items-center gap-4'
+                           side="right"
+                           className="flex items-center gap-4"
                         >
                            {link.title}
                            {link.label && (
-                              <span className='ml-auto text-muted-foreground'>
+                              <span className="ml-auto text-muted-foreground">
                                  {link.label}
                               </span>
                            )}
@@ -79,31 +77,28 @@ export function Nav({ links, isCollapsed }: NavProps) {
                         href={link.href}
                         className={cn(
                            buttonVariants({
-                              variant:
-                                 link.href === pathName ? "default" : "ghost",
+                              variant: isActive ? "default" : "ghost",
                               size: "sm",
                            }),
-                           link.variant === "default" &&
-                              "dark:bg-muted dark:text-white dark:hover:bg-main dark:hover:text-white",
+                           isActive && "bg-muted text-foreground hover:bg-main",
                            "justify-start"
                         )}
                      >
-                        <link.icon className='mr-2 h-4 w-4' />
+                        <link.icon className="mr-2 h-4 w-4" />
                         {link.title}
                         {link.label && (
                            <span
                               className={cn(
                                  "ml-auto",
-                                 link.variant === "default" &&
-                                    "text-background dark:text-white"
+                                 isActive && "text-background"
                               )}
                            >
                               {link.label}
                            </span>
                         )}
                      </Link>
-                  )
-               )}
+                  );
+               })}
             </nav>
          </div>
       </TooltipProvider>

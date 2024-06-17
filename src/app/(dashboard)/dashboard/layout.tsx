@@ -21,7 +21,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
    }
 
    return (
-      <div className='flex'>
+      <div className='flex bg-white min-h-screen'>
          <DashboardNav toggleSidebar={toggleSidebar} />
          <SideNavbar isCollapsed={isCollapsed} />
          <div
