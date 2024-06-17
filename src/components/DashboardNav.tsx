@@ -23,7 +23,7 @@ const DashboardNav = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
                   onClick={toggleSidebar}
                   className="cursor-pointer"
                />
-               <h1 className="ml-6 hidden sm:text-sm md:text-xl">
+               <h1 className="ml-6 hidden md:block  ">
                   Welcome Back Chris 🖐️
                </h1>
             </div>

@@ -1,11 +1,13 @@
 /** @format */
-
+"use client";
 import PageTitle from "@/components/PageTitle";
 import Image from "next/image";
 import { DollarSign, Users, CreditCard, Activity } from "lucide-react";
 import Card, { CardContent, CardProps } from "@/components/Card";
 import BarChart from "@/components/BarChart";
-import SalesCard, { SalesProps } from "@/components/SalesCard";
+import PieChart from "@/components/PieChart";
+import LineChartComponent from "@/components/LineChart";
+import AreaChartComponent from "@/components/AreaChartComponent";
 
 const cardData: CardProps[] = [
    {
@@ -34,34 +36,6 @@ const cardData: CardProps[] = [
    },
 ];
 
-const uesrSalesData: SalesProps[] = [
-   {
-      name: "Olivia Martin",
-      email: "olivia.martin@email.com",
-      saleAmount: "+$1,999.00",
-   },
-   {
-      name: "Jackson Lee",
-      email: "isabella.nguyen@email.com",
-      saleAmount: "+$1,999.00",
-   },
-   {
-      name: "Isabella Nguyen",
-      email: "isabella.nguyen@email.com",
-      saleAmount: "+$39.00",
-   },
-   {
-      name: "William Kim",
-      email: "will@email.com",
-      saleAmount: "+$299.00",
-   },
-   {
-      name: "Sofia Davis",
-      email: "sofia.davis@email.com",
-      saleAmount: "+$39.00",
-   },
-];
-
 export default function Dashboard() {
    return (
       <div className="flex flex-col gap-5  w-full  pr-10">
@@ -75,17 +49,17 @@ export default function Dashboard() {
             <CardContent>
                <p className="p-4 font-semibold">Total fees</p>
 
-               <BarChart />
+               <PieChart />
             </CardContent>
             <CardContent>
                <p className="p-4 font-semibold">Cash-in Account</p>
 
-               <BarChart />
+               <LineChartComponent />
             </CardContent>
             <CardContent>
                <p className="p-4 font-semibold">Cash-out Account</p>
 
-               <BarChart />
+               <AreaChartComponent />
             </CardContent>
          </section>
       </div>

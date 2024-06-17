@@ -37,7 +37,7 @@ const DocsNavbar = () => {
             const results: SearchResult[] = await response.json();
             setSearchResults(
                results.filter((result) => result.type === "page")
-            ); // Filter out non-page results
+            ); 
          } else {
             console.error(
                "Error fetching search results:",
@@ -52,10 +52,10 @@ const DocsNavbar = () => {
    useEffect(() => {
       if (searchQuery) {
          fetchSearchResults(searchQuery);
-         setIsDrawerOpen(true); // Open drawer when search query is not empty
+         setIsDrawerOpen(true); 
       } else {
          setSearchResults([]);
-         setIsDrawerOpen(false); // Close drawer when search query is empty
+         setIsDrawerOpen(false); 
       }
    }, [searchQuery]);
 
@@ -65,7 +65,7 @@ const DocsNavbar = () => {
          router.push(searchResults[0].url);
          setSearchResults([]);
          setSearchQuery("");
-         setIsDrawerOpen(false); // Close drawer after navigating
+         setIsDrawerOpen(false); 
       }
    };
 
