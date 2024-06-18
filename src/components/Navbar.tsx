@@ -92,47 +92,19 @@ const Navbar: React.FC = () => {
    };
 
    return (
-      <div className="container mx-auto p-4 flex items-center justify-between h-[100px]">
-         <div className="flex items-center">
-            <Link
-               href="/"
-               className=""
-            >
-               <Image
-                  src={logo}
-                  alt="ZibaPay"
-               />
-            </Link>
-            <div className="hidden md:flex w-1/2 gap-12 ml-8">
-               {Object.entries(menuItems).map(([title, items]) => (
-                  <Dropdown
-                     key={title}
-                     title={title}
-                     items={items}
+      <div className="fixed z-[80] top-0 left-0 w-full bg-background ">
+         <div className="container mx-auto p-4 flex items-center justify-between h-[100px]">
+            <div className="flex items-center">
+               <Link
+                  href="/"
+                  className=""
+               >
+                  <Image
+                     src={logo}
+                     alt="ZibaPay"
                   />
-               ))}
-               <Link href="/api-docs">Developer</Link>
-            </div>
-         </div>
-         <div className="hidden md:flex gap-3">
-            <Link href="/login">
-               <Button variant="outline">Login</Button>
-            </Link>
-            <Link href="/sign-up">
-               <Button>Create Account</Button>
-            </Link>
-         </div>
-         <div className="md:hidden flex items-center">
-            <button
-               onClick={toggleMenu}
-               className="text-2xl"
-            >
-               {isOpen ? <AiOutlineClose /> : <FiMenu />}
-            </button>
-         </div>
-         {isOpen && (
-            <div className="absolute top-[100px] left-0 w-full  bg-white md:hidden ">
-               <div className="flex flex-col items-center p-4  gap-5 text-2xl ">
+               </Link>
+               <div className="hidden md:flex w-1/2 gap-12 ml-8">
                   {Object.entries(menuItems).map(([title, items]) => (
                      <Dropdown
                         key={title}
@@ -140,28 +112,58 @@ const Navbar: React.FC = () => {
                         items={items}
                      />
                   ))}
-                  <Link
-                     href="/api-docs"
-                     className="block py-2"
-                  >
-                     Developer
-                  </Link>
-                  <div className="flex flex-col gap-3 mt-4 ">
-                     <Link href="/login">
-                        <Button
-                           variant="outline"
-                           className="w-full"
-                        >
-                           Login
-                        </Button>
-                     </Link>
-                     <Link href="/sign-up">
-                        <Button className="w-full">Create Account</Button>
-                     </Link>
-                  </div>
+                  <Link href="/api-docs">Developer</Link>
                </div>
             </div>
-         )}
+            <div className="hidden md:flex gap-3">
+               <Link href="/login">
+                  <Button variant="outline">Login</Button>
+               </Link>
+               <Link href="/sign-up">
+                  <Button>Create Account</Button>
+               </Link>
+            </div>
+            <div className="md:hidden flex items-center">
+               <button
+                  onClick={toggleMenu}
+                  className="text-2xl"
+               >
+                  {isOpen ? <AiOutlineClose /> : <FiMenu />}
+               </button>
+            </div>
+            {isOpen && (
+               <div className="absolute top-[100px] left-0 w-full  bg-white md:hidden ">
+                  <div className="flex flex-col items-center p-4  gap-5 text-2xl ">
+                     {Object.entries(menuItems).map(([title, items]) => (
+                        <Dropdown
+                           key={title}
+                           title={title}
+                           items={items}
+                        />
+                     ))}
+                     <Link
+                        href="/api-docs"
+                        className="block py-2"
+                     >
+                        Developer
+                     </Link>
+                     <div className="flex flex-col gap-3 mt-4 ">
+                        <Link href="/login">
+                           <Button
+                              variant="outline"
+                              className="w-full"
+                           >
+                              Login
+                           </Button>
+                        </Link>
+                        <Link href="/sign-up">
+                           <Button className="w-full">Create Account</Button>
+                        </Link>
+                     </div>
+                  </div>
+               </div>
+            )}
+         </div>
       </div>
    );
 };

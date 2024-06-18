@@ -74,12 +74,12 @@ const Footer = () => {
    ];
    return (
       <div
-         className="bg-center  bg-cover mt-40"
+         className="bg-center  bg-cover mt-40 "
          style={{
             backgroundImage: "url('/images/footerImg.png')",
          }}
       >
-         <div className="bg-white/50 py-6">
+         <div className="bg-white/50  py-6">
             <div className="flex flex-col gap-4 p-6 w-5/6 bg-white/80 mx-auto rounded-md my-2 ">
                <h3 className="py-2 prose">Ready to get started ?</h3>
                <p>
