@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logo from "../../../public/svg/logo.svg";
+import logo from "../../public/svg/logo.svg";
 import React from "react";
 
 const CheckoutNavbar = () => {
@@ -9,12 +9,13 @@ const CheckoutNavbar = () => {
             <Image
                src={logo}
                alt="zibaPay"
-               width={210}
             />
          </div>
          <div>
-            <h1 className="text-[#9E9E9E]">Chrisdon@gmail.com
-            Pay <span className="text-main">RWF 350</span></h1>
+            <p className="text-[#9E9E9E]">
+               Chrisdon@gmail.com <br /> Pay{" "}
+               <span className="text-main">RWF 350</span>
+            </p>
          </div>
       </div>
    );

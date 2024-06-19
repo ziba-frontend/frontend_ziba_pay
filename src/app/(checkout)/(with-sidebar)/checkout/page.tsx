@@ -17,6 +17,13 @@ import {
    FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+   Select,
+   SelectContent,
+   SelectItem,
+   SelectTrigger,
+   SelectValue,
+} from "@/components/ui/select";
 
 // Define the schema
 const formSchema = z.object({
@@ -48,9 +55,10 @@ const Page = () => {
                height={100}
             />
          </div>
-         <h1 className="text-center text-[#535353]">
-            Enter your mobile money number <br /> and provider to start the payment
-         </h1>
+         <h4 className="text-center text-[#535353]">
+            Enter your mobile money number <br /> and provider to start the
+            payment
+         </h4>
 
          <div className="flex justify-center items-center">
             <Form {...form}>
@@ -63,7 +71,6 @@ const Page = () => {
                      name="issue"
                      render={({ field }) => (
                         <FormItem>
-                           <FormLabel>Write your issue below</FormLabel>
                            <FormControl>
                               <Input
                                  className="bg-white p-6 outline-none border"
@@ -80,19 +87,29 @@ const Page = () => {
                      name="email"
                      render={({ field }) => (
                         <FormItem>
-                           <FormLabel>Your email</FormLabel>
                            <FormControl>
-                              <Input
-                                 className="bg-white p-6 outline-none border "
-                                 placeholder="email"
-                                 {...field}
-                              />
+                              <Select>
+                                 <SelectTrigger className="">
+                                    <SelectValue placeholder="Select Momo" />
+                                 </SelectTrigger>
+                                 <SelectContent className="bg-white">
+                                    <SelectItem value="Airtel">
+                                       Airtel
+                                    </SelectItem>
+                                    <SelectItem value="MTN">MTN</SelectItem>
+                                 </SelectContent>
+                              </Select>
                            </FormControl>
                            <FormMessage />
                         </FormItem>
                      )}
                   />
-                  <Button type="submit" className="w-full">Submit</Button>
+                  <Button
+                     type="submit"
+                     className="w-full"
+                  >
+                     Confirm
+                  </Button>
                </form>
             </Form>
          </div>
