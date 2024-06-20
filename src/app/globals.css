@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "swiper/css";
 
 @layer base {
    :root {
@@ -71,6 +70,7 @@
 
    .swiper-pagination-bullet {
       background-color: #e0e0e0 !important;
+      margin-top: 4rem !important;
    }
    .swiper-pagination-bullet-active {
       background-color: #030a11 !important;

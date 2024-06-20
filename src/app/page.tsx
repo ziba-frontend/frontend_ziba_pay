@@ -114,7 +114,6 @@ const Home = () => {
                      transactions and take control of your financial life.
                   </p>
                   <div className="flex items-center">
-
                      <div className="flex flex-wrap w-5/6 gap-5 mx-auto items-center md:items-start justify-center">
                         <div className="flex flex-row gap-2 bg-submain p-8 h-fit rounded-lg text-white w-full   lg:w-[400px] xl:w-[500px]">
                            <div>
@@ -332,12 +331,13 @@ const Home = () => {
                   <Image
                      src={phone}
                      alt="mobile integration"
-                     className=" mx-auto"
+                     className=" mx-auto z-30"
+
                   />
                   <Image
                      src={momo1}
                      alt="mobile integration"
-                     className=" absolute top-[40%] right-0 "
+                     className=" absolute hidden md:block top-[40%] right-0 z-10"
                   />
                </div>
             </div>

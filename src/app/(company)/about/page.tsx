@@ -6,6 +6,7 @@ import about2 from "../../../../public/images/about2.png";
 import about3 from "../../../../public/images/about3.png";
 import about4 from "../../../../public/images/about4.png";
 import about5 from "../../../../public/images/about5.png";
+import CheckList from "@/components/CheckList";
 
 const AboutUs = () => {
    return (
@@ -95,7 +96,10 @@ const AboutUs = () => {
                      alt="mission"
                   />
                </div>
-               <div className="flex flex-col gap-6 p-4 bg-white rounded-2xl md:w-[300px] md:h-[400px] lg:w-[400px] lg:h-[600px] w-5/6 h-[400px]">
+               <div
+                  className="flex flex-col gap-6 p-4 bg-white rounded-2xl md:w-[300px] md:h-[400px] lg:w-[400px] lg:h-[600px] w-5/6 h-[400px] text-white"
+                  style={{ backgroundImage: "url(/images/about6.png)",backgroundSize:"cover", backgroundPosition:"center" }}
+               >
                   <h2>Our Vision</h2>
                   <p>
                      To be Africa&apos;s top provider of customizable payment
@@ -119,12 +123,16 @@ const AboutUs = () => {
                      independence, focusing on customer needs and teamwork to
                      help them succeed.
                   </p>
-                  <ul>
-                     <li>Innovation</li>
-                     <li>Security</li>
-                     <li>Customer Service</li>
-                     <li>Affordability</li>
-                  </ul>
+                  <div>
+                     <CheckList
+                        items={[
+                           "Innovation",
+                           "Security",
+                           "Customer Service",
+                           "Affordability",
+                        ]}
+                     />
+                  </div>
                </div>
             </div>
          </div>

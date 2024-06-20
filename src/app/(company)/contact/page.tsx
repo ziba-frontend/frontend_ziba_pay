@@ -15,6 +15,8 @@ import {
    CarouselNext,
    CarouselPrevious,
 } from "@/components/ui/carousel";
+import Slider from "@/components/Slider";
+import ContactSlider from "@/components/ContactSlider";
 
 const Contact = () => {
    return (
@@ -27,18 +29,18 @@ const Contact = () => {
                   alt="contact ziba pay"
                />
             </div>
-            <div className="flex items-center justify-center flex-wrap gap-4">
-               <div className="flex flex-col gap-2 w-[250px] border border-black/50 p-4">
+            <div className="flex items-center  justify-center flex-wrap gap-4">
+               <div className="flex flex-col gap-2 w-[250px] border border-black/50 p-6 min-h-[200px] hover:bg-main hover:text-white transition-all hover:border-none">
                   <FaMailBulk className="text-main" />
                   <h3>Email</h3>
                   <p>Contact Ziba pay today using Zibapaysupport.com</p>
                </div>
-               <div className="flex flex-col gap-2 w-[250px] border border-black/50 p-4">
+               <div className="flex flex-col gap-2 w-[250px] border border-black/50 p-6 min-h-[200px] hover:bg-main hover:text-white transition-all hover:border-none">
                   <FaPhone className="text-main" />
                   <h3>Call Us</h3>
                   <p>You can call us here +234810005456</p>
                </div>
-               <div className="flex flex-col gap-2 w-[250px] border border-black/50 p-4">
+               <div className="flex flex-col gap-2 w-[250px] border border-black/50 p-6 min-h-[200px] hover:bg-main hover:text-white transition-all hover:border-none">
                   <FaHeadset className="text-main" />
                   <h3>Contact Sales</h3>
                   <p>
@@ -47,66 +49,7 @@ const Contact = () => {
                </div>
             </div>
          </div>
-
-         <Carousel>
-            <CarouselContent>
-               <CarouselItem>
-                  <div className="flex flex-col gap-4 w-5/6 md:w-[500px]">
-                     <p className="flex gap-2">
-                        <span>
-                           <FaQuoteLeft className="text-black/50" />
-                        </span>
-                        Ziba Pay&apos;s support team was incredibly helpful in
-                        guiding us through the setup process. Thanks to their
-                        assistance, our business is now smoothly processing
-                        payments online.
-                     </p>
-                     <p className="text-center">
-                        Fatima Kamara, Owner of Kaya Boutique,
-                        <br /> Nigeria
-                     </p>
-                  </div>
-               </CarouselItem>
-               <CarouselItem>
-                  {" "}
-                  <div className="flex flex-col gap-4 w-5/6 md:w-[500px]">
-                     <p className="flex gap-2">
-                        <span>
-                           <FaQuoteLeft className="text-black/50" />
-                        </span>
-                        Ziba Pay&apos;s support team was incredibly helpful in
-                        guiding us through the setup process. Thanks to their
-                        assistance, our business is now smoothly processing
-                        payments online.
-                     </p>
-                     <p className="text-center">
-                        Fatima Kamara, Owner of Kaya Boutique,
-                        <br /> Nigeria
-                     </p>
-                  </div>
-               </CarouselItem>
-               <CarouselItem>
-                  .{" "}
-                  <div className="flex flex-col gap-4 w-5/6 md:w-[500px]">
-                     <p className="flex gap-2">
-                        <span>
-                           <FaQuoteLeft className="text-black/50" />
-                        </span>
-                        Ziba Pay&apos;s support team was incredibly helpful in
-                        guiding us through the setup process. Thanks to their
-                        assistance, our business is now smoothly processing
-                        payments online.
-                     </p>
-                     <p className="text-center">
-                        Fatima Kamara, Owner of Kaya Boutique,
-                        <br /> Nigeria
-                     </p>
-                  </div>
-               </CarouselItem>
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-         </Carousel>
+         <ContactSlider />
       </div>
    );
 };

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import partn2 from "../../../../public/images/partnership2.png";
 import rect from "../../../../public/images/rect1.png";
 import partn3 from "../../../../public/images/partnership3.png";
+import CheckList from "@/components/CheckList";
 
 const Partnership = () => {
    return (
@@ -138,13 +139,18 @@ const Partnership = () => {
                      <h4 className="my-2">
                         Boost Your Earnings as a Strategic <br /> Partner
                      </h4>
-                     <ul className="mb-3">
-                        <li className="my-1">Earn Commissions</li>
-                        <li className="my-1">Additional Revenue Streams</li>
-                        <li className="my-1">Expand Your Reach</li>
-                        <li className="my-1">Trusted Partnership</li>
-                        <li className="my-1">Marketing Support</li>
-                     </ul>
+                     <div className="my-4">
+                        <CheckList
+                           items={[
+                              "Earn Commissions",
+                              "Additional Revenue Streams",
+                              "Expand Your Reach",
+                              "Trusted Partnership",
+                              "Marketing Support",
+                           ]}
+                        />
+                     </div>
+
                      <Button className="mt-4">
                         Become an incentive partner
                      </Button>
