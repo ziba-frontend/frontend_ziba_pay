@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { signupApi }  from "@/lib/api-calls/action"
 import Link from "next/link";
 import {
    Select,
@@ -27,6 +28,16 @@ import {
    SelectValue,
 } from "@/components/ui/select";
 
+interface User {
+   name: string | null;
+   email: string | null;
+   businessName: string | null;
+   phoneNumber: string | null;
+   businessType: string | null;
+   country: string | null;
+   password: string | null;
+
+}
 const formSchema = z.object({
    email: z.string().email({ message: "Invalid email address." }),
    password: z.string().min(1, { message: "Password is required." }),
@@ -36,8 +47,8 @@ const SignUp = () => {
       resolver: zodResolver(formSchema),
    });
 
-   // Define the onSubmit handler
-   const onSubmit = (data: any) => {
+   const onSubmit = async(data: any) => {
+      await signupApi(data)
       console.log(data);
    };
    return (

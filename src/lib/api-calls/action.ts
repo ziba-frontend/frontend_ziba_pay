@@ -11,9 +11,10 @@ interface User {
 
 }
 
-const BASE_URL = 'https://payment-service-dw96.onrender.com/api/v1/auth'
+// const BASE_URL = 'https://payment-service-dw96.onrender.com/api/v1/auth'
+const BASE_URL= "http://localhost:8085/api/v1/auth"
 
-export const signup = async (userData: User) => {
+export const signupApi = async (userData: User) => {
     try {
         const response = await axios.post(`${BASE_URL}/signup`, userData);
         return response.data;
@@ -23,7 +24,7 @@ export const signup = async (userData: User) => {
     }
 }
 
-export const loginA = async (credentials: { email: string; password: string; }) => {
+export const loginApi = async (credentials: { email: string; password: string; }) => {
     try {
         const response = await axios.post(`${BASE_URL}/login`, credentials);
         return response.data;
