@@ -3,11 +3,82 @@ title: DOCS
 description: Your first document
 ---
 
-Welcome to the docs! You can start writing documents in `/content/docs`.
 
-## What is Next?
+# API-DOC Documentation
 
-<Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.vercel.app" />
-</Cards>
+Join the ranks of satisfied developers who have harnessed the power of our  API to enhance their applications and drive business growth. Explore our documentation and start revolutionizing payment experiences today.
+
+You can use the API-DOC in test mode, which doesn’t affect your live data or interact with the banking networks. The API key you use to authenticate the request determines whether the request is live mode or test mode.
+
+
+<DocCards>
+<DocCard bgColor='#00E616' title='Getting started ' content='Embark on your payment processing journey with ease by following these simple steps to get started with our Payment API. '>
+ <p className="text-[#1E1147]"><a href="http://localhost:3000/api-docs/start/quick">Developer Quick Start Guide</a></p>
+</DocCard>
+<DocCard bgColor='#00E616' title='Not a developer? ' content='Explore our no-code option to get started with API-DOC and do more with our API-DOC account '>
+ <p className="text-[#1E1147]"><a href="http://localhost:3000/api-docs/start/quick">No Code Option</a></p>
+</DocCard>
+</DocCards>
+
+
+
+## Choose your client
+
+Select the client that best suits your development needs from our comprehensive range of options. API-DOC offers clients for JavaScript, Python, and PHP. In the following example, you can see how to install each client.
+
+Here's how to get your client ID and client secret:
+
+1. Select Log in to Dashboard and log in or sign up.
+2. Select Apps & Credentials.
+3. New accounts come with a Default Application in the REST API apps section. To create a new project, select Create App.
+4. Copy the client ID and client secret for your app.
+
+```js
+
+curl -G https://api.protocol.chat/v1/conversations \
+  -H "Authorization: Bearer {token}" \
+  -d limit=10
+
+```
+
+## Client Libraries
+
+import rubby from '../../public/images/rubby.png';
+import php from '../../public/images/php.png';
+import js from '../../public/images/js.png';
+import python from '../../public/images/python.png';
+import go from '../../public/images/go.png';
+
+<div className='grid  md:grid-cols-2 xl:grid-cols-3 gap-2'>
+<div className="bg-white shadow  p-2 flex items-start gap-2 h-[250px]">
+
+<Image src={rubby} alt="pay" width={30} height={30}/>
+<DocCard title='Rubby' content='A dynamic, open source programming language with a focus on simplicity and productivity'>
+</DocCard>
+</div>
+
+<div className="bg-white shadow  p-2 flex items-start gap-2 h-[250px]">
+
+<Image src={php} alt="pay" width={30} height={30}/>
+<DocCard title='Php' content='A dynamic, open source programming language with a focus on simplicity and productivity'>
+</DocCard>
+</div>
+<div className="bg-white shadow  p-2 flex items-start gap-2 h-[250px]">
+
+<Image src={js} alt="pay" width={30} height={30}/>
+<DocCard title='Nodejs' content='A dynamic, open source programming language with a focus on simplicity and productivity'>
+</DocCard>
+</div>
+<div className="bg-white shadow  p-2 flex items-start gap-2 h-[250px]">
+
+<Image src={python} alt="pay" width={30} height={30}/>
+<DocCard title='Python' content='A dynamic, open source programming language with a focus on simplicity and productivity'>
+</DocCard>
+</div>
+<div className="bg-white shadow  p-2 flex items-start gap-2 h-[250px]">
+
+<Image src={go} alt="pay" width={30} height={30}/>
+<DocCard title='GO' content='A dynamic, open source programming language with a focus on simplicity and productivity'>
+</DocCard>
+</div>
+</div>

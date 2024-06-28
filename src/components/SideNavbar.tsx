@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import {
    ShoppingCart,
@@ -15,25 +14,27 @@ import {
    ArrowUpLeftSquare,
    Phone,
 } from "lucide-react";
+import { FaBars } from "react-icons/fa";
 import { useWindowWidth } from "@react-hook/window-size";
 import { Nav } from "./ui/nav";
 
 type Props = {
    isCollapsed: boolean;
+   toggleSidebar: () => void;
 };
 
-export default function SideNavbar({ isCollapsed }: Props) {
+export default function SideNavbar({ isCollapsed, toggleSidebar }: Props) {
    const onlyWidth = useWindowWidth();
    const mobileWidth = onlyWidth < 768;
 
    return (
       <div
-         className={`fixed top-[100px] left-0 bg-white bottom-0 ${
-            isCollapsed ? "w-[60px]" : "w-[200px]"
+         className={`fixed top-[100px] left-0 bg-white bottom-0 z-20 ${
+            isCollapsed || mobileWidth ? "w-[60px]" : "w-[200px] md:w-[250px]"
          } border-r p-4 transition-width duration-300`}
       >
          <div className="py-2">
-            {!isCollapsed && <p className="ml-4 my-2">Metrics</p>}
+            {!(isCollapsed || mobileWidth) && <p className="ml-4 my-2">Metrics</p>}
             <Nav
                isCollapsed={mobileWidth ? true : isCollapsed}
                links={[
@@ -71,7 +72,7 @@ export default function SideNavbar({ isCollapsed }: Props) {
             />
          </div>
          <div className="py-2 border-t">
-            {!isCollapsed && <p className="ml-4 my-2">Products</p>}
+            {!(isCollapsed || mobileWidth) && <p className="ml-4 my-2">Products</p>}
             <Nav
                isCollapsed={mobileWidth ? true : isCollapsed}
                links={[
@@ -92,7 +93,7 @@ export default function SideNavbar({ isCollapsed }: Props) {
          </div>
 
          <div className="py-2 border-t">
-            {!isCollapsed && <p className="ml-4 my-2">Admin</p>}
+            {!(isCollapsed || mobileWidth) && <p className="ml-4 my-2">Admin</p>}
             <Nav
                isCollapsed={mobileWidth ? true : isCollapsed}
                links={[
@@ -115,6 +116,14 @@ export default function SideNavbar({ isCollapsed }: Props) {
                      variant: "ghost",
                   },
                ]}
+            />
+         </div>
+
+         {/* Toggle Button */}
+         <div className="mt-auto pt-4 border-t">
+            <FaBars
+               onClick={toggleSidebar}
+               className="cursor-pointer"
             />
          </div>
       </div>

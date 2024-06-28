@@ -13,12 +13,14 @@ export default function RootDocsLayout({ children }: { children: ReactNode }) {
          }}
       >
          <DocsNavbar />
-         <DocsLayout
-            tree={pageTree}
-            nav={{ enabled: false }}
-         >
-            {children}
-         </DocsLayout>
+         <div className="pt-[90px]">
+            <DocsLayout
+               tree={pageTree}
+               nav={{ enabled: false }}
+            >
+               {children}
+            </DocsLayout>
+         </div>
       </RootProvider>
    );
 }

@@ -37,7 +37,7 @@ const DocsNavbar = () => {
             const results: SearchResult[] = await response.json();
             setSearchResults(
                results.filter((result) => result.type === "page")
-            ); 
+            );
          } else {
             console.error(
                "Error fetching search results:",
@@ -52,10 +52,10 @@ const DocsNavbar = () => {
    useEffect(() => {
       if (searchQuery) {
          fetchSearchResults(searchQuery);
-         setIsDrawerOpen(true); 
+         setIsDrawerOpen(true);
       } else {
          setSearchResults([]);
-         setIsDrawerOpen(false); 
+         setIsDrawerOpen(false);
       }
    }, [searchQuery]);
 
@@ -65,7 +65,7 @@ const DocsNavbar = () => {
          router.push(searchResults[0].url);
          setSearchResults([]);
          setSearchQuery("");
-         setIsDrawerOpen(false); 
+         setIsDrawerOpen(false);
       }
    };
 
@@ -96,13 +96,13 @@ const DocsNavbar = () => {
    };
 
    return (
-      <div className="bg-white">
-         <div className="container mx-auto p-4 flex items-center justify-between h-[100px]">
+      <div className="h-[90px] fixed left-0 top-0 w-full z-[99] bg-background shadow-md">
+         <div className="container mx-auto p-4 flex items-center justify-between ">
             <Link href="/">API-DOCS</Link>
             <div className="flex items-center gap-10 ">
                <form
                   onSubmit={handleSearch}
-                  className="hidden md:flex gap-4 bg-transparent items-center p-2 rounded-full w-[200px] md:w-[300px] border border-main"
+                  className="flex gap-4 bg-transparent items-center p-2 rounded-full w-[200px] md:w-[300px] border border-main"
                >
                   <FaSearch className="text-main" />
                   <input
@@ -114,7 +114,7 @@ const DocsNavbar = () => {
                      onFocus={() => setIsDrawerOpen(true)}
                   />
                </form>
-               <div className="hidden md:flex items-center gap-4 ">
+               <div className="flex items-center gap-4 ">
                   <Link href="#">API</Link>
                   <Link href="/help-center">Support</Link>
                   <Link href="/login">

@@ -9,6 +9,24 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
    useEffect(() => {
       setIsClient(true);
+
+      // Automatically collapse sidebar on small screens
+      const handleResize = () => {
+         if (window.innerWidth < 768) {
+            setIsCollapsed(true);
+         } else {
+            setIsCollapsed(false);
+         }
+      };
+
+      // Add event listener
+      window.addEventListener("resize", handleResize);
+
+      // Check initial size
+      handleResize();
+
+      // Remove event listener on cleanup
+      return () => window.removeEventListener("resize", handleResize);
    }, []);
 
    const toggleSidebar = () => {
@@ -21,12 +39,15 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
    }
 
    return (
-      <div className='flex bg-white min-h-screen'>
-         <DashboardNav toggleSidebar={toggleSidebar} />
-         <SideNavbar isCollapsed={isCollapsed} />
+      <div className="flex bg-white min-h-screen overflow-x-scroll">
+         <DashboardNav />
+         <SideNavbar
+            isCollapsed={isCollapsed}
+            toggleSidebar={toggleSidebar}
+         />
          <div
             className={`transition-all duration-300 py-6 pr-4 md:pr-10 ${
-               isCollapsed ? "ml-[80px]" : "ml-[250px]"
+               isCollapsed ? "ml-[80px]" : "ml-[px] md:ml-[260px]"
             } mt-[140px] w-full`}
          >
             {children}

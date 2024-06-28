@@ -12,7 +12,7 @@ interface User {
 }
 
 // const BASE_URL = 'https://payment-service-dw96.onrender.com/api/v1/auth'
-const BASE_URL= "http://localhost:8085/api/v1/auth"
+const BASE_URL= "http://localhost:8080/api/v1/auth"
 
 export const signupApi = async (userData: User) => {
     try {

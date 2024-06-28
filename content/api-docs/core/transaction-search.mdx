@@ -3,15 +3,218 @@ title: Transaction Search
 description: transaction search
 ---
 
-## Code Block
+## Transaction Search
 
+
+Use the Transaction Search API to get the history of transactions for a PayPal account. To use the API on behalf of third parties, you must be part of the PayPal partner network. Reach out to your partner manager for the next steps. To enroll in the partner program, see Partner with PayPal. For more information about the API, see the Transaction Search API Integration Guide.                        
+
+
+<DocCards>
+<div>
+<DocCard bgColor='#EEEDF4'>
+<p><span style={{color:"black"}} className="text-border text-black">Note:</span>To use the API on behalf of third parties, you must be part of the PayPal partner network. Reach out to your partner manager for the next steps. To enroll in the partner program, see </p>
+</DocCard>
+
+<DocCard>
+### List transactions
+
+Lists transactions. Specify one or more query parameters to filter the transaction that appear in the response.
+</DocCard>
+<Endpoint></Endpoint>
+
+<DocCard bgColor='#EEEDF4'>
+### Note:
+
+- If you specify one or more optional query parameters, the ending_balance response field is empty.
+- It takes a maximum of three hours for executed transactions to appear in the list transactions call.
+- This call lists transaction for the previous three years.
+</DocCard>
+
+
+</div>
+
+{/* ======mdx content====== */}
+<div style={{width:'370px'}}>
 ```js
-console.log('Hello World');
+const query = new URLSearchParams({ 
+  transaction_id: 'stringstringstrin',
+  transaction_type: 'string', 
+  transaction_status: 'string', 
+  transaction_amount: 'string',
+  transaction_currency: 'string', 
+  start_date: 'stringstringstringst',  
+  end_date: 'stringstringstringst',  
+  payment_instrument_type: 'string',
+  store_id: 'string',
+  terminal_id: 'string', 
+  fields: 'transaction_info',
+  balance_affecting_records_only: 'Y', 
+  page_size: '100', 
+  page: '1'
+  } ).toString();
+
+  const resp = await fetch(
+      `https://api-m.paypal.com/v1/reporting/transactions?
+      ${query}`, 
+        {    method: 'GET',    
+          headers: {  
+                Authorization: 'Bearer <YOUR_TOKEN_HERE>' 
+                   } });
+
+
+const data = await resp.text();console.log(data);
 ```
 
-## Cards
+</div>
+</DocCards>
 
-<Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.vercel.app" />
-</Cards>
+
+
+
+
+<BEndpoint></BEndpoint>
+
+<div className="bg-white my-6 p-4 ">
+
+## QUERY PARAMETERS
+
+<div className="grid grid-cols-2  gap-10 ">
+<p>transaction_id</p>
+
+<div ><p>string  17 .. 19  characters
+Filters the transactions in the response by a PayPal transaction ID. A valid transaction ID is 17 characters long, except for an order ID, which is 19 characters long.</p> <div className="bg-br p-1 rounded"><p><span className="text-2xl">Note : </span>A transaction ID is not unique in the reporting system. The response can list two transactions with the same ID. One transaction can be balance affecting while the other is non-balance affecting.</p></div></div>
+<p>transaction_type</p>
+<div ><p>string
+Filters the transactions in the response by a PayPal transaction event code. See Transaction event codes.</p></div>
+</div>
+</div>
+
+
+### response
+
+
+<DocCards>
+<DocCard>
+<Response></Response>
+<Reschema></Reschema>
+<div className="grid grid-cols-2  gap-1">
+<p>transaction_id</p>
+<div ><p>Array of objects [ 1 .. 2147483647 ] items
+An array of transaction detail objects.</p></div>
+
+<p>account_number</p>
+<div ><p>string
+Filters the transactions in the response by a PayPal transaction event code. See Transaction event codes.</p></div>
+</div>
+</DocCard>
+
+<DocCard>
+
+```
+{
+"transaction_details": [
+{
+"transaction_info": {
+"paypal_account_id": "6STWC2LSUYYYE",
+"transaction_id": "5TY05013RG002845M",
+"transaction_event_code": "T0006",
+"transaction_initiation_date": "2014-07-11T04:03:52+0000",
+"transaction_updated_date": "2014-07-11T04:03:52+0000",
+"transaction_amount": {
+"currency_code": "USD",
+"value": "465.00"
+},
+"fee_amount": {
+"currency_code": "USD",
+"value": "-13.79"
+},
+"insurance_amount": {
+"currency_code": "USD",
+"value": "15.00"
+},
+```
+
+
+</DocCard>
+</DocCards>
+
+
+### List All Balances
+
+<DocCards>
+<DocCard>
+<Endpoint></Endpoint>
+
+ List all balances. Specify date time to list balances for that time that appear in the response.
+
+ <div className="bg-br p-2">
+ 
+ Note: 
+- It takes a maximum of three hours for balances to appear in the list balances call.
+- This call lists balances upto the previous three years.
+ </div>
+
+
+ ### QUERY PARAMETERS
+
+<div className="grid grid-cols-2  gap-1">
+<p>as_of_time</p>
+<div ><p>Array of objects [ 1 .. 2147483647 ] items
+An array of transaction detail objects.</p></div>
+
+<p>currency_code</p>
+<div ><p>string [ 20 .. 64 ] characters Show pattern
+List balances in the response at the date time provided, will return the last refreshed balance in the system when not provided.</p></div>
+</div>
+</DocCard>
+
+<DocCard>
+
+```
+{
+"crypto_balances": [
+{
+"asset_symbol": "BTC",
+"quantity": "0.00512814"
+}
+],
+"balances": [
+{
+"currency": "USD",
+"primary": true,
+"total_balance": {
+"currency_code": "USD",
+"value": "300.00"
+},
+"available_balance": {
+"currency_code": "USD",
+"value": "100.00"
+},
+"withheld_balance": {
+"currency_code": "USD",
+"value": "200.00"
+}
+}
+],
+"account_id": "DV77JV8VP82XE",
+"as_of_time": "2021-02-22T11:35:58Z",
+"last_refresh_time": "2021-03-03T16:23:30Z"
+}
+
+```
+
+
+</DocCard>
+</DocCards>
+
+### Response
+
+<Response></Response>
+
+<Reschema></Reschema>
+### Support
+
+If you have any questions or need assistance, please contact our support team 
+at support@example.com.
+
+

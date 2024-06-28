@@ -3,15 +3,44 @@ title: Response
 description: response
 ---
 
-## Code Block
+## Response
 
-```js
-console.log('Hello World');
-```
+This document outlines the responses returned by the Payment API endpoints.
 
-## Cards
+Common Response Attributes
+- status: Indicates the status of the request. Possible values include
+              -  success: The request was successful.
+              - error: There was an error processing the request.
+- message: Provides a human-readable message providing additional context about the response.
 
-<Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.vercel.app" />
-</Cards>
+
+## Response Status Codes
+
+The Payment API returns standard HTTP status codes to indicate the success or failure of a request.
+
+- 200 OK: The request was successful.
+- 400 Bad Request: The request was malformed or invalid.
+- 401 Unauthorized: Authentication credentials were missing or invalid.
+- 403 Forbidden: The request is forbidden due to insufficient permissions.
+- 404 Not Found: The requested resource was not found.
+- 500 Server Error: An error occurred on the server while processing the request.
+
+## Example Responses
+
+### Response Data Formats
+- transaction_id: Unique identifier for the transaction.
+- amount: Amount of the transaction.
+- currency: Currency of the transaction.
+- customer_id: Identifier of the customer associated with the transaction.
+- timestamp: Timestamp indicating when the transaction occurred.
+
+### Error Messages
+
+The API returns specific error messages to provide context about why a request failed. Common error messages include:
+- Invalid Card Number: The provided credit card number is invalid.
+- Insufficient Funds: The customer does not have sufficient funds to complete the transaction.
+- Expired Card: The provided credit card has expired.
+
+### Conclusion
+
+Understanding the responses returned by the Payment API is crucial for effective integration. If you encounter any issues or have questions about specific responses, please contact our support team for assistance.

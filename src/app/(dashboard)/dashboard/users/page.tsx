@@ -12,6 +12,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import React from "react";
 import PageTitle from "@/components/PageTitle";
 import Image from "next/image";
+import Ab1 from "../../../../../public/images/about1.png"
 
 type Props = {};
 type Payment = {
@@ -30,9 +31,7 @@ const columns: ColumnDef<Payment>[] = [
             <div className="flex gap-2 items-center">
                <Image
                   className="h-10 w-10"
-                  src={`https://api.dicebear.com/7.x/lorelei/svg?seed=${row.getValue(
-                     "name"
-                  )}`}
+                  src={Ab1}
                   alt="user-image"
                />
                <p>{row.getValue("name")} </p>
