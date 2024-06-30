@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import { FaBell, FaSearch } from "react-icons/fa";
 import logo from "../../public/svg/logo.svg";
 import { Bell, LogOut } from "lucide-react";
 import Link from "next/link";

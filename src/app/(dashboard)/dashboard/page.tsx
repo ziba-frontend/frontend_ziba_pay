@@ -38,25 +38,25 @@ const cardData: CardProps[] = [
 
 export default function Dashboard() {
    return (
-      <div className="flex flex-col gap-5  w-full  pr-10">
+      <div className="flex flex-col gap-5  w-full pr-2 md:pr-10 ">
          <h2>Dashboard</h2>
-         <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <CardContent>
+         <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 ">
+            <CardContent className="">
                <p className="p-4 font-semibold">Transaction Rate</p>
 
                <BarChart />
             </CardContent>
-            <CardContent>
+            <CardContent className="">
                <p className="p-4 font-semibold">Total fees</p>
 
                <PieChart />
             </CardContent>
-            <CardContent>
+            <CardContent className="">
                <p className="p-4 font-semibold">Cash-in Account</p>
 
                <LineChartComponent />
             </CardContent>
-            <CardContent>
+            <CardContent className="">
                <p className="p-4 font-semibold">Cash-out Account</p>
 
                <AreaChartComponent />

@@ -74,20 +74,20 @@ const Footer = () => {
    ];
    return (
       <div
-         className="bg-center  bg-cover mt-40 "
+         className="bg-center  bg-cover mt-40 h-auto "
          style={{
-            backgroundImage: "url('/images/footerImg.png')",
+            backgroundImage: "url('/images/footer.png')",
          }}
       >
-         <div className="bg-white/50  py-6">
+         <div className="bg-white/50  h-full py-20">
             <div className="flex flex-col gap-4 p-6 w-5/6 bg-white/80 mx-auto rounded-md my-2 ">
-               <h3 className="py-2 prose">Ready to get started ?</h3>
+               <h3 className="py-6 prose ">Ready to get started ?</h3>
                <p>
                   Create an account instantly and start accepting payments.Feel
                   free to reach out to us for tailored solutions designed
                   specifically for your business needs.
                </p>
-               <div className="flex gap-2 py-2">
+               <div className="flex gap-2 py-6">
                   <Link href="/login">
                      <Button variant="outline">Login</Button>
                   </Link>
@@ -96,9 +96,9 @@ const Footer = () => {
                   </Link>
                </div>
             </div>
-            <div className="container mx-auto px-4 border-b py-6 flex justify-center items-center">
-               <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-center items-center">
-                  <div className="flex flex-col justify-between">
+            <div className="container mx-auto px-4 border-b py-6 flex justify-center items-start">
+               <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-center items-start mt-4">
+                  <div className="flex flex-col justify-between  h-full">
                      <div>
                         <Image
                            src={logo}
@@ -139,7 +139,7 @@ const Footer = () => {
                   ))}
                </div>
             </div>
-            <p className="text-center my-3">
+            <p className="text-center my-3 mt-6 ">
                &copy;<span className="mx-2">Copyright 2024</span>All rights
                reserved by Ziba Pay
             </p>

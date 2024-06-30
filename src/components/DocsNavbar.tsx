@@ -50,12 +50,9 @@ const DocsNavbar = () => {
    };
 
    useEffect(() => {
-      if (searchQuery) {
+      if (searchQuery.length >= 3) {
          fetchSearchResults(searchQuery);
          setIsDrawerOpen(true);
-      } else {
-         setSearchResults([]);
-         setIsDrawerOpen(false);
       }
    }, [searchQuery]);
 
@@ -90,19 +87,23 @@ const DocsNavbar = () => {
       };
    }, [isDrawerOpen]);
 
-   // Function to toggle mobile menu
    const toggleMenu = () => {
       setIsMenuOpen(!isMenuOpen);
    };
 
+   const toggleDrawer = () => {
+      setIsDrawerOpen(!isDrawerOpen);
+   };
+
    return (
       <div className="h-[90px] fixed left-0 top-0 w-full z-[99] bg-background shadow-md">
-         <div className="container mx-auto p-4 flex items-center justify-between ">
-            <Link href="/">API-DOCS</Link>
-            <div className="flex items-center gap-10 ">
+         <div className="container mx-auto p-4 flex items-center justify-between">
+            <Link href="/api-docs">API-DOCS</Link>
+
+            <div className="flex items-center gap-10">
                <form
                   onSubmit={handleSearch}
-                  className="flex gap-4 bg-transparent items-center p-2 rounded-full w-[200px] md:w-[300px] border border-main"
+                  className="hidden md:flex gap-4 bg-transparent items-center p-2 rounded-full w-[200px] md:w-[300px] border border-main"
                >
                   <FaSearch className="text-main" />
                   <input
@@ -114,40 +115,31 @@ const DocsNavbar = () => {
                      onFocus={() => setIsDrawerOpen(true)}
                   />
                </form>
-               <div className="flex items-center gap-4 ">
-                  <Link href="#">API</Link>
+               <div className="hidden md:flex md:items-center md:gap-4">
+                  <Link href="/api-docs">API</Link>
                   <Link href="/help-center">Support</Link>
                   <Link href="/login">
                      <Button className="bg-main">Sign in</Button>
                   </Link>
                </div>
+               <button
+                  className="md:hidden text-main"
+                  onClick={() => setIsDrawerOpen(true)}
+               >
+                  <FaSearch size={20} />
+               </button>
             </div>
             <div className="md:hidden">
                <button
                   onClick={toggleMenu}
                   className="text-main"
                >
-                  <FaBars size={24} />
+                  <FaBars size={20} />
                </button>
             </div>
          </div>
-         {/* Mobile menu */}
          {isMenuOpen && (
-            <div className="md:hidden bg-white shadow-lg p-4 absolute top-[100px] left-0 right-0">
-               <form
-                  onSubmit={handleSearch}
-                  className="flex gap-4 bg-transparent items-center p-2 rounded-full w-full border border-main mb-4"
-               >
-                  <FaSearch className="text-main" />
-                  <input
-                     type="text"
-                     value={searchQuery}
-                     onChange={(e) => setSearchQuery(e.target.value)}
-                     className="outline-none w-full bg-transparent"
-                     placeholder="Search..."
-                     onFocus={() => setIsDrawerOpen(true)}
-                  />
-               </form>
+            <div className="md:hidden bg-background shadow-lg p-10 absolute top-[90px] right-0 w-fit">
                <div className="flex flex-col gap-4">
                   <Link
                      href="#"
@@ -170,7 +162,6 @@ const DocsNavbar = () => {
                </div>
             </div>
          )}
-         {/* Drawer for search results */}
          <Drawer open={isDrawerOpen}>
             <FocusLock>
                <DrawerTrigger></DrawerTrigger>
@@ -201,7 +192,7 @@ const DocsNavbar = () => {
                         </div>
                      </form>
                   </div>
-                  {searchResults.length > 0 && (
+                  {searchResults.length > 0 ? (
                      <ul className="bg-background p-2">
                         {searchResults.map((result: SearchResult) => (
                            <li
@@ -210,7 +201,7 @@ const DocsNavbar = () => {
                            >
                               <Link
                                  href={result.url}
-                                 className="hover:underline "
+                                 className="hover:underline"
                                  onClick={() => setIsDrawerOpen(false)}
                               >
                                  {result.content}
@@ -218,6 +209,10 @@ const DocsNavbar = () => {
                            </li>
                         ))}
                      </ul>
+                  ) : (
+                     <div className="bg-background p-2 text-center">
+                        No results found.
+                     </div>
                   )}
                </DrawerContent>
             </FocusLock>

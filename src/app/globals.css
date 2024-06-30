@@ -77,6 +77,17 @@
    }
 }
 
-.resp-card{
+.resp-card {
    width: 200px;
+}
+
+@layer utilities {
+   .no-scrollbar::-webkit-scrollbar {
+      display: none;
+   }
+
+   .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+   }
 }
