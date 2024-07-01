@@ -44,17 +44,19 @@ const formSchema = z.object({
    password: z.string().min(1, { message: "Password is required." }),
    name: z.string().min(1, { message: "Name is required." }),
    businessName: z.string().min(1, { message: "Business name is required." }),
-   phoneNumber:z.string().min(10,{message:"Phone number is required"}),
+   phoneNumber: z.string().min(10, { message: "Phone number is required" }),
    businessType: z.string().min(1, { message: "Business type is required." }),
    country: z.string().min(1, { message: "Country is required." }),
    howHear: z.string().min(1, { message: "This field is required." }),
    agreeTerms: z.literal(true, {
-      errorMap: () => ({ message: "You must agree to the terms and conditions" }),
+      errorMap: () => ({
+         message: "You must agree to the terms and conditions",
+      }),
    }),
 });
 
 const SignUp = () => {
-   const router = useRouter(); 
+   const router = useRouter();
    const form = useForm({
       resolver: zodResolver(formSchema),
       defaultValues: {
@@ -62,7 +64,7 @@ const SignUp = () => {
          email: "",
          password: "",
          businessName: "",
-         phoneNumber:"",
+         phoneNumber: "",
          businessType: "",
          country: "",
          howHear: "",
@@ -90,7 +92,10 @@ const SignUp = () => {
             className="fixed top-0 right-0"
          />
          <div className="flex flex-col gap-6 items-center justify-center min-h-screen">
-            <Link href="/" className="mt-6">
+            <Link
+               href="/"
+               className="mt-6"
+            >
                <Image
                   src={logo}
                   alt="zibaPay"
@@ -152,6 +157,7 @@ const SignUp = () => {
                                  <Input
                                     className="bg-white p-6 border"
                                     placeholder="Enter your password"
+                                    type="password"
                                     {...field}
                                  />
                               </FormControl>
@@ -225,10 +231,18 @@ const SignUp = () => {
                                        <SelectValue placeholder="Country" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                       <SelectItem value="Nigeria">Nigeria</SelectItem>
-                                       <SelectItem value="Ghana">Ghana</SelectItem>
-                                       <SelectItem value="Rwanda">Rwanda</SelectItem>
-                                       <SelectItem value="Kenya">Kenya</SelectItem>
+                                       <SelectItem value="Nigeria">
+                                          Nigeria
+                                       </SelectItem>
+                                       <SelectItem value="Ghana">
+                                          Ghana
+                                       </SelectItem>
+                                       <SelectItem value="Rwanda">
+                                          Rwanda
+                                       </SelectItem>
+                                       <SelectItem value="Kenya">
+                                          Kenya
+                                       </SelectItem>
                                     </SelectContent>
                                  </Select>
                               </FormControl>
@@ -241,7 +255,9 @@ const SignUp = () => {
                         name="howHear"
                         render={({ field }) => (
                            <FormItem>
-                              <FormLabel>How did you hear about Ziba pay *</FormLabel>
+                              <FormLabel>
+                                 How did you hear about Ziba pay *
+                              </FormLabel>
                               <FormControl>
                                  <Select
                                     onValueChange={field.onChange}
@@ -251,9 +267,15 @@ const SignUp = () => {
                                        <SelectValue placeholder="Select One or more options" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                       <SelectItem value="social-media">Social media</SelectItem>
-                                       <SelectItem value="ad">Advertisement</SelectItem>
-                                       <SelectItem value="research">Research</SelectItem>
+                                       <SelectItem value="social-media">
+                                          Social media
+                                       </SelectItem>
+                                       <SelectItem value="ad">
+                                          Advertisement
+                                       </SelectItem>
+                                       <SelectItem value="research">
+                                          Research
+                                       </SelectItem>
                                     </SelectContent>
                                  </Select>
                               </FormControl>
@@ -276,17 +298,24 @@ const SignUp = () => {
                               </FormControl>
                               <p>
                                  I hereby consent to the{" "}
-                                 <Link href="#" className="text-main underline">
+                                 <Link
+                                    href="#"
+                                    className="text-main underline"
+                                 >
                                     Terms of Use
                                  </Link>{" "}
-                                 and give consent to Ziba pay to process my data in line
-                                 with Ziba pay’s
-                                 <Link href="#" className="text-main underline ml-1">
+                                 and give consent to Ziba pay to process my data
+                                 in line with Ziba pay’s
+                                 <Link
+                                    href="#"
+                                    className="text-main underline ml-1"
+                                 >
                                     Privacy Policy
                                  </Link>
-                                 . I also confirm I have the authorization of the Board
-                                 of Directors and the Company to create this account and
-                                 provide their personal data.
+                                 . I also confirm I have the authorization of
+                                 the Board of Directors and the Company to
+                                 create this account and provide their personal
+                                 data.
                               </p>
                               <FormMessage />
                            </FormItem>

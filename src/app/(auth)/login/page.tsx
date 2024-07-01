@@ -86,6 +86,7 @@ const Login = () => {
                                     <Input
                                        className="bg-white p-6  border "
                                        placeholder="******"
+                                       type="password"
                                        {...field}
                                     />
                                  </FormControl>

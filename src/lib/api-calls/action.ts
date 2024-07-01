@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 
 interface User {
     name: string | null;
@@ -8,15 +8,13 @@ interface User {
     businessType: string | null;
     country: string | null;
     password: string | null;
-
 }
 
-// const BASE_URL = 'https://payment-service-dw96.onrender.com/api/v1/auth'
-const BASE_URL= "http://localhost:8080/api/v1/auth"
+const BASE_URL = 'http://localhost:8080/api/v1/auth';
 
 export const signupApi = async (userData: User) => {
     try {
-        const response = await axios.post(`${BASE_URL}/signup`, userData);
+        const response = await axios.post(`${BASE_URL}/signup`, userData, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.error('Error during signup:', error);
@@ -26,7 +24,7 @@ export const signupApi = async (userData: User) => {
 
 export const loginApi = async (credentials: { email: string; password: string; }) => {
     try {
-        const response = await axios.post(`${BASE_URL}/login`, credentials);
+        const response = await axios.post(`${BASE_URL}/login`, credentials, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.error('Error during login:', error);
@@ -36,16 +34,17 @@ export const loginApi = async (credentials: { email: string; password: string; }
 
 export const forgotPassword = async (email: string) => {
     try {
-        const response = await axios.post(`${BASE_URL}/forgotPassword`, { email });
+        const response = await axios.post(`${BASE_URL}/forgotPassword`, { email }, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.error('Error during forgot password:', error);
         throw error;
     }
 };
+
 export const resetPassword = async (token: string, newPassword: string) => {
     try {
-        const response = await axios.patch(`${BASE_URL}/resetPassword/${token}`, { password: newPassword });
+        const response = await axios.patch(`${BASE_URL}/resetPassword/${token}`, { password: newPassword }, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.error('Error during reset password:', error);
@@ -58,7 +57,8 @@ export const updatePassword = async (newPassword: string, token: string) => {
         const response = await axios.patch(`${BASE_URL}/updateMyPassword`, { password: newPassword }, {
             headers: {
                 Authorization: `Bearer ${token}`
-            }
+            },
+            withCredentials: true
         });
         return response.data;
     } catch (error) {
@@ -68,11 +68,12 @@ export const updatePassword = async (newPassword: string, token: string) => {
 };
 
 
-
-
-
-
-
-
-
-
+export const getUserProfile = async () => {
+    try {
+        const response = await axios.get(`${BASE_URL}/profile`, { withCredentials: true });
+        return response.data.data.user;
+    } catch (error) {
+        console.error('Error fetching user profile:', error);
+        throw error;
+    }
+};
