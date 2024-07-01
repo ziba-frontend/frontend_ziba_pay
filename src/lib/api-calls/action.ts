@@ -77,3 +77,15 @@ export const getUserProfile = async () => {
         throw error;
     }
 };
+
+
+export const logoutApi = async () => {
+    try {
+        await axios.post(`${BASE_URL}/logout`, {}, { withCredentials: true });
+    } catch (error) {
+        console.error('Error during logout:', error);
+        throw error;
+    }
+};
+
+

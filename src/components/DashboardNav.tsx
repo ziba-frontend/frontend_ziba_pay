@@ -2,11 +2,10 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import logo from "../../public/svg/logo.svg";
-import { Bell, LogOut } from "lucide-react";
-import Link from "next/link";
+import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { getUserProfile } from "@/lib/api-calls/action";
-import axios from "axios";
+import { getUserProfile, logoutApi } from "@/lib/api-calls/action";
+import Link from "next/link";
 
 const DashboardNav = () => {
    const [firstName, setFirstName] = useState("");
@@ -28,7 +27,7 @@ const DashboardNav = () => {
 
    const handleLogout = async () => {
       try {
-         await axios.post("/api/v1/auth/logout");
+         await logoutApi();
          router.push("/login");
       } catch (error) {
          console.error("Failed to logout:", error);

@@ -23,20 +23,20 @@ const formSchema = z.object({
 });
 import login from "../../../../public/images/login.png";
 import { Checkbox } from "@/components/ui/checkbox";
-import { loginApi }  from "@/lib/api-calls/action"
+import { loginApi } from "@/lib/api-calls/action";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const Login = () => {
-   const router = useRouter()
+   const router = useRouter();
    const form = useForm({
       resolver: zodResolver(formSchema),
    });
 
    // Define the onSubmit handler
-   const onSubmit = async(data: any) => {
-      await loginApi(data)
-      router.push("/dashboard")
+   const onSubmit = async (data: any) => {
+      await loginApi(data);
+      router.push("/dashboard");
       console.log(data);
    };
    return (
@@ -94,9 +94,12 @@ const Login = () => {
                               </FormItem>
                            )}
                         />
-                        <span className="text-main absolute right-0 top-24">
+                        <Link
+                           href="/forgot-password"
+                           className="text-main absolute right-0 top-24"
+                        >
                            Forgot password ?
-                        </span>
+                        </Link>
                      </div>
                      <div className="flex gap-4 items-center pt-20">
                         <Checkbox />
