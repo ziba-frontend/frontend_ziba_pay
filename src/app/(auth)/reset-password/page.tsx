@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -14,7 +14,7 @@ import {
    FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const formSchema = z
    .object({
@@ -53,22 +53,31 @@ const resetPassword = async (token: string, password: string) => {
 
 const ResetPasswordPage: React.FC = () => {
    const router = useRouter();
-   const searchParams = useSearchParams();
-   const token = searchParams.get("token");
+   const [token, setToken] = useState<string | null>(null);
 
-   if (!token) {
-      return <div>Token is missing</div>;
-   }
+   useEffect(() => {
+      const params = new URLSearchParams(window.location.search);
+      const tokenParam = params.get("token");
+      setToken(tokenParam);
+   }, []);
 
    const form = useForm<FormData>({
       resolver: zodResolver(formSchema),
    });
 
    const onSubmit = async (data: FormData) => {
+      if (!token) {
+         alert("Token is missing");
+         return;
+      }
       await resetPassword(token, data.password);
       alert("Password has been reset.");
       router.push("/login");
    };
+
+   if (!token) {
+      return <div>Token is missing</div>;
+   }
 
    return (
       <div className="flex justify-center items-center h-screen bg-gray-100">
