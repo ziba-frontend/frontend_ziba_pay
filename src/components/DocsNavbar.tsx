@@ -91,10 +91,6 @@ const DocsNavbar = () => {
       setIsMenuOpen(!isMenuOpen);
    };
 
-   const toggleDrawer = () => {
-      setIsDrawerOpen(!isDrawerOpen);
-   };
-
    return (
       <div className="h-[90px] fixed left-0 top-0 w-full z-[99] bg-background shadow-md">
          <div className="container mx-auto p-4 flex items-center justify-between">
@@ -115,7 +111,7 @@ const DocsNavbar = () => {
                      onFocus={() => setIsDrawerOpen(true)}
                   />
                </form>
-               <div className="hidden md:flex md:items-center md:gap-4">
+               <div className="docnav">
                   <Link href="/api-docs">API</Link>
                   <Link href="/help-center">Support</Link>
                   <Link href="/login">
