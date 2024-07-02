@@ -18,6 +18,7 @@ const formSchema = z.object({
 type Payment = {
     recipient: {
         name: string;
+        phoneNumber: string
     };
     date: string;
     amount: number;
@@ -38,8 +39,15 @@ const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "createdAt",
-        header: "Date",
+        accessorKey: "recipient.phoneNumber",
+        header:"Phone Number",
+        cell: ({ row }) => {
+            return (
+                <div className="flex gap-2 items-center">
+                    <p>{row.original.recipient.phoneNumber}</p>
+                </div>
+            );
+        },
     },
     {
         accessorKey: "amount",
@@ -48,6 +56,10 @@ const columns: ColumnDef<Payment>[] = [
     {
         accessorKey: "status",
         header: "Status",
+    },
+    {
+        accessorKey: "createdAt",
+        header: "Date",
     },
 ];
 

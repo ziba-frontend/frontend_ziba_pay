@@ -1,11 +1,11 @@
-"use client";
+"use client"
+import axios from "axios";
 import React from "react";
 import Image from "next/image";
 import im1 from "../../../../../public/images/mobile_checkout.svg";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
    Form,
@@ -25,24 +25,58 @@ import {
    SelectValue,
 } from "@/components/ui/select";
 
+interface PaymentData {
+    amount: number | null;
+    currency: string;
+    phoneNumber: string | null;
+    description: string | null;
+}
+
+const BASE_URL = 'http://localhost:8080/api/v1/payment';
+
+const initiateMtnPayment = async (paymentData: PaymentData) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/mtn-momo-pay`, paymentData, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.error("Error during Mtn momo payment");
+        throw error;
+    }
+};
+
 // Define the schema
 const formSchema = z.object({
-   username: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
+   phoneNumber: z.string().min(10, {
+      message: "Phone number must be at least 10 characters.",
    }),
-   issue: z.string().min(1, { message: "Issue is required." }),
-   email: z.string().email({ message: "Invalid email address." }),
-   subject: z.string().min(1, { message: "Subject is required." }),
+   provider: z.string().min(1, { message: "Provider is required." }),
+   amount: z.preprocess((val) => Number(val), z.number().positive({ message: "Amount must be positive." })),
+   currency: z.string().min(1, { message: "Currency is required." }),
+   description: z.string().optional(),
 });
 
 const Page = () => {
    const form = useForm({
       resolver: zodResolver(formSchema),
+      defaultValues: {
+         provider: "",
+      },
    });
 
    // Define the onSubmit handler
-   const onSubmit = (data: any) => {
-      console.log(data);
+   const onSubmit = async (data: any) => {
+      try {
+         const paymentData: PaymentData = {
+            amount: data.amount,
+            currency: data.currency,
+            phoneNumber: data.phoneNumber,
+            description: data.description || null,
+         };
+         const result = await initiateMtnPayment(paymentData);
+         console.log("Payment successful:", result);
+      } catch (error) {
+         console.error("Payment failed:", error);
+      }
    };
 
    return (
@@ -68,7 +102,7 @@ const Page = () => {
                >
                   <FormField
                      control={form.control}
-                     name="issue"
+                     name="phoneNumber"
                      render={({ field }) => (
                         <FormItem>
                            <FormControl>
@@ -84,21 +118,79 @@ const Page = () => {
                   />
                   <FormField
                      control={form.control}
-                     name="email"
+                     name="provider"
                      render={({ field }) => (
                         <FormItem>
                            <FormControl>
-                              <Select>
-                                 <SelectTrigger className="">
-                                    <SelectValue placeholder="Select Momo" />
-                                 </SelectTrigger>
-                                 <SelectContent className="bg-white">
-                                    <SelectItem value="Airtel">
-                                       Airtel
-                                    </SelectItem>
-                                    <SelectItem value="MTN">MTN</SelectItem>
-                                 </SelectContent>
-                              </Select>
+                              <Controller
+                                 control={form.control}
+                                 name="provider"
+                                 render={({ field }) => (
+                                    <Select
+                                       onValueChange={(value) => field.onChange(value)}
+                                       value={field.value}
+                                    >
+                                       <SelectTrigger className="">
+                                          <SelectValue placeholder="Select Momo" />
+                                       </SelectTrigger>
+                                       <SelectContent className="bg-white">
+                                          <SelectItem value="Airtel">
+                                             Airtel
+                                          </SelectItem>
+                                          <SelectItem value="MTN">MTN</SelectItem>
+                                       </SelectContent>
+                                    </Select>
+                                 )}
+                              />
+                           </FormControl>
+                           <FormMessage />
+                        </FormItem>
+                     )}
+                  />
+                  <FormField
+                     control={form.control}
+                     name="amount"
+                     render={({ field }) => (
+                        <FormItem>
+                           <FormControl>
+                              <Input
+                                 type="number"
+                                 className="bg-white p-6 outline-none border"
+                                 placeholder="Enter amount"
+                                 {...field}
+                              />
+                           </FormControl>
+                           <FormMessage />
+                        </FormItem>
+                     )}
+                  />
+                  <FormField
+                     control={form.control}
+                     name="currency"
+                     render={({ field }) => (
+                        <FormItem>
+                           <FormControl>
+                              <Input
+                                 className="bg-white p-6 outline-none border"
+                                 placeholder="Enter currency"
+                                 {...field}
+                              />
+                           </FormControl>
+                           <FormMessage />
+                        </FormItem>
+                     )}
+                  />
+                  <FormField
+                     control={form.control}
+                     name="description"
+                     render={({ field }) => (
+                        <FormItem>
+                           <FormControl>
+                              <Input
+                                 className="bg-white p-6 outline-none border"
+                                 placeholder="Enter description (optional)"
+                                 {...field}
+                              />
                            </FormControl>
                            <FormMessage />
                         </FormItem>
