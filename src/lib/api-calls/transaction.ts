@@ -42,3 +42,25 @@ export const getAllTransactions = async() => {
         throw error;
     }
 }
+
+
+export const generatePDFTransactions = async() => {
+    try{
+        const response = await axios.get(`${BASE_URL}/pdf-reports/received`, { withCredentials: true});
+        return response.data;
+
+    }catch(error){
+        console.error("Error while creating pdf");
+        throw error;
+    }
+}
+export const generateCSVTransactions = async() => {
+    try{
+        const response = await axios.get(`${BASE_URL}/csv-reports/sent`, { withCredentials: true});
+        return response.data;
+
+    }catch(error){
+        console.error("Error while creating pdf");
+        throw error;
+    }
+}

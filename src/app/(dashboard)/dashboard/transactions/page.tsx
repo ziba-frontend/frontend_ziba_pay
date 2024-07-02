@@ -8,12 +8,7 @@ import DrawerForm from "@/components/DrawerForm";
 import { getSentTransaction } from "@/lib/api-calls/transaction";
 import { z } from "zod";
 
-const formSchema = z.object({
-    username: z.string().min(2, { message: "Username must be at least 2 characters." }),
-    issue: z.string().min(1, { message: "Issue is required." }),
-    email: z.string().email({ message: "Invalid email address." }),
-    subject: z.string().min(1, { message: "Subject is required." }),
-});
+
 
 type Payment = {
     recipient: {
