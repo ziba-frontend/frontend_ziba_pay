@@ -13,7 +13,7 @@ import {
    FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { forgotPassword } from "@/lib/api-calls/action";
+import { forgotPassword } from "@/lib/api-calls/auth-server";
 
 const formSchema = z.object({
    email: z.string().email({ message: "Invalid email address." }),

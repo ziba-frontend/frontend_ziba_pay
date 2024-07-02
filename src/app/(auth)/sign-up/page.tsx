@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { signupApi } from "@/lib/api-calls/action";
+import { signupApi } from "@/lib/api-calls/auth-server";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {

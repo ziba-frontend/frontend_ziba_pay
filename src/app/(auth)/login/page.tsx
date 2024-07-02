@@ -23,7 +23,7 @@ const formSchema = z.object({
 });
 import login from "../../../../public/images/login.png";
 import { Checkbox } from "@/components/ui/checkbox";
-import { loginApi } from "@/lib/api-calls/action";
+import { loginApi } from "@/lib/api-calls/auth-server";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
