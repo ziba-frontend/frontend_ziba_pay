@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import axios from "axios";
 import React from "react";
 import Image from "next/image";
@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button";
 import {
    Form,
    FormControl,
-   FormDescription,
    FormField,
    FormItem,
    FormLabel,
@@ -24,24 +23,30 @@ import {
    SelectTrigger,
    SelectValue,
 } from "@/components/ui/select";
+import { useRouter } from "next/navigation";
 
 interface PaymentData {
-    amount: number | null;
-    currency: string;
-    phoneNumber: string | null;
-    description: string | null;
+   amount: number | null;
+   currency: string;
+   provider: string;
+   phoneNumber: string | null;
+   description: string | null;
 }
 
-const BASE_URL = 'http://localhost:8080/api/v1/payment';
+const BASE_URL = "http://localhost:8080/api/v1/payment";
 
 const initiateMtnPayment = async (paymentData: PaymentData) => {
-    try {
-        const response = await axios.post(`${BASE_URL}/mtn-momo-pay`, paymentData, { withCredentials: true });
-        return response.data;
-    } catch (error) {
-        console.error("Error during Mtn momo payment");
-        throw error;
-    }
+   try {
+      const response = await axios.post(
+         `${BASE_URL}/mtn-momo-pay`,
+         paymentData,
+         { withCredentials: true }
+      );
+      return response.data;
+   } catch (error) {
+      console.error("Error during Mtn momo payment");
+      throw error;
+   }
 };
 
 // Define the schema
@@ -50,30 +55,40 @@ const formSchema = z.object({
       message: "Phone number must be at least 10 characters.",
    }),
    provider: z.string().min(1, { message: "Provider is required." }),
-   amount: z.preprocess((val) => Number(val), z.number().positive({ message: "Amount must be positive." })),
+   amount: z.preprocess(
+      (val) => Number(val),
+      z.number().positive({ message: "Amount must be positive." })
+   ),
    currency: z.string().min(1, { message: "Currency is required." }),
    description: z.string().optional(),
 });
 
-const Page = () => {
+const Checkout = () => {
    const form = useForm({
       resolver: zodResolver(formSchema),
       defaultValues: {
+         amount: "",
+         currency: "",
+         phoneNumber: "",
          provider: "",
+         description: "",
       },
    });
 
+   const router = useRouter();
    // Define the onSubmit handler
    const onSubmit = async (data: any) => {
       try {
          const paymentData: PaymentData = {
             amount: data.amount,
             currency: data.currency,
+            provider: data.provider,
             phoneNumber: data.phoneNumber,
             description: data.description || null,
          };
          const result = await initiateMtnPayment(paymentData);
          console.log("Payment successful:", result);
+         router.push("/confirm");
       } catch (error) {
          console.error("Payment failed:", error);
       }
@@ -122,26 +137,22 @@ const Page = () => {
                      render={({ field }) => (
                         <FormItem>
                            <FormControl>
-                              <Controller
-                                 control={form.control}
-                                 name="provider"
-                                 render={({ field }) => (
-                                    <Select
-                                       onValueChange={(value) => field.onChange(value)}
-                                       value={field.value}
-                                    >
-                                       <SelectTrigger className="">
-                                          <SelectValue placeholder="Select Momo" />
-                                       </SelectTrigger>
-                                       <SelectContent className="bg-white">
-                                          <SelectItem value="Airtel">
-                                             Airtel
-                                          </SelectItem>
-                                          <SelectItem value="MTN">MTN</SelectItem>
-                                       </SelectContent>
-                                    </Select>
-                                 )}
-                              />
+                              <Select
+                                 onValueChange={(value) =>
+                                    field.onChange(value)
+                                 }
+                                 value={field.value}
+                              >
+                                 <SelectTrigger className="">
+                                    <SelectValue placeholder="Select Momo" />
+                                 </SelectTrigger>
+                                 <SelectContent className="bg-white">
+                                    <SelectItem value="Airtel">
+                                       Airtel
+                                    </SelectItem>
+                                    <SelectItem value="MTN">MTN</SelectItem>
+                                 </SelectContent>
+                              </Select>
                            </FormControl>
                            <FormMessage />
                         </FormItem>
@@ -209,4 +220,4 @@ const Page = () => {
    );
 };
 
-export default Page;
+export default Checkout;

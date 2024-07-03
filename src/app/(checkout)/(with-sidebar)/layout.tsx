@@ -7,7 +7,7 @@ import React from "react";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
    return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
+      <div className="flex flex-col items-center justify-center min-h-screen  py-12">
          <div className=" mx-auto w-full md:w-5/6 lg:w-[50%]">
             <div className="flex shadow-lg border">
                <CheckoutSidebar />
