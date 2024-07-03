@@ -12,6 +12,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import React, { useState } from "react";
 import { z } from "zod";
 import DrawerForm from "@/components/DrawerForm";
+import Link from "next/link";
 
 // Define the schema
 const formSchema = z.object({
@@ -23,7 +24,6 @@ const formSchema = z.object({
    subject: z.string().min(1, { message: "Subject is required." }),
 });
 
-
 type Props = {};
 type Payment = {
    name: string;
@@ -31,8 +31,6 @@ type Payment = {
    amount: string;
    status: string;
 };
-
-
 
 const columns: ColumnDef<Payment>[] = [
    {
@@ -108,7 +106,7 @@ const Transactions = () => {
                </div>
             </div>
          </div>
-         <div className="gap-6 flex flex-wrap p-1 sm:p-6 border my-6">
+         <div className="gap-6 flex flex-wrap p-1 sm:p-6 border my-6 items-center">
             <div className="">
                {" "}
                <Select>
@@ -145,12 +143,19 @@ const Transactions = () => {
                   </SelectContent>
                </Select>
             </div>
-            <div className="flex items-center justify-center border px-4 cursor-pointer " onClick={() => handleOpenDrawer("Cash In")}>
+            <div
+               className="flex items-center justify-center border px-4 cursor-pointer "
+               onClick={() => handleOpenDrawer("Cash In")}
+            >
                CashIn
             </div>
-            <div className="flex items-center justify-center border px-4 cursor-pointer" onClick={() => handleOpenDrawer("Cash Out")}>
+            <div
+               className="flex items-center justify-center border px-4 cursor-pointer"
+               onClick={() => handleOpenDrawer("Cash Out")}
+            >
                CashOut
             </div>
+            <Link href="/checkout">checkout</Link>
          </div>
          <div className="flex items-center justify-between my-2">
             <div>
@@ -182,12 +187,14 @@ const Transactions = () => {
             <p>No Transactions found from 10-01-2023 / 10-02-2023.</p>
          </div> */}
 
+         {/* CASH_IN */}
 
-{/* CASH_IN */}
-
-     
-     {/* DrawerForm Component */}
-     <DrawerForm isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} title={drawerTitle} />
+         {/* DrawerForm Component */}
+         <DrawerForm
+            isOpen={isDrawerOpen}
+            onClose={() => setIsDrawerOpen(false)}
+            title={drawerTitle}
+         />
       </div>
    );
 };

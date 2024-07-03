@@ -6,6 +6,7 @@ import sol2 from "../../../../public/images/sol2.png";
 import sol3 from "../../../../public/images/sol3.png";
 import sol4 from "../../../../public/images/sol4.png";
 import sol5 from "../../../../public/images/sol5.png";
+import Link from "next/link";
 
 const Solution = () => {
    return (
@@ -38,7 +39,11 @@ const Solution = () => {
                   processing, manage transactions, and enhance the checkout
                   experience for your customers.
                </p>
-               <Button className="w-fit">Learn More</Button>
+
+               <Button className="w-fit">
+                  <Link href="/ecommerce-solutions">Learn More</Link>
+               </Button>
+
                <Image
                   src={sol2}
                   alt="ziba"
@@ -52,7 +57,9 @@ const Solution = () => {
                   compliance, improve patient satisfaction, and accelerate
                   revenue cycles with our secure and efficient payment platform
                </p>
-               <Button className="w-fit">Learn More</Button>
+               <Button className="w-fit">
+                  <Link href="/health-care-payment-solutions">Learn More</Link>
+               </Button>
                <Image
                   src={sol3}
                   alt="ziba"
@@ -69,7 +76,9 @@ const Solution = () => {
                   check-in to integrated POS systems, we provide the tools you
                   need to streamline operations and deliver exceptional service.
                </p>
-               <Button className="w-fit">Learn More</Button>
+               <Button className="w-fit">
+                  <Link href="/hospitality">Learn More</Link>
+               </Button>
                <Image
                   src={sol4}
                   alt="ziba"
@@ -83,7 +92,9 @@ const Solution = () => {
                   management, automate recurring payments, and improve financial
                   transparency for educational institutions of all sizes.
                </p>
-               <Button className="w-fit">Learn More</Button>
+               <Button className="w-fit">
+                  <Link href="/education">Learn More</Link>
+               </Button>
                <Image
                   src={sol5}
                   alt="ziba"

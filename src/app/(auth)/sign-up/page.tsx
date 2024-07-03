@@ -284,19 +284,20 @@ const SignUp = () => {
                         )}
                      />
                   </div>
-                  <div className="flex gap-4">
+                  <div className="">
                      <FormField
                         control={form.control}
                         name="agreeTerms"
                         render={({ field }) => (
-                           <FormItem>
+                           <FormItem className=" flex gap-4 items-start">
                               <FormControl>
                                  <Checkbox
                                     checked={field.value}
                                     onCheckedChange={field.onChange}
+                                    className="mt-3"
                                  />
                               </FormControl>
-                              <p>
+                              <p className=" mt-0">
                                  I hereby consent to the{" "}
                                  <Link
                                     href="#"

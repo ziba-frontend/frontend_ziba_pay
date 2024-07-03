@@ -5,12 +5,12 @@ import Endpoint from "@/components/Endpoint";
 import BEndpoint from "@/components/BEndpoint";
 import Response from "@/components/Response";
 
-
 import DocCards from "@/components/DocCards";
 import DocCard from "@/components/DocCard";
 import Reschema from "@/components/Reschema";
 import Image from "next/image";
 
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
    return {
@@ -21,6 +21,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       Response,
       BEndpoint,
       Reschema,
+      Tab,
+      Tabs,
       Image,
       ...components,
    };

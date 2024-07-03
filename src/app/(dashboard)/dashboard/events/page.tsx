@@ -12,7 +12,7 @@ import React from "react";
 const Events = () => {
    return (
       <div>
-         <div className="flex items-center justify-between my-2">
+         <div className="flex gap-4 flex-col md:flex-row md:items-center md:justify-between my-4 md:my-2">
             <h2>Events</h2>
             <div className="flex gap-3">
                <div className="bg-black flex flex-col gap-2 items-end rounded p-2 text-white">
