@@ -102,8 +102,8 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onOpenChange }) => {
             {title}
          </DropdownMenuTrigger>
          <DropdownMenuContent
-            className={`bg-white p-6 relative ${
-               title === "Products" ? "w-[26rem]" : "w-64"
+            className={`bg-white p-10 relative ${
+               title === "Products" ? "w-[40rem]" : "w-64"
             } left-0`}
          >
             <Image
@@ -123,25 +123,27 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onOpenChange }) => {
             {items.map((item, index) => (
                <DropdownMenuItem
                   key={index}
-                  className="flex flex-col py-2 justify-start"
+                  className="flex flex-col p-4 justify-start"
                >
                   {title === "Products" ? (
-                     <Link
-                        href={item.href}
-                        className="flex items-start gap-2"
+                     <div
+                        className="flex items-start gap-6"
                         onClick={handleItemClick}
                      >
                         <Image
                            src={item.img!}
                            alt={item.label}
-                           width={40}
-                           height={40}
+                           width={80}
+                           height={80}
                         />
+
                         <div className="flex flex-col">
-                           <span className="font-bold">{item.label}</span>
+                           <span className="font-bold hover:text-main">
+                              <Link href={item.href}>{item.label}</Link>
+                           </span>
                            <span className="text-sm">{item.description}</span>
                         </div>
-                     </Link>
+                     </div>
                   ) : (
                      <Link
                         href={item.href}
