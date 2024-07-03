@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import logo from "../../public/svg/logo.svg";
 import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { getUserProfile, logoutApi } from "@/lib/api-calls/action";
+import { getUserProfile, logoutApi } from "@/lib/api-calls/auth-server";
 import Link from "next/link";
 
 const DashboardNav = () => {

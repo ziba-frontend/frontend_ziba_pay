@@ -1,5 +1,5 @@
 "use client"
-import { getUserProfile } from "@/lib/api-calls/action";
+import { getUserProfile } from "@/lib/api-calls/auth-server";
 import React, { useEffect, useState } from "react";
 
 const Account = () => {

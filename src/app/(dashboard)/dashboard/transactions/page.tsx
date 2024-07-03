@@ -1,4 +1,5 @@
 "use client";
+import React, { useEffect, useState } from "react";
 import {
    Select,
    SelectContent,
@@ -9,8 +10,6 @@ import {
 import { Settings } from "lucide-react";
 import { DataTable } from "@/components/DataTable";
 import { ColumnDef } from "@tanstack/react-table";
-import React, { useState } from "react";
-import { z } from "zod";
 import DrawerForm from "@/components/DrawerForm";
 import Link from "next/link";
 
@@ -25,28 +24,42 @@ const formSchema = z.object({
 });
 
 type Props = {};
+import { getSentTransaction } from "@/lib/api-calls/transaction";
+import { z } from "zod";
+
 type Payment = {
-   name: string;
+   recipient: {
+      name: string;
+      phoneNumber: string;
+   };
    date: string;
-   amount: string;
+   amount: number;
    status: string;
+   createdAt: string;
 };
 
 const columns: ColumnDef<Payment>[] = [
    {
-      accessorKey: "name",
-      header: "Transactions",
+      accessorKey: "recipient.name",
+      header: "Recipient",
       cell: ({ row }) => {
          return (
             <div className="flex gap-2 items-center">
-               <p>{row.getValue("name")} </p>
+               <p>{row.original.recipient.name}</p>
             </div>
          );
       },
    },
    {
-      accessorKey: "date",
-      header: "Date",
+      accessorKey: "recipient.phoneNumber",
+      header: "Phone Number",
+      cell: ({ row }) => {
+         return (
+            <div className="flex gap-2 items-center">
+               <p>{row.original.recipient.phoneNumber}</p>
+            </div>
+         );
+      },
    },
    {
       accessorKey: "amount",
@@ -56,61 +69,65 @@ const columns: ColumnDef<Payment>[] = [
       accessorKey: "status",
       header: "Status",
    },
-];
-
-const data: Payment[] = [
    {
-      name: "John Doe",
-      date: "2023-01-01",
-      amount: "4000FRW",
-      status: "Pending",
-   },
-   {
-      name: "Alice Smith",
-      date: "2023-02-15",
-      amount: "2.5$",
-      status: "Completed",
-   },
-
-   {
-      name: "Mia Gonzalez",
-      date: "2023-12-08",
-      amount: "6.8$",
-      status: "Failed",
+      accessorKey: "createdAt",
+      header: "Date",
    },
 ];
+
 const Transactions = () => {
    const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
    const [drawerTitle, setDrawerTitle] = useState<string>("");
+   const [data, setData] = useState<Payment[]>([]);
+   const [loading, setLoading] = useState<boolean>(true);
 
    const handleOpenDrawer = (title: string) => {
       setDrawerTitle(title);
       setIsDrawerOpen(true);
    };
+   useEffect(() => {
+      const fetchAllTransactions = async () => {
+         try {
+            const transactions = await getSentTransaction();
+            console.log("Transactions retrieved are:", transactions);
+            setData(transactions);
+         } catch (error) {
+            console.error("Error while getting all transactions:", error);
+         } finally {
+            setLoading(false);
+         }
+      };
+
+      fetchAllTransactions();
+   }, []);
+
+   if (loading) {
+      return <div>Loading...</div>;
+   }
+
    return (
       <div>
-         <div className="flex md:items-center md:justify-between my-2 flex-col  sm:gap-4 md:flex-row gap-6">
+         <div className="flex md:items-center md:justify-between my-2 flex-col sm:gap-4 md:flex-row gap-6">
             <h2>Transactions</h2>
             <div className="flex gap-3 flex-row">
-               <div className="bg-black flex w-fit flex-col gap-2 items-end rounded p-2 text-white ">
+               <div className="bg-black flex w-fit flex-col gap-2 items-end rounded p-2 text-white">
                   <h5>RWF 0</h5>
                   <p>MTN Balance</p>
                </div>
-               <div className="bg-black flex w-fit flex-col gap-2 items-end rounded p-2 text-white ">
+               <div className="bg-black flex w-fit flex-col gap-2 items-end rounded p-2 text-white">
                   <h5>RWF 0</h5>
                   <p>Airtel Balance</p>
                </div>
-               <div className="bg-black flex w-fit flex-col gap-2 items-end rounded p-2 text-white ">
+               <div className="bg-black flex w-fit flex-col gap-2 items-end rounded p-2 text-white">
                   <h5>RWF 0</h5>
                   <p>Total Balance</p>
                </div>
             </div>
          </div>
-         <div className="gap-6 flex flex-wrap p-1 sm:p-6 border my-6 items-center">
-            <div className="">
-               {" "}
+         <div className="gap-6 flex flex-wrap p-1 sm:p-6 border my-6">
+            <div>
                <Select>
-                  <SelectTrigger className="">
+                  <SelectTrigger>
                      <SelectValue placeholder="Kind" />
                   </SelectTrigger>
                   <SelectContent className="bg-white p-2">
@@ -119,10 +136,9 @@ const Transactions = () => {
                   </SelectContent>
                </Select>
             </div>
-            <div className="">
-               {" "}
+            <div>
                <Select>
-                  <SelectTrigger className="">
+                  <SelectTrigger>
                      <SelectValue placeholder="Status" />
                   </SelectTrigger>
                   <SelectContent className="bg-white p-1 sm:p-2">
@@ -131,10 +147,9 @@ const Transactions = () => {
                   </SelectContent>
                </Select>
             </div>
-            <div className="">
-               {" "}
+            <div>
                <Select>
-                  <SelectTrigger className="">
+                  <SelectTrigger>
                      <SelectValue placeholder="Provider" />
                   </SelectTrigger>
                   <SelectContent className="bg-white p-2">
@@ -144,7 +159,7 @@ const Transactions = () => {
                </Select>
             </div>
             <div
-               className="flex items-center justify-center border px-4 cursor-pointer "
+               className="flex items-center justify-center border px-4 cursor-pointer"
                onClick={() => handleOpenDrawer("Cash In")}
             >
                CashIn
@@ -155,41 +170,28 @@ const Transactions = () => {
             >
                CashOut
             </div>
-            <Link href="/checkout">checkout</Link>
          </div>
          <div className="flex items-center justify-between my-2">
             <div>
-               {" "}
                <p>All Transactions</p>
                <p>10-01-2023 / 10-02-2023 </p>
             </div>
-
             <div className="flex gap-3">
-               <div className="bg-black hidden sm:flex  sm:gap-2 items-end rounded p-2 text-white">
+               <div className="bg-black hidden sm:flex sm:gap-2 items-end rounded p-2 text-white">
                   <Settings />
                   <p>Filters</p>
                </div>
-               <div className="bg-black flex w-fit   items-end rounded p-2 text-white">
+               <div className="bg-black flex w-fit items-end rounded p-2 text-white">
                   <p>Refresh</p>
                </div>
             </div>
          </div>
-         <div className="py-6 w-full  overflow-x-scroll ">
+         <div className="py-6 w-full overflow-x-scroll">
             <DataTable
                columns={columns}
                data={data}
             />
          </div>
-
-         {/* =========CONDITIONAL RENDERING============== */}
-         {/*          
-         <div className="flex items-center justify-center p-12 bg-br my-6">
-            <p>No Transactions found from 10-01-2023 / 10-02-2023.</p>
-         </div> */}
-
-         {/* CASH_IN */}
-
-         {/* DrawerForm Component */}
          <DrawerForm
             isOpen={isDrawerOpen}
             onClose={() => setIsDrawerOpen(false)}
