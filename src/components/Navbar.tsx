@@ -110,20 +110,20 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onOpenChange }) => {
                src={drop1}
                alt="ziba"
                className="absolute top-0 left-0"
-               height={40}
-               width={40}
+               height={60}
+               width={60}
             />
             <Image
                src={drop2}
                alt="ziba"
                className="absolute bottom-0 right-0"
-               height={40}
-               width={40}
+               height={60}
+               width={60}
             />
             {items.map((item, index) => (
                <DropdownMenuItem
                   key={index}
-                  className="flex flex-col p-4 justify-start"
+                  className="flex flex-col p-2 justify-start"
                >
                   {title === "Products" ? (
                      <div
@@ -147,7 +147,7 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onOpenChange }) => {
                   ) : (
                      <Link
                         href={item.href}
-                        className="w-full text-left"
+                        className="w-full text-left hover:text-main"
                         onClick={handleItemClick}
                      >
                         {item.label}
