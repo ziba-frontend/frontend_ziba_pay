@@ -99,7 +99,7 @@ const DocsNavbar = () => {
             <div className="flex items-center gap-10">
                <form
                   onSubmit={handleSearch}
-                  className="hidden md:flex gap-4 bg-transparent items-center p-2 rounded-full w-[200px] md:w-[300px] border border-main"
+                  className="  bg-transparent  p-2 rounded-full w-[200px] md:w-[300px] border border-main docform"
                >
                   <FaSearch className="text-main" />
                   <input
