@@ -11,18 +11,18 @@ export async function middleware(req: NextRequest) {
         return NextResponse.redirect(`${origin}/server-down`);
     }
 
-    try {
-        // Check API health
-        const healthResponse = await axios.get(`${process.env.API_BASE_URL}/health`);
-        if (healthResponse.status !== 200) {
-            throw new Error('Server health check failed with status: ' + healthResponse.status);
-        }
-    } catch (error) {
-        console.error('API health check failed:', error);
+    // try {
+    //     // Check API health
+    //     const healthResponse = await axios.get(`${process.env.API_BASE_URL}/health`);
+    //     if (healthResponse.status !== 200) {
+    //         throw new Error('Server health check failed with status: ' + healthResponse.status);
+    //     }
+    // } catch (error) {
+    //     console.error('API health check failed:', error);
 
-        // Redirect to a custom error page or show a specific error message
-        return NextResponse.redirect(`${origin}/server-down`);
-    }
+    //     // Redirect to a custom error page or show a specific error message
+    //     return NextResponse.redirect(`${origin}/server-down`);
+    // }
 
     const token = req.cookies.get('jwt_auth_token')?.value;
 
