@@ -12,6 +12,9 @@ import { DataTable } from "@/components/DataTable";
 import { ColumnDef } from "@tanstack/react-table";
 import DrawerForm from "@/components/DrawerForm";
 import Link from "next/link";
+import RiseLoader from "react-spinners/RiseLoader";
+import { z } from "zod";
+import { getSentTransaction } from "@/lib/api-calls/transaction";
 
 // Define the schema
 const formSchema = z.object({
@@ -22,10 +25,6 @@ const formSchema = z.object({
    email: z.string().email({ message: "Invalid email address." }),
    subject: z.string().min(1, { message: "Subject is required." }),
 });
-
-type Props = {};
-import { getSentTransaction } from "@/lib/api-calls/transaction";
-import { z } from "zod";
 
 type Payment = {
    recipient: {
@@ -85,6 +84,7 @@ const Transactions = () => {
       setDrawerTitle(title);
       setIsDrawerOpen(true);
    };
+
    useEffect(() => {
       const fetchAllTransactions = async () => {
          try {
@@ -102,7 +102,11 @@ const Transactions = () => {
    }, []);
 
    if (loading) {
-      return <div>Loading...</div>;
+      return (
+         <div className="w-full h-screen flex items-center justify-center">
+            <RiseLoader color="#3BD64A" />
+         </div>
+      );
    }
 
    return (
@@ -187,10 +191,7 @@ const Transactions = () => {
             </div>
          </div>
          <div className="py-6 w-full overflow-x-scroll">
-            <DataTable
-               columns={columns}
-               data={data}
-            />
+            <DataTable columns={columns} data={data} />
          </div>
          <DrawerForm
             isOpen={isDrawerOpen}

@@ -5,13 +5,18 @@ import { FaFilePdf, FaFileCsv } from "react-icons/fa";
 import { DataTable } from "@/components/DataTable";
 import { ColumnDef } from "@tanstack/react-table";
 import DrawerForm from "@/components/DrawerForm";
-import { getReceivedTransactions, generatePDFTransactions, generateCSVTransactions } from "@/lib/api-calls/transaction";
+import {
+   getReceivedTransactions,
+   generatePDFTransactions,
+   generateCSVTransactions,
+} from "@/lib/api-calls/transaction";
 import { z } from "zod";
+import RiseLoader from "react-spinners/RiseLoader";
 
 type Payment = {
    user: {
       name: string;
-      phoneNumber: string
+      phoneNumber: string;
    };
    date: string;
    amount: number;
@@ -21,7 +26,7 @@ type Payment = {
 
 const columns: ColumnDef<Payment>[] = [
    {
-      accessorKey: "recipient.name",
+      accessorKey: "user.name",
       header: "Recipient",
       cell: ({ row }) => {
          return (
@@ -32,7 +37,7 @@ const columns: ColumnDef<Payment>[] = [
       },
    },
    {
-      accessorKey: "recipient.phoneNumber",
+      accessorKey: "user.phoneNumber",
       header: "Phone Number",
       cell: ({ row }) => {
          return (
@@ -70,11 +75,11 @@ const Summary = () => {
    const handleGeneratePDF = async () => {
       try {
          const pdfData = await generatePDFTransactions();
-         const blob = new Blob([pdfData], { type: 'application/pdf' });
+         const blob = new Blob([pdfData], { type: "application/pdf" });
          const url = URL.createObjectURL(blob);
-         const link = document.createElement('a');
+         const link = document.createElement("a");
          link.href = url;
-         link.download = 'transactions.pdf';
+         link.download = "transactions.pdf";
          document.body.appendChild(link);
          link.click();
          document.body.removeChild(link);
@@ -86,11 +91,11 @@ const Summary = () => {
    const handleGenerateCSV = async () => {
       try {
          const csvData = await generateCSVTransactions();
-         const blob = new Blob([csvData], { type: 'text/csv' });
+         const blob = new Blob([csvData], { type: "text/csv" });
          const url = URL.createObjectURL(blob);
-         const link = document.createElement('a');
+         const link = document.createElement("a");
          link.href = url;
-         link.download = 'transactions.csv';
+         link.download = "transactions.csv";
          document.body.appendChild(link);
          link.click();
          document.body.removeChild(link);
@@ -116,7 +121,11 @@ const Summary = () => {
    }, []);
 
    if (loading) {
-      return <div>Loading...</div>;
+      return (
+         <div className="w-full h-screen flex items-center justify-center">
+            <RiseLoader color="#3BD64A" />
+         </div>
+      );
    }
 
    return (
@@ -124,29 +133,48 @@ const Summary = () => {
          <div className="flex items-center justify-between my-2">
             <h2>Summary</h2>
             <div className="flex gap-3">
-               <div className="bg-white flex  gap-2 items-center rounded p-2 border">
+               <div className="bg-white flex gap-2 items-center rounded p-2 border">
                   <Calendar />
                   <p>January</p>
                   <p>2023</p>
                </div>
-               <div className="bg-black flex  gap-2 items-center rounded p-2 text-white" onClick={handleGeneratePDF}>
+               <div
+                  className="bg-black flex gap-2 items-center rounded p-2 text-white cursor-pointer"
+                  onClick={handleGeneratePDF}
+               >
                   <h5>PDF</h5>
                   <FaFilePdf />
                </div>
-               <div className="bg-black flex  gap-2 items-center rounded p-2 text-white" onClick={handleGenerateCSV}>
+               <div
+                  className="bg-black flex gap-2 items-center rounded p-2 text-white cursor-pointer"
+                  onClick={handleGenerateCSV}
+               >
                   <h5>CSV</h5>
                   <FaFileCsv />
                </div>
-               <div className="bg-black flex  items-center justify-center rounded p-2 text-white">
+               <div className="bg-black flex items-center justify-center rounded p-2 text-white cursor-pointer">
                   <p>Refresh</p>
                </div>
             </div>
          </div>
 
-         <div className="py-6 w-full overflow-x-scroll">
-            <DataTable columns={columns} data={data} />
+         <div className="py-6 w-full ">
+            {data?.length > 0 ? (
+               <DataTable
+                  columns={columns}
+                  data={data}
+               />
+            ) : (
+               <div className="flex items-center justify-center p-12 bg-br my-6">
+                  No transactions available.
+               </div>
+            )}
          </div>
-         <DrawerForm isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} title={drawerTitle} />
+         <DrawerForm
+            isOpen={isDrawerOpen}
+            onClose={() => setIsDrawerOpen(false)}
+            title={drawerTitle}
+         />
       </div>
    );
 };

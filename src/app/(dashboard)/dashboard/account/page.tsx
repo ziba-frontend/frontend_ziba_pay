@@ -1,6 +1,7 @@
-"use client"
+"use client";
 import { getUserProfile } from "@/lib/api-calls/auth-server";
 import React, { useEffect, useState } from "react";
+import RiseLoader from "react-spinners/RiseLoader";
 
 const Account = () => {
    const [user, setUser] = useState({
@@ -11,6 +12,7 @@ const Account = () => {
       businessType: "",
       country: "",
    });
+   const [loading, setLoading] = useState<boolean>(true);
 
    useEffect(() => {
       const fetchUserProfile = async () => {
@@ -19,16 +21,26 @@ const Account = () => {
             setUser(userData);
          } catch (error) {
             console.error("Error fetching user profile:", error);
+         } finally {
+            setLoading(false);
          }
       };
 
       fetchUserProfile();
    }, []);
 
+   if (loading) {
+      return (
+         <div className="w-full h-screen flex items-center justify-center">
+            <RiseLoader color="#3BD64A" />
+         </div>
+      );
+   }
+
    return (
       <div>
          <div className="flex items-center justify-between my-2">
-            <h2>Testing Numbers</h2>
+            <h2>Profile</h2>
             <div className="bg-black flex items-center justify-center rounded p-2 text-white">
                <p>Refresh</p>
             </div>

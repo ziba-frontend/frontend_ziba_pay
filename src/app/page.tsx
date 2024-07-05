@@ -21,7 +21,7 @@ import send2 from "../../public/images/send2.png";
 import oval from "../../public/images/oval.png";
 import curvedImg from "../../public/images/rect1.png";
 import Link from "next/link";
-import phone from "../../public/images/phone.png";
+import phone from "../../public/images/phone.gif";
 import {
    Accordion,
    AccordionContent,
@@ -31,6 +31,9 @@ import {
 import CheckList from "@/components/CheckList";
 import Slider from "@/components/Slider";
 import momo1 from "../../public/images/momo1.png";
+import ball from "../../public/images/ball.png";
+import elp1 from "../../public/images/elp1.png";
+import elp2 from "../../public/images/elp2.png";
 import signup2 from "../../public/images/signup2.png";
 
 const Home = () => {
@@ -309,7 +312,33 @@ const Home = () => {
             {/* ===MOBILE MONEY INTEGRATION==== */}
 
             <div className="bg-main text-white flex flex-col gap-6 py-6 relative">
-               <div className="container">
+               <Image
+                  src={ball}
+                  alt="ball"
+                  className="absolute top-40 right-10"
+               />
+               <Image
+                  src={ball}
+                  alt="ball"
+                  className="absolute bottom-40 right-10"
+               />
+               <Image
+                  src={ball}
+                  alt="ball"
+                  className="absolute bottom-40 left-10"
+               />
+               <Image
+                  src={elp1}
+                  alt="ball"
+                  className="absolute top-0 left-0 z-10"
+               />
+               <Image
+                  src={elp2}
+                  alt="ball"
+                  className="absolute bottom-0 left-0 "
+               />
+            
+               <div className="container z-20">
                   <div>
                      <h2 className="my-4">Mobile Money Integration</h2>
                      <p className="my-4">
@@ -332,7 +361,7 @@ const Home = () => {
                      src={phone}
                      alt="mobile integration"
                      className=" mx-auto z-30"
-
+                     width={700}
                   />
                   <Image
                      src={momo1}
@@ -376,12 +405,12 @@ const Home = () => {
                            className="border-b border-black/30 py-4"
                         >
                            <AccordionTrigger>
-                              What is Ziba pay?
+                              What is Ziba Pay?
                            </AccordionTrigger>
                            <AccordionContent>
                               Ziba Pay is a payment processing platform designed
                               to streamline payment collection for businesses of
-                              all sizes
+                              all sizes.
                            </AccordionContent>
                         </AccordionItem>
                         <AccordionItem
@@ -389,11 +418,15 @@ const Home = () => {
                            className="border-b border-black/30 py-4"
                         >
                            <AccordionTrigger>
-                              How does Ziba Pay work ?
+                              How does Ziba Pay work?
                            </AccordionTrigger>
                            <AccordionContent>
-                              Yes. It comes with default styles that matches the
-                              other components&apos; aesthetic.
+                              Ziba Pay integrates with various payment gateways,
+                              including MTN MoMo and Airtel Money, to enable
+                              businesses to accept payments from customers via
+                              mobile money. The platform provides a seamless
+                              interface for managing transactions, tracking
+                              payments, and generating reports.
                            </AccordionContent>
                         </AccordionItem>
                         <AccordionItem
@@ -404,20 +437,23 @@ const Home = () => {
                               What payment methods does Ziba Pay support?
                            </AccordionTrigger>
                            <AccordionContent>
-                              Yes. It&apos;s animated by default, but you can
-                              disable it if you prefer.
+                              Ziba Pay supports multiple payment methods,
+                              including credit and debit cards, mobile money
+                              (MTN MoMo and Airtel Money), and bank transfers.
                            </AccordionContent>
                         </AccordionItem>
                         <AccordionItem
-                           value="item-3"
+                           value="item-4"
                            className="border-b border-black/30 py-4"
                         >
                            <AccordionTrigger>
                               Is Ziba Pay secure?
                            </AccordionTrigger>
                            <AccordionContent>
-                              Yes. It&apos;s animated by default, but you can
-                              disable it if you prefer.
+                              Yes, Ziba Pay employs advanced security measures,
+                              including encryption and fraud detection, to
+                              ensure that all transactions are secure and that
+                              customer data is protected.
                            </AccordionContent>
                         </AccordionItem>
                      </Accordion>
