@@ -5,11 +5,12 @@ import { verifyAuth } from './lib/auth';
 export async function middleware(req: NextRequest) {
     const { pathname, origin } = req.nextUrl;
 
+    
     // Check if API_BASE_URL is set
-    if (!process.env.API_BASE_URL) {
-        console.error('API_BASE_URL is not defined in the environment variables.');
-        return NextResponse.redirect(`${origin}/server-down`);
-    }
+    // if (!process.env.API_BASE_URL) {
+    //     console.error('API_BASE_URL is not defined in the environment variables.');
+    //     return NextResponse.redirect(`${origin}/server-down`);
+    // }
 
     // try {
     //     // Check API health
@@ -36,18 +37,18 @@ export async function middleware(req: NextRequest) {
     }
 
     if (!verifiedToken) {
-        // Redirect to login if not authenticated
+      
         if (!pathname.startsWith('/login')) {
             return NextResponse.redirect(`${origin}/login`);
         }
     } else {
-        // Redirect to dashboard if authenticated and trying to access login
+     
         if (pathname.startsWith('/login')) {
             return NextResponse.redirect(`${origin}/dashboard`);
         }
     }
 
-    // Allow the request to proceed if no redirects are needed
+    
     return NextResponse.next();
 }
 
