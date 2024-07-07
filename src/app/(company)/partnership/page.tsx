@@ -6,8 +6,16 @@ import partn2 from "../../../../public/images/partnership2.png";
 import rect from "../../../../public/images/rect1.png";
 import partn3 from "../../../../public/images/partnership3.png";
 import CheckList from "@/components/CheckList";
+import checkMark from "../../../../public/images/check.png";
 
 const Partnership = () => {
+   const checkListItems = [
+      { text: "Earn Commissions", img: checkMark },
+      { text: "Additional Revenue Streams", img: checkMark },
+      { text: "Expand Your Reach", img: checkMark },
+      { text: "Trusted Partnership", img: checkMark },
+      { text: "Marketing Support", img: checkMark },
+    ];
    return (
       <div>
          <div className="flex flex-col py-6 md:flex-row gap-6 container items-center ">
@@ -140,15 +148,8 @@ const Partnership = () => {
                         Boost Your Earnings as a Strategic <br /> Partner
                      </h4>
                      <div className="my-4">
-                        <CheckList
-                           items={[
-                              "Earn Commissions",
-                              "Additional Revenue Streams",
-                              "Expand Your Reach",
-                              "Trusted Partnership",
-                              "Marketing Support",
-                           ]}
-                        />
+                     <CheckList items={checkListItems} />
+                        
                      </div>
 
                      <Button className="mt-4">
