@@ -35,8 +35,15 @@ import ball from "../../public/images/ball.png";
 import elp1 from "../../public/images/elp1.png";
 import elp2 from "../../public/images/elp2.png";
 import signup2 from "../../public/images/signup2.png";
+import checkMark from "../../public/images/checkmark.png"; 
 
 const Home = () => {
+   const checkListItems = [
+      { text: "Rapid Fund Transfers", img: checkMark },
+      { text: "Simple and Recurring Payment Setup", img: checkMark },
+      { text: "Transaction Authetication", img: checkMark },
+      { text: "Customer Identity Verification", img: checkMark },
+    ];
    return (
       <>
          <Navbar />
@@ -267,14 +274,8 @@ const Home = () => {
                         APIs to enhance their payment experiences.
                      </p>
                      <div className="mt-6">
-                        <CheckList
-                           items={[
-                              "Rapid Fund Transfers",
-                              "Simple and Recurring Payment Setup",
-                              "Transaction Authetication",
-                              "Customer Identity Verification",
-                           ]}
-                        />
+                     <CheckList items={checkListItems} />
+                       
                      </div>
                   </div>
                   <Image

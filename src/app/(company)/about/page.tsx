@@ -7,12 +7,21 @@ import about3 from "../../../../public/images/about3.png";
 import about4 from "../../../../public/images/about4.png";
 import about5 from "../../../../public/images/about5.png";
 import CheckList from "@/components/CheckList";
+import checkMark from "../../../../public/images/check.png";
+import logo from "../../../../public/svg/logo.svg";
 
 const AboutUs = () => {
+   const checkListItems = [
+      { text: "Innovation", img: checkMark },
+      { text: "Security", img: checkMark },
+      { text: "Customer Service", img: checkMark },
+      { text: "Affordability", img: checkMark },
+   ];
+
    return (
       <div>
-         <div className="flex items-center justify-center gap-6 flex-col container py-6">
-            <h1 className="text-center">
+         <div className="flex items-center justify-center gap-6 flex-col container py-10 ">
+            <h1 className="text-center my-6 ">
                We&apos;re changing how businesses handle their money with
                payment solutions made just for them. It&apos;s like a party for
                your finances
@@ -30,7 +39,7 @@ const AboutUs = () => {
             />
 
             <div className="flex flex-col container items-center justify-center gap-4 mt-20">
-               <h3 className="text-center mt-10">
+               <h3 className="lg:text-3xl mt-10">
                   Ziba Pay is a team of passionate professionals dedicated to
                   delivering excellence in payment technology. With a wealth of
                   experience and expertise in the fintech industry, our team
@@ -47,7 +56,7 @@ const AboutUs = () => {
 
          <div className="flex flex-col container items-center justify-center gap-4 mt-20">
             <div className="flex flex-col container items-center justify-center gap-4 mt-20 py-6">
-               <h3 className="text-center ">
+               <h3 className="my-4 lg:text-3xl">
                   At Ziba Pay, we offer a comprehensive suite of payment
                   solutions designed to streamline operations, enhance customer
                   experiences, and drive business growth. From online payment
@@ -55,12 +64,18 @@ const AboutUs = () => {
                   platform provides businesses with the tools they need to
                   succeed in today&apos;s competitive marketplace.
                </h3>
-
-               <Image
-                  src={about3}
-                  alt="ziba"
-                  className="w-[200px] md:w-[400px]"
-               />
+               <div className="relative">
+                  <Image
+                     src={about3}
+                     alt="ziba"
+                     className="w-[200px] md:w-[400px] "
+                  />
+                  <Image
+                     src={logo}
+                     alt="zibapay"
+                     className="absolute bottom-6 left-1/2 transform -translate-x-1/2 "
+                  />
+               </div>
             </div>
          </div>
 
@@ -71,8 +86,8 @@ const AboutUs = () => {
                className="absolute top-0 left-0 w-full "
             />
 
-            <div className="flex flex-col container items-center justify-center gap-4 mt-20">
-               <h3 className="text-center mt-10">
+            <div className="flex flex-col container items-start justify-start gap-6 mt-20">
+               <h3 className="text-start mt-10 lg:text-3xl">
                   We offer our full suite of products through an API, empowering
                   developers to innovate and businesses to scale up, providing
                   top-notch payment solutions.
@@ -84,7 +99,7 @@ const AboutUs = () => {
             </div>
          </div>
 
-         <div className="bg-[#efeeee]">
+         <div className="bg-[#efeeee] py-12">
             <div className="flex items-center justify-center p-6 container gap-6 flex-col sm:flex-row">
                <div className="flex flex-col gap-6  bg-white rounded-2xl md:w-[300px] md:h-[400px] lg:w-[400px] lg:h-[600px] w-5/6 h-[400px]">
                   <div className="p-6">
@@ -98,7 +113,11 @@ const AboutUs = () => {
                </div>
                <div
                   className="flex flex-col gap-6 p-4 bg-white rounded-2xl md:w-[300px] md:h-[400px] lg:w-[400px] lg:h-[600px] w-5/6 h-[400px] text-white"
-                  style={{ backgroundImage: "url(/images/about6.png)",backgroundSize:"cover", backgroundPosition:"center" }}
+                  style={{
+                     backgroundImage: "url(/images/about6.png)",
+                     backgroundSize: "cover",
+                     backgroundPosition: "center",
+                  }}
                >
                   <h2>Our Vision</h2>
                   <p>
@@ -124,14 +143,7 @@ const AboutUs = () => {
                      help them succeed.
                   </p>
                   <div>
-                     <CheckList
-                        items={[
-                           "Innovation",
-                           "Security",
-                           "Customer Service",
-                           "Affordability",
-                        ]}
-                     />
+                     <CheckList items={checkListItems} />
                   </div>
                </div>
             </div>

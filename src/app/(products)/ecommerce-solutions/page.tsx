@@ -107,7 +107,9 @@ const Ecommerce = () => {
                Improve customer experience and retention with easy payments and
                quick conversions using Ziba pay Pay-In solutions.
             </h2>
-            <Button>Go To Checkout</Button>
+            <Button>
+               <Link href="/checkout">Go To Checkout</Link>
+            </Button>
          </div>
       </div>
    );
