@@ -95,6 +95,13 @@ const Request = () => {
                      </FormItem>
                   )}
                />
+               <div className="my-4">
+                  <p className="text-[#3498DB]">
+                     Before you submit the tickets, check out the FAQ article
+                     with related issues. You might see the solution of the
+                     issue you’re about to report.
+                  </p>
+               </div>
                <Button type="submit">Submit</Button>
             </form>
          </Form>

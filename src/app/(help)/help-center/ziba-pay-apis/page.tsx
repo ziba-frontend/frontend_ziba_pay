@@ -5,39 +5,49 @@ import React from "react";
 const Zibapis = () => {
    return (
       <div className="container ">
-         <div className="mt-6 mb-6">
+         <div className="mt-6 mb-6 hidden sm:block">
             <p>
-               <span className="mr-2"> Ziba pay</span>
+               <span className="hover:text-main cursor-default mr-2">
+               {" "}<Link href="/zibapay-help-center">
+                  Ziba pay
+                  </Link>
+               </span>
                {">"}
-               <span className="mx-2">General</span>
+               <span className="hover:text-main cursor-default mx-2">
+                  General
+               </span>
                {">"}
-               <span className="ml-2">FAQ</span>
+               <span className="hover:text-main cursor-default ml-2">FAQ</span>
             </p>
          </div>
          <div>
             <div className="my-4 mt-20 flex gap-20 flex-col md:flex-row">
-               <div>
-                  <h4>Articles in this section</h4>
-                  <Link href="./ziba-pay-security">
-                     <p>How secure is Ziba pay?</p>
-                  </Link>
-                  <Link href="./virtual-accounts">
-                     <p>Virtual Accounts</p>
-                  </Link>
-                  <Link href="./ziba-pay-apis">
+               <div className="mt-6 sm:mt-0 flex flex-col gap-3">
+                  <h4 className="">Articles in this section</h4>
+                  <p>
                      {" "}
-                     <p>Ziba pay APIs</p>
-                  </Link>
+                     <Link href="./ziba-pay-security">
+                        How secure is Ziba pay?
+                     </Link>
+                  </p>
+                  <p>
+                     {" "}
+                     <Link href="./virtual-accounts">Virtual Accounts </Link>
+                  </p>{" "}
+                  <p>
+                     {" "}
+                     <Link href="./ziba-pay-apis">Ziba pay APIs</Link>
+                  </p>
                </div>
                <div className="w-full md:w-3/4">
                   <div className=" border-b pb-40">
-                     <h2>Virtual Account?</h2>
+                     <h2>Ziba pay APIs</h2>
                      <span className="mx-2 text-blue-400">1 months ago</span>
                      <span className="mx-2 text-blue-400">Updated</span>
                      <div className="mt-10">
                         <ul className="flex flex-col gap-6">
                            <li>
-                              <h4>
+                              <h4 className="my-2">
                                  What are Ziba Pay APIs, and how can they
                                  benefit my business?
                               </h4>
@@ -45,17 +55,17 @@ const Zibapis = () => {
                                  Ziba Pay APIs (Application Programming
                                  Interfaces) are software interfaces that allow
                                  different systems or applications to
-                                 communicate with and access Ziba Pay&apos;s services
-                                 and functionalities. Integrating Ziba Pay APIs
-                                 into your business systems can streamline
-                                 payment processes, enhance customer experience,
-                                 and provide access to advanced features such as
-                                 payment processing, invoicing, and financial
-                                 management tools.
+                                 communicate with and access Ziba Pay&apos;s
+                                 services and functionalities. Integrating Ziba
+                                 Pay APIs into your business systems can
+                                 streamline payment processes, enhance customer
+                                 experience, and provide access to advanced
+                                 features such as payment processing, invoicing,
+                                 and financial management tools.
                               </p>
                            </li>
                            <li>
-                              <h4>
+                              <h4 className="my-2">
                                  How do I integrate Ziba Pay APIs into my
                                  existing systems or applications?
                               </h4>
@@ -72,7 +82,7 @@ const Zibapis = () => {
                               </p>
                            </li>
                            <li>
-                              <h4>
+                              <h4 className="my-2">
                                  Are Ziba Pay APIs secure, and what measures are
                                  in place to protect my data and transactions?
                               </h4>
@@ -115,13 +125,13 @@ const Zibapis = () => {
                      <p>0 out of 0 found it helpful</p>
                      <p>
                         Have more questions ?{" "}
-                        <Link href="request-form">Submit a request</Link>
+                        <Link href="request">Submit a request</Link>
                      </p>
                   </div>
                   <div className="flex flex-col gap-2">
                      <h3>Related article</h3>
-                     <Link href="/ziba-pay-apis">Ziba pay APIs</Link>
-                     <Link href="/ziba-pay-apis">Getting Started</Link>
+                     <Link href="./ziba-pay-apis">Ziba pay APIs</Link>
+                     <Link href="./help-center">Getting Started</Link>
                      <Link href="/ziba-pay-apis">Pricing </Link>
                      <Link href="/ziba-pay-apis">Disputes</Link>
                   </div>

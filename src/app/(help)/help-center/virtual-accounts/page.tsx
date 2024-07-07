@@ -5,29 +5,39 @@ import React from "react";
 const VAccounts = () => {
    return (
       <div className="container ">
-         <div className="mt-6 mb-6">
+         <div className="mt-6 mb-6 hidden sm:block">
             <p>
-               <span className="mr-2"> Ziba pay</span>
+               <span className="hover:text-main cursor-default mr-2">
+                  {" "}<Link href="/zibapay-help-center">
+                  Ziba pay
+                  </Link>
+               </span>
                {">"}
-               <span className="mx-2">General</span>
+               <span className="hover:text-main cursor-default mx-2">
+                  General
+               </span>
                {">"}
-               <span className="ml-2">FAQ</span>
+               <span className="hover:text-main cursor-default ml-2">FAQ</span>
             </p>
          </div>
          <div>
             <div className="my-4 mt-20 flex gap-20 flex-col md:flex-row">
-               <div>
-                  <h4>Articles in this section</h4>
-                  <Link href="./ziba-pay-security">
-                     <p>How secure is Ziba pay?</p>
-                  </Link>
-                  <Link href="./virtual-accounts">
-                     <p>Virtual Accounts</p>
-                  </Link>
-                  <Link href="./ziba-pay-apis">
+            <div className="mt-6 sm:mt-0 flex flex-col gap-3">
+                  <h4 className="">Articles in this section</h4>
+                  <p>
                      {" "}
-                     <p>Ziba pay APIs</p>
-                  </Link>
+                     <Link href="./ziba-pay-security">
+                        How secure is Ziba pay?
+                     </Link>
+                  </p>
+                  <p>
+                     {" "}
+                     <Link href="./virtual-accounts">Virtual Accounts </Link>
+                  </p>{" "}
+                  <p>
+                     {" "}
+                     <Link href="./ziba-pay-apis">Ziba pay APIs</Link>
+                  </p>
                </div>
                <div className="w-full md:w-3/4">
                   <div className=" border-b pb-40">
@@ -37,7 +47,7 @@ const VAccounts = () => {
                      <div className="mt-10">
                         <ul className="flex flex-col gap-6">
                            <li>
-                              <h4>What is a Virtual Account?</h4>
+                              <h4 className="my-4">What is a Virtual Account?</h4>
                               <p>
                                  A virtual account is a type of bank account
                                  that exists digitally and is typically used for
@@ -49,7 +59,7 @@ const VAccounts = () => {
                               </p>
                            </li>
                            <li>
-                              <h4>
+                              <h4 className="my-4">
                                  How can I benefit from having a virtual account
                                  with Ziba Pay?
                               </h4>
@@ -63,7 +73,7 @@ const VAccounts = () => {
                               </p>
                            </li>
                            <li>
-                              <h4>
+                              <h4 className="my-4">
                                  Is it secure to use virtual accounts for my
                                  transactions?
                               </h4>
@@ -77,7 +87,7 @@ const VAccounts = () => {
                               </p>
                            </li>
                            <li>
-                              <h4>
+                              <h4 className="my-4">
                                  Can I send and receive payments using my
                                  virtual account?
                               </h4>
@@ -89,7 +99,7 @@ const VAccounts = () => {
                               </p>
                            </li>
                            <li>
-                              <h4>
+                              <h4 className="my-4">
                                  How do I access and manage my virtual account?
                               </h4>
                               <p>
@@ -101,7 +111,7 @@ const VAccounts = () => {
                               </p>
                            </li>
                            <li>
-                              <h4>
+                              <h4 className="my-4">
                                  Can I link my virtual account to my existing
                                  bank account?
                               </h4>
@@ -112,7 +122,7 @@ const VAccounts = () => {
                               </p>
                            </li>
                            <li>
-                              <h4>
+                              <h4 className="my-4">
                                  Can I use my virtual account for both personal
                                  and business transactions?
                               </h4>
@@ -123,7 +133,7 @@ const VAccounts = () => {
                               </p>
                            </li>
                            <li>
-                              <h4>
+                              <h4 className="my-4">
                                  How quickly are transactions processed through
                                  a virtual account?
                               </h4>
@@ -135,7 +145,7 @@ const VAccounts = () => {
                               </p>
                            </li>
                            <li>
-                              <h4>
+                              <h4 className="my-4">
                                  Can I set up recurring payments or automatic
                                  transfers with my virtual account?
                               </h4>
@@ -169,12 +179,12 @@ const VAccounts = () => {
                      <p>0 out of 0 found it helpful</p>
                      <p>
                         Have more questions ?{" "}
-                        <Link href="request-form">Submit a request</Link>
+                        <Link href="request">Submit a request</Link>
                      </p>
                   </div>
                   <div className="flex flex-col gap-2">
                      <h3>Related article</h3>
-                     <Link href="/ziba-pay-apis">Ziba pay APIs</Link>
+                     <Link href="./ziba-pay-apis">Ziba pay APIs</Link>
                      <Link href="/ziba-pay-apis">Getting Started</Link>
                      <Link href="/ziba-pay-apis">Pricing </Link>
                      <Link href="/ziba-pay-apis">Disputes</Link>
