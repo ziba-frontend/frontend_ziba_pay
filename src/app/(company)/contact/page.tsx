@@ -30,17 +30,17 @@ const Contact = () => {
                />
             </div>
             <div className="flex items-center  justify-center flex-wrap gap-4">
-               <div className="flex flex-col gap-2 w-[250px] border border-black/50 p-6 min-h-[200px] hover:bg-main hover:text-white transition-all hover:border-none">
+               <div className="flex flex-col gap-2 w-[250px] border border-black/50 p-6 min-h-[200px] hover:bg-main hover:text-white transition-all hover:border-none cursor-default">
                   <FaMailBulk className="text-main" />
                   <h3>Email</h3>
                   <p>Contact Ziba pay today using Zibapaysupport.com</p>
                </div>
-               <div className="flex flex-col gap-2 w-[250px] border border-black/50 p-6 min-h-[200px] hover:bg-main hover:text-white transition-all hover:border-none">
+               <div className="flex flex-col gap-2 w-[250px] border border-black/50 p-6 min-h-[200px] hover:bg-main hover:text-white transition-all hover:border-none cursor-default">
                   <FaPhone className="text-main" />
                   <h3>Call Us</h3>
                   <p>You can call us here +234810005456</p>
                </div>
-               <div className="flex flex-col gap-2 w-[250px] border border-black/50 p-6 min-h-[200px] hover:bg-main hover:text-white transition-all hover:border-none">
+               <div className="flex flex-col gap-2 w-[250px] border border-black/50 p-6 min-h-[200px] hover:bg-main hover:text-white transition-all hover:border-none cursor-default">
                   <FaHeadset className="text-main" />
                   <h3>Contact Sales</h3>
                   <p>

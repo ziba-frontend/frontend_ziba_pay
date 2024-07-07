@@ -52,7 +52,7 @@ const Request = () => {
                         <FormLabel>Write your issue below</FormLabel>
                         <FormControl>
                            <Input
-                              className="bg-white p-6 outline-none border"
+                              className="bg-white p-6 md:p-8 outline-none border"
                               placeholder="issue"
                               {...field}
                            />
@@ -69,7 +69,7 @@ const Request = () => {
                         <FormLabel>Your email</FormLabel>
                         <FormControl>
                            <Input
-                              className="bg-white p-6 outline-none border "
+                              className="bg-white p-6 outline-none border md:p-8"
                               placeholder="email"
                               {...field}
                            />
@@ -86,7 +86,7 @@ const Request = () => {
                         <FormLabel>Subject</FormLabel>
                         <FormControl>
                            <Input
-                              className="bg-white p-6  border"
+                              className="bg-white p-6  border md:p-8"
                               placeholder="subject"
                               {...field}
                            />

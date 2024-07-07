@@ -1,23 +1,31 @@
 "use client";
-
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
-import Layout from "../(help)/layout";
-import { Search } from "lucide-react";
-import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import logo from "../../../../public/svg/logo.svg";
+import help1 from "../../../../public/images/help1.png";
+import help2 from "../../../../public/images/help2.png";
+import { FaSearch } from "react-icons/fa";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 
+// Define the search data type
 interface SearchData {
    title: string;
    link: string;
 }
 
+// Sample search data
 const searchData: SearchData[] = [
    { title: "How secure is Ziba pay?", link: "/help-center/ziba-pay-security" },
    { title: "Virtual Accounts", link: "/help-center/virtual-accounts" },
    { title: "Ziba pay APIs", link: "/help-center/ziba-pay-apis" },
+   // Add more search data as needed
 ];
-const ZibapayHelp = () => {
+
+const WithSearchLayout: React.FC<{ children: React.ReactNode }> = ({
+   children,
+}) => {
    const pathname = usePathname();
    const showSearchForm = pathname !== "/help-center/request";
    const [query, setQuery] = useState<string>("");
@@ -34,24 +42,22 @@ const ZibapayHelp = () => {
          setFilteredResults([]);
       }
    }, [query]);
+
    return (
-      <Layout
-         showFormAndImage={false}
-         hideBorder={true}
-      >
-         <div
-            className="flex items-center justify-center min-h-[40vh] bg-no-repeat bg-cover bg-center mt-12"
-            style={{
-               backgroundImage: "url('/svg/help1.svg')",
-            }}
-         >
-            <div className="w-5/6 sm:w-3/4 ">
+      <>
+         <Image
+            src={help1}
+            alt="ziba help center"
+            className="absolute right-0 -z-20"
+         />
+         {showSearchForm && (
+            <div className="absolute right-12 top-[150px] w-[200px] md:w-[300px]">
                <form
-                  className={`flex gap-4 bg-white items-center sm:p-6 p-2 rounded-full transition-all ${
+                  className={`flex gap-4 bg-white items-center p-2 rounded-full transition-all ${
                      isInputFocused ? "border-2 border-main" : "border"
                   }`}
                >
-                  <Search color="gray" />
+                  <FaSearch color="gray" />
                   <input
                      className="outline-none w-5/6"
                      placeholder="Search..."
@@ -67,7 +73,7 @@ const ZibapayHelp = () => {
                         <Link
                            key={index}
                            href={result.link}
-                           onClick={() => setQuery("")}
+                           onClick={() => setQuery("")} // Clear the query on click
                         >
                            <div className="p-2 hover:bg-gray-100 cursor-pointer">
                               {result.title}
@@ -77,38 +83,36 @@ const ZibapayHelp = () => {
                   </div>
                )}
             </div>
-         </div>
+         )}
+         <div className="border-b">
+            <div className="flex justify-between items-center h-[100px] container">
+               <Link href="/">
+                  <Image
+                     src={logo}
+                     alt="zibaPay"
+                     className="-z-10"
+                  />
+               </Link>
 
-         <div className="container flex items-center justify-center py-12 flex-col gap-6">
-            <div className="flex gap-4 lg:gap-12 flex-wrap items-center justify-center  my-6">
-               <Button
-                  variant="outline"
-                  className="md:w-[200px] lg:w-[383px] hover:border-main hover:bg-main hover:text-white p-6"
-               >
-                  <Link href="/help-center">General</Link>
-               </Button>
-               <Button
-                  variant="outline"
-                  className="md:w-[200px] lg:w-[383px] hover:border-main hover:bg-main hover:text-white p-6"
-               >
-                  <Link href="/help-center">Getting Started</Link>
-               </Button>
-               <Button
-                  variant="outline"
-                  className="md:w-[200px] lg:w-[383px] hover:border-main hover:bg-main hover:text-white p-6"
-               >
-                  Pricing
+               <Button>
+                  <Link href="/help-center/request">Submit a Request</Link>
                </Button>
             </div>
-            <Button
-               variant="outline"
-               className="w-[93%] hover:border-main hover:bg-main hover:text-white p-6"
-            >
-               Disputes
-            </Button>
          </div>
-      </Layout>
+
+         <section className="min-h-[75vh] border-b">{children}</section>
+         <div className="flex items-start h-[80px] container">
+            <Link href="/">
+               <h4>Ziba Pay</h4>
+            </Link>
+         </div>
+         <Image
+            src={help2}
+            alt="ziba help center"
+            className="fixed right-0 -bottom-20 -z-20"
+         />
+      </>
    );
 };
 
-export default ZibapayHelp;
+export default WithSearchLayout;
