@@ -1,5 +1,4 @@
 "use client";
-import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import logo from "../../../../public/svg/logo.svg";
@@ -13,12 +12,6 @@ interface SearchData {
 }
 
 // Sample search data
-const searchData: SearchData[] = [
-  { title: "How secure is Ziba pay?", link: "/help-center/ziba-pay-security" },
-  { title: "Virtual Accounts", link: "/help-center/virtual-accounts" },
-  { title: "Ziba pay APIs", link: "/help-center/ziba-pay-apis" },
-  // Add more search data as needed
-];
 
 const WithoutSearchLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
@@ -35,8 +28,8 @@ const WithoutSearchLayout: React.FC<{ children: React.ReactNode }> = ({ children
         </div>
       </div>
 
-      <section className="min-h-[75vh]">{children}</section>
-      <div className="flex items-start h-[80px] container">
+      <section className="min-h-[75vh] border-b">{children}</section>
+      <div className="flex items-start h-[80px] container mt-6">
         <Link href="/">
           <h4>Ziba Pay</h4>
         </Link>

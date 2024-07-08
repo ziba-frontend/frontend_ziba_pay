@@ -1,17 +1,227 @@
 ---
 title: Libraries
-description: Libraries
+description: Overview and installation guide for the payment gateway libraries.
 ---
 
-## Code Block
 
-```js
-console.log('Hello World');
+This document provides an overview of the libraries available for integrating the payment gateway and instructions on how to install and use them.
+
+## Available Libraries
+
+We offer libraries for various programming languages and frameworks to make integration with our payment gateway as seamless as possible.
+
+- [JavaScript SDK](#javascript-sdk)
+- [Python SDK](#python-sdk)
+- [Java SDK](#java-sdk)
+- [Ruby SDK](#ruby-sdk)
+- [PHP SDK](#php-sdk)
+
+## JavaScript SDK
+
+### Installation
+
+You can install the JavaScript SDK using npm or yarn.
+
+```bash
+npm install payment-gateway-sdk
 ```
 
-## Cards
+Or
 
-<Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.vercel.app" />
-</Cards>
+```bash
+yarn add payment-gateway-sdk
+
+```
+
+## Basic Usage
+
+Here's a quick example of how to use the JavaScript SDK to process a payment.
+
+
+```jsx
+
+import { PaymentGateway } from 'payment-gateway-sdk';
+
+const paymentGateway = new PaymentGateway({
+  apiKey: 'YOUR_API_KEY',
+});
+
+const processPayment = async () => {
+  try {
+    const result = await paymentGateway.processPayment({
+      cardNumber: '4111111111111111',
+      expiryDate: '12/25',
+      cvv: '123',
+    });
+    if (result.success) {
+      console.log('Payment successful!');
+    } else {
+      console.log('Payment failed:', result.error);
+    }
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+};
+
+```
+
+## Python SDK
+
+### Installation
+
+Install the Python SDK using pip.
+
+```bash
+pip install payment-gateway-sdk
+
+```
+## Basic Usage
+
+Here's an example of using the Python SDK to process a payment.
+
+```python
+
+from payment_gateway_sdk import PaymentGateway
+
+payment_gateway = PaymentGateway(api_key='YOUR_API_KEY')
+
+try:
+    result = payment_gateway.process_payment(
+        card_number='4111111111111111',
+        expiry_date='12/25',
+        cvv='123'
+    )
+    if result['success']:
+        print('Payment successful!')
+    else:
+        print('Payment failed:', result['error'])
+except Exception as e:
+    print('An error occurred:', str(e))
+
+```
+
+## Java SDK
+
+### Installation
+
+Add the following dependency to your pom.xml if you're using Maven.
+
+```xml
+
+<dependency>
+  <groupId>com.payment.gateway</groupId>
+  <artifactId>payment-gateway-sdk</artifactId>
+  <version>1.0.0</version>
+</dependency>
+
+
+```
+
+## Basic Usage
+
+Here's an example of using the Java SDK to process a payment.
+
+```java
+
+import com.payment.gateway.PaymentGateway;
+import com.payment.gateway.models.PaymentResult;
+
+public class Main {
+  public static void main(String[] args) {
+    PaymentGateway paymentGateway = new PaymentGateway("YOUR_API_KEY");
+
+    try {
+      PaymentResult result = paymentGateway.processPayment("4111111111111111", "12/25", "123");
+      if (result.isSuccess()) {
+        System.out.println("Payment successful!");
+      } else {
+        System.out.println("Payment failed: " + result.getError());
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+```
+
+## Ruby SDK
+
+### Installation
+
+Install the Ruby SDK using gem.
+
+```bash
+
+gem install payment-gateway-sdk
+
+```
+
+## Basic Usage
+
+Here's an example of using the Ruby SDK to process a payment.
+
+```ruby
+
+
+require 'payment_gateway_sdk'
+
+payment_gateway = PaymentGateway.new(api_key: 'YOUR_API_KEY')
+
+begin
+  result = payment_gateway.process_payment(
+    card_number: '4111111111111111',
+    expiry_date: '12/25',
+    cvv: '123'
+  )
+  if result[:success]
+    puts 'Payment successful!'
+  else
+    puts "Payment failed: #{result[:error]}"
+  end
+rescue => e
+  puts "An error occurred: #{e.message}"
+end
+
+```
+
+## PHP SDK
+
+### Installation
+
+Install the PHP SDK using Composer.
+
+```bash
+
+composer require payment-gateway-sdk
+
+```
+
+## Basic Usage
+
+Here's an example of using the PHP SDK to process a payment.
+
+```php
+
+<?php
+require 'vendor/autoload.php';
+
+use PaymentGateway\PaymentGateway;
+
+$paymentGateway = new PaymentGateway('YOUR_API_KEY');
+
+try {
+  $result = $paymentGateway->processPayment('4111111111111111', '12/25', '123');
+  if ($result->success) {
+    echo 'Payment successful!';
+  } else {
+    echo 'Payment failed: ' . $result->error;
+  }
+} catch (Exception $e) {
+  echo 'An error occurred: ' . $e->getMessage();
+}
+?>
+
+```
+
+These libraries are designed to simplify the integration process for our payment gateway. Refer to the respective sections for detailed installation and usage instructions. If you encounter any issues or need further assistance, please contact our support team.

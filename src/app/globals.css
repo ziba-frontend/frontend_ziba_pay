@@ -75,6 +75,11 @@
    .swiper-pagination-bullet-active {
       background-color: #030a11 !important;
    }
+
+   code,
+   pre {
+      user-select: all !important;
+   }
 }
 
 .resp-card {
@@ -98,18 +103,17 @@
    gap: 2rem;
 }
 
-.docform{
+.docform {
    display: flex;
    gap: 4;
    align-items: center;
-
 }
 
 @media screen and (max-width: 768px) {
    .docnav {
       display: none;
    }
-   .docform{
+   .docform {
       display: none;
    }
 }

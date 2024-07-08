@@ -1,17 +1,145 @@
 ---
 title: Accept Payment
-description: how to accept payment
+description: Guide to accepting payments using the payment gateway.
 ---
 
-## Code Block
 
-```js
-console.log('Hello World');
+This document provides a guide on how to accept payments using the payment gateway. It includes API calls, transaction controllers, and specific implementations for MTN and Airtel payment methods.
+
+## API Calls
+
+To initiate a payment, you can use the following API call. The example below shows how to initiate an MTN MoMo payment.
+
+### Example: Initiating MTN MoMo Payment
+
+```typescript
+import axios from "axios";
+
+interface PaymentData {
+    amount: number | null;
+    currency: string;
+    phoneNumber: string | null;
+    description: string | null;
+}
+
+const BASE_URL = 'http://localhost:8080/api/v1/payment';
+
+const initiateMtnPayment = async (paymentData: PaymentData) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/mtn-momo-pay`, paymentData, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.error("Error during Mtn momo payment");
+        throw error;
+    }
+}
 ```
 
-## Cards
+## Transaction Controllers
 
-<Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.vercel.app" />
-</Cards>
+### Get Sent Transactions
+
+```typescript
+
+import { Request, Response } from 'express';
+import { getSentTransactions, getReceivedTransaction, completeTransaction, getAllTransactions } from '../services/transaction.service';
+
+interface AuthenticatedRequest extends Request {
+    user: {
+        id: string;
+    };
+}
+
+export const getSentTransactionsHandler = async (req: Request, res: Response) => {
+    if (!req.user) {
+        return res.status(401).json({ error: 'User not authenticated' });
+    }
+    const authReq = req as AuthenticatedRequest;
+    try {
+        const result = await getSentTransactions(authReq.user.id);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ error: 'Error retrieving sent transactions' });
+    }
+};
+
+```
+
+## Get Received Transactions
+
+```typescript
+
+import { Request, Response } from 'express';
+import { getSentTransactions, getReceivedTransaction, completeTransaction, getAllTransactions } from '../services/transaction.service';
+
+interface AuthenticatedRequest extends Request {
+    user: {
+        id: string;
+    };
+}
+
+export const getReceivedTransactionsHandler = async (req: Request, res: Response) => {
+    if (!req.user) {
+        return res.status(401).json({ error: 'User not authenticated' });
+    }
+    const authReq = req as AuthenticatedRequest;
+    try {
+        const result = await getReceivedTransaction(authReq.user.id);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ error: 'Error retrieving received transactions' });
+    }
+};
+
+```
+
+## Get All Transactions
+
+```typescript
+
+import { Request, Response } from 'express';
+import { getSentTransactions, getReceivedTransaction, completeTransaction, getAllTransactions } from '../services/transaction.service';
+
+export const getAllTransaction = async (req: Request, res: Response) => {
+    if (!req.user) {
+        return res.status(401).json({ error: 'User not authenticated' });
+    }
+    try {
+        const result = await getAllTransactions();
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ error: 'Error retrieving all transactions' });
+    }
+};
+
+```
+
+## Complete Transaction
+
+```typescript
+
+import { Request, Response } from 'express';
+import { getSentTransactions, getReceivedTransaction, completeTransaction, getAllTransactions } from '../services/transaction.service';
+
+interface AuthenticatedRequest extends Request {
+    user: {
+        id: string;
+    };
+}
+
+export const completeTransactionHandler = async (req: Request, res: Response) => {
+    if (!req.user) {
+        return res.status(401).json({ error: 'User not authenticated' });
+    }
+    const authReq = req as AuthenticatedRequest;
+    try {
+        const result = await completeTransaction(req.params.id, authReq.user.id);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ error: 'Error completing transaction' });
+    }
+};
+
+```
+
+This guide provides the necessary information to accept payments using the payment gateway. Follow the provided examples and customize the implementation to fit your specific requirements. If you have any questions or need further assistance, please contact our support team.
