@@ -49,7 +49,7 @@ const Home = () => {
          <Navbar />
          <div>
             {/* ===============HERO SECTION================== */}
-            <div className="flex items-center mx-auto text-center flex-col py-4 prose container min-h-[60vh] justify-center pt-20">
+            <div className="flex items-center mx-auto text-center flex-col py-4 prose container min-h-[85vh] justify-center pt-20">
                <Image
                   src={oval}
                   alt="oval"

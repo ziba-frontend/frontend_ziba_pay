@@ -78,7 +78,7 @@
 
    code,
    pre {
-      user-select: all !important;
+      user-select: text !important;
    }
 }
 
@@ -109,6 +109,10 @@
    align-items: center;
 }
 
+
+.docs .sidebar{
+   background-color: red;
+}
 @media screen and (max-width: 768px) {
    .docnav {
       display: none;

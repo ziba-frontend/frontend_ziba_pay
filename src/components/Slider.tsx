@@ -74,7 +74,7 @@ const Slider = () => {
 
                      <div>
                         <p className="mb-6">{review.text}</p>
-                        <div className="flex gap-2">
+                        <div className="flex flex-col  gap-4 md:flex-row ">
                            <h4>{review.name}</h4>
                            <p>{review.title}</p>
                         </div>
