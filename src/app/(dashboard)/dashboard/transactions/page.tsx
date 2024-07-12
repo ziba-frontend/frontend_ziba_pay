@@ -75,11 +75,11 @@ const columns: ColumnDef<Payment>[] = [
       const status = row.original.status;
       let statusClass = "";
 
-      if (status === "Pending") {
+      if (status === "pending") {
         statusClass = "text-blue-500 bg-blue-100";
-      } else if (status === "Completed") {
+      } else if (status === "completed") {
         statusClass = "text-green-500 bg-green-100";
-      } else if (status === "Cancelled") {
+      } else if (status === "cancelled") {
         statusClass = "text-red-500 bg-red-100";
       }
 
