@@ -43,6 +43,16 @@ export const getAllTransactions = async() => {
     }
 }
 
+export const getAllTransactionStatus = async() => {
+    try{
+        const response = await axios.get(`${BASE_URL}/status`, { withCredentials: true});
+        return response.data;
+    }catch(error){
+        console.error("Error while getting All transaction");
+        throw error;
+    }
+}
+
 
 export const generatePDFTransactions = async() => {
     try{
