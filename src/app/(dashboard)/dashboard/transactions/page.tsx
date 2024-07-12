@@ -15,6 +15,7 @@ import Link from "next/link";
 import RiseLoader from "react-spinners/RiseLoader";
 import { z } from "zod";
 import { getSentTransaction } from "@/lib/api-calls/transaction";
+import CategoryBadge from "@/components/CategoryBadge";
 
 // Define the schema
 const formSchema = z.object({
@@ -36,6 +37,7 @@ type Payment = {
    status: string;
    createdAt: string;
 };
+
 
 const columns: ColumnDef<Payment>[] = [
    {
@@ -59,10 +61,6 @@ const columns: ColumnDef<Payment>[] = [
             </div>
          );
       },
-   },
-   {
-      accessorKey: "amount",
-      header: "Amount",
    },
    {
       accessorKey: "status",
