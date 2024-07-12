@@ -11,9 +11,10 @@ export default function RootDocsLayout({ children }: { children: ReactNode }) {
          theme={{
             enabled: false,
          }}
+         
       >
          <DocsNavbar />
-         <div className="pt-[90px]">
+         <div className="pt-[90px] docs" >
             <DocsLayout
                tree={pageTree}
                nav={{ enabled: false }}

@@ -11,6 +11,7 @@ import Reschema from "@/components/Reschema";
 import Image from "next/image";
 
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import DocsReview from "@/components/DocsReview";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
    return {
@@ -21,6 +22,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       Response,
       BEndpoint,
       Reschema,
+      DocsReview,
       Tab,
       Tabs,
       Image,

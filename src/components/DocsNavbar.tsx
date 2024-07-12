@@ -92,7 +92,7 @@ const DocsNavbar = () => {
    };
 
    return (
-      <div className="h-[90px] fixed left-0 top-0 w-full z-[99] bg-background shadow-md">
+      <div className="h-[90px] fixed left-0 top-0 w-full z-[50] bg-background shadow-md">
          <div className="container mx-auto p-4 flex items-center justify-between">
             <Link href="/api-docs">API-DOCS</Link>
 
@@ -163,7 +163,7 @@ const DocsNavbar = () => {
                <DrawerTrigger></DrawerTrigger>
                <DrawerContent
                   ref={drawerRef}
-                  className="bg-transparent fixed z-50 left-0 md:left-1/2 top-20 transform md:-translate-x-1/2 -translate-y-1/2 w-full max-w-lg h-auto max-h-[90%] rounded-lg shadow-lg p-6"
+                  className="bg-transparent fixed z-[99] left-0 md:left-1/2 top-20 transform md:-translate-x-1/2 -translate-y-1/2 w-full max-w-lg h-auto max-h-[90%] rounded-lg shadow-lg p-6"
                >
                   <DrawerHeader className="bg-background flex justify-between items-center">
                      <DrawerTitle>Search Results</DrawerTitle>

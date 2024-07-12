@@ -1,17 +1,206 @@
 ---
 title: Webhook
-description: webhook
+description: Guide to setting up and using webhooks with the payment gateway.
 ---
 
-## Code Block
 
-```js
-console.log('Hello World');
+Webhooks allow your application to receive real-time notifications about events that occur within the payment gateway. This document provides a comprehensive guide to setting up and handling webhooks.
+
+## Overview
+
+Webhooks are HTTP callbacks that send event data to a specified URL in your application. When an event is triggered, our servers will send a POST request to your webhook endpoint containing details about the event.
+
+## Supported Events
+
+The following events are supported:
+
+- `payment.completed`: Triggered when a payment is successfully completed.
+- `payment.failed`: Triggered when a payment attempt fails.
+- `refund.initiated`: Triggered when a refund is initiated.
+- `refund.completed`: Triggered when a refund is successfully processed.
+- `customer.created`: Triggered when a new customer is created.
+- `customer.updated`: Triggered when a customer's information is updated.
+
+## Setting Up Webhooks
+
+### Step 1: Configure Your Webhook Endpoint
+
+First, set up an endpoint in your application to receive webhook events. The endpoint should be able to handle POST requests and process the incoming data.
+
+### Example in Node.js (Express)
+
+```javascript
+const express = require('express');
+const bodyParser = require('body-parser');
+
+const app = express();
+app.use(bodyParser.json());
+
+app.post('/webhooks', (req, res) => {
+  const event = req.body;
+
+  switch (event.type) {
+    case 'payment.completed':
+      // Handle successful payment
+      console.log(`Payment completed: ${event.data}`);
+      break;
+    case 'payment.failed':
+      // Handle failed payment
+      console.log(`Payment failed: ${event.data}`);
+      break;
+    // Handle other events
+    default:
+      console.log(`Unhandled event type: ${event.type}`);
+  }
+
+  res.sendStatus(200);
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
 ```
 
-## Cards
+### Example in Python (Flask)
 
-<Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.vercel.app" />
-</Cards>
+```python
+
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route('/webhooks', methods=['POST'])
+def handle_webhook():
+    event = request.json
+
+    if event['type'] == 'payment.completed':
+        # Handle successful payment
+        print(f"Payment completed: {event['data']}")
+    elif event['type'] == 'payment.failed':
+        # Handle failed payment
+        print(f"Payment failed: {event['data']}")
+    # Handle other events
+
+    return jsonify(success=True)
+
+if __name__ == '__main__':
+    app.run(port=3000)
+
+```
+
+### Step 2: Register Your Webhook URL
+
+Register your webhook URL in the payment gateway dashboard or via the API.
+
+#### Example API Request
+
+```bash
+POST /api/webhooks
+Authorization: Bearer YOUR_ACCESS_TOKEN
+Content-Type: application/json
+
+{
+  "url": "https://yourdomain.com/webhooks",
+  "events": ["payment.completed", "payment.failed"]
+}
+
+```
+
+#### Example Response
+
+```json
+
+{
+  "id": "wh_123",
+  "url": "https://yourdomain.com/webhooks",
+  "events": ["payment.completed", "payment.failed"],
+  "status": "active"
+}
+
+```
+
+## Verifying Webhooks
+
+To ensure the integrity of the data sent to your webhook endpoint, we sign each webhook event. You should verify this signature to confirm that the request is from our servers.
+
+## Verifying the Signature
+
+Each webhook request includes a X-Signature header which you can use to verify the authenticity of the event.
+
+#### Example in Node.js (Express)
+```js
+
+const crypto = require('crypto');
+
+app.post('/webhooks', (req, res) => {
+  const signature = req.headers['x-signature'];
+  const body = JSON.stringify(req.body);
+  const expectedSignature = crypto
+    .createHmac('sha256', 'YOUR_WEBHOOK_SECRET')
+    .update(body)
+    .digest('hex');
+
+  if (signature !== expectedSignature) {
+    return res.status(400).send('Invalid signature');
+  }
+
+  // Process the webhook event
+});
+
+```
+#### Example in Python (Flask)
+
+```python
+
+import hashlib
+import hmac
+
+@app.route('/webhooks', methods=['POST'])
+def handle_webhook():
+    signature = request.headers.get('X-Signature')
+    body = request.get_data(as_text=True)
+    expected_signature = hmac.new(
+        'YOUR_WEBHOOK_SECRET'.encode(),
+        body.encode(),
+        hashlib.sha256
+    ).hexdigest()
+
+    if signature != expected_signature:
+        return 'Invalid signature', 400
+
+    # Process the webhook event
+    return jsonify(success=True)
+
+```
+
+## Handling Retries
+
+If your webhook endpoint is unavailable or returns a non-2xx status code, we will retry the delivery for up to 24 hours with exponential backoff. Ensure your endpoint is idempotent to handle potential duplicate events.
+
+#### Example Webhook Payload
+
+Here’s an example of the payload sent for a payment.completed event:
+
+```json
+
+{
+  "id": "evt_123",
+  "type": "payment.completed",
+  "data": {
+    "transaction_id": "txn_123",
+    "amount": 1000,
+    "currency": "USD",
+    "status": "completed",
+    "customer": {
+      "id": "cust_123",
+      "email": "customer@example.com"
+    }
+  },
+  "created_at": "2024-07-08T12:34:56Z"
+}
+
+```
+
+Webhooks provide a powerful way to receive real-time updates about events in the payment gateway. Follow the steps outlined in this guide to set up and handle webhooks securely. If you have any questions or need further assistance, please contact our support team.
+
+<DocsReview/>

@@ -10,10 +10,10 @@ You can use the API-DOC in test mode, which doesn’t affect your live data or i
 
 
 <DocCards>
-<DocCard bgColor='#00E616' title='Getting started ' content='Embark on your payment processing journey with ease by following these simple steps to get started with our Payment API. '>
+<DocCard bgColor='#AFF4B7' title='Getting started ' content='Embark on your payment processing journey with ease by following these simple steps to get started with our Payment API. '>
  <p className="text-[#1E1147]"><a href="http://localhost:3000/api-docs/start/quick">Developer Quick Start Guide</a></p>
 </DocCard>
-<DocCard bgColor='#00E616' title='Not a developer? ' content='Explore our no-code option to get started with API-DOC and do more with our API-DOC account '>
+<DocCard bgColor='#AFF4B7' title='Not a developer? ' content='Explore our no-code option to get started with API-DOC and do more with our API-DOC account '>
  <p className="text-[#1E1147]"><a href="http://localhost:3000/api-docs/start/quick">No Code Option</a></p>
 </DocCard>
 </DocCards>
@@ -31,13 +31,20 @@ Here's how to get your client ID and client secret:
 3. New accounts come with a Default Application in the REST API apps section. To create a new project, select Create App.
 4. Copy the client ID and client secret for your app.
 
-```js
+
+<Tabs items={['Curl', 'Rust']}>
+  <Tab value="Curl" >
+  ```shell 
 
 curl -G https://api.protocol.chat/v1/conversations \
   -H "Authorization: Bearer {token}" \
   -d limit=10
 
 ```
+</Tab>
+  <Tab value="Rust">Rust is fast</Tab>
+</Tabs>
+
 
 ## Client Libraries
 

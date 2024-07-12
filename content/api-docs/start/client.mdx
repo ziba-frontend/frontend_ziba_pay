@@ -1,17 +1,172 @@
 ---
 title: Client
-description: client
+description: Detailed guide on integrating the payment gateway into your client-side application.
 ---
+This document provides a comprehensive guide on how to integrate our payment gateway into your client-side application.
 
-## Code Block
+## Prerequisites
 
-```js
-console.log('Hello World');
+Before integrating the payment gateway, ensure you have the following:
+
+- An API key from your payment gateway account.
+- Basic knowledge of JavaScript and front-end development.
+- A client-side framework (e.g., React, Vue, Angular).
+
+## Getting Started
+
+### Step 1: Install the SDK
+
+First, you need to install the payment gateway SDK. You can do this using npm or yarn.
+
+```bash
+npm install payment-gateway-sdk
 ```
 
-## Cards
+Or 
 
-<Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.vercel.app" />
-</Cards>
+```bash
+yarn add payment-gateway-sdk
+```
+
+### Step 2: Initialize the SDK
+
+Initialize the SDK with your API key. This can be done in your main application file.
+
+```js 
+import { PaymentGateway } from 'payment-gateway-sdk';
+
+const paymentGateway = new PaymentGateway({
+  apiKey: 'YOUR_API_KEY',
+});
+```
+
+### Step 3: Create a Payment Form
+
+Create a form to capture payment details from the user. The form should include fields for card number, expiry date, CVV, and any other required information.
+
+```jsx 
+
+import React, { useState } from 'react';
+
+const PaymentForm = () => {
+  const [cardNumber, setCardNumber] = useState('');
+  const [expiryDate, setExpiryDate] = useState('');
+  const [cvv, setCvv] = useState('');
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    // Add payment processing logic here
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>Card Number</label>
+        <input
+          type="text"
+          value={cardNumber}
+          onChange={(e) => setCardNumber(e.target.value)}
+        />
+      </div>
+      <div>
+        <label>Expiry Date</label>
+        <input
+          type="text"
+          value={expiryDate}
+          onChange={(e) => setExpiryDate(e.target.value)}
+        />
+      </div>
+      <div>
+        <label>CVV</label>
+        <input
+          type="text"
+          value={cvv}
+          onChange={(e) => setCvv(e.target.value)}
+        />
+      </div>
+      <button type="submit">Pay Now</button>
+    </form>
+  );
+};
+
+export default PaymentForm;
+
+```
+
+### Step 4: Process the Payment
+
+Use the SDK to process the payment when the form is submitted.
+
+```js
+
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  try {
+    const paymentResult = await paymentGateway.processPayment({
+      cardNumber,
+      expiryDate,
+      cvv,
+    });
+    if (paymentResult.success) {
+      alert('Payment successful!');
+    } else {
+      alert('Payment failed: ' + paymentResult.error);
+    }
+  } catch (error) {
+    alert('An error occurred: ' + error.message);
+  }
+};
+
+```
+
+### Step 5: Handle Payment Results
+
+Ensure you handle both successful and failed payment attempts. Provide appropriate feedback to the user based on the payment result.
+
+```js
+
+if (paymentResult.success) {
+  // Handle successful payment
+} else {
+  // Handle failed payment
+}
+
+```
+
+### Additional Features
+
+#### Handling Webhooks
+
+To handle webhooks for real-time payment updates, refer to the server-side integration guide.
+
+#### Saving Customer Information
+
+To save customer payment information for future transactions, use the SDK's customer management features.
+
+```js
+
+const saveCustomerInfo = async () => {
+  try {
+    const customerResult = await paymentGateway.saveCustomer({
+      cardNumber,
+      expiryDate,
+      cvv,
+      customerId: 'CUSTOMER_ID',
+    });
+    if (customerResult.success) {
+      alert('Customer information saved!');
+    } else {
+      alert('Failed to save customer information: ' + customerResult.error);
+    }
+  } catch (error) {
+    alert('An error occurred: ' + error.message);
+  }
+};
+
+```
+
+Integrating the payment gateway into your client-side application is straightforward with our SDK. Follow the steps outlined in this guide to get started, and refer to the SDK documentation for more advanced features.
+
+If you have any questions or need further assistance, please contact our support team.
+
+<DocsReview/>

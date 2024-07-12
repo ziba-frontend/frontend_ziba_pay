@@ -13,19 +13,19 @@ const Footer = () => {
          links: [
             {
                name: "Payment processing solutions",
-               link: "/",
+               link: "/payment-processing",
             },
             {
                name: "Invoicing and billing services",
-               link: "/about",
+               link: "/billing",
             },
             {
                name: "Financial management tools",
-               link: "/posts",
+               link: "/financial-management-tools",
             },
             {
                name: "Custom solutions",
-               link: "/posts",
+               link: "/custom-solution-for-business",
             },
          ],
       },
@@ -59,7 +59,7 @@ const Footer = () => {
          links: [
             {
                name: "Help Center",
-               link: "/help",
+               link: "/help-center",
             },
             {
                name: "Contact",
@@ -67,7 +67,7 @@ const Footer = () => {
             },
             {
                name: "FAQs",
-               link: "/contact",
+               link: "/help-center/ziba-pay-security",
             },
          ],
       },
