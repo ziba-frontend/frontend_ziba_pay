@@ -1,5 +1,7 @@
+// Import necessary libraries and components
 "use client";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Select,
   SelectContent,
@@ -16,6 +18,7 @@ import RiseLoader from "react-spinners/RiseLoader";
 import { z } from "zod";
 import { getSentTransaction } from "@/lib/api-calls/transaction";
 import CategoryBadge from "@/components/CategoryBadge";
+import { getUserProfile } from "@/lib/api-calls/auth-server";
 
 // Define the schema
 const formSchema = z.object({
@@ -37,7 +40,6 @@ type Payment = {
   status: string;
   createdAt: string;
 };
-
 
 const columns: ColumnDef<Payment>[] = [
   {
@@ -94,11 +96,13 @@ const columns: ColumnDef<Payment>[] = [
   },
 ];
 
+
 const Transactions = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [drawerTitle, setDrawerTitle] = useState<string>("");
   const [data, setData] = useState<Payment[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [profile, setProfile] = useState<{ balance: number, balanceMTN: number, balanceAirtel: number } | null>(null);
 
   const handleOpenDrawer = (title: string) => {
     setDrawerTitle(title);
@@ -118,7 +122,18 @@ const Transactions = () => {
       }
     };
 
+    const fetchUserProfile = async () => {
+      try {
+        const userProfile = await getUserProfile();
+        setProfile(userProfile);
+        console.log("The user proifle: ", userProfile)
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+      }
+    };
+
     fetchAllTransactions();
+    fetchUserProfile();
   }, []);
 
   if (loading) {
@@ -135,15 +150,15 @@ const Transactions = () => {
         <h2>Transactions</h2>
         <div className="flex gap-3 flex-row">
           <div className="bg-black flex w-fit flex-col gap-2 items-end rounded p-2 text-white">
-            <h5>RWF 0</h5>
+            <h5>RWF {profile?.balanceMTN || 0}</h5>
             <p>MTN Balance</p>
           </div>
           <div className="bg-black flex w-fit flex-col gap-2 items-end rounded p-2 text-white">
-            <h5>RWF 0</h5>
+            <h5>RWF {profile?.balanceAirtel || 0}</h5>
             <p>Airtel Balance</p>
           </div>
           <div className="bg-black flex w-fit flex-col gap-2 items-end rounded p-2 text-white">
-            <h5>RWF 0</h5>
+            <h5>RWF {profile?.balance || 0}</h5>
             <p>Total Balance</p>
           </div>
         </div>
