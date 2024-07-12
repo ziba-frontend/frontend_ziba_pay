@@ -52,6 +52,7 @@ export const resetPassword = async (token: string, newPassword: string) => {
     }
 };
 
+
 export const updatePassword = async (newPassword: string, token: string) => {
     try {
         const response = await axios.patch(`${BASE_URL}/updateMyPassword`, { password: newPassword }, {

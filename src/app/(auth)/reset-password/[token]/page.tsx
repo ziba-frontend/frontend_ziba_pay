@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { useParams } from "next/navigation"; // useParams for extracting token from URL
+import { resetPassword } from "@/lib/api-calls/auth-server";
 
 const formSchema = z
    .object({
@@ -35,31 +37,10 @@ interface FormData {
    passwordConfirm: string;
 }
 
-const resetPassword = async (token: string, password: string) => {
-   const response = await fetch("/api/reset-password", {
-      method: "POST",
-      headers: {
-         "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ token, password }),
-   });
-
-   if (!response.ok) {
-      throw new Error("Failed to reset password");
-   }
-
-   return response.json();
-};
 
 const ResetPasswordPage: React.FC = () => {
    const router = useRouter();
-   const [token, setToken] = useState<string | null>(null);
-
-   useEffect(() => {
-      const params = new URLSearchParams(window.location.search);
-      const tokenParam = params.get("token");
-      setToken(tokenParam);
-   }, []);
+   const { token } = useParams(); 
 
    const form = useForm<FormData>({
       resolver: zodResolver(formSchema),
@@ -70,9 +51,13 @@ const ResetPasswordPage: React.FC = () => {
          alert("Token is missing");
          return;
       }
-      await resetPassword(token, data.password);
-      alert("Password has been reset.");
-      router.push("/login");
+      try {
+         await resetPassword(token as string, data.password);
+         alert("Password has been reset.");
+         router.push("/login");
+      } catch (error) {
+         alert("Failed to reset password. Please try again.");
+      }
    };
 
    if (!token) {
@@ -82,14 +67,9 @@ const ResetPasswordPage: React.FC = () => {
    return (
       <div className="flex justify-center items-center h-screen bg-gray-100">
          <div className="bg-white p-8 shadow-md w-full max-w-md">
-            <h1 className="text-2xl font-semibold mb-4 text-main">
-               Reset Password
-            </h1>
+            <h1 className="text-2xl font-semibold mb-4 text-main">Reset Password</h1>
             <Form {...form}>
-               <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-4"
-               >
+               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                   <FormField
                      control={form.control}
                      name="password"
@@ -126,10 +106,7 @@ const ResetPasswordPage: React.FC = () => {
                         </FormItem>
                      )}
                   />
-                  <Button
-                     type="submit"
-                     className="w-full"
-                  >
+                  <Button type="submit" className="w-full">
                      Reset Password
                   </Button>
                </form>
