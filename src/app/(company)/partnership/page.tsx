@@ -22,6 +22,7 @@ const Partnership = () => {
             <Image
                src={partn1}
                alt="partnership"
+               className="md:w-[400px] lg:w-[500px]"
             />
             <div className="flex flex-col gap-2  justify-center">
                <h1>Unlock Growth Opportunities with Ziba Pay Partnerships</h1>
@@ -37,11 +38,11 @@ const Partnership = () => {
             <Image
                src={rect}
                alt="ziba"
-               className="absolute top-0 left-0 w-full"
+               className="absolute top-0 left-0 w-full "
             />
             <div className="flex container pt-20 flex-col md:flex-row gap-6 items-center justify-center ">
-               <div className="w-full md:w-3/4">
-                  <h2>
+               <div className="  pt-10">
+                  <h2 className="my-4">
                      Start your journey towards becoming a Ziba pay partner
                      today.
                   </h2>
@@ -49,7 +50,7 @@ const Partnership = () => {
                      Explore our diverse partner programs and find the one that
                      best fits you.
                   </p>
-                  <div className="flex flex-col my-4 md:justify-between md:flex-row gap-4">
+                  <div className="flex flex-col my-4 md:justify-between lg:flex-row gap-4">
                      <div>
                         <h4 className="my-2">Strategic Partner</h4>
                         <p>
@@ -77,15 +78,16 @@ const Partnership = () => {
                <Image
                   src={partn2}
                   alt="partnership"
+                  className="md:w-[400px] lg:w-[500px]"
                />
             </div>
          </div>
          <div className="bg-white">
             <div className="py-20 container">
-               <h2>
-                  Boost Your Earnings as a Strategic <br /> Partner
+               <h2 className="mb-8">
+                  Boost Your Earnings as a Strategic  Partner
                </h2>
-               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   <div className="flex flex-col w-5/6 sm:w-[300px]">
                      <h4 className="my-3">1. Exclusive Offers</h4>
                      <p>
@@ -94,41 +96,32 @@ const Partnership = () => {
                      </p>
                   </div>
                   <div className="flex flex-col w-5/6 sm:w-[300px]">
-                     <h4 className="my-3">1. Exclusive Offers</h4>
+                     <h4 className="my-3">2. Enhanced Customer Trust</h4>
                      <p>
-                        Attract new customers by offering special discounts,
-                        perks, and rewards through Ziba pay
+                     Build customer loyalty and credibility by aligning your brand with Ziba pay trusted reputation.
                      </p>
                   </div>
                   <div className="flex flex-col w-5/6 sm:w-[300px]">
-                     <h4 className="my-3">1. Exclusive Offers</h4>
+                     <h4 className="my-3">3. Business Referrals</h4>
                      <p>
-                        Attract new customers by offering special discounts,
-                        perks, and rewards through Ziba pay
+                     Expand your customer base and revenue opportunities with referrals from Ziba pay to people in need of your solutions.
                      </p>
                   </div>
                   <div className="flex flex-col w-5/6 sm:w-[300px]">
-                     <h4 className="my-3">1. Exclusive Offers</h4>
+                     <h4 className="my-3">4. Increased Brand Visibility</h4>
                      <p>
-                        Attract new customers by offering special discounts,
-                        perks, and rewards through Ziba pay
+                     Gain exposure through prominent placement on our website, marketing materials, and digital channels, reaching potential customers within our ecosystem.
                      </p>
                   </div>
                   <div className="flex flex-col w-5/6 sm:w-[300px]">
-                     <h4 className="my-3">1. Exclusive Offers</h4>
+                     <h4 className="my-3">5. Networking Opportunities</h4>
                      <p>
-                        Attract new customers by offering special discounts,
-                        perks, and rewards through Ziba pay
+                     Connect with other esteemed Ziba pay Partners for collaboration and business development within our vibrant community.
                      </p>
                   </div>
-                  <div className="flex flex-col w-5/6 sm:w-[300px]">
-                     <h4 className="my-3">1. Exclusive Offers</h4>
-                     <p>
-                        Attract new customers by offering special discounts,
-                        perks, and rewards through Ziba pay
-                     </p>
-                  </div>
+                 
                </div>
+               <Button className="mt-20">Become A Strategic Partner</Button>
             </div>
          </div>
          <div className="relative py-20">
@@ -138,10 +131,11 @@ const Partnership = () => {
                className="absolute top-0 left-0 w-full"
             />
             <div className="my-6 py-4">
-               <div className="flex flex-col items-center justify-center md:flex-row gap-6 container">
+               <div className="flex flex-col md:items-center justify-center md:flex-row gap-6 container">
                   <Image
                      src={partn3}
                      alt="ziba"
+                     className="hidden md:block"
                   />
                   <div className="">
                      <h4 className="my-2">

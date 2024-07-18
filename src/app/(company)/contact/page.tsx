@@ -20,16 +20,16 @@ import ContactSlider from "@/components/ContactSlider";
 
 const Contact = () => {
    return (
-      <div className="container py-10">
-         <div className="flex flex-col md:flex-row gap-6 items-center justify-center">
-            <div className="flex flex-col gap-8">
+      <div className=" py-10">
+         <div className="flex flex-col md:flex-row gap-6 items-center justify-center container">
+            <div className="flex flex-col gap-8 ">
                <h1>We are here to assist you Get in touch with us today.</h1>
                <Image
                   src={contact1}
                   alt="contact ziba pay"
                />
             </div>
-            <div className="flex items-center  justify-center flex-wrap gap-4">
+            <div className="flex items-center  justify-center flex-wrap gap-4 ">
                <div className="flex flex-col gap-2 w-[250px] border border-black/50 p-6 min-h-[200px] hover:bg-main hover:text-white transition-all hover:border-none cursor-default">
                   <FaMailBulk className="text-main" />
                   <h3>Email</h3>

@@ -4,7 +4,7 @@ import React from "react";
 const ZibaSec = () => {
    return (
       <div className="container ">
-       <div className="mt-6 mb-6 hidden sm:block">
+       <div className="mt-6 mb-6 ">
             <p>
                <span className="hover:text-main cursor-default mr-2">
                {" "}<Link href="/zibapay-help-center">
@@ -21,7 +21,7 @@ const ZibaSec = () => {
          </div>
          <div>
             <div className="my-4 mt-20 flex gap-20 flex-col md:flex-row">
-            <div className="mt-6 sm:mt-0 flex flex-col gap-3">
+            <div className="mt-6 hidden  md:flex flex-col gap-3">
                   <h4 className="">Articles in this section</h4>
                   <p>
                      {" "}
@@ -38,7 +38,7 @@ const ZibaSec = () => {
                      <Link href="./ziba-pay-apis">Ziba pay APIs</Link>
                   </p>
                </div>
-               <div className="w-full md:w-3/4">
+               <div className="w-full md:w-3/4 mt-20 md:mt-0">
                   <h2>How Secure is Ziba pay?</h2>
                   <span className="mx-2 text-blue-400">1 months ago</span>
                   <span className="mx-2 text-blue-400">Updated</span>

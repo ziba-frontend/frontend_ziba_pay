@@ -76,29 +76,29 @@ const ZibapayHelp = () => {
          </div>
 
          <div className="container flex items-center justify-center py-12 flex-col gap-6">
-            <div className="flex gap-4 lg:gap-12 flex-wrap items-center justify-center my-6">
+            <div className="flex flex-col-reverse md:flex-row gap-[21px] lg:gap-12  items-center justify-center mt-6  w-full md:my-10">
                <Button
                   variant="outline"
-                  className="md:w-[200px] lg:w-[383px] hover:border-main hover:bg-main hover:text-white p-6"
+                  className="w-[93%] md:w-[250px] lg:w-[383px] hover:border-main hover:bg-main hover:text-white p-6 border-main md:border-black"
                >
                   <Link href="/help-center">General</Link>
                </Button>
                <Button
                   variant="outline"
-                  className="md:w-[200px] lg:w-[383px] hover:border-main hover:bg-main hover:text-white p-6"
+                  className="w-[93%] md:w-[250px] lg:w-[383px] hover:border-main hover:bg-main hover:text-white p-6 border-main md:border-black"
                >
                   <Link href="/help-center">Getting Started</Link>
                </Button>
                <Button
                   variant="outline"
-                  className="md:w-[200px] lg:w-[383px] hover:border-main hover:bg-main hover:text-white p-6"
+                  className="w-[93%] hidden md:flex md:w-[250px] lg:w-[383px] hover:border-main hover:bg-main hover:text-white p-6 border-main md:border-black"
                >
                   Pricing
                </Button>
             </div>
             <Button
                variant="outline"
-               className="w-[93%] hover:border-main hover:bg-main hover:text-white p-6"
+               className="w-[93%] hover:border-main hover:bg-main hover:text-white p-6 border-main md:border-black "
             >
                Disputes
             </Button>

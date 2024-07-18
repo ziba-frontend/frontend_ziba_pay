@@ -11,7 +11,7 @@ import Link from "next/link";
 
 const Ecommerce = () => {
    return (
-      <div>
+      <div className="pt-20">
          <div className="my-10 container">
             <div className="flex-col flex md:flex-row items-center justify-center gap-6">
                <div className="">
@@ -33,10 +33,10 @@ const Ecommerce = () => {
                />
             </div>
          </div>
-
-         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mx-auto py-20 gap-6 container">
-            <div className="flex flex-col gap-4 bg-white rounded p-4">
-               <p>
+<div className="flex items-center justify-center">
+         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mx-auto py-20 gap-6 container items-center justify-center">
+            <div className="flex flex-col gap-4 bg-white rounded p-4 md:w-[384px] md:h-[598px]">
+               <p className="text-center">
                   Easily accept payments from your customers using a variety of
                   methods, including virtual accounts, payment links, checkout,
                   and direct charge via API.
@@ -46,8 +46,8 @@ const Ecommerce = () => {
                   alt="ziba e-commerce"
                />
             </div>
-            <div className="flex flex-col gap-4 bg-[#d3eafaa5] rounded p-4">
-               <p>
+            <div className="flex flex-col gap-4 bg-[#d3eafaa5] rounded p-4 md:w-[384px] md:h-[598px]">
+               <p className="text-center">
                   {" "}
                   E-commerce platform offers virtual account issuance in four
                   currencies, allowing customers to make payments conveniently
@@ -58,8 +58,8 @@ const Ecommerce = () => {
                   alt="ziba e-commerce"
                />
             </div>
-            <div className="flex flex-col gap-4 bg-[#c4c3c3] rounded p-4">
-               <p>
+            <div className="flex flex-col gap-4 bg-[#c4c3c3] rounded p-4 md:w-[384px] md:h-[598px]">
+               <p className="text-center">
                   Ziba pay checkout enables customers to finalize purchases
                   effortlessly, making payments seamlessly through bank
                   transfers, card transactions, or a single API integration
@@ -70,7 +70,7 @@ const Ecommerce = () => {
                   alt="ziba e-commerce"
                />
             </div>
-         </div>
+         </div></div>
 
          <div className="flex flex-col md:flex-row py-20 gap-6 items-center justify-center container">
             <Image

@@ -4,7 +4,7 @@ import React from "react";
 const HelpCenter = () => {
    return (
       <div className="container flex items-center justify-center  min-h-[80vh] ">
-         <div className="flex flex-col gap-4">
+         <div className="flex flex-col gap-4  w-full md:w-[60%]">
             <h1>General</h1>
             <h4>FAQ</h4>
             <Link href="help-center/ziba-pay-security">

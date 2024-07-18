@@ -5,49 +5,86 @@ description: A comprehensive guide to integrating Ziba Pay into your application
 
 
 
-Welcome to the Ziba Pay Integration Guide. This documentation will walk you through the steps required to integrate Ziba Pay, a powerful and secure payment gateway, into your application. Whether you are developing a web application, a mobile app, or an e-commerce platform, Ziba Pay provides a seamless and reliable solution for handling transactions.
+Join the ranks of satisfied developers who have harnessed the power of our  API to enhance their applications and drive business growth. Explore our documentation and start revolutionizing payment experiences today.
 
-## What is Ziba Pay?
+You can use the API-DOC in test mode, which doesn’t affect your live data or interact with the banking networks. The API key you use to authenticate the request determines whether the request is live mode or test mode.
 
-Ziba Pay is a robust payment gateway designed to facilitate online transactions with ease and security. It supports multiple payment methods, including credit cards, debit cards, and digital wallets. Ziba Pay ensures that all transactions are processed securely, providing both merchants and customers with peace of mind.
 
-## Features of Ziba Pay
+<DocCards>
+<DocCard bgColor='#AFF4B7' title='Getting started ' content='Embark on your payment processing journey with ease by following these simple steps to get started with our Payment API. '>
+ <p className="text-[#1E1147]"><a href="http://localhost:3000/api-docs/start/quick">Developer Quick Start Guide</a></p>
+</DocCard>
+<DocCard bgColor='#AFF4B7' title='Not a developer? ' content='Explore our no-code option to get started with API-DOC and do more with our API-DOC account '>
+ <p className="text-[#1E1147]"><a href="http://localhost:3000/api-docs/start/quick">No Code Option</a></p>
+</DocCard>
+</DocCards>
 
-- **Multiple Payment Methods:** Accept payments through various channels such as credit cards, debit cards, and digital wallets.
-- **Secure Transactions:** Utilizes advanced encryption and fraud detection mechanisms to ensure the security of transactions.
-- **Easy Integration:** Simple and straightforward integration process with well-documented APIs.
-- **Real-time Reporting:** Access to detailed transaction reports and analytics in real-time.
-- **Customer Support:** Dedicated support team available to assist with any integration or transaction issues.
 
-## Getting Started
 
-To start using Ziba Pay in your application, you need to complete the following steps:
+## Choose your client
 
-1. **Sign Up for a Ziba Pay Account:** Create an account on the Ziba Pay website to get access to the API keys and other necessary credentials.
-2. **Set Up Your Development Environment:** Prepare your development environment by installing the required libraries and dependencies.
-3. **Integrate Ziba Pay API:** Follow the integration guide to connect your application with Ziba Pay's API.
-4. **Test the Integration:** Perform thorough testing to ensure that the payment gateway is working correctly and securely.
-5. **Go Live:** Once testing is complete, deploy the integration to your production environment.
+Select the client that best suits your development needs from our comprehensive range of options. API-DOC offers clients for JavaScript, Python, and PHP. In the following example, you can see how to install each client.
 
-## Prerequisites
+Here's how to get your client ID and client secret:
 
-Before you begin the integration, make sure you have the following:
+1. Select Log in to Dashboard and log in or sign up.
+2. Select Apps & Credentials.
+3. New accounts come with a Default Application in the REST API apps section. To create a new project, select Create App.
+4. Copy the client ID and client secret for your app.
 
-- A Ziba Pay account with API access.
-- Basic knowledge of web development and familiarity with APIs.
-- A development environment set up for your application (e.g., Node.js, Python, PHP, etc.).
 
-## Documentation Structure
+<Tabs items={['Curl', 'Rust']} >
+  <Tab value="Curl" >
+  ```shell 
 
-This documentation is divided into several sections:
+curl -G https://api.protocol.chat/v1/conversations \
+  -H "Authorization: Bearer {token}" \
+  -d limit=10
 
-- **Getting Started:** Step-by-step guide to getting started with Ziba Pay.
-- **API Reference:** Detailed documentation of Ziba Pay's API endpoints.
-- **Examples:** Code examples demonstrating how to implement Ziba Pay in different programming languages.
-- **FAQs:** Frequently asked questions and troubleshooting tips.
+```
+</Tab>
+  <Tab value="Rust">Rust is fast</Tab>
+</Tabs>
 
-By the end of this guide, you will have a fully integrated Ziba Pay solution in your application, allowing you to process payments securely and efficiently.
 
-Let's get started with [Getting Started with Ziba Pay](/docs/getting-started).
+## Client Libraries
 
-<DocsReview/>
+import rubby from '../../../public/images/rubby.png';
+import php from '../../../public/images/php.png';
+import js from '../../../public/images/js.png';
+import python from '../../../public/images/python.png';
+import go from '../../../public/images/go.png';
+
+<div className='grid  md:grid-cols-2 xl:grid-cols-3 gap-2'>
+<div className="bg-white shadow  p-2 flex items-start gap-2 h-[250px]">
+
+<Image src={rubby} alt="pay" width={30} height={30}/>
+<DocCard title='Rubby' content='A dynamic, open source programming language with a focus on simplicity and productivity'>
+</DocCard>
+</div>
+
+<div className="bg-white shadow  p-2 flex items-start gap-2 h-[250px]">
+
+<Image src={php} alt="pay" width={30} height={30}/>
+<DocCard title='Php' content='A dynamic, open source programming language with a focus on simplicity and productivity'>
+</DocCard>
+</div>
+<div className="bg-white shadow  p-2 flex items-start gap-2 h-[250px]">
+
+<Image src={js} alt="pay" width={30} height={30}/>
+<DocCard title='Nodejs' content='A dynamic, open source programming language with a focus on simplicity and productivity'>
+</DocCard>
+</div>
+<div className="bg-white shadow  p-2 flex items-start gap-2 h-[250px]">
+
+<Image src={python} alt="pay" width={30} height={30}/>
+<DocCard title='Python' content='A dynamic, open source programming language with a focus on simplicity and productivity'>
+</DocCard>
+</div>
+<div className="bg-white shadow  p-2 flex items-start gap-2 h-[250px]">
+
+<Image src={go} alt="pay" width={30} height={30}/>
+<DocCard title='GO' content='A dynamic, open source programming language with a focus on simplicity and productivity'>
+</DocCard>
+</div>
+</div>

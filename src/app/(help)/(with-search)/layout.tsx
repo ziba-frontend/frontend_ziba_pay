@@ -51,9 +51,9 @@ const WithSearchLayout: React.FC<{ children: React.ReactNode }> = ({
             className="absolute right-0 -z-20"
          />
          {showSearchForm && (
-            <div className="absolute right-12 top-[150px] w-[200px] md:w-[300px]">
+            <div className="absolute left-[34px] md:left-auto md:right-[34px] 2xl:right-[115px] top-[170px] md:top-[120px] w-[344px]">
                <form
-                  className={`flex gap-4 bg-white items-center p-2 rounded-full transition-all ${
+                  className={`flex gap-4 bg-white items-center p-[15px] rounded-full transition-all ${
                      isInputFocused ? "border-2 border-main" : "border"
                   }`}
                >

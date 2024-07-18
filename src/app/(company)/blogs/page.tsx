@@ -7,7 +7,7 @@ import { FaArrowCircleRight, FaArrowRight } from "react-icons/fa";
 
 const Blogs = () => {
    return (
-      <div className="container ">
+      <div className="container pt-10">
          <div className="flex flex-col gap-4  justify-center">
             <h1>Ziba pay Blogs</h1>
             <p>Latest Insights, Tips, and News in the World of Payments</p>
@@ -26,8 +26,8 @@ const Blogs = () => {
 
          <h1 className="my-4">All Articles</h1>
          <div className="flex items-center justify-center">
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 p-2 gap-8 items-center justify-center mx-auto ">
-               <div className="flex flex-col gap-2 bg-white w-5/6 sm:w-[300px] md:w-[320px] lg:w-[380px]  h-[450px] shadow-sm rounded ">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 p-2 gap-8 items-center justify-center mx-auto ">
+               <div className="flex flex-col gap-2 bg-white w-5/6 sm:w-3/4 md:w-[320px] lg:w-[380px]  h-[450px] shadow-sm rounded ">
                   <Image
                      src={blog1}
                      alt="blog1"

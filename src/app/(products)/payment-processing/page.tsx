@@ -4,6 +4,7 @@ import paypro1 from "../../../../public/images/processing1.png";
 import paypro2 from "../../../../public/images/processing2.png";
 import paypro3 from "../../../../public/images/processing3.png";
 import paypro4 from "../../../../public/images/processing4.png";
+import payp from "../../../../public/svg/payp.svg";
 import rect from "../../../../public/images/rect1.png";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -11,38 +12,44 @@ import Link from "next/link";
 const PaymentProcessing = () => {
    return (
       <div className="py-10">
-         <div className="container flex items-center justify-center flex-col gap-4 pt-6">
+         <div className="container flex items-center justify-center flex-col gap-4 py-[150px]">
             <h4>
                At Ziba <span className="text-main">Pay</span>
             </h4>
-            <h1 className="text-center">
-               We are dedicated to simplifying payments for <br />
+            <h1 className="text-center text-[48px] md:w-5/6">
+               We are dedicated to simplifying payments for 
                businesses in Africa.{" "}
             </h1>
-            <p className="text-center">
+            <p className="text-center text-[20px] mb-6 md:w-5/6">
                Our comprehensive payment processing solutions empower businesses
-               of all sizes to streamline operations and drive
-               <br /> growth. From online transactions to mobile payments and
-               in-person sales.
+               of all sizes to streamline operations and drive growth. From
+               online transactions to mobile payments and in-person sales.
             </p>
             <Image
                src={paypro1}
                alt="ziba"
             />
-            <h2 className="text-center">
-               Let’s Explore how Ziba pay can transform <br /> your business
-            </h2>
+            <div className="relative flex items-center justify-center mt-[75px]">
+               <h2 className="text-center text-[48px] md:w-5/6">
+                  Let’s Explore how Ziba pay can transform your business
+               </h2>
+               <Image
+                  src={payp}
+                  alt="ziba"
+                  className="absolute -bottom-12 -z-10"
+               />
+            </div>
          </div>
-         <div className="relative py-10 my-10">
+         <div className="relative py-20  bg-[#E0E0E0]">
             <Image
                src={rect}
                alt="ziba pay"
                className="absolute left-0 top-0 w-full"
             />
-            <div className="flex flex-col md:flex-row gap-6 items-center justify-center pt-20 container">
+            <div className="flex flex-col md:flex-row gap-6 md:gap-0 items-center justify-center pt-20 container ">
                <div className="flex flex-col gap-4">
-                  <h2>
-                     Let’s Explore how Ziba pay can transform your business
+                  <h2 className="text-[40px]">
+                  Online Payment Processing
                   </h2>
                   <p>
                      Ziba pay’s online payment processing solutions empowers
@@ -58,10 +65,10 @@ const PaymentProcessing = () => {
                />
             </div>
          </div>
-         <div className="bg-white">
+         <div className="">
             <div className="flex flex-col md:flex-row gap-6 items-center justify-center pt-20 container ">
                <div className="flex flex-col gap-4">
-                  <h2>Mobile Payment Solutions</h2>
+                  <h2 className="text-[40px]">Mobile Payment Solutions</h2>
                   <p>
                      Ziba Pay&apos;s mobile payment solutions enable businesses
                      to easily accept payments on-the-go using a mobile device
@@ -77,15 +84,15 @@ const PaymentProcessing = () => {
             </div>
          </div>
 
-         <div className="relative py-10 my-10">
+         <div className="relative py-20  bg-[#E0E0E0]">
             <Image
                src={rect}
                alt="ziba pay"
                className="absolute left-0 top-0 w-full"
             />
-            <div className="flex flex-col md:flex-row gap-6 items-center justify-center pt-20 container">
+            <div className="flex flex-col md:flex-row gap-6 md:gap-0 items-center justify-center py-20 container ">
                <div className="flex flex-col gap-4">
-                  <h2>Point-of-Sale (POS) Systems</h2>
+                  <h2 className="text-[40px]">Point-of-Sale (POS) Systems</h2>
                   <p>
                      Ziba Pay&apos;s point-of-sale (POS) systems are designed to
                      streamline in-person transactions with integrated POS
@@ -98,19 +105,21 @@ const PaymentProcessing = () => {
                <Image
                   src={paypro4}
                   alt="ziba"
+                  className="md:-ml-40 md:-mb-[140px]"
                />
             </div>
          </div>
-
-         <div className="container flex flex-col gap-4  justify-center min-h-[40vh]">
-            <h2>
-               Get started with Ziba Pay&apos;s online payment processing <br />{" "}
-               solution today!
-            </h2>
-            <Link href="/sign-up">
-               {" "}
-               <Button className="w-fit">Create Account</Button>
-            </Link>
+         <div className="">
+            <div className="container flex flex-col gap-8  justify-center min-h-[40vh]">
+               <h2 className="text-[48px]">
+                  Get started with Ziba Pay&apos;s online payment processing{" "}
+                  <br /> solution today!
+               </h2>
+               <Link href="/sign-up">
+                  {" "}
+                  <Button className="w-fit">Create Account</Button>
+               </Link>
+            </div>
          </div>
       </div>
    );

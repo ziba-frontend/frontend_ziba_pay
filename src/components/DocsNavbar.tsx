@@ -94,14 +94,14 @@ const DocsNavbar = () => {
    return (
       <div className="h-[90px] fixed left-0 top-0 w-full z-[50] bg-background shadow-md">
          <div className="container mx-auto p-4 flex items-center justify-between">
-            <Link href="/api-docs">API-DOCS</Link>
+            <Link href="/api-docs/start/introduction">API-DOCS</Link>
 
             <div className="flex items-center gap-10">
                <form
                   onSubmit={handleSearch}
-                  className="  bg-transparent  p-2 rounded-full w-[200px] md:w-[300px] border border-main docform"
+                  className="  bg-transparent  p-2 rounded-md w-[200px] md:w-[300px] lg:w-[400px] border border-main docform"
                >
-                  <FaSearch className="text-main" />
+                  <FaSearch className="text-main mx-2" />
                   <input
                      type="text"
                      value={searchQuery}
@@ -112,7 +112,7 @@ const DocsNavbar = () => {
                   />
                </form>
                <div className="docnav">
-                  <Link href="/api-docs">API</Link>
+                  <Link href="/api-docs/start/introduction">API</Link>
                   <Link href="/help-center">Support</Link>
                   <Link href="/login">
                      <Button className="bg-main">Sign in</Button>

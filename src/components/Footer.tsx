@@ -5,6 +5,7 @@ import { url } from "inspector";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import logo from "../../public/svg/logo.svg";
+import zp from "../../public/svg/zp.svg";
 
 const Footer = () => {
    const Links = [
@@ -79,24 +80,36 @@ const Footer = () => {
             backgroundImage: "url('/images/footer.png')",
          }}
       >
-         <div className="bg-white/50  h-full py-20">
-            <div className="flex flex-col gap-4 p-6 w-5/6 bg-white/80 mx-auto rounded-md my-2 ">
-               <h3 className="py-6 prose ">Ready to get started ?</h3>
-               <p>
+         <div className="  h-full py-20">
+            <div className="flex flex-col gap-4 p-[52px] w-5/6 bg-white/80 mx-auto rounded-md my-2 relative items-center md:items-start">
+               <h3 className="py-6  text-[32px]">Ready to get started ?</h3>
+               <p className="text-xl text-center md:text-start md:w-5/6">
                   Create an account instantly and start accepting payments.Feel
                   free to reach out to us for tailored solutions designed
                   specifically for your business needs.
                </p>
-               <div className="flex gap-2 py-6">
+               <div className="flex gap-2 py-6 flex-col items-center md:flex-row md:items-start">
                   <Link href="/login">
-                     <Button variant="outline">Login</Button>
+                     <Button
+                        variant="outline"
+                        className="w-[200px] md:w-[150px]"
+                     >
+                        Login
+                     </Button>
                   </Link>
                   <Link href="/sign-up">
-                     <Button>Create Account</Button>
+                     <Button className="w-[200px] md:w-[150px]">
+                        Create Account
+                     </Button>
                   </Link>
                </div>
+               <Image
+                  src={zp}
+                  alt="zp"
+                  className="absolute  w-[50px] md:w-[78px] top-2 right-2 md:top-16 md:right-16 "
+               />
             </div>
-            <div className="container mx-auto px-4 border-b py-6 flex justify-center items-start">
+            <div className="container mx-auto px-4 border-b border-black py-6 flex  items-start ">
                <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-center items-start mt-4">
                   <div className="flex flex-col justify-between  h-full">
                      <div>
@@ -104,7 +117,12 @@ const Footer = () => {
                            src={logo}
                            alt="zibaPay"
                         />
-                        <p>Simplifying payments for Businesses in Africa</p>
+                        <p>
+                           <span className="text-[#3BD64A]">
+                              Simplifying payments
+                           </span>{" "}
+                           for Businesses in Africa
+                        </p>
                      </div>
                      <div className="flex gap-2">
                         <Link href="">

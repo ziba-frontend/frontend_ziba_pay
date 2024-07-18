@@ -8,15 +8,15 @@ import billing3 from "../../../../public/images/billing3.png";
 const Billing = () => {
    return (
       <div className="py-20">
-         <div className="container my-10">
+         <div className="container my-16">
             <p className="text-center">
                At Ziba <span className="text-main">pay</span>{" "}
             </p>
-            <h1 className="my-4">
+            <h1 className="my-4 text-[48px] text-center md:text-start">
                We understand the importance of efficient invoicing and billing
                for businesses.
             </h1>
-            <p>
+            <p className="text-center md:text-start">
                Our Invoicing and Billing Services are designed to streamline
                your financial processes, saving you time and effort. Explore our
                comprehensive solutions below.
@@ -30,8 +30,8 @@ const Billing = () => {
                className="absolute left-0 top-0 w-full"
             />
             <div className="container py-20 flex items-left justify-center flex-col gap-6">
-               <div className="mt-10 flex flex-col gap-4 w-full md:w-5/6">
-                  <h2>Automated Invoicing</h2>
+               <div className="mt-10 flex flex-col gap-4 w-full md:w-5/6 pt-8">
+                  <h2 className="text-[40px]">Automated Invoicing</h2>
                   <p>
                      Say goodbye to manual invoicing with Ziba Pay&apos;s automated
                      invoicing feature. Generate and send invoices to your
@@ -45,13 +45,14 @@ const Billing = () => {
                   src={billing1}
                   alt="ziba billing"
                   width={500}
+                  className="md:my-6"
                />
             </div>
          </div>
 
          <div className="container py-20 flex items-left justify-center flex-col gap-6">
             <div className="mt-10 flex flex-col gap-4 w-full md:w-5/6">
-               <h2>Recurring Billing</h2>
+               <h2 className="text-[40px]">Recurring Billing</h2>
                <p>
                   Simplify subscription-based services or memberships with Ziba
                   Pay&apos;s recurring billing feature. Set up recurring payment
@@ -65,6 +66,7 @@ const Billing = () => {
                src={billing2}
                alt="ziba billing"
                width={500}
+               className="md:my-6"
             />
          </div>
 
@@ -75,8 +77,8 @@ const Billing = () => {
                className="absolute left-0 top-0 w-full"
             />
             <div className="container py-20 flex items-left justify-center flex-col gap-6">
-               <div className="mt-10 flex flex-col gap-4 w-full md:w-5/6">
-                  <h2>Customizable Invoice Templates</h2>
+               <div className="mt-10 flex flex-col gap-4 w-full md:w-5/6 pt-8">
+                  <h2 className="text-[40px]">Customizable Invoice Templates</h2>
                   <p>
                      Make a lasting impression on your clients with personalized
                      invoices using Ziba Pay&apos;s customizable templates. Tailor
@@ -91,6 +93,7 @@ const Billing = () => {
                   src={billing3}
                   alt="ziba billing"
                   width={500}
+                  className="md:my-6"
                />
             </div>
          </div>

@@ -18,11 +18,13 @@ import {
    AccordionTrigger,
 } from "@/components/ui/accordion";
 import logo from "../../public/svg/logo.svg";
+import hamburger from "../../public/svg/hamburger.png";
 import Image from "next/image";
 import drop1 from "../../public/images/drop1.png";
 import drop2 from "../../public/images/drop2.png";
 import { createPortal } from "react-dom";
 import prod1 from "../../public/images/prod1.png";
+import close from "../../public/images/close.png";
 
 type MenuItems = {
    [key: string]: {
@@ -169,7 +171,7 @@ const Navbar: React.FC = () => {
    };
 
    return (
-      <div className="fixed z-[80] top-0 left-0 w-full bg-background">
+      <div className="fixed z-[80] top-0 left-0 w-full bg-background border-b border-black md:border-none">
          <div className="container mx-auto p-4 flex items-center justify-between h-[100px]">
             <div className="flex items-center">
                <Link
@@ -195,10 +197,17 @@ const Navbar: React.FC = () => {
             </div>
             <div className="hidden md:flex gap-3">
                <Link href="/login">
-                  <Button variant="outline">Login</Button>
+                  <Button
+                     className="w-[107px] sm:w-[150px]"
+                     variant="outline"
+                  >
+                     Login
+                  </Button>
                </Link>
                <Link href="/sign-up">
-                  <Button>Create Account</Button>
+                  <Button className="w-[107px] sm:w-[150px]">
+                     Create Account
+                  </Button>
                </Link>
             </div>
             <div className="md:hidden flex items-center">
@@ -206,7 +215,17 @@ const Navbar: React.FC = () => {
                   onClick={toggleMenu}
                   className="text-2xl"
                >
-                  {isOpen ? <AiOutlineClose /> : <FiMenu />}
+                  {isOpen ? (
+                     <Image
+                        src={close}
+                        alt="close"
+                     />
+                  ) : (
+                     <Image
+                        src={hamburger}
+                        alt="menu"
+                     />
+                  )}
                </button>
             </div>
             {isOpen && (
@@ -216,47 +235,24 @@ const Navbar: React.FC = () => {
                         <Accordion
                            type="single"
                            collapsible
-                           className="w-full"
+                           className="w-full "
                            key={title}
                         >
                            <AccordionItem value={title}>
                               <AccordionTrigger>{title}</AccordionTrigger>
-                              <AccordionContent>
+                              <AccordionContent className="bg-[#3BD64A1A] w-full py-4">
                                  {items.map((item, index) => (
                                     <div
                                        key={index}
-                                       className="py-2 flex items-start gap-2"
+                                       className="py-2 flex items-start gap-2 "
                                     >
-                                       {title === "Products" ? (
-                                          <>
-                                             <Image
-                                                src={item.img!}
-                                                alt={item.label}
-                                                width={40}
-                                                height={40}
-                                             />
-                                             <div className="flex flex-col">
-                                                <Link
-                                                   href={item.href}
-                                                   onClick={toggleMenu}
-                                                >
-                                                   <span className="font-bold">
-                                                      {item.label}
-                                                   </span>
-                                                   <span className="text-sm">
-                                                      {item.description}
-                                                   </span>
-                                                </Link>
-                                             </div>
-                                          </>
-                                       ) : (
-                                          <Link
-                                             href={item.href}
-                                             onClick={toggleMenu}
-                                          >
-                                             {item.label}
-                                          </Link>
-                                       )}
+                                       <Link
+                                          href={item.href}
+                                          onClick={toggleMenu}
+                                          className="text-[16px]"
+                                       >
+                                          {item.label}
+                                       </Link>
                                     </div>
                                  ))}
                               </AccordionContent>

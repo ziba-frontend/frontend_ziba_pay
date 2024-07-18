@@ -13,7 +13,7 @@ const Solution = () => {
       <div className="py-20 container">
          <div className="flex-col flex md:flex-row items-center md:items-start justify-center gap-6">
             <div className="w-full md:w-1/2 mt-6">
-               <h1 className="my-4">
+               <h1 className="my-4 text-[48px]">
                   Tailored solutions designed to meet the unique needs of your
                   industry or business, whether you&apos;re in e-commerce,
                   healthcare, hospitality, or education.

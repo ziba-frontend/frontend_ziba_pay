@@ -13,7 +13,7 @@ import Link from "next/link";
 
 const Education = () => {
    return (
-      <div>
+      <div className="pt-20">
          <div className="my-10 container">
             <div className="flex-col flex md:flex-row items-center justify-center gap-6">
                <div className="">
@@ -46,7 +46,7 @@ const Education = () => {
             <div className="mt-10">
                <div className="flex flex-col items-center justify-center gap-20 md:flex-row py-6 container">
                   <div className="w-full md:w-1/2">
-                     <h3 className="my-2">Automated Tuition Collection</h3>
+                     <h2 className="my-2 mb-4">Automated Tuition Collection</h2>
                      <p>
                         Eliminate manual processes and reduce administrative
                         burden by automating tuition collection. Our platform
@@ -71,7 +71,7 @@ const Education = () => {
                className="w-[400px]"
             />
             <div className="w-full md:w-1/2">
-               <h3 className="my-2">Streamlined Fee Management</h3>
+               <h2 className="my-2 mb-4">Streamlined Fee Management</h2>
                <p>
                   Simplify fee management processes by centralizing fee
                   collection and tracking within a single platform. Ziba Pay
@@ -91,9 +91,9 @@ const Education = () => {
             <div className="mt-10">
                <div className=" py-10 container">
                   <div className="w-full md:w-1/2">
-                     <h3 className="my-2">
+                     <h2 className="my-2 mb-4">
                         Enhanced Financial Transparency for Stakeholders
-                     </h3>
+                     </h2>
                      <p>
                         Enhance transparency and accountability by providing
                         stakeholders, including administrators, faculty, and

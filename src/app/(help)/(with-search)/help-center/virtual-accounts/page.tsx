@@ -5,7 +5,7 @@ import React from "react";
 const VAccounts = () => {
    return (
       <div className="container ">
-         <div className="mt-6 mb-6 hidden sm:block">
+         <div className="mt-6 mb-6 ">
             <p>
                <span className="hover:text-main cursor-default mr-2">
                   {" "}<Link href="/zibapay-help-center">
@@ -22,7 +22,7 @@ const VAccounts = () => {
          </div>
          <div>
             <div className="my-4 mt-20 flex gap-20 flex-col md:flex-row">
-            <div className="mt-6 sm:mt-0 flex flex-col gap-3">
+            <div className="mt-6 sm:mt-0 hidden md:flex flex-col gap-3">
                   <h4 className="">Articles in this section</h4>
                   <p>
                      {" "}
@@ -39,7 +39,7 @@ const VAccounts = () => {
                      <Link href="./ziba-pay-apis">Ziba pay APIs</Link>
                   </p>
                </div>
-               <div className="w-full md:w-3/4">
+               <div className="w-full md:w-3/4 pt-20 md:pt-0">
                   <div className=" border-b pb-40">
                      <h2>Virtual Account?</h2>
                      <span className="mx-2 text-blue-400">1 months ago</span>

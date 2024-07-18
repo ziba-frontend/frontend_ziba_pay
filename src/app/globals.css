@@ -45,11 +45,11 @@
    }
 
    h1 {
-      @apply text-3xl font-bold leading-tight;
+      @apply text-[36px] md:text-[48px] font-bold leading-tight;
    }
 
    h2 {
-      @apply text-2xl font-bold leading-tight;
+      @apply text-[24px] md:text-[40px] font-bold leading-tight;
    }
 
    h3 {
@@ -67,18 +67,8 @@
    h6 {
       @apply text-sm font-medium leading-normal;
    }
-
-   .swiper-pagination-bullet {
-      background-color: #e0e0e0 !important;
-      margin-top: 4rem !important;
-   }
-   .swiper-pagination-bullet-active {
-      background-color: #030a11 !important;
-   }
-
-   code,
-   pre {
-      user-select: text !important;
+   p {
+      @apply text-[20px];
    }
 }
 
@@ -109,8 +99,7 @@
    align-items: center;
 }
 
-
-.docs .sidebar{
+.docs .sidebar {
    background-color: red;
 }
 @media screen and (max-width: 768px) {
@@ -120,8 +109,22 @@
    .docform {
       display: none;
    }
+
+ 
 }
 
 /* .category-badge {
    @apply flex-center truncate w-fit gap-1 rounded-2xl border-[1.5px] py-[2px] pl-1.5 pr-2;
  } */
+
+.swiper-pagination {
+   bottom: 0px !important; /* Adjusts the position of the pagination bullets */
+}
+
+.swiper-pagination-bullet {
+   background-color: black !important;
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+   background-color: #030a11 !important;
+}

@@ -10,7 +10,7 @@ import Link from "next/link";
 
 const Healthcare = () => {
    return (
-      <div>
+      <div className="pt-20">
          <div className="my-10 container">
             <div className="flex-col flex md:flex-row items-center justify-center gap-6">
                <div className="">
@@ -40,13 +40,9 @@ const Healthcare = () => {
             <div className="mt-10">
                <div className="flex flex-col items-center justify-center gap-20 md:flex-row py-6 container">
                   <div className="w-full md:w-1/2">
-                     <h3 className="my-2">Reporting and Analytics</h3>
+                     <h2 className="my-2">HIPAA-Compliant Payment Processing</h2>
                      <p>
-                        Gain valuable insights into your financial performance
-                        with Ziba Pay&apos;s robust reporting and analytics
-                        capabilities. Generate detailed reports, visualize data
-                        trends, and make data-driven decisions to drive business
-                        growth.
+                     Safeguard patient privacy and confidentiality with HIPAA-compliant payment processing. Our platform adheres to the highest security standards, protecting sensitive healthcare data and maintaining compliance with regulatory requirements.
                      </p>
                   </div>
                   <Image
@@ -58,16 +54,16 @@ const Healthcare = () => {
             </div>
          </div>
 
-         <div className="flex flex-col items-center justify-center gap-20 md:flex-row py-6 container">
+         <div className="flex flex-col items-center justify-center gap-20 md:flex-row py-10 container">
             <Image
                src={health3}
                alt="ziba pay"
                className="w-[400px]"
             />
             <div className="w-full md:w-1/2">
-               <h3 className="my-2">
+               <h2 className="my-2 mb-4">
                   Faster Reimbursements and Revenue Cycles
-               </h3>
+               </h2>
                <p>
                   Expedite reimbursements and optimize revenue cycles with Ziba
                   Pay&apos;s efficient payment processing capabilities. By
@@ -78,7 +74,7 @@ const Healthcare = () => {
             </div>
          </div>
 
-         <div className="bg-br pt-40 relative mt-10">
+         <div className="bg-br pt-40 relative mt-10 pb-10">
             <Image
                src={rect}
                alt="ziba pay"
@@ -87,7 +83,7 @@ const Healthcare = () => {
             <div className="mt-10">
                <div className="flex flex-col items-center justify-center gap-20 md:flex-row py-6 container">
                   <div className="w-full md:w-1/2">
-                     <h3 className="my-2">Enhanced Patient Satisfaction</h3>
+                     <h2 className="my-2">Enhanced Patient Satisfaction</h2>
                      <p>
                         Improve patient satisfaction by offering flexible
                         payment options and transparent billing practices. With

@@ -35,55 +35,62 @@ const reviews = [
 
 const Slider = () => {
    return (
-      <section className="container mt-5 text-light">
-         <SwiperType
-            pagination={{ dynamicBullets: true, clickable: true }}
-            modules={[Pagination]}
-            breakpoints={{
-               640: {
-                  slidesPerView: 1,
-                  spaceBetween: 20,
-               },
-               768: {
-                  slidesPerView: 2,
-                  spaceBetween: 30,
-               },
-               1024: {
-                  slidesPerView: 2,
-                  spaceBetween: 40,
-               },
-            }}
-            onSlideChange={(swiper) => {
-               console.log("Slide changed to: ", swiper.activeIndex);
-            }}
-         >
-            {reviews.map((review, index) => (
-               <SwiperSlide
-                  key={index}
-                  className="py-4"
-               >
-                  <div className="flex gap-4 flex-col items-center md:items-start justify-center md:flex-row ">
-                     <div className="w-48 h-48 md:w-96">
+      <>
+         <section className=" mt-5 container text-light">
+            <SwiperType
+               pagination={{ dynamicBullets: true, clickable: true }}
+               modules={[Pagination]}
+               breakpoints={{
+                  640: {
+                     slidesPerView: 1,
+                     spaceBetween: 20,
+                  },
+                  768: {
+                     slidesPerView: 1.1,
+                     spaceBetween: 30,
+                  },
+                  900:{
+                     slidesPerView: 1.2,
+                     spaceBetween: 30,
+                  },
+                  1024: {
+                     slidesPerView: 1.5,
+                     spaceBetween: 40,
+                  },
+                  1100:{
+                     slidesPerView: 2,
+                     spaceBetween: 40,
+                  }
+               }}
+               onSlideChange={(swiper) => {
+                  console.log("Slide changed to: ", swiper.activeIndex);
+               }}
+            >
+               {reviews.map((review, index) => (
+                  <SwiperSlide
+                     key={index}
+                     className="py-10 "
+                  >
+                     <div className="flex gap-4 mb-[82px] ">
                         <Image
                            src={review.image}
                            alt={review.alt}
-                           layout="responsive"
-                           className="object-cover w-full h-full"
+                           className="w-[196px] h-[196px] "
                         />
-                     </div>
 
-                     <div>
-                        <p className="mb-6">{review.text}</p>
-                        <div className="flex flex-col  gap-4 md:flex-row ">
-                           <h4>{review.name}</h4>
-                           <p>{review.title}</p>
+                        <div>
+                           <p className="mb-6">{review.text}</p>
+                           <div className="flex gap-4 ">
+                              <h4>{review.name}</h4>
+                              <p className="text-[#00000040]">{review.title}</p>
+                           </div>
                         </div>
                      </div>
-                  </div>
-               </SwiperSlide>
-            ))}
-         </SwiperType>
-      </section>
+                  </SwiperSlide>
+               ))}
+            </SwiperType>
+         </section>
+      </>
    );
 };
 

@@ -32,10 +32,16 @@ import CheckList from "@/components/CheckList";
 import Slider from "@/components/Slider";
 import momo1 from "../../public/images/momo1.png";
 import ball from "../../public/images/ball.png";
+import ball2 from "../../public/images/ball2.png";
 import elp1 from "../../public/images/elp1.png";
 import elp2 from "../../public/images/elp2.png";
-import signup2 from "../../public/images/signup2.png";
-import checkMark from "../../public/images/checkmark.png"; 
+import elp4 from "../../public/images/elp4.png";
+import elp5 from "../../public/images/elp5.png";
+import elp6 from "../../public/images/elp6.png";
+import elp7 from "../../public/images/elp7.png";
+import money from "../../public/images/money.png";
+import checkMark from "../../public/images/checkmark.png";
+import rect2 from "../../public/images/rect2.png";
 
 const Home = () => {
    const checkListItems = [
@@ -43,42 +49,50 @@ const Home = () => {
       { text: "Simple and Recurring Payment Setup", img: checkMark },
       { text: "Transaction Authetication", img: checkMark },
       { text: "Customer Identity Verification", img: checkMark },
-    ];
+   ];
    return (
       <>
          <Navbar />
          <div>
             {/* ===============HERO SECTION================== */}
-            <div className="flex items-center mx-auto text-center flex-col py-4 prose container min-h-[85vh] justify-center pt-20">
+            <div className="flex items-center mx-auto text-center flex-col py-4 prose container my-8 md:min-h-[80vh] justify-center pt-20">
                <Image
                   src={oval}
                   alt="oval"
-                  className="absolute top-[100px] -left-10 -z-10"
+                  className="hidden md:block absolute top-[100px] -left-10 -z-10"
                />
                <h4>
                   Introducing Ziba <span className="text-main">Pay</span>
                </h4>
-               <h2 className="my-2">
+               <h1 className="my-2 text-[48]">
                   <span className="text-main">Simplifying Payments</span> for{" "}
-                  <br />
                   Businesses in Africa
-               </h2>
-               <p>
+               </h1>
+               <p className="text-[20px] font-[600] text-black">
                   Ziba Pay offers businesses a streamlined and effective online
                   payment collection solution
                </p>
                <div className="flex gap-2 my-4">
                   <Link href="/login">
-                     <Button variant="outline">Login</Button>
+                     <Button
+                        className="w-[107px] sm:w-[150px]"
+                        variant="outline"
+                     >
+                        Login
+                     </Button>
                   </Link>
                   <Link href="/sign-up">
                      {" "}
-                     <Button>Create Account</Button>
+                     <Button className="w-[107px] sm:w-[150px]">
+                        Create Account
+                     </Button>
                   </Link>
                </div>
             </div>
             <div className="flex flex-col container">
-               <p>We are trusted by 1Million+ businesses</p>
+               <p className="text-[28px]">
+                  We are trusted by 1Million+ businesses
+               </p>
                <div className="flex gap-12 flex-wrap items-center my-10">
                   <Image
                      src={uber}
@@ -117,18 +131,18 @@ const Home = () => {
                />
                <div className="pt-40 flex items-center flex-col gap-6 container">
                   <h1>Our Features</h1>
-                  <p className="text-center">
+                  <p className="text-center mb-6 text-[#000000] text-[20px]">
                      With features like customizable dashboards, real-time
                      alerts, and secure data encryption, you can effortlessly
-                     manage your <br />
-                     transactions and take control of your financial life.
+                     manage your transactions and take control of your financial
+                     life.
                   </p>
                   <div className="flex items-center">
-                     <div className="flex flex-wrap w-5/6 gap-5 mx-auto items-center md:items-start justify-center">
-                        <div className="flex flex-row gap-2 bg-submain p-8 h-fit rounded-lg text-white w-full   lg:w-[400px] xl:w-[500px]">
+                     <div className="flex flex-wrap  gap-5 mx-auto items-center lg:items-start justify-center">
+                        <div className="flex flex-row gap-2 bg-submain p-[35px] lg:h-[402px] rounded-[28px]  text-white w-full    xl:w-[581px] items-center ">
                            <div>
                               <h3 className="my-2">Real-time Alerts</h3>
-                              <p>
+                              <p className="text-xl">
                                  Stay on top of your finances with our real-time
                                  alert feature! Get instant notifications about
                                  account activity, upcoming bills, and
@@ -139,15 +153,15 @@ const Home = () => {
                            <Image
                               src={fr1}
                               alt="fr1"
-                              width={100}
+                              width={192}
                               style={{ objectFit: "contain" }}
                               className="ml-2 hidden sm:block"
                            />
                         </div>
-                        <div className="flex flex-row gap-2 bg-submain p-8 h-fit rounded-lg text-white w-full lg:w-[400px] xl:w-[500px]">
+                        <div className="flex flex-row gap-2 bg-submain p-[35px] lg:h-[400px] rounded-[28px]  text-white w-full  xl:w-[581px] items-center">
                            <div>
                               <h3 className="my-2">Customizable Dashboard</h3>
-                              <p>
+                              <p className="text-xl">
                                  Easily track spending, monitor balances, and
                                  view transaction history all in one place. Take
                                  control of your finances and see the
@@ -157,32 +171,32 @@ const Home = () => {
                            <Image
                               src={fr2}
                               alt="fr2"
-                              width={100}
+                              width={192}
                               style={{ objectFit: "contain" }}
                               className="ml-2 hidden sm:block"
                            />
                         </div>
-                        <div className="flex flex-col gap-2 bg-submain p-8 h-fit rounded-lg text-white w-full  lg:w-[250px] xl:w-[300px]">
+                        <div className="flex flex-col gap-2 bg-submain p-[35px] lg:h-[449px] rounded-[28px]  text-white w-full   xl:w-[375px] justify-center">
                            <Image
                               src={fr3}
                               alt="fr3"
-                              width={100}
+                              width={90}
                               style={{ objectFit: "contain" }}
                               className="ml-2 hidden sm:block"
                            />
                            <div>
                               <h3 className="my-2">Ziba pay fraud detection</h3>
-                              <p>
+                              <p className="text-xl">
                                  Your money is 100% safe and secure on Ziba pay.
                                  No hassles, no glitches, get access to your
                                  money anytime.
                               </p>
                            </div>
                         </div>
-                        <div className="flex flex-row gap-2 bg-submain p-6 h-fit rounded-xl text-white w-full lg:w-[520px] xl:w-[700px] items-center">
+                        <div className="flex flex-row gap-2 bg-submain p-6 lg:h-[420px] rounded-[28px]  text-white w-full  xl:w-[794px] items-center">
                            <div>
                               <h3 className="my-2">Friendly Interface</h3>
-                              <p>
+                              <p className="text-xl">
                                  Navigating through Ziba Pay is a breeze, thanks
                                  to our clean and clutter-free interface.
                                  Whether you&apos;re setting up payment
@@ -194,7 +208,7 @@ const Home = () => {
                            <Image
                               src={fr4}
                               alt="fr4"
-                              width={100}
+                              width={108}
                               style={{ objectFit: "contain" }}
                               className="ml-2 hidden sm:block "
                            />
@@ -211,25 +225,26 @@ const Home = () => {
                   alt="rect"
                   className=" absolute left-0  top-0  -z-20 w-screen"
                />
-               <h1 className="text-center mt-[7rem] mb-20">
-                  We have more offers for you
-               </h1>
-               <div className="flex flex-col gap-12 md:gap-5 md:flex-row items-center justify-center">
-                  <div>
-                     <h2>Simplifying Payment Collection</h2>
-                     <p>
-                        Because starting a business is tough enough, but
-                        collecting
-                        <br /> money should be the easy part! At Ziba Pay,
-                        we&apos;re here to <br />
-                        streamline the process and make getting paid a breeze.
-                     </p>
+               <div className="container">
+                  <h1 className="text-center mt-[8rem] mb-20 ">
+                     We have more offers for you
+                  </h1>
+                  <div className="flex flex-col gap-12 md:gap-0 md:flex-row items-center justify-center">
+                     <div className="md:w-1/2">
+                        <h2 className="mb-2">Simplifying Payment Collection</h2>
+                        <p className="text-[20px]">
+                           Because starting a business is tough enough, but
+                           collecting money should be the easy part! At Ziba
+                           Pay, we&apos;re here to streamline the process and
+                           make getting paid a breeze.
+                        </p>
+                     </div>
+                     <Image
+                        src={offer1}
+                        alt="offers"
+                        width={500}
+                     />
                   </div>
-                  <Image
-                     src={offer1}
-                     alt="offers"
-                     className="w-[200px] md:w-[500px]"
-                  />
                </div>
             </div>
             {/* =======TRACKING=========== */}
@@ -239,27 +254,25 @@ const Home = () => {
                   alt="rect"
                   className=" absolute left-0  top-0  -z-20 w-screen"
                />
-               <div className="flex flex-col gap-12 md:gap-5 md:flex-row items-center justify-center mt-[8rem]">
-                  <div>
+               <div className="flex flex-col gap-12 md:gap-[1.5px] md:flex-row items-center justify-center mt-[8rem] container">
+                  <div className="md:w-1/2">
                      <h2 className="my-4">Easy tracking</h2>
-                     <p>
+                     <p className="text-[20.49px]">
                         Easily track your payments with our payment tracking{" "}
-                        <br />
                         feature. Monitor your bills and payments in one place,
-                        and
-                        <br /> get alerts when bills are due, so you never miss
-                        a payment again.
+                        and get alerts when bills are due, so you never miss a
+                        payment again.
                      </p>
                   </div>
                   <Image
                      src={track}
                      alt="offers"
-                     className="w-[200px] md:w-[500px]"
+                     width={500}
                   />
                </div>
             </div>
             <div className="container py-6 ">
-               <div className="flex flex-col gap-12 md:gap-5 md:flex-row items-center justify-center bg-submain text-white p-8">
+               <div className="flex flex-col gap-12 md:gap-0 md:flex-row items-center md:items-start justify-center bg-submain text-white px-8 py-16 relative">
                   <div>
                      <h2 className="my-3">
                         Ziba Pay offers well-documented and easy-to-use{" "}
@@ -274,37 +287,52 @@ const Home = () => {
                         APIs to enhance their payment experiences.
                      </p>
                      <div className="mt-6">
-                     <CheckList items={checkListItems} />
-                       
+                        <CheckList items={checkListItems} />
                      </div>
                   </div>
                   <Image
                      src={smile}
                      alt="offers"
-                     className="hidden md:block w-[500px]"
+                     className="hidden md:block w-[600px] -ml-40 "
+                  />
+                  <Image
+                     src={elp4}
+                     alt="offers"
+                     className="hidden md:block absolute bottom-0 left-0"
+                  />
+                  <Image
+                     src={elp1}
+                     alt="ball"
+                     className="absolute top-0 left-0 z-10"
                   />
                </div>
             </div>
 
-            <div className="bg-br py-6">
-               <div className="flex flex-col md:flex-row gap-4 mx-auto items-center justify-center container">
-                  <div className=" md:h-[600px] justify-center bg-white w-fit rounded-2xl p-2">
-                     <h4 className="my-4">
+            <div className="bg-br py-20">
+               <div className="flex flex-col md:flex-row gap-8 mx-auto items-center justify-center container">
+                  <div className=" md:h-[756px] justify-center bg-white  rounded-[25px] p-[30px] w-full sm:w-5/6 md:w-[613px] ">
+                     <h3 className="my-4 text-[40px]">
                         Send and receive without borders with Mobile Money
-                     </h4>
+                     </h3>
                      <Image
                         src={send1}
                         alt="momo"
+                        width={450}
+                        className="mt-8 ml-[50%] transform -translate-x-1/2"
                      />
                   </div>
-                  <div className=" md:h-[600px] justify-center rounded-2xl bg-submain w-fit p-2 text-white ">
-                     <h4 className="my-4">Invoices that work smarter</h4>
+                  <div className=" md:h-[756px] flex flex-col   bg-submain  text-white rounded-[25px] p-[30px] md:w-[548px] w-full sm:w-5/6 ">
+                     <h3 className="my-2 text-[40px]">
+                        Invoices that work smarter
+                     </h3>
 
-                     <p className="my-4">Learn more about invoices</p>
+                     <p className="my-2">Learn more about invoices</p>
 
                      <Image
                         src={send2}
                         alt="smarter"
+                        width={450}
+                        className="mt-[100px] ml-[50%] transform -translate-x-1/2"
                      />
                   </div>
                </div>
@@ -312,87 +340,87 @@ const Home = () => {
 
             {/* ===MOBILE MONEY INTEGRATION==== */}
 
-            <div className="bg-main text-white flex flex-col gap-6 py-6 relative">
+            <div className="bg-main text-white flex flex-col gap-6 py-6 relative min-h-[900px]">
                <Image
-                  src={ball}
+                  src={ball2}
                   alt="ball"
                   className="absolute top-40 right-10"
                />
                <Image
-                  src={ball}
+                  src={ball2}
                   alt="ball"
                   className="absolute bottom-40 right-10"
                />
                <Image
-                  src={ball}
+                  src={ball2}
                   alt="ball"
                   className="absolute bottom-40 left-10"
                />
                <Image
-                  src={elp1}
+                  src={elp6}
                   alt="ball"
                   className="absolute top-0 left-0 z-10"
                />
                <Image
-                  src={elp2}
+                  src={elp7}
                   alt="ball"
                   className="absolute bottom-0 left-0 "
                />
-            
+               <Image
+                  src={elp5}
+                  alt="ball"
+                  className="absolute top-0 right-0  w-[80px] md:w-[150px]"
+               />
+
                <div className="container z-20">
-                  <div>
-                     <h2 className="my-4">Mobile Money Integration</h2>
-                     <p className="my-4">
+                  <div className="text-black w-5/6">
+                     <h2 className="my-4 text-[48px]">Mobile Money Integration</h2>
+                     <p className="my-4 text-[20px]  font-[700]">
                         Expand your payment options with Ziba Pay by integrating
-                        <span className="text-black">
-                           MTN Mobile Money
-                        </span> and{" "}
-                        <span className="text-black">Airtel Mobile Money</span>.
-                        Offer your customers the convenience of paying directly
-                        from their mobile wallets.
+                        MTN Mobile Money and Airtel Mobile Money Offer your
+                        customers the convenience of paying directly from their
+                        mobile wallets.
                      </p>
                   </div>
                   <Link
                      href="/mobile-money-integration"
-                     className="underline text-black"
+                     className=""
                   >
-                     Learn more about MoMo{" "}
+                     <h4 className="text-black underline text-[32px] font-[900] ">
+                        Learn more about MoMo
+                     </h4>{" "}
                   </Link>
-                  <Image
-                     src={phone}
-                     alt="mobile integration"
-                     className=" mx-auto z-30"
-                     width={700}
-                  />
-                  <Image
-                     src={momo1}
-                     alt="mobile integration"
-                     className=" absolute hidden md:block top-[40%] right-0 z-10"
-                  />
                </div>
+               <Image
+                  src={money}
+                  alt="mobile integration"
+                  className=" mx-auto absolute top-[40%] md:top-60 w-full"
+               />
             </div>
 
             {/* =======REVIEWS=========== */}
-            <div className=" py-6 relative">
+            <div className=" py-20 relative ">
                <Image
-                  src={curvedImg}
+                  src={rect2}
                   alt="rect"
                   className=" absolute left-0  top-0  -z-20 w-screen"
                />
 
-               <div className="flex flex-col gap-6 container items-center justify-center py-40">
-                  <p className="mt-20">5000+ Happy Ziba pay Users</p>
-                  <h2>Don’t just take our words</h2>
+               <div className="flex flex-col gap-6  items-center justify-center pt-40 md:pt-80 ">
+                  <p className="mt-40 text-center">
+                     5000+ Happy Ziba pay Users
+                  </p>
+                  <h2 className="text-center text-[48px]">Don’t just take our words</h2>
                   {/* reviews */}
                   <Slider />
                </div>
             </div>
 
             {/* =======FAQs=========== */}
-            <div className="bg-br">
-               <div className="container  flex gap-6 justify-between items-center flex-col md:flex-row">
+            <div className="bg-br py-20">
+               <div className="container  flex gap-2 justify-center items-center flex-col md:flex-row md:justify-between md:gap-6">
                   <h2>FAQ&apos;s</h2>
-                  <div className="flex flex-col gap-4 items-center justify-center py-10 w-full md:w-3/4">
+                  <div className="flex flex-col gap-4 items-center justify-center   py-4 md:py-10 w-full md:w-3/4">
                      <h3>Got questions?</h3>
                      <p>Get the answers to your questions about Ziba pay.</p>
 

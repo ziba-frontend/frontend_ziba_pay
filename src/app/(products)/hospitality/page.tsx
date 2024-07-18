@@ -10,7 +10,7 @@ import Link from "next/link";
 
 const Healthcare = () => {
    return (
-      <div>
+      <div className="pt-20">
          <div className="my-10 container">
             <div className="flex-col flex md:flex-row items-center justify-center gap-6">
                <div className="md:w-1/2">
@@ -34,14 +34,14 @@ const Healthcare = () => {
             </div>
          </div>
 
-         <div className="flex items-center justify-center gap-20 md:flex-row py-6 container flex-col-reverse">
+         <div className="flex items-center justify-center gap-20 md:flex-row py-6 container flex-col-reverse ">
             <Image
                src={hospi2}
                alt="ziba pay"
                className="w-[400px]"
             />
             <div className="w-full md:w-1/2">
-               <h3 className="my-2">Welcome Guests Worldwide</h3>
+               <h2 className="my-2 mb-4">Welcome Guests Worldwide</h2>
                <p>
                   Welcome guests from around the globe and accept payments in
                   both local and international currencies. Seamlessly integrate
@@ -59,9 +59,9 @@ const Healthcare = () => {
             <div className="mt-10 py-20">
                <div className=" py-6 container">
                   <div className="w-full md:w-1/2">
-                     <h3 className="my-2">
+                     <h2 className="my-2 mb-4">
                         Enhance Passenger Payment Experience
-                     </h3>
+                     </h2>
                      <p>
                         Ziba pay ensures a smooth payment journey for passengers
                         with flexible options. Our Pay-In solutions offer
@@ -81,10 +81,10 @@ const Healthcare = () => {
                      alt="ziba"
                      className="sm:w-[300px] lg:w-[400px]"
                   />
-                  <div className="">
-                     <h3 className="my-2">
+                  <div className="md:w-1/2">
+                     <h2 className="my-2 mb-6">
                         For a Smooth In-Person Payment Experience
-                     </h3>
+                     </h2>
                      <p>
                         We strategically position Ziba pay POS Terminals to make
                         paying in person a breeze. Whether you&apos;re at
@@ -105,9 +105,9 @@ const Healthcare = () => {
             <div className="mt-10">
                <div className="flex flex-col items-center justify-center gap-20 md:flex-row py-6 container">
                   <div className="w-full md:w-1/2">
-                     <h3 className="my-2">
+                     <h2 className="my-2 mb-6">
                         Handle Different Currencies and Send Money Back Home
-                     </h3>
+                     </h2>
                      <p>
                         Use our treasury solution to manage and send funds
                         abroad in different currencies. This helps you meet

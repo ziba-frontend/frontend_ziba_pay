@@ -1,7 +1,7 @@
 {
     "title": "api-docs",
     "root":true,
-    "pages":["index","start","guide","core"]
+    "pages":["start","guide","core"]
 
   
   }

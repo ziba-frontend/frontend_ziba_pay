@@ -48,7 +48,7 @@ const Slider = () => {
                   spaceBetween: 20,
                },
                768: {
-                  slidesPerView: 2,
+                  slidesPerView: 1,
                   spaceBetween: 30,
                },
                1024: {
@@ -63,9 +63,9 @@ const Slider = () => {
             {reviews.map((review, index) => (
                <SwiperSlide
                   key={index}
-                  className="py-4"
+                  className="py-10 pb-16"
                >
-                  <div className="flex flex-col gap-4 w-5/6 md:w-[500px] hover:bg-main rounded-lg p-6 hover:text-white">
+                  <div className="flex flex-col gap-4 w-full sm:w-5/6 md:w-[500px] hover:bg-main rounded-lg p-6 hover:text-white items-center  ">
                      <p className="flex gap-2">
                         <span>
                            <FaQuoteLeft className="text-black/50" />

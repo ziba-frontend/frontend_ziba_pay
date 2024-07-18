@@ -20,7 +20,7 @@ const AboutUs = () => {
 
    return (
       <div>
-         <div className="flex items-center justify-center gap-6 flex-col container py-10 ">
+         <div className="flex items-center justify-center gap-6 flex-col container py-10 pb-20">
             <h1 className="text-center my-6 ">
                We&apos;re changing how businesses handle their money with
                payment solutions made just for them. It&apos;s like a party for
@@ -39,41 +39,41 @@ const AboutUs = () => {
             />
 
             <div className="flex flex-col container items-center justify-center gap-4 mt-20">
-               <h3 className="lg:text-3xl mt-10">
+               <h2 className="lg:text-3xl mt-10">
                   Ziba Pay is a team of passionate professionals dedicated to
                   delivering excellence in payment technology. With a wealth of
                   experience and expertise in the fintech industry, our team
                   works tirelessly to develop cutting-edge solutions that meet
                   the evolving needs of businesses in Africa and beyond.
-               </h3>
+               </h2>
                <Image
                   src={about2}
                   alt="ziba"
-                  className="w-[200px] md:w-[400px]"
+                  width={734}
                />
             </div>
          </div>
 
-         <div className="flex flex-col container items-center justify-center gap-4 mt-20">
+         <div className="flex flex-col container items-center justify-center gap-4 mt-20  pb-20">
             <div className="flex flex-col container items-center justify-center gap-4 mt-20 py-6">
-               <h3 className="my-4 lg:text-3xl">
+               <h2 className="my-4 lg:text-3xl">
                   At Ziba Pay, we offer a comprehensive suite of payment
                   solutions designed to streamline operations, enhance customer
                   experiences, and drive business growth. From online payment
                   processing to invoicing and financial management tools, our
                   platform provides businesses with the tools they need to
                   succeed in today&apos;s competitive marketplace.
-               </h3>
+               </h2>
                <div className="relative">
                   <Image
                      src={about3}
                      alt="ziba"
-                     className="w-[200px] md:w-[400px] "
+                     width={899}
                   />
                   <Image
                      src={logo}
                      alt="zibapay"
-                     className="absolute bottom-6 left-1/2 transform -translate-x-1/2 "
+                     className="absolute bottom-20 left-1/2 transform -translate-x-1/2 "
                   />
                </div>
             </div>
@@ -86,12 +86,12 @@ const AboutUs = () => {
                className="absolute top-0 left-0 w-full "
             />
 
-            <div className="flex flex-col container items-start justify-start gap-6 mt-20">
-               <h3 className="text-start mt-10 lg:text-3xl">
+            <div className="flex flex-col container items-start justify-start gap-6 mt-20 py-10">
+               <h2 className="text-start mt-10 ">
                   We offer our full suite of products through an API, empowering
                   developers to innovate and businesses to scale up, providing
                   top-notch payment solutions.
-               </h3>
+               </h2>
                <p>
                   We&apos;ve made these products with care so businesses can
                   grow without limits.
@@ -99,11 +99,11 @@ const AboutUs = () => {
             </div>
          </div>
 
-         <div className="bg-[#efeeee] py-12">
-            <div className="flex items-center justify-center p-6 container gap-6 flex-col sm:flex-row">
-               <div className="flex flex-col gap-6  bg-white rounded-2xl md:w-[300px] md:h-[400px] lg:w-[400px] lg:h-[600px] w-5/6 h-[400px]">
+         <div className="bg-[#efeeee] py-16">
+            <div className="flex items-center justify-center p-6 container gap-[28px] flex-col md:flex-row">
+               <div className="flex flex-col gap-6  bg-white rounded-2xl md:w-[400px] md:h-[900px]  lg:w-[586px] lg:h-[1153px] sm:w-5/6 w-[90%] h-[800px]">
                   <div className="p-6">
-                     <h2>Our Mission</h2>
+                     <h2 className="mb-4">Our Mission</h2>
                      <p>Making payment process for businesses easy</p>
                   </div>
                   <Image
@@ -112,7 +112,7 @@ const AboutUs = () => {
                   />
                </div>
                <div
-                  className="flex flex-col gap-6 p-4 bg-white rounded-2xl md:w-[300px] md:h-[400px] lg:w-[400px] lg:h-[600px] w-5/6 h-[400px] text-white"
+                  className="flex flex-col gap-6 p-4 bg-white rounded-2xl md:w-[400px] md:h-[900px] lg:w-[586px] lg:h-[1153px] sm:w-5/6 w-[90%] h-[800px] text-white"
                   style={{
                      backgroundImage: "url(/images/about6.png)",
                      backgroundSize: "cover",
@@ -128,14 +128,20 @@ const AboutUs = () => {
                </div>
             </div>
          </div>
-         <div className="bg-br">
-            <div className="flex items-center justify-center p-6 container gap-6 flex-col sm:flex-row">
+         <div className="container bg-br md:bg-background pt-40 relative ">
+         <Image
+               src={rect}
+               alt="rect"
+               className="absolute top-0 left-0 w-full block md:hidden"
+            />
+            <div className="flex items-center justify-center py-16  gap-6 flex-col md:flex-row w-full md:bg-br lg:w-[90%] mx-auto ">
                <Image
                   src={about5}
                   alt="about"
-                  className="w-[300px] md:w-[500px]"
+                  width={600}
+                  className=" md:w-[400px] lg:w-[600px]"
                />
-               <div className="flex flex-col gap-6 p-4  justify-center md:w-[300px] md:h-[400px] lg:w-[400px] lg:h-[600px] w-5/6 h-[400px]">
+               <div className="flex flex-col gap-6 p-4  justify-center ">
                   <h2>Why Choose Ziba Pay</h2>
                   <p>
                      At Ziba Pay, we embrace creativity, innovation, and

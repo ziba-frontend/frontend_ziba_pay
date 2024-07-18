@@ -14,7 +14,7 @@ const FinancialManagement = () => {
       <div className="my-20">
          <div className="flex flex-col items-center md:items-start justify-center gap-6 md:flex-row container">
             <div className="w-full md:w-1/2">
-               <h1>
+               <h1 className="text-[48px] mb-4">
                   Gain better control over your finances and make informed
                   decisions with our suite of financial management tools.{" "}
                </h1>
@@ -27,6 +27,7 @@ const FinancialManagement = () => {
             <Image
                src={fin1}
                alt="ziba"
+               width={500}
             />
          </div>
 
@@ -37,15 +38,15 @@ const FinancialManagement = () => {
                className="absolute left-0 top-0 w-full"
             />
             <div className="mt-10">
-               <h2 className="text-center my-6">Features</h2>
-               <div className="flex flex-col items-center justify-center gap-20 md:flex-row py-6 container">
+               <h2 className="text-center my-6 text-[48px]">Features</h2>
+               <div className="flex flex-col items-center justify-center gap-20 md:flex-row py-16 container ">
                   <Image
                      src={fin2}
                      alt="ziba pay"
-                     className="w-[400px]"
+                     width={400}
                   />
-                  <div className="">
-                     <h3 className="my-2">Expense Tracking</h3>
+                  <div className="md:w-1/2">
+                     <h3 className="my-2 text-[40px]">Expense Tracking</h3>
                      <p>
                         Track your expenses easily and efficiently with Ziba
                         Pay&apos;s intuitive expense tracking feature.
@@ -57,9 +58,9 @@ const FinancialManagement = () => {
             </div>
          </div>
 
-         <div className="flex flex-col items-center justify-center md:justify-between gap-6 md:flex-row container py-20">
+         <div className="flex flex-col items-center justify-center  gap-6 md:flex-row container py-20">
             <div className="w-full sm:w-5/6 md:w-1/2">
-               <h1>Budgeting Tools</h1>
+               <h1 className="text-[48px] mb-4">Budgeting Tools</h1>
                <p>
                   Take control of your finances and plan for the future with
                   Ziba Pay&apos;s powerful budgeting tools. Set customizable
@@ -70,7 +71,7 @@ const FinancialManagement = () => {
             <Image
                src={fin3}
                alt="ziba"
-               className="w-[400px]"
+               width={400}
             />
          </div>
 
@@ -80,7 +81,7 @@ const FinancialManagement = () => {
                alt="ziba pay"
                className="absolute left-0 top-0 w-full"
             />
-            <div className="mt-10">
+            <div className="mt-10 pb-6">
                <div className="flex flex-col items-center justify-center gap-20 md:flex-row py-6 container">
                   <Image
                      src={fin4}
@@ -88,7 +89,7 @@ const FinancialManagement = () => {
                      className="w-[400px]"
                   />
                   <div className="">
-                     <h3 className="my-2">Reporting and Analytics</h3>
+                     <h3 className="my-2 text-[40px]">Reporting and Analytics</h3>
                      <p>
                         Gain valuable insights into your financial performance
                         with Ziba Pay&apos;s robust reporting and analytics
@@ -108,7 +109,7 @@ const FinancialManagement = () => {
                   className="sm:w-[300px] lg:w-[468px]"
                />
                <div className="">
-                  <h2 className="my-4">
+                  <h2 className="my-4 text-[40px]">
                      Ready to take control of your finances? Sign up for Ziba
                      Pay now and unlock a suite of powerful financial management
                      tools to streamline your operations and drive success.
