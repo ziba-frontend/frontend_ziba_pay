@@ -74,7 +74,6 @@ const columns: ColumnDef<Payment>[] = [
       cell: ({ row }) => {
          const status = row.original.status;
          let statusClass = "";
-
          if (status === "pending") {
             statusClass = "text-blue-500 bg-blue-100";
          } else if (status === "completed") {
