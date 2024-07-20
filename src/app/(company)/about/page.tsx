@@ -6,6 +6,7 @@ import about2 from "../../../../public/images/about2.png";
 import about3 from "../../../../public/images/about3.png";
 import about4 from "../../../../public/images/about4.png";
 import about5 from "../../../../public/images/about5.png";
+import aboutball from "../../../../public/images/aboutball.png";
 import CheckList from "@/components/CheckList";
 import checkMark from "../../../../public/images/check.png";
 import logo from "../../../../public/svg/logo.svg";
@@ -21,7 +22,7 @@ const AboutUs = () => {
    return (
       <div>
          <div className="flex items-center justify-center gap-6 flex-col container py-10 pb-20">
-            <h1 className="text-center my-6 ">
+            <h1 className="text-center my-6 md:w-3/4">
                We&apos;re changing how businesses handle their money with
                payment solutions made just for them. It&apos;s like a party for
                your finances
@@ -29,6 +30,7 @@ const AboutUs = () => {
             <Image
                src={about1}
                alt="about1"
+               width={1100}
             />
          </div>
          <div className="relative py-20 bg-br">
@@ -49,7 +51,8 @@ const AboutUs = () => {
                <Image
                   src={about2}
                   alt="ziba"
-                  width={734}
+                  width={700}
+                  className="mt-4"
                />
             </div>
          </div>
@@ -68,7 +71,8 @@ const AboutUs = () => {
                   <Image
                      src={about3}
                      alt="ziba"
-                     width={899}
+                     width={800}
+                       className="mt-4"
                   />
                   <Image
                      src={logo}
@@ -86,12 +90,17 @@ const AboutUs = () => {
                className="absolute top-0 left-0 w-full "
             />
 
-            <div className="flex flex-col container items-start justify-start gap-6 mt-20 py-10">
-               <h2 className="text-start mt-10 ">
+            <div className="flex flex-col container items-start justify-start gap-6 mt-20 py-10 relative">
+               <h2 className="text-start mt-20 ">
                   We offer our full suite of products through an API, empowering
                   developers to innovate and businesses to scale up, providing
                   top-notch payment solutions.
                </h2>
+               <Image
+                     src={aboutball}
+                     alt="about"
+                     className="absolute -left-2 hidden md:block"
+                  />
                <p>
                   We&apos;ve made these products with care so businesses can
                   grow without limits.
@@ -138,7 +147,6 @@ const AboutUs = () => {
                <Image
                   src={about5}
                   alt="about"
-                  width={600}
                   className=" md:w-[400px] lg:w-[600px]"
                />
                <div className="flex flex-col gap-6 p-4  justify-center ">

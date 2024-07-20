@@ -55,27 +55,27 @@ const Home = () => {
          <Navbar />
          <div>
             {/* ===============HERO SECTION================== */}
-            <div className="flex items-center mx-auto text-center flex-col py-4 prose container my-8 md:min-h-[80vh] justify-center pt-20">
+            <div className="flex items-center mx-auto text-center flex-col py-4  container my-8 md:min-h-[60vh] lg:min-h-[80vh] justify-center pt-20">
                <Image
                   src={oval}
                   alt="oval"
                   className="hidden md:block absolute top-[100px] -left-10 -z-10"
                />
-               <h4>
+               <p>
                   Introducing Ziba <span className="text-main">Pay</span>
-               </h4>
-               <h1 className="my-2 text-[48]">
+               </p>
+               <h1 className=" text-[48] md:w-5/6 lg:w-[45%]">
                   <span className="text-main">Simplifying Payments</span> for{" "}
                   Businesses in Africa
                </h1>
-               <p className="text-[20px] font-[600] text-black">
+               <p className="text-[20px] font-[600] text-black mt-2 md:w-5/6 lg:w-[45%]">
                   Ziba Pay offers businesses a streamlined and effective online
                   payment collection solution
                </p>
-               <div className="flex gap-2 my-4">
+               <div className="flex gap-2 my-4 pt-8">
                   <Link href="/login">
                      <Button
-                        className="w-[107px] sm:w-[150px]"
+                        className="w-[107px] sm:w-[130px] p-6"
                         variant="outline"
                      >
                         Login
@@ -83,7 +83,7 @@ const Home = () => {
                   </Link>
                   <Link href="/sign-up">
                      {" "}
-                     <Button className="w-[107px] sm:w-[150px]">
+                     <Button className="w-[107px] sm:w-[130px] p-6">
                         Create Account
                      </Button>
                   </Link>
@@ -374,7 +374,9 @@ const Home = () => {
 
                <div className="container z-20">
                   <div className="text-black w-5/6">
-                     <h2 className="my-4 text-[48px]">Mobile Money Integration</h2>
+                     <h2 className="my-4 text-[48px]">
+                        Mobile Money Integration
+                     </h2>
                      <p className="my-4 text-[20px]  font-[700]">
                         Expand your payment options with Ziba Pay by integrating
                         MTN Mobile Money and Airtel Mobile Money Offer your
@@ -410,7 +412,9 @@ const Home = () => {
                   <p className="mt-40 text-center">
                      5000+ Happy Ziba pay Users
                   </p>
-                  <h2 className="text-center text-[48px]">Don’t just take our words</h2>
+                  <h2 className="text-center text-[48px]">
+                     Don’t just take our words
+                  </h2>
                   {/* reviews */}
                   <Slider />
                </div>

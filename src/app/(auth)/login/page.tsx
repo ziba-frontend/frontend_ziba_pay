@@ -41,23 +41,26 @@ const Login = () => {
    };
    return (
       <div>
-         <div className="flex bg-white">
+         <div className="flex bg-white flex-col md:flex-row">
             <Image
                src={login}
                alt="login to ziba"
-               className="hidden w-[386px] md:block"
+               className=" w-full md:w-[400px] lg:w-[600px]   md:h-[1000px]"
             />
-            <div className="flex  w-full items-center justify-center flex-col gap-6 py-20 md:py-0">
+            <div className="flex  w-full items-center justify-center flex-col gap-6 py-20 md:pb-0 2xl:-ml-[270px] md:pt-8">
                <Image
                   src={logo}
                   alt="zibaPay"
-                  width={210}
+                  width={120}
+                  className="hidden md:block"
                />
+
                <Form {...form}>
                   <form
                      onSubmit={form.handleSubmit(onSubmit)}
-                     className="space-y-8 w-full  xl:w-[850px] p-10 shadow"
+                     className="space-y-8 w-full  xl:w-[800px] p-6 lg:p-[60px] lg:shadow-xl xl:p-[102px]"
                   >
+                     <p className="text-center">Login</p>
                      <FormField
                         control={form.control}
                         name="email"
@@ -84,7 +87,7 @@ const Login = () => {
                                  <FormLabel>Password *</FormLabel>
                                  <FormControl>
                                     <Input
-                                       className="bg-white p-6  border "
+                                       className=" bg-white p-6  border "
                                        placeholder="******"
                                        type="password"
                                        {...field}
@@ -96,7 +99,7 @@ const Login = () => {
                         />
                         <Link
                            href="/forgot-password"
-                           className="text-main absolute right-0 top-24"
+                           className="text-main absolute right-0 top-24 underline"
                         >
                            Forgot password ?
                         </Link>
@@ -107,7 +110,7 @@ const Login = () => {
                      </div>
                      <Button
                         type="submit"
-                        className="w-full"
+                        className="w-full p-[26px]"
                      >
                         Log In
                      </Button>

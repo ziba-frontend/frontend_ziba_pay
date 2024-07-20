@@ -9,8 +9,6 @@ import {
    DropdownMenuContent,
    DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { FiMenu } from "react-icons/fi";
-import { AiOutlineClose } from "react-icons/ai";
 import {
    Accordion,
    AccordionContent,
@@ -23,7 +21,6 @@ import Image from "next/image";
 import drop1 from "../../public/images/drop1.png";
 import drop2 from "../../public/images/drop2.png";
 import { createPortal } from "react-dom";
-import prod1 from "../../public/images/prod1.png";
 import close from "../../public/images/close.png";
 
 type MenuItems = {
@@ -100,12 +97,12 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onOpenChange }) => {
             onOpenChange(isOpen);
          }}
       >
-         <DropdownMenuTrigger className="cursor-pointer">
+         <DropdownMenuTrigger className="cursor-pointer text-[16px]">
             {title}
          </DropdownMenuTrigger>
          <DropdownMenuContent
-            className={`bg-white p-10 relative ${
-               title === "Products" ? "w-[40rem]" : "w-64"
+            className={`bg-white p-12 relative rounded-[20px] ${
+               title === "Products" ? "w-[40rem]" : "w-fit"
             } left-0`}
          >
             <Image
@@ -149,10 +146,10 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onOpenChange }) => {
                   ) : (
                      <Link
                         href={item.href}
-                        className="w-full text-left hover:text-main"
+                        className="w-full text-left hover:text-main my-1"
                         onClick={handleItemClick}
                      >
-                        {item.label}
+                        <h4> {item.label}</h4>
                      </Link>
                   )}
                </DropdownMenuItem>
@@ -192,20 +189,20 @@ const Navbar: React.FC = () => {
                         onOpenChange={(isOpen) => setIsDropdownOpen(isOpen)}
                      />
                   ))}
-                  <Link href="/api-docs">Developer</Link>
+                  <Link href="/api-docs" className="text-[16px]">Developer</Link>
                </div>
             </div>
             <div className="hidden md:flex gap-3">
                <Link href="/login">
                   <Button
-                     className="w-[107px] sm:w-[150px]"
+                     className="w-[107px] sm:w-[130px] p-6"
                      variant="outline"
                   >
                      Login
                   </Button>
                </Link>
-               <Link href="/sign-up">
-                  <Button className="w-[107px] sm:w-[150px]">
+               <Link href="/sign-up" className="md:hidden lg:block">
+                  <Button className="w-[107px] sm:w-[130px] p-6 ">
                      Create Account
                   </Button>
                </Link>

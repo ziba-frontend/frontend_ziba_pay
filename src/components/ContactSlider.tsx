@@ -48,32 +48,34 @@ const Slider = () => {
                   spaceBetween: 20,
                },
                768: {
-                  slidesPerView: 1,
+                  slidesPerView: 1.2,
                   spaceBetween: 30,
                },
                1024: {
                   slidesPerView: 2,
                   spaceBetween: 40,
                },
+               1400: {
+                  slidesPerView: 2.2,
+                  spaceBetween: 40,
+               },
             }}
-            onSlideChange={(swiper) => {
-               console.log("Slide changed to: ", swiper.activeIndex);
-            }}
+        
          >
             {reviews.map((review, index) => (
                <SwiperSlide
                   key={index}
                   className="py-10 pb-16"
                >
-                  <div className="flex flex-col gap-4 w-full sm:w-5/6 md:w-[500px] hover:bg-main rounded-lg p-6 hover:text-white items-center  ">
-                     <p className="flex gap-2">
+                  <div className="flex flex-col gap-4 w-full sm:w-5/6 md:w-[500px] hover:bg-main rounded-[15px] p-6 hover:text-white items-center  text-[#030A1196] min-h-[250px]">
+                     <p className="flex gap-2  ">
                         <span>
-                           <FaQuoteLeft className="text-black/50" />
+                           <FaQuoteLeft />
                         </span>
                         {review.text}
                      </p>
-                     <p className="text-center">{review.name}</p>
-                     <p className="text-center">{review.location}</p>
+                     <p className="text-center  text-[16px] ">{review.name}</p>
+                     <p className="text-center  text-[16px] ">{review.location}</p>
                   </div>
                </SwiperSlide>
             ))}

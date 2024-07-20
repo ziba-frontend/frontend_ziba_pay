@@ -25,13 +25,14 @@ interface DocCardProps {
       | null
       | undefined;
    bgColor?: string; // Add the bgColor prop
+   className?: string; // Add the className prop
    children?: ReactNode;
 }
 
-const DocCard = ({ title, content, bgColor, children }: DocCardProps) => {
+const DocCard = ({ title, content, bgColor, className, children }: DocCardProps) => {
    return (
       <div
-         className={styles["resp-card"]}
+         className={`${styles["resp-card"]} ${className}`}
          style={{ backgroundColor: bgColor }}
       >
          {title && <h4>{title}</h4>}

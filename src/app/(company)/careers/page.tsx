@@ -1,6 +1,7 @@
+"use client"
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import React from "react";
+import React, { useRef } from "react";
 import careers1 from "../../../../public/images/careers1.png";
 import careers2 from "../../../../public/images/careers2.png";
 import careers3 from "../../../../public/images/careers3.png";
@@ -11,59 +12,59 @@ import careers7 from "../../../../public/images/careers7.png";
 import rect from "../../../../public/images/rect1.png";
 
 const Careers = () => {
+   const positionsRef = useRef<HTMLHeadingElement | null>(null);
+
+   const handleScrollToPositions = () => {
+      if (positionsRef.current) {
+         positionsRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+   };
+
    return (
       <div>
          <div className="flex items-center justify-center flex-col gap-5 mt-12 container py-10">
-            <h1 className="text-center">Careers at Ziba pay</h1>
+            <h1 className="text-center">Careers at Ziba Pay</h1>
             <p className="text-center">
                We&apos;re looking for passionate individuals who are ready to
                join us in this <br /> journey of innovation and growth. If
                you&apos;re driven, creative, and eager to <br />
                make a difference, we want to hear from you!
             </p>
-            <Button>Explore Job Openings</Button>
+            <Button onClick={handleScrollToPositions}>Explore Job Openings</Button>
          </div>
 
          <div className="container flex items-center justify-center p-4 flex-col gap-8 pb-20">
-            <Image
-               src={careers1}
-               alt="careers"
-               className=""
-            />
-            <div className="w-full md:w-3/4">
+            <Image src={careers1} alt="careers" width={950}/>
+            <div className="w-full md:w-3/4" ref={positionsRef}>
                <h1 className="text-center my-4">
-                  Craft Your Future with Ziba pay
+                  Craft Your Future with Ziba Pay
                </h1>
                <p className="text-center">
                   Embark on a rewarding journey of shaping Africa&apos;s
-                  connection to the global payment network. At Fincra,
+                  connection to the global payment network. At Ziba Pay,
                   we&apos;re committed to fostering diversity, promoting
                   teamwork, and fostering continuous growth. Join our passionate
                   team and be part of the transformative journey in the world of
                   payments.
                </p>
             </div>
-            <h4>At the moment, we don&apos;t have any available positions</h4>
+            <h4 >At the moment, we don&apos;t have any available positions</h4>
          </div>
 
-         <div className=" bg-br relative">
-            <Image
-               src={rect}
-               alt="rect"
-               className="absolute w-full left-0 top-0"
-            />
-            <div className="flex flex-col gap-12 container py-20">
+         <div className="bg-br relative">
+            <Image src={rect} alt="rect" className="absolute w-full left-0 top-0" />
+            <div className="flex flex-col gap-12 container py-20 relative z-10">
                <div className="mt-20 sm:mt-40">
-                  <h2 className="mt-6 ">Benefits</h2>
+                  <h2 className="mt-6">Benefits</h2>
                   <p className="mt-2 mb-2">
-                     Ziba pay provides competitive salaries and a comprehensive
-                     benefits package to <br />
+                     Ziba Pay provides competitive salaries and a comprehensive
+                     benefits package to 
                      support your professional growth and well-being.
                   </p>
                </div>
-               <div className="flex items-center justify-center">
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 p-2 gap-4 items-center justify-center  ">
-                     <div className="flex gap-4 flex-col bg-white p-4 w-5/6 sm:w-3/4 md:w-[320px] lg:w-[380px] h-fit sm:h-[250px]  shadow-lg">
+               <div className="flex items-center justify-center xl:justify-start">
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[25px] ">
+                     <div className="flex gap-4 flex-col bg-white p-[26px] w-full md:w-[320px] lg:w-[383px] h-fit sm:h-[250px] shadow-lg">
                         <Image
                            src={careers2}
                            alt="health Insurance"
@@ -71,13 +72,13 @@ const Careers = () => {
                            height={40}
                            className="bg-[#3BD64A1A] rounded-full p-2"
                         />
-                        <h4>Health Insurance </h4>
+                        <h4>Health Insurance</h4>
                         <p>
                            We offer comprehensive health insurance for all your
                            medical needs.
                         </p>
                      </div>
-                     <div className="flex gap-4 flex-col bg-white p-4 w-5/6 sm:w-3/4 md:w-[320px] lg:w-[380px] h-fit sm:h-[250px]  shadow-lg">
+                     <div className="flex gap-4 flex-col bg-white p-[26px] w-full md:w-[320px] lg:w-[383px] h-fit sm:h-[250px] shadow-lg">
                         <Image
                            src={careers3}
                            alt="health Insurance"
@@ -85,13 +86,13 @@ const Careers = () => {
                            height={40}
                            className="bg-[#3BD64A1A] rounded-full p-2"
                         />
-                        <h4>Life Insurance </h4>
+                        <h4>Life Insurance</h4>
                         <p>
                            All team members receive comprehensive life insurance
                            coverage.
                         </p>
                      </div>
-                     <div className="flex gap-4 flex-col bg-white p-4 w-5/6 sm:w-3/4 md:w-[320px] lg:w-[380px] h-fit sm:h-[250px]  shadow-lg">
+                     <div className="flex gap-4 flex-col bg-white p-[26px] w-full md:w-[320px] lg:w-[383px] h-fit sm:h-[250px] shadow-lg">
                         <Image
                            src={careers4}
                            alt="health Insurance"
@@ -105,7 +106,7 @@ const Careers = () => {
                            leave.
                         </p>
                      </div>
-                     <div className="flex gap-4 flex-col bg-white p-4 w-5/6 sm:w-3/4 md:w-[320px] lg:w-[380px] h-fit sm:h-[250px]  shadow-lg">
+                     <div className="flex gap-4 flex-col bg-white p-[26px] w-full md:w-[320px] lg:w-[383px] h-fit sm:h-[250px] shadow-lg">
                         <Image
                            src={careers5}
                            alt="health Insurance"
@@ -120,7 +121,7 @@ const Careers = () => {
                            goals.
                         </p>
                      </div>
-                     <div className="flex gap-4 flex-col bg-white p-4 w-5/6 sm:w-3/4 md:w-[320px] lg:w-[380px] h-fit sm:h-[250px]  shadow-lg">
+                     <div className="flex gap-4 flex-col bg-white p-[26px] w-full md:w-[320px] lg:w-[383px] h-fit sm:h-[250px] shadow-lg">
                         <Image
                            src={careers6}
                            alt="health Insurance"
@@ -128,14 +129,12 @@ const Careers = () => {
                            height={40}
                            className="bg-[#3BD64A1A] rounded-full p-2"
                         />
-                        <h4>Remote Working Tools </h4>
+                        <h4>Remote Working Tools</h4>
                         <p>
-                           We invest in our people to ensure they can achieve
-                           their short, medium, and long term professional
-                           goals.
+                           We provide the tools you need to excel in a remote working environment.
                         </p>
                      </div>
-                     <div className="flex gap-4 flex-col bg-white p-4 w-5/6 sm:w-3/4 md:w-[320px] lg:w-[380px] h-fit sm:h-[250px]  shadow-lg">
+                     <div className="flex gap-4 flex-col bg-white p-[26px] w-full md:w-[320px] lg:w-[383px] h-fit sm:h-[250px] shadow-lg">
                         <Image
                            src={careers7}
                            alt="health Insurance"
@@ -143,7 +142,7 @@ const Careers = () => {
                            height={40}
                            className="bg-[#3BD64A1A] rounded-full p-2"
                         />
-                        <h4>Employee Pension </h4>
+                        <h4>Employee Pension</h4>
                         <p>
                            We provide all team members with an employee pension
                            plan.
@@ -154,8 +153,8 @@ const Careers = () => {
             </div>
          </div>
 
-         <div className="container flex items-center justify-between min-h-[40vh]">
-            <div>
+         <div className="container flex flex-col md:flex-row items-center justify-between min-h-[40vh]">
+            <div className="text-center md:text-left">
                <h1 className="my-4">Take a Chance!</h1>
                <p>Send us your CV, and our team will review it</p>
             </div>

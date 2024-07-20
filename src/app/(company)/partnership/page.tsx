@@ -138,9 +138,9 @@ const Partnership = () => {
                      className="hidden md:block"
                   />
                   <div className="">
-                     <h4 className="my-2">
+                     <h2 className="my-2">
                         Boost Your Earnings as a Strategic <br /> Partner
-                     </h4>
+                     </h2>
                      <div className="my-4">
                      <CheckList items={checkListItems} />
                         
