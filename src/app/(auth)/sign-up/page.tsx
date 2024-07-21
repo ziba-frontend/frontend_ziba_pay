@@ -80,21 +80,32 @@ const SignUp = () => {
    };
 
    return (
-      <div className="bg-main/40">
+      <div className="md:bg-main/40">
          <Image
             src={signup}
             alt="signup ziba"
-            className="fixed top-0 left-0 bottom-0 w-[350px] z-10"
+            className="fixed top-0 left-0 bottom-0 w-[350px] z-10 hidden md:block"
          />
          <Image
             src={signup2}
             alt="ziba"
-            className="fixed top-0 right-0"
+            className="fixed top-0 right-0 hidden md:block"
          />
          <div className="flex flex-col gap-6 items-center justify-center min-h-screen">
+         <Image
+               src={logo}
+               alt="zibaPay"
+               width={120}
+               className="block md:hidden py-6"
+            />
+         <Image
+            src={signup}
+            alt="signup ziba"
+            className="w-full mb-20 block md:hidden"
+         />
             <Link
                href="/"
-               className="mt-6"
+               className="mt-6 hidden md:block"
             >
                <Image
                   src={logo}

@@ -15,17 +15,17 @@ import {
    FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import login from "../../../../public/images/login.png";
+import { Checkbox } from "@/components/ui/checkbox";
+import { loginApi } from "@/lib/api-calls/auth-server";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 // Define the schema
 const formSchema = z.object({
    email: z.string().email({ message: "Invalid email address." }),
    password: z.string().min(1, { message: "Password is required." }),
 });
-import login from "../../../../public/images/login.png";
-import { Checkbox } from "@/components/ui/checkbox";
-import { loginApi } from "@/lib/api-calls/auth-server";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 const Login = () => {
    const router = useRouter();
@@ -39,28 +39,48 @@ const Login = () => {
       router.push("/dashboard");
       console.log(data);
    };
+
    return (
-      <div>
-         <div className="flex bg-white flex-col md:flex-row">
+      <div className="bg-white">
+         <Image
+            src={login}
+            alt="login ziba"
+            className="fixed top-0 left-0 bottom-0 w-[500px] h-screen z-10 hidden md:block"
+         />
+         <div className="flex flex-col gap-6 items-center justify-center min-h-screen z-20">
+            <Image
+               src={logo}
+               alt="zibaPay"
+               width={120}
+               className="block md:hidden py-6"
+            />
             <Image
                src={login}
-               alt="login to ziba"
-               className=" w-full md:w-[400px] lg:w-[600px]   md:h-[1000px]"
+               alt="login ziba"
+               className="w-full mb-20 block md:hidden"
             />
-            <div className="flex  w-full items-center justify-center flex-col gap-6 py-20 md:pb-0 2xl:-ml-[270px] md:pt-8">
+            <Link
+               href="/"
+               className="mt-6 hidden md:block z-30"
+            >
                <Image
                   src={logo}
                   alt="zibaPay"
+                  className=" 2xl:ml-[200px]"
                   width={120}
-                  className="hidden md:block"
                />
+            </Link>
 
-               <Form {...form}>
-                  <form
-                     onSubmit={form.handleSubmit(onSubmit)}
-                     className="space-y-8 w-full  xl:w-[800px] p-6 lg:p-[60px] lg:shadow-xl xl:p-[102px]"
-                  >
-                     <p className="text-center">Login</p>
+            <Form {...form}>
+               <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-8 w-full sm:w-5/6 md:w-[70%] lg:w-[60%] z-20 container p-10 shadow-lg bg-white rounded 2xl:ml-[500px] md:px-[60px] 2xl:px-[102px] 2xl:w-1/2"
+               >
+                  <h4 className="text-center my-6">
+                     Log in to your <br />{" "}
+                     <span className="text-main">Ziba pay</span> Account
+                  </h4>
+                  <div className="space-y-8">
                      <FormField
                         control={form.control}
                         name="email"
@@ -69,7 +89,7 @@ const Login = () => {
                               <FormLabel>Email Address *</FormLabel>
                               <FormControl>
                                  <Input
-                                    className="bg-white p-6 outline-none border "
+                                    className="bg-white p-6 outline-none border"
                                     placeholder="email"
                                     {...field}
                                  />
@@ -87,7 +107,7 @@ const Login = () => {
                                  <FormLabel>Password *</FormLabel>
                                  <FormControl>
                                     <Input
-                                       className=" bg-white p-6  border "
+                                       className="bg-white p-6 border"
                                        placeholder="******"
                                        type="password"
                                        {...field}
@@ -99,9 +119,9 @@ const Login = () => {
                         />
                         <Link
                            href="/forgot-password"
-                           className="text-main absolute right-0 top-24 underline"
+                           className="text-main absolute right-0 -bottom-10 underline"
                         >
-                           Forgot password ?
+                           Forgot password?
                         </Link>
                      </div>
                      <div className="flex gap-4 items-center pt-20">
@@ -117,9 +137,9 @@ const Login = () => {
                      <p className="text-center">
                         <Link href="/sign-up">Create Account</Link>
                      </p>
-                  </form>
-               </Form>
-            </div>
+                  </div>
+               </form>
+            </Form>
          </div>
       </div>
    );
