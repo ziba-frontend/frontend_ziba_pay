@@ -10,7 +10,6 @@ export default function RootDocsLayout({ children }: { children: ReactNode }) {
       <RootProvider
          theme={{
             enabled: false,
-            
          }}
          
       >
@@ -18,7 +17,7 @@ export default function RootDocsLayout({ children }: { children: ReactNode }) {
          <div className="pt-[90px] docs" >
             <DocsLayout
                tree={pageTree}
-               nav={{ enabled: false }}
+               nav={{ enabled: false,enableSearch:false }}
             >
                {children}
             </DocsLayout>

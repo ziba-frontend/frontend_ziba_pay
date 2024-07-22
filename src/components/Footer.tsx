@@ -88,20 +88,17 @@ const Footer = () => {
                   free to reach out to us for tailored solutions designed
                   specifically for your business needs.
                </p>
-               <div className="flex gap-2 py-6 flex-col items-center md:flex-row md:items-start">
-                  <Link href="/login">
-                     <Button
-                        variant="outline"
-                        className="w-[200px] md:w-[150px]"
-                     >
-                        Login
-                     </Button>
-                  </Link>
-                  <Link href="/sign-up">
-                     <Button className="w-[200px] md:w-[150px]">
-                        Create Account
-                     </Button>
-                  </Link>
+               <div className="flex gap-2 py-6 flex-col items-center md:flex-row md:items-start  w-full">
+                  <Button
+                     variant="outline"
+                     className="w-[60%] md:w-[130px] p-6"
+                  >
+                     <Link href="/login">Login</Link>
+                  </Button>
+
+                  <Button className="w-[60%] md:w-[130px] p-6">
+                     <Link href="/sign-up">Create Account </Link>
+                  </Button>
                </div>
                <Image
                   src={zp}

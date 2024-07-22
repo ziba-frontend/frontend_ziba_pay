@@ -111,18 +111,19 @@ const SignUp = () => {
                   src={logo}
                   alt="zibaPay"
                   className="z-30"
+                  width={120}
                />
             </Link>
 
             <Form {...form}>
                <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-8 w-full sm:w-5/6 md:w-[70%] lg:w-[60%] z-20 container p-10 shadow bg-white rounded"
+                  className="space-y-8 w-full sm:w-5/6 md:w-[70%] lg:w-[60%] z-20 container p-10 shadow bg-white rounded md:px-[60px] lg:px-[100px]"
                >
                   <h4 className="text-center my-6">
                      Create your Ziba pay Account
                   </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="grid grid-cols-1  gap-8 items-center justify-center">
                      <FormField
                         control={form.control}
                         name="name"
@@ -131,7 +132,7 @@ const SignUp = () => {
                               <FormLabel>Name *</FormLabel>
                               <FormControl>
                                  <Input
-                                    className="bg-white p-6 outline-none border"
+                                    className="bg-white p-6 outline-none border "
                                     placeholder="Enter your name"
                                     {...field}
                                  />
@@ -140,25 +141,7 @@ const SignUp = () => {
                            </FormItem>
                         )}
                      />
-
-                     <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                           <FormItem>
-                              <FormLabel>Business Email *</FormLabel>
-                              <FormControl>
-                                 <Input
-                                    className="bg-white p-6 border"
-                                    placeholder="email@tech.com"
-                                    {...field}
-                                 />
-                              </FormControl>
-                              <FormMessage />
-                           </FormItem>
-                        )}
-                     />
-                     <FormField
+       <FormField
                         control={form.control}
                         name="password"
                         render={({ field }) => (
@@ -177,6 +160,41 @@ const SignUp = () => {
                         )}
                      />
                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormLabel> Email Address *</FormLabel>
+                              <FormControl>
+                                 <Input
+                                    className="bg-white p-6 border"
+                                    placeholder="email@tech.com"
+                                    {...field}
+                                 />
+                              </FormControl>
+                              <FormMessage />
+                           </FormItem>
+                        )}
+                     />
+                     {/* <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormLabel>Password *</FormLabel>
+                              <FormControl>
+                                 <Input
+                                    className="bg-white p-6 border"
+                                    placeholder="Enter your password"
+                                    type="password"
+                                    {...field}
+                                 />
+                              </FormControl>
+                              <FormMessage />
+                           </FormItem>
+                        )}
+                     /> */}
+                     {/* <FormField
                         control={form.control}
                         name="businessName"
                         render={({ field }) => (
@@ -209,7 +227,7 @@ const SignUp = () => {
                               <FormMessage />
                            </FormItem>
                         )}
-                     />
+                     /> */}
                      <FormField
                         control={form.control}
                         name="businessType"
@@ -227,7 +245,7 @@ const SignUp = () => {
                            </FormItem>
                         )}
                      />
-                     <FormField
+                     {/* <FormField
                         control={form.control}
                         name="country"
                         render={({ field }) => (
@@ -260,8 +278,8 @@ const SignUp = () => {
                               <FormMessage />
                            </FormItem>
                         )}
-                     />
-                     <FormField
+                     /> */}
+                     {/* <FormField
                         control={form.control}
                         name="howHear"
                         render={({ field }) => (
@@ -293,7 +311,7 @@ const SignUp = () => {
                               <FormMessage />
                            </FormItem>
                         )}
-                     />
+                     /> */}
                   </div>
                   <div className="">
                      <FormField

@@ -27,6 +27,7 @@ const Solution = () => {
                src={sol1}
                alt="ziba pay"
                width={500}
+               className="md:w-[300px] xl:w-[500px] "
             />
          </div>
 
@@ -40,8 +41,8 @@ const Solution = () => {
                   experience for your customers.
                </p>
 
-               <Button className="w-fit">
-                  <Link href="/ecommerce-solutions">Learn More</Link>
+               <Button className="w-fit mb-4">
+                  <Link href="ecommerce-solutions">Learn More</Link>
                </Button>
 
                <Image
@@ -57,7 +58,7 @@ const Solution = () => {
                   compliance, improve patient satisfaction, and accelerate
                   revenue cycles with our secure and efficient payment platform
                </p>
-               <Button className="w-fit">
+               <Button className="w-fit mb-4">
                   <Link href="/health-care-payment-solutions">Learn More</Link>
                </Button>
                <Image
@@ -76,7 +77,7 @@ const Solution = () => {
                   check-in to integrated POS systems, we provide the tools you
                   need to streamline operations and deliver exceptional service.
                </p>
-               <Button className="w-fit">
+               <Button className="w-fit mb-4">
                   <Link href="/hospitality">Learn More</Link>
                </Button>
                <Image
@@ -92,7 +93,7 @@ const Solution = () => {
                   management, automate recurring payments, and improve financial
                   transparency for educational institutions of all sizes.
                </p>
-               <Button className="w-fit">
+               <Button className="w-fit mb-4">
                   <Link href="/education">Learn More</Link>
                </Button>
                <Image

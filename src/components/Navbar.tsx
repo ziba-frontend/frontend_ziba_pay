@@ -109,15 +109,15 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onOpenChange }) => {
                src={drop1}
                alt="ziba"
                className="absolute top-0 left-0"
-               height={60}
-               width={60}
+               height={`${title === "Products" ? 100 : 60}`}
+               width={`${title === "Products" ? 100 : 60}`}
             />
             <Image
                src={drop2}
                alt="ziba"
                className="absolute bottom-0 right-0"
-               height={60}
-               width={60}
+               height={`${title === "Products" ? 100 : 60}`}
+               width={`${title === "Products" ? 100 : 60}`}
             />
             {items.map((item, index) => (
                <DropdownMenuItem
@@ -126,7 +126,7 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onOpenChange }) => {
                >
                   {title === "Products" ? (
                      <div
-                        className="flex items-start gap-6"
+                        className="flex items-start gap-0 "
                         onClick={handleItemClick}
                      >
                         <Image
@@ -137,9 +137,9 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onOpenChange }) => {
                         />
 
                         <div className="flex flex-col">
-                           <span className="font-bold hover:text-main">
+                           <h4 className=" hover:text-main">
                               <Link href={item.href}>{item.label}</Link>
-                           </span>
+                           </h4>
                            <span className="text-sm">{item.description}</span>
                         </div>
                      </div>
@@ -189,7 +189,12 @@ const Navbar: React.FC = () => {
                         onOpenChange={(isOpen) => setIsDropdownOpen(isOpen)}
                      />
                   ))}
-                  <Link href="/api-docs" className="text-[16px]">Developer</Link>
+                  <Link
+                     href="/api-docs/start/introduction"
+                     className="text-[16px]"
+                  >
+                     Developer
+                  </Link>
                </div>
             </div>
             <div className="hidden md:flex gap-3">
@@ -201,7 +206,10 @@ const Navbar: React.FC = () => {
                      Login
                   </Button>
                </Link>
-               <Link href="/sign-up" className="md:hidden lg:block">
+               <Link
+                  href="/sign-up"
+                  className="md:hidden lg:block"
+               >
                   <Button className="w-[107px] sm:w-[130px] p-6 ">
                      Create Account
                   </Button>

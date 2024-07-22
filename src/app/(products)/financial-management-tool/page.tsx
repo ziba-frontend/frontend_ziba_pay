@@ -28,6 +28,7 @@ const FinancialManagement = () => {
                src={fin1}
                alt="ziba"
                width={500}
+               className="md:w-[400px]  2xl:w-[600px]"
             />
          </div>
 

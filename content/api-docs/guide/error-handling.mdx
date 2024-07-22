@@ -3,7 +3,6 @@ title: Error Handling
 description: How to handle errors
 ---
 
-## Error Handling
 This section outlines the error handling process for the API. It provides information on the types of errors  returned, their corresponding HTTP status codes, and how to interpret error responses.
 
 ## Error Response Format
@@ -36,7 +35,7 @@ Error response from the API follow a consistent format to facilitate easy unders
 The API may return the following error codes:
 
 <DocCards>
-<div className="overflow-scroll w-full md:w-3/4">
+<DocCard>
 | Status Code     | Meaning    | Description     |
 | -------------|---------------|--------------|
 | 400    | Bad Request   | Indicates that the request was malformed or contained invalid parameters.     |
@@ -44,8 +43,22 @@ The API may return the following error codes:
 | 403     | Forbidden    | Indicates that the request is not authorized to access the resources.     |
 | 404     | Not Found    | Indicates that the requested resources does not exist     |
 | 500     | Serve Errors    | Indicates an internal server error occurred     |
-</div>
+</DocCard>
+<DocCard>
+```json
+{
+  "type": "api_error",
+  
+"message": "No way this is happening",
+  "documentation_url": "https://protocol.chat/docs/errors/api_error",
+  
+}
 
+```
+
+<div className="bg-[#EEEDF4] p-4 rounded-[12px] "><p>Unsure of where to find what you need? Try Search 
+Enter the error message or keywords into the search bar above. if you don't find what you're seeking, feel free to reach out to us for assistance. We're here tp help!</p></div>
+</DocCard>
 </DocCards>
 
 <DocsReview/>

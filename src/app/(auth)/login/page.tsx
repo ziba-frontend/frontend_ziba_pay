@@ -76,9 +76,12 @@ const Login = () => {
                   onSubmit={form.handleSubmit(onSubmit)}
                   className="space-y-8 w-full sm:w-5/6 md:w-[70%] lg:w-[60%] z-20 container p-10 shadow-lg bg-white rounded 2xl:ml-[500px] md:px-[60px] 2xl:px-[102px] 2xl:w-1/2"
                >
-                  <h4 className="text-center my-6">
+                  <h4 className="text-center my-6 block md:hidden">
                      Log in to your <br />{" "}
                      <span className="text-main">Ziba pay</span> Account
+                  </h4>
+                  <h4 className="text-center my-6 hidden md:block">
+                     Login
                   </h4>
                   <div className="space-y-8">
                      <FormField

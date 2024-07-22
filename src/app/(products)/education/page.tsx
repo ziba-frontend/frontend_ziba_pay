@@ -33,6 +33,7 @@ const Education = () => {
                <Image
                   src={edu1}
                   alt="ziba pay"
+                  className="md:w-[400px] xl:w-[500px] 2xl:w-[600px]"
                />
             </div>
          </div>
@@ -44,7 +45,7 @@ const Education = () => {
                className="absolute left-0 top-0 w-full"
             />
             <div className="mt-10">
-               <div className="flex flex-col items-center justify-center gap-20 md:flex-row py-6 container">
+               <div className="flex flex-col items-center justify-center gap-20 md:gap-0 md:flex-row py-6 container">
                   <div className="w-full md:w-1/2">
                      <h2 className="my-2 mb-4">Automated Tuition Collection</h2>
                      <p>
@@ -64,7 +65,7 @@ const Education = () => {
             </div>
          </div>
 
-         <div className="flex flex-col items-center justify-center gap-20 md:flex-row py-6 container">
+         <div className="flex flex-col items-center justify-center gap-20 md:gap-0 md:flex-row py-6 container">
             <Image
                src={edu3}
                alt="ziba pay"

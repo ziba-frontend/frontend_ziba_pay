@@ -364,7 +364,7 @@ const Home = () => {
                <Image
                   src={elp7}
                   alt="ball"
-                  className="absolute bottom-0 left-0 "
+                  className="absolute bottom-0 left-0 w-[100px] md:w-fit"
                />
                <Image
                   src={elp5}

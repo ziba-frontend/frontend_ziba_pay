@@ -105,7 +105,7 @@ const PaymentProcessing = () => {
                <Image
                   src={paypro4}
                   alt="ziba"
-                  className="md:-ml-40 md:-mb-[140px]"
+                  className="md:-ml-10 lg:-ml-40 lg:-mb-[140px]"
                />
             </div>
          </div>

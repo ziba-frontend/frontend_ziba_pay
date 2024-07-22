@@ -30,6 +30,7 @@ const Healthcare = () => {
                   src={hospi1}
                   alt="ziba pay"
                   width={500}
+                  className="md:w-[400px] xl:w-[500px] 2xl:w-[600px]"
                />
             </div>
          </div>
@@ -38,7 +39,7 @@ const Healthcare = () => {
             <Image
                src={hospi2}
                alt="ziba pay"
-               className="w-[400px]"
+             className="md:w-[400px] xl:w-[500px] 2xl:w-[600px]"
             />
             <div className="w-full md:w-1/2">
                <h2 className="my-2 mb-4">Welcome Guests Worldwide</h2>
@@ -103,7 +104,7 @@ const Healthcare = () => {
                className="absolute left-0 top-0 w-full"
             />
             <div className="mt-10">
-               <div className="flex flex-col items-center justify-center gap-20 md:flex-row py-6 container">
+               <div className="flex flex-col items-center justify-center gap-20 md:gap-0 md:flex-row py-6 container">
                   <div className="w-full md:w-1/2">
                      <h2 className="my-2 mb-6">
                         Handle Different Currencies and Send Money Back Home

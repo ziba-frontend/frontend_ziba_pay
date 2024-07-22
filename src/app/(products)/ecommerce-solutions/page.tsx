@@ -30,47 +30,55 @@ const Ecommerce = () => {
                <Image
                   src={comm1}
                   alt="ziba pay"
+                  width={500}
+                  className="md:w-[400px] xl:w-[600px]"
                />
             </div>
          </div>
-<div className="flex items-center justify-center">
-         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mx-auto py-20 gap-6 container items-center justify-center">
-            <div className="flex flex-col gap-4 bg-white rounded p-4 md:w-[384px] md:h-[598px]">
-               <p className="text-center">
-                  Easily accept payments from your customers using a variety of
-                  methods, including virtual accounts, payment links, checkout,
-                  and direct charge via API.
-               </p>
-               <Image
-                  src={comm2}
-                  alt="ziba e-commerce"
-               />
+         <div className="flex items-center justify-center  container">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mx-auto py-20 gap-6  items-center justify-center ">
+               <div className="flex flex-col gap-4  bg-white rounded-[15px] p-4 lg:w-[384px] md:h-[598px] h-[459px]">
+                  <p className="text-center">
+                     Easily accept payments from your customers using a variety
+                     of methods, including virtual accounts, payment links,
+                     checkout, and direct charge via API.
+                  </p>
+                  <Image
+                     src={comm2}
+                     alt="ziba e-commerce"
+                     className="transform ml-[50%] -translate-x-1/2"
+                     width={223}
+                     height={223}
+                  />
+               </div>
+               <div className="flex flex-col gap-4  bg-[#d3eafaa5] rounded-[15px] p-4 lg:w-[384px] h-[459px] md:h-[598px]">
+                  <p className="text-center">
+                     {" "}
+                     E-commerce platform offers virtual account issuance in four
+                     currencies, allowing customers to make payments
+                     conveniently via bank transfers.
+                  </p>
+                  <Image
+                     src={comm3}
+                     alt="ziba e-commerce"
+                     className="transform ml-[50%] -translate-x-1/2"
+                  />
+               </div>
+               <div className="flex flex-col gap-4  bg-[#c4c3c3] rounded-[15px] p-4 lg:w-[384px] h-[459px] md:h-[598px]">
+                  <p className="text-center">
+                     Ziba pay checkout enables customers to finalize purchases
+                     effortlessly, making payments seamlessly through bank
+                     transfers, card transactions, or a single API integration
+                     directly into your platform
+                  </p>
+                  <Image
+                     src={comm4}
+                     alt="ziba e-commerce"
+                     className="transform ml-[50%] -translate-x-1/2"
+                  />
+               </div>
             </div>
-            <div className="flex flex-col gap-4 bg-[#d3eafaa5] rounded p-4 md:w-[384px] md:h-[598px]">
-               <p className="text-center">
-                  {" "}
-                  E-commerce platform offers virtual account issuance in four
-                  currencies, allowing customers to make payments conveniently
-                  via bank transfers.
-               </p>
-               <Image
-                  src={comm3}
-                  alt="ziba e-commerce"
-               />
-            </div>
-            <div className="flex flex-col gap-4 bg-[#c4c3c3] rounded p-4 md:w-[384px] md:h-[598px]">
-               <p className="text-center">
-                  Ziba pay checkout enables customers to finalize purchases
-                  effortlessly, making payments seamlessly through bank
-                  transfers, card transactions, or a single API integration
-                  directly into your platform
-               </p>
-               <Image
-                  src={comm4}
-                  alt="ziba e-commerce"
-               />
-            </div>
-         </div></div>
+         </div>
 
          <div className="flex flex-col md:flex-row py-20 gap-6 items-center justify-center container">
             <Image
@@ -98,6 +106,8 @@ const Ecommerce = () => {
                <Image
                   src={comm6}
                   alt="ziba"
+                  width={580}
+                  className="lg:w-[600px]"
                />
             </div>
          </div>

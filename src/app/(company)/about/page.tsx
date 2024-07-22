@@ -147,7 +147,7 @@ const AboutUs = () => {
                <Image
                   src={about5}
                   alt="about"
-                  className=" md:w-[400px] lg:w-[600px]"
+                  className=" md:w-[400px] lg:w-[500px] 2xl:w-[600px]"
                />
                <div className="flex flex-col gap-6 p-4  justify-center ">
                   <h2>Why Choose Ziba Pay</h2>

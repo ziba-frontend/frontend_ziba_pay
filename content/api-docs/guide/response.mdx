@@ -27,6 +27,35 @@ The Payment API returns standard HTTP status codes to indicate the success or fa
 
 ## Example Responses
 
+<DocCards>
+<DocCard>
+<p>Successful Response</p>
+```json
+
+{
+  "status": "success",
+  "message": "Payment Successful"
+  "data": {
+   "transaction_id": "123456789",
+    "amount": "100.00"
+    "currency": "USD"
+    "customer_id": "123456"
+    "timestamp": "2024-02-09T12:34:56Z"
+   }
+}
+```
+</DocCard>
+<DocCard>
+<p>Error Response</p>
+```json
+
+{
+  "status": "error",
+  "message": "Invalid card number"
+}
+```
+</DocCard>
+</DocCards>
 ### Response Data Formats
 - transaction_id: Unique identifier for the transaction.
 - amount: Amount of the transaction.

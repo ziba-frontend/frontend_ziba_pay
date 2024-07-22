@@ -7,7 +7,7 @@ description: transaction search
 
 
 Use the Transaction Search API to get the history of transactions for a PayPal account. To use the API on behalf of third parties, you must be part of the PayPal partner network. Reach out to your partner manager for the next steps. To enroll in the partner program, see Partner with PayPal. For more information about the API, see the Transaction Search API Integration Guide.                        
-d
+
 
 <DocCards>
 <div>
@@ -17,10 +17,10 @@ d
 
 <DocCard>
 ### List transactions
-
+<Endpoint/>
 Lists transactions. Specify one or more query parameters to filter the transaction that appear in the response.
 </DocCard>
-<Endpoint></Endpoint>
+
 
 <DocCard bgColor='#EEEDF4'>
 ### Note:
@@ -34,7 +34,7 @@ Lists transactions. Specify one or more query parameters to filter the transacti
 </div>
 
 {/* ======mdx content====== */}
-<div style={{width:'370px'}}>
+<div className="md:w-1/2">
 ```js
 const query = new URLSearchParams({ 
   transaction_id: 'stringstringstrin',
@@ -74,11 +74,11 @@ const data = await resp.text();console.log(data);
 
 <BEndpoint></BEndpoint>
 
-<div className="bg-white my-6 p-4 ">
+<div className="bg-white my-6 p-4  w-5/6">
 
 ## QUERY PARAMETERS
 
-<div className="grid grid-cols-2  gap-10 ">
+<div className="grid grid-cols-2  gap-10">
 <p>transaction_id</p>
 
 <div ><p>string  17 .. 19  characters

@@ -27,6 +27,8 @@ const Healthcare = () => {
                <Image
                   src={health1}
                   alt="ziba pay"
+                  width={620}
+                  className="md:w-[400px] xl:w-[600px] 2xl:w-[638px]"
                />
             </div>
          </div>
