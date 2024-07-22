@@ -17,7 +17,7 @@ export default async function Page({
   const MDX = page.data.exports.default;
 
   return (
-    <DocsPage breadcrumb={{enabled:false}} footer={{enabled:false}}>
+    <DocsPage>
       <DocsBody className=" md:w-[68vw] ">
         <h1>{page.data.title}</h1>
         <MDX />

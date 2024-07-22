@@ -105,8 +105,9 @@
 }
 
 .started{
-   @apply md:h-[350px] lg:h-[300px] p-4 rounded-[12px] w-full  lg:w-[50%] 
+   @apply md:h-[320px] lg:h-[300px] p-4 rounded-[12px] w-full  lg:w-[50%] 
 }
+
 
 @media screen and (max-width: 768px) {
    .docnav {

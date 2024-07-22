@@ -192,6 +192,7 @@ const Navbar: React.FC = () => {
                   <Link
                      href="/api-docs/start/introduction"
                      className="text-[16px]"
+                     target="_blank"
                   >
                      Developer
                   </Link>
@@ -265,9 +266,10 @@ const Navbar: React.FC = () => {
                         </Accordion>
                      ))}
                      <Link
-                        href="/api-docs"
+                        href="/api-docs/start/introduction"
                         className="block py-2"
                         onClick={toggleMenu}
+                        target="_blank"
                      >
                         Developer
                      </Link>

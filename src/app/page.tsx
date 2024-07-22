@@ -42,6 +42,7 @@ import elp7 from "../../public/images/elp7.png";
 import money from "../../public/images/money.png";
 import checkMark from "../../public/images/checkmark.png";
 import rect2 from "../../public/images/rect2.png";
+import DocsSidebar from "@/components/DocsSidebar";
 
 const Home = () => {
    const checkListItems = [
