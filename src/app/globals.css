@@ -100,6 +100,14 @@
 .docs .sidebar {
    background-color: red;
 }
+.flex-box{
+   @apply flex gap-4 flex-col lg:flex-row items-start justify-start
+}
+
+.started{
+   @apply md:h-[350px] lg:h-[300px] p-4 rounded-[12px] w-full  lg:w-[50%] 
+}
+
 @media screen and (max-width: 768px) {
    .docnav {
       display: none;

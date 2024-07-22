@@ -12,6 +12,7 @@ import Image from "next/image";
 
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import DocsReview from "@/components/DocsReview";
+import DocsFooter from "@/components/DocsFooter";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
    return {
@@ -23,6 +24,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       BEndpoint,
       Reschema,
       DocsReview,
+      DocsFooter,
       Tab,
       Tabs,
       Image,
