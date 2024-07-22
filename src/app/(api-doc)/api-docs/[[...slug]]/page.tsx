@@ -4,41 +4,44 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 export default async function Page({
-  params,
+   params,
 }: {
-  params: { slug?: string[] };
+   params: { slug?: string[] };
 }) {
-  const page = getPage(params.slug);
+   const page = getPage(params.slug);
 
-  if (page == null) {
-    notFound();
-  }
+   if (page == null) {
+      notFound();
+   }
 
-  const MDX = page.data.exports.default;
+   const MDX = page.data.exports.default;
 
-  return (
-    <DocsPage>
-      <DocsBody className=" md:w-[68vw] ">
-        <h1>{page.data.title}</h1>
-        <MDX />
-      </DocsBody>
-    </DocsPage>
-  );
+   return (
+      <DocsPage
+         breadcrumb={{ enabled: false }}
+         footer={{ enabled: false }}
+      >
+         <DocsBody className=" md:w-[68vw] ">
+            <h1>{page.data.title}</h1>
+            <MDX />
+         </DocsBody>
+      </DocsPage>
+   );
 }
 
 export async function generateStaticParams() {
-  return getPages().map((page) => ({
-    slug: page.slugs,
-  }));
+   return getPages().map((page) => ({
+      slug: page.slugs,
+   }));
 }
 
 export function generateMetadata({ params }: { params: { slug?: string[] } }) {
-  const page = getPage(params.slug);
+   const page = getPage(params.slug);
 
-  if (page == null) notFound();
+   if (page == null) notFound();
 
-  return {
-    title: page.data.title,
-    description: page.data.description,
-  } satisfies Metadata;
+   return {
+      title: page.data.title,
+      description: page.data.description,
+   } satisfies Metadata;
 }
