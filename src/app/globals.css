@@ -72,8 +72,6 @@
    }
 }
 
-
-
 @layer utilities {
    .no-scrollbar::-webkit-scrollbar {
       display: none;
@@ -84,6 +82,8 @@
       scrollbar-width: none;
    }
 }
+
+/* ======API DOCUMENTATION====== */
 
 .docnav {
    display: flex;
@@ -100,12 +100,28 @@
 .docs .sidebar {
    background-color: red;
 }
-.flex-box{
-   @apply flex gap-4 flex-col lg:flex-row items-start justify-start
+.flex-box {
+   @apply flex gap-4 flex-col lg:flex-row items-start justify-start;
 }
 
-.started{
-   @apply md:h-[320px] lg:h-[300px] p-4 rounded-[12px] w-full  lg:w-[50%] 
+.started {
+   @apply md:h-[320px] lg:h-[300px] p-4 rounded-[12px] w-full  lg:w-[50%];
+}
+
+button.flex.w-full.flex-row.items-center.gap-2.rounded-md.px-2.text-muted-foreground.transition-colors.duration-100 {
+   font-weight: bold;
+   font-size: 16px;
+   color: black;
+   margin-top: 10px;
+}
+
+div.ms-2.flex.flex-col.border-s.py-2.ps-2{
+   border-left: none;
+}
+
+div.ms-2.flex.flex-col.border-s.py-2.ps-2 >a{
+   color: black;
+  font-size: 14px;
 }
 
 
@@ -116,8 +132,6 @@
    .docform {
       display: none;
    }
-
- 
 }
 
 /* .category-badge {
