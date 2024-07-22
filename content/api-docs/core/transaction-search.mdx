@@ -72,9 +72,9 @@ const data = await resp.text();console.log(data);
 
 
 
-<BEndpoint></BEndpoint>
+<BEndpoint/>
 
-<div className="bg-white my-6 p-4  w-5/6">
+<div className="bg-white my-6 p-4  md:w-5/6">
 
 ## QUERY PARAMETERS
 
@@ -108,9 +108,10 @@ Filters the transactions in the response by a PayPal transaction event code. See
 </div>
 </DocCard>
 
-<DocCard>
+<div className="md:w-1/2">
 
-```
+```json
+
 {
 "transaction_details": [
 {
@@ -132,10 +133,11 @@ Filters the transactions in the response by a PayPal transaction event code. See
 "currency_code": "USD",
 "value": "15.00"
 },
+
 ```
 
 
-</DocCard>
+</div>
 </DocCards>
 
 
@@ -168,9 +170,9 @@ List balances in the response at the date time provided, will return the last re
 </div>
 </DocCard>
 
-<DocCard>
+<div className="w-1/2">
 
-```
+```json
 {
 "crypto_balances": [
 {
@@ -204,7 +206,7 @@ List balances in the response at the date time provided, will return the last re
 ```
 
 
-</DocCard>
+</div>
 </DocCards>
 
 ### Response
@@ -215,7 +217,7 @@ List balances in the response at the date time provided, will return the last re
 ### Support
 
 If you have any questions or need assistance, please contact our support team 
-at support@example.com.
+at <a href="/help-center" target="blank">support</a>
 
 
 <DocsFooter/>

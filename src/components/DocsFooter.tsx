@@ -6,11 +6,11 @@ const DocsFooter = () => {
       <div className="flex flex-col gap-2 py-10">
          <div className="flex gap-6">
             <p>Was this page helpful?</p>
-            <p className="flex items-center">
+            <p className="flex items-center cursor-pointer">
                <ThumbsUp fill="#1E1147" />
                <span className="ml-2 text-main">Helpful</span>
             </p>
-            <p className="flex items-center">
+            <p className="flex items-center cursor-pointer">
                <ThumbsDown fill="#1E1147"  />
                <span className="ml-2 text-destructive ">Not helpful</span>
             </p>
