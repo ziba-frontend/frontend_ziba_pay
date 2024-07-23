@@ -3,17 +3,90 @@ title: Split Payment
 description: split payment
 ---
 
-## Code Block
+Learn how to implement and manage split payments within your application. This section provides detailed information on integrating and utilizing the split payment API, enabling you to distribute payments among multiple recipients seamlessly.
 
-```js
-console.log('Hello World');
+## Authentication
+
+You need an API key. You can obtain your API key by signing up for an account on our platform. Use this API key in the Authorization header of your HTTP requests.
+
+```shell
+Authorization: Bearer YOUR_API_KEY
+```
+<div className="flex-box">
+  <div className="w-full lg:w-1/2">
+    ## Initiate Split Payment
+<div className="bg-[#DAE3F6] rounded-xl py-2 px-4 w-fit my-4">POST /split-payment</div>
+
+Use this endpoint to initiate a split payment to multiple recipients.
+
+### Attributes
+
+<div>
+  <div className="pb-6 border-b">
+    <div className="flex items-center gap-4">
+      <div className="bg-[#DAE3F6] rounded-xl p-2 w-fit my-4">amount</div> <span>integer</span>
+    </div>
+    Total amount to be split among recipients. A positive integer representing how much to charge.
+  </div>
+</div>
+<div className="pb-6 border-b">
+  <div className="flex items-center gap-4">
+    <div className="bg-[#DAE3F6] rounded-xl p-2 w-fit my-4">currency</div> <span>string</span>
+  </div>
+  Three-letter ISO currency code, in lowercase. Must be a supported currency.
+</div>
+<div className="pb-6 border-b">
+  <div className="flex items-center gap-4">
+    <div className="bg-[#DAE3F6] rounded-xl p-2 w-fit my-4">recipients</div> <span>array</span>
+  </div>
+  List of recipients with their respective share amounts.
+</div>
+  </div>
+  <div className="w-full lg:w-1/2">
+    ### Request
+```json
+{
+  "amount": 100.00,
+  "currency": "USD",
+  "recipients": [
+    {
+      "recipient_id": "user123",
+      "amount": 60.00
+    },
+    {
+      "recipient_id": "user456",
+      "amount": 40.00
+    }
+  ]
+}
 ```
 
-## Cards
+### Response
 
-<Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.vercel.app" />
-</Cards>
+```json
+{
+  "id": "splitpayment123",
+  "amount": 100.00,
+  "currency": "USD",
+  "recipients": [
+    {
+      "recipient_id": "user123",
+      "amount": 60.00,
+      "status": "pending"
+    },
+    {
+      "recipient_id": "user456",
+      "amount": 40.00,
+      "status": "pending"
+    }
+  ],
+  "status": "pending",
+  "date": "2024-02-10"
+}
+```
+  </div>
+</div>
+Support
+If you have any questions or need assistance, please contact our support team at <a href="/help-center">support</a>
 
 <DocsFooter/>

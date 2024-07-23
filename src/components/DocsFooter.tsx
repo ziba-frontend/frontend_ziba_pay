@@ -7,12 +7,12 @@ const DocsFooter = () => {
          <div className="flex gap-6">
             <p>Was this page helpful?</p>
             <p className="flex items-center cursor-pointer">
-               <ThumbsUp fill="#1E1147" />
-               <span className="ml-2 text-main">Helpful</span>
+               <ThumbsUp className="fill-[#1E1147] thumb1" />
+               <span className="ml-2 text-main helpful">Helpful</span>
             </p>
             <p className="flex items-center cursor-pointer">
-               <ThumbsDown fill="#1E1147"  />
-               <span className="ml-2 text-destructive ">Not helpful</span>
+               <ThumbsDown  className="fill-[#1E1147] thumb2" />
+               <span className="ml-2 text-destructive helpful">Not helpful</span>
             </p>
          </div>
 

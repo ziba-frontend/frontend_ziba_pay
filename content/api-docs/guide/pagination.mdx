@@ -1,19 +1,71 @@
 ---
 title: Pagination
-description: How to make paginations
+description: Implementing and managing pagination in your application
 ---
 
-## Code Block
+Pagination is a technique used to divide large sets of data into smaller, manageable chunks, or pages. This allows users to navigate through data efficiently without overwhelming them with too much information at once. This documentation will guide you through the implementation of pagination in your application.
 
-```js
-console.log('Hello World');
+## Overview
+
+Pagination is essential for applications that handle large datasets, such as lists of products, user records, or messages. It helps improve performance and user experience by loading and displaying data in smaller segments.
+
+## Types of Pagination
+
+There are several types of pagination:
+
+1. **Offset-Based Pagination:** Uses a limit and an offset to retrieve a specific subset of data.
+2. **Cursor-Based Pagination:** Uses a unique identifier (cursor) to retrieve the next set of data after the current position.
+3. **Page-Based Pagination:** Divides data into fixed pages that users can navigate through.
+
+## Offset-Based Pagination
+
+Offset-based pagination is straightforward and involves specifying the number of items to retrieve and the starting point.
+
+### Example: React
+
+```jsx
+import { useState, useEffect } from 'react';
+
+const PaginatedList = () => {
+   const [items, setItems] = useState([]);
+   const [page, setPage] = useState(1);
+   const [totalPages, setTotalPages] = useState(1);
+
+   useEffect(() => {
+      fetch(`/items?page=${page}`)
+         .then(response => response.json())
+         .then(data => {
+            setItems(data.items);
+            setTotalPages(data.totalPages);
+         });
+   }, [page]);
+
+   return (
+      <div>
+         <ul>
+            {items.map(item => <li key={item}>{item}</li>)}
+         </ul>
+         <div>
+            <button onClick={() => setPage(prevPage => Math.max(prevPage - 1, 1))} disabled={page === 1}>
+               Previous
+            </button>
+            <span> Page {page} of {totalPages} </span>
+            <button onClick={() => setPage(prevPage => Math.min(prevPage + 1, totalPages))} disabled={page === totalPages}>
+               Next
+            </button>
+         </div>
+      </div>
+   );
+};
+
+export default PaginatedList;
+
 ```
 
-## Cards
+Conclusion
+Pagination is a crucial feature for managing large datasets and enhancing user experience. Depending on your requirements, you can choose the appropriate type of pagination and implement it as demonstrated.
 
-<Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.vercel.app" />
-</Cards>
+Support
+If you have any questions or need assistance, please contact our support team at <a href="/help-center">support</a>.
 
 <DocsFooter/>

@@ -18,10 +18,12 @@ The Pagination feature  allows you to efficiently navigate through large sets of
 - Purpose: Retrieve user profile information.
 - Usage Example:
 
-```mdx
+```shell
+
 GET /api/users/123 HTTP/1.1
 Host: example.com
 Authorization: Bearer <access_token>
+
 ```
 
 
@@ -30,12 +32,14 @@ Authorization: Bearer <access_token>
 - Purpose: Retrieve user profile information.
 - Usage Example:
 
-```mdx
+```shell
+
 PUT /api/users/123 HTTP/1.1
 Host: example.com
 Authorization: Bearer <access_token>
 Content-Type: application/json
 {"name": "John Doe",  "email": "john.doe@example.com"}
+
 ```
 
 ### Request Payload:
@@ -45,14 +49,17 @@ Metadata:  Additional information related to the request (optional).
 
 Example Request Payload
 
-```mdx
+```json
+
 {
+
   "purpose": "transaction_tracking",
   "metadata": {
     "transaction_id": "123456789",
     "user_id": "987654321"
    }
 }
+
 ```
 
 ### Response Structure:
@@ -65,12 +72,14 @@ Status Code: HTTP status code indicating the success or failure of the request.
 Example Response:
 
 
-```mdx
+```json
+
 {
   "id": "7f7bd729-5be5-4c2b-a24e-85d13816f672",
   "timestamp":"2024-02-09T12:34:56Z":
   "status":  "success"
 }
+
 ```
 
 Error Handling
@@ -80,11 +89,13 @@ Error Handling
 
 Example Error Response:
 
-```mdx
+```json
+
 {
-  {  "name": "John Doe",
-    "email": "john.doe@example.com"}
+  "name": "John Doe",
+  "email": "john.doe@example.com"
 }
+
 ```
 
 Security Considerations

@@ -61,7 +61,7 @@
    }
 
    h5 {
-      @apply text-base font-medium leading-normal;
+      @apply text-base font-bold leading-normal;
    }
 
    h6 {
@@ -97,15 +97,12 @@
    align-items: center;
 }
 
-.docs .sidebar {
-   background-color: red;
-}
 .flex-box {
    @apply flex gap-4 flex-col lg:flex-row items-start justify-start;
 }
 
 .started {
-   @apply md:h-[320px] lg:h-[300px] p-4 rounded-[12px] w-full  lg:w-[50%];
+   @apply md:h-[310px] lg:h-[300px] p-4 md:p-6 rounded-[12px] w-full  lg:w-[50%] 2xl:h-[280px];
 }
 
 button.flex.w-full.flex-row.items-center.gap-2.rounded-md.px-2.text-muted-foreground.transition-colors.duration-100 {
@@ -115,16 +112,35 @@ button.flex.w-full.flex-row.items-center.gap-2.rounded-md.px-2.text-muted-foregr
    margin-top: 10px;
 }
 
-div.ms-2.flex.flex-col.border-s.py-2.ps-2{
+div.ms-2.flex.flex-col.border-s.py-2.ps-2 {
    border-left: none;
 }
 
-div.ms-2.flex.flex-col.border-s.py-2.ps-2 >a{
+div.ms-2.flex.flex-col.border-s.py-2.ps-2 > a {
    color: black;
-  font-size: 14px;
+   font-size: 14px;
 }
 
+.grid-system {
+   @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4;
+}
 
+.grid-card {
+   @apply lg:h-[270px];
+}
+
+thead {
+   @apply bg-[#EEEDF4] p-2;
+}
+.helpful {
+   @apply hidden md:block;
+}
+.thumb1 {
+   @apply fill-main md:fill-[#1E1147];
+}
+.thumb2 {
+   @apply fill-destructive md:fill-[#1E1147];
+}
 @media screen and (max-width: 768px) {
    .docnav {
       display: none;

@@ -14,4 +14,89 @@ You need an API key. You can obtain your API key by signing up for an account on
 Authorization: Bearer YOUR_API_KEY
 
 ```
+
+<div className="flex-box">
+<div className="w-full lg:w-1/2 ">
+## Initiate Payout
+
+<div className="bg-[#DAE3F6] rounded-xl py-2 px-4 w-fit my-4">POST /payout</div>
+
+Use this endpoint to initiate a payout to a user or vendor.
+
+### Attributes
+
+<div>
+<div className="pb-6 border-b">
+<div className="flex items-center gap-4">
+<div className="bg-[#DAE3F6] rounded-xl p-2 w-fit my-4">recipient_id</div> <span>string</span>
+</div>
+Unique identifier identification 
+</div>
+</div>
+<div className="pb-6 border-b">
+<div className="flex items-center gap-4">
+<div className="bg-[#DAE3F6] rounded-xl p-2 w-fit my-4">amount</div> <span>integer</span>
+</div>
+Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge
+</div>
+<div className="pb-6 border-b">
+<div className="flex items-center gap-4">
+<div className="bg-[#DAE3F6] rounded-xl p-2 w-fit my-4">currency</div> <span>retrievable with publishable key</span>
+</div>
+Three-letter ISO currency code, in lowercase. Must be a supported currency.
+</div>
+<div className="pb-6 border-b">
+<div className="flex items-center gap-4">
+<div className="bg-[#DAE3F6] rounded-xl p-2 w-fit my-4">description</div> <span>string</span>
+</div>
+describe the reason for payment
+</div>
+<div className="pb-6 border-b">
+<div className="flex items-center gap-4">
+<div className="bg-[#DAE3F6] rounded-xl p-2 w-fit my-4">status</div> <span>string</span>
+</div>
+show what the result on transaction 
+</div>
+</div>
+
+<div className="w-full lg:w-1/2 ">
+### request
+```js
+
+{
+  "amount": 100.00,
+  "currency": "USD",
+  "payment_method": "credit_card",
+  "card_number": "4111111111111111",
+  "expiration_month": 12,
+  "expiration_year": 2025,
+  "cvv": "123"
+}
+
+```
+
+### response
+
+```js
+
+{
+  "id": "payout123",
+  "recipient_id": "user123",
+  "amount": 100.00,
+  "currency": "USD",
+  "status": "pending",
+  "date": "2024-02-10"
+}
+
+
+```
+
+</div>
+</div>
+
+#### Support
+
+If you have any questions or need assistance, please contact our support team 
+at <a href="/help-center">support</a>
+
 <DocsFooter/>

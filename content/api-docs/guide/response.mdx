@@ -27,9 +27,10 @@ The Payment API returns standard HTTP status codes to indicate the success or fa
 
 ## Example Responses
 
-<DocCards>
-<DocCard>
+<div className="flex-box">
+<div className="w-full lg:w-1/2">
 <p>Successful Response</p>
+
 ```json
 
 {
@@ -44,8 +45,8 @@ The Payment API returns standard HTTP status codes to indicate the success or fa
    }
 }
 ```
-</DocCard>
-<DocCard>
+</div>
+<div className="w-full lg:w-1/2">
 <p>Error Response</p>
 ```json
 
@@ -54,8 +55,8 @@ The Payment API returns standard HTTP status codes to indicate the success or fa
   "message": "Invalid card number"
 }
 ```
-</DocCard>
-</DocCards>
+</div>
+</div>
 ### Response Data Formats
 - transaction_id: Unique identifier for the transaction.
 - amount: Amount of the transaction.

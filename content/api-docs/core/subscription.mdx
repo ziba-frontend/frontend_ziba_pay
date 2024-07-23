@@ -1,20 +1,153 @@
 ---
 title: Subscription
-description: subscriptiom guide
+description: Managing and implementing subscription plans in your application
 ---
 
-## Code Block
+Subscriptions allow you to offer recurring services or products to your users. This section provides detailed information on how to integrate and manage subscription plans within your application using our API.
 
-```js
-console.log('Hello World');
+## Overview
+
+Subscriptions enable you to create recurring billing models for your application. Users can subscribe to different plans with various billing intervals, such as monthly or yearly. This documentation will guide you through creating, managing, and canceling subscriptions.
+
+## Creating a Subscription Plan
+
+To create a subscription plan, you'll need to define the pricing, billing cycle, and other relevant details. Below is a step-by-step guide on how to create a subscription plan.
+
+### Endpoint
+
+#### `POST /subscription-plans`
+
+Use this endpoint to create a new subscription plan.
+
+### Request
+
+```json
+{
+  "name": "Premium Plan",
+  "price": 29.99,
+  "currency": "USD",
+  "interval": "month", // or "year"
+  "description": "Access to all premium features"
+}
+```
+### Response
+```json
+{
+  "id": "plan123",
+  "name": "Premium Plan",
+  "price": 29.99,
+  "currency": "USD",
+  "interval": "month",
+  "description": "Access to all premium features",
+  "created_at": "2024-07-23T00:00:00Z"
+}
 ```
 
-## Cards
+Subscribing to a Plan
+Users can subscribe to a plan by providing their payment details and selecting the desired subscription plan.
 
-<Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.vercel.app" />
-</Cards>
+Endpoint
+`POST /subscriptions`
+Use this endpoint to create a subscription for a user.
 
+### Request
+
+
+```json
+{
+  "user_id": "user123",
+  "plan_id": "plan123",
+  "payment_method": "credit_card",
+  "card_number": "4111111111111111",
+  "expiration_month": 12,
+  "expiration_year": 2025,
+  "cvv": "123"
+}
+```
+
+### Response
+
+
+```json
+{
+  "id": "subscription123",
+  "user_id": "user123",
+  "plan_id": "plan123",
+  "status": "active",
+  "start_date": "2024-07-23T00:00:00Z",
+  "next_billing_date": "2024-08-23T00:00:00Z"
+}
+
+```
+
+### Managing Subscriptions
+You may need to update or cancel subscriptions as needed. Below are examples of how to manage subscriptions.
+
+#### Update Subscription
+Endpoint
+`PUT /subscriptions/{subscription_id}`
+Use this endpoint to update an existing subscription.
+
+### Request
+
+```json
+{
+  "payment_method": "new_credit_card",
+  "card_number": "4111111111111112",
+  "expiration_month": 1,
+  "expiration_year": 2026,
+  "cvv": "456"
+}
+
+```
+
+### Response
+
+```json
+{
+  "id": "subscription123",
+  "status": "active",
+  "updated_at": "2024-07-23T00:00:00Z"
+}
+
+
+```
+
+### Cancel Subscription
+Endpoint
+`DELETE /subscriptions/{subscription_id}`
+Use this endpoint to cancel an existing subscription.
+
+### Response
+
+```json
+{
+  "id": "subscription123",
+  "status": "canceled",
+  "canceled_at": "2024-07-23T00:00:00Z"
+}
+
+```
+
+### Handling Payments
+Ensure that you handle payment processing securely and comply with relevant regulations. Payments can be processed using various methods, including credit cards, digital wallets, or direct debits.
+
+### Webhooks
+Set up webhooks to receive notifications about subscription events, such as renewals, cancellations, or failed payments. This helps you keep track of subscription status and take appropriate actions.
+
+#### Example Webhook Event
+
+```json
+{
+  "event": "subscription_renewal",
+  "subscription_id": "subscription123",
+  "status": "success",
+  "timestamp": "2024-07-23T00:00:00Z"
+}
+
+```
+
+Support
+If you have any questions or need assistance, please contact our support team at <a href="/help-center">support</a>.
 
 <DocsFooter/>

@@ -22,7 +22,7 @@ export default async function Page({
          footer={{ enabled: false }}
 
       >
-         <DocsBody className=" md:w-[68vw] " >
+         <DocsBody className=" lg:w-[68vw] " >
             <h1>{page.data.title}</h1>
             <MDX />
          </DocsBody>

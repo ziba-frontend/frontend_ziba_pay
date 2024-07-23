@@ -11,13 +11,13 @@ export default function RootDocsLayout({ children }: { children: ReactNode }) {
          theme={{
             enabled: false,
          }}
-         
+         search={{ enabled: false }}
       >
          <DocsNavbar />
-         <div className="pt-[90px] docs" >
+         <div className="pt-[90px] docs">
             <DocsLayout
                tree={pageTree}
-               nav={{ enabled: false,enableSearch:false }}
+               nav={{ enabled: false, enableSearch: false }}
             >
                {children}
             </DocsLayout>
