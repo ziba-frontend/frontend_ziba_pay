@@ -225,11 +225,13 @@ const Navbar: React.FC = () => {
                      <Image
                         src={close}
                         alt="close"
+                        width={40}
                      />
                   ) : (
                      <Image
                         src={hamburger}
                         alt="menu"
+                        width={40}
                      />
                   )}
                </button>
@@ -267,30 +269,33 @@ const Navbar: React.FC = () => {
                      ))}
                      <Link
                         href="/api-docs/start/introduction"
-                        className="block py-2"
+                        className="block py-2 text-start w-full border-b text-[20px]"
                         onClick={toggleMenu}
                         target="_blank"
                      >
                         Developer
                      </Link>
-                     <div className="flex flex-col gap-3 mt-4">
-                        <Link
-                           href="/login"
-                           onClick={toggleMenu}
+                     <div className="flex flex-col gap-6 mt-4  w-full">
+                        <Button
+                           variant="outline"
+                           className="w-full p-6"
                         >
-                           <Button
-                              variant="outline"
-                              className="w-full"
+                           <Link
+                              href="/login"
+                              onClick={toggleMenu}
                            >
-                              Login
-                           </Button>
-                        </Link>
-                        <Link
-                           href="/sign-up"
-                           onClick={toggleMenu}
-                        >
-                           <Button className="w-full">Create Account</Button>
-                        </Link>
+                              Login{" "}
+                           </Link>
+                        </Button>
+
+                        <Button className="w-full p-6">
+                           <Link
+                              href="/sign-up"
+                              onClick={toggleMenu}
+                           >
+                              Create Account{" "}
+                           </Link>
+                        </Button>
                      </div>
                   </div>
                </div>
