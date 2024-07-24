@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -20,6 +20,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { loginApi } from "@/lib/api-calls/auth-server";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import RiseLoader from "react-spinners/RiseLoader";
+import { Eye, EyeOff } from "lucide-react";
 
 // Define the schema
 const formSchema = z.object({
@@ -29,13 +31,19 @@ const formSchema = z.object({
 
 const Login = () => {
    const router = useRouter();
+   const [isLoading, setIsLoading] = useState(false);
+   const [showPassword, setShowPassword] = useState(false);
+
    const form = useForm({
       resolver: zodResolver(formSchema),
+      mode: "onChange",
    });
 
    // Define the onSubmit handler
    const onSubmit = async (data: any) => {
+      setIsLoading(true);
       await loginApi(data);
+      setIsLoading(false);
       router.push("/dashboard");
       console.log(data);
    };
@@ -80,9 +88,7 @@ const Login = () => {
                      Log in to your <br />{" "}
                      <span className="text-main">Ziba pay</span> Account
                   </h4>
-                  <h4 className="text-center my-6 hidden md:block">
-                     Login
-                  </h4>
+                  <h4 className="text-center my-6 hidden md:block">Login</h4>
                   <div className="space-y-8">
                      <FormField
                         control={form.control}
@@ -109,12 +115,20 @@ const Login = () => {
                               <FormItem>
                                  <FormLabel>Password *</FormLabel>
                                  <FormControl>
-                                    <Input
-                                       className="bg-white p-6 border"
-                                       placeholder="******"
-                                       type="password"
-                                       {...field}
-                                    />
+                                    <div className="relative">
+                                       <Input
+                                          className="bg-white p-6 border pr-10"
+                                          placeholder="******"
+                                          type={showPassword ? "text" : "password"}
+                                          {...field}
+                                       />
+                                       <div
+                                          className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                                          onClick={() => setShowPassword((prev) => !prev)}
+                                       >
+                                          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                       </div>
+                                    </div>
                                  </FormControl>
                                  <FormMessage />
                               </FormItem>
@@ -134,8 +148,19 @@ const Login = () => {
                      <Button
                         type="submit"
                         className="w-full p-[26px]"
+                        disabled={!form.formState.isValid || isLoading}
                      >
-                        Log In
+                        {isLoading ? (
+                           <div className="flex items-center justify-center gap-2">
+                              <RiseLoader
+                                 color="#3BD64A"
+                                 size={10}
+                              />
+                              <span>Logging In...</span>
+                           </div>
+                        ) : (
+                           "Log In"
+                        )}
                      </Button>
                      <p className="text-center">
                         <Link href="/sign-up">Create Account</Link>
