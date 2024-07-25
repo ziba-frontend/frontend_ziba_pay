@@ -88,7 +88,7 @@ const Footer = () => {
                   free to reach out to us for tailored solutions designed
                   specifically for your business needs.
                </p>
-               <div className="flex gap-4 py-6 flex-col items-center md:flex-row md:items-start md:gap-3 w-full">
+               <div className="flex gap-6 py-6 flex-col items-center md:flex-row md:items-start  w-full">
                   <Button
                      variant="outline"
                      className="w-[60%] md:w-[130px] p-6"

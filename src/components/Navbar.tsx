@@ -204,7 +204,7 @@ const Navbar: React.FC = () => {
                   </Link>
                </div>
             </div>
-            <div className="hidden md:flex gap-3">
+            <div className="hidden md:flex gap-6">
                <Link href="/login">
                   <Button
                      className="w-[107px] sm:w-[130px] p-6"

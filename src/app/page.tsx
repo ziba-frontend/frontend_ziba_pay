@@ -73,7 +73,7 @@ const Home = () => {
                   Ziba Pay offers businesses a streamlined and effective online
                   payment collection solution
                </p>
-               <div className="flex gap-3 my-4 pt-8">
+               <div className="flex gap-6 my-4 pt-8">
                   <Link href="/login">
                      <Button
                         className="w-[107px] sm:w-[130px] p-6"
