@@ -156,9 +156,15 @@ const SignUp = () => {
                                     />
                                     <div
                                        className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
-                                       onClick={() => setShowPassword((prev) => !prev)}
+                                       onClick={() =>
+                                          setShowPassword((prev) => !prev)
+                                       }
                                     >
-                                       {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                       {showPassword ? (
+                                          <EyeOff size={20} />
+                                       ) : (
+                                          <Eye size={20} />
+                                       )}
                                     </div>
                                  </div>
                               </FormControl>
@@ -189,12 +195,12 @@ const SignUp = () => {
                         control={form.control}
                         name="agreeTerms"
                         render={({ field }) => (
-                           <FormItem className="flex gap-4 items-start">
+                           <FormItem className="flex gap-3 items-start ">
                               <FormControl>
                                  <Checkbox
                                     checked={field.value}
                                     onCheckedChange={field.onChange}
-                                    className="mt-3"
+                                    className="mt-[16px]"
                                  />
                               </FormControl>
                               <p className="mt-0">

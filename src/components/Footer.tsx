@@ -75,7 +75,7 @@ const Footer = () => {
    ];
    return (
       <div
-         className="bg-center  bg-cover mt-40 h-auto "
+         className="bg-center  bg-cover mt-40 h-auto bg-black/20"
          style={{
             backgroundImage: "url('/images/footer.png')",
          }}
@@ -88,7 +88,7 @@ const Footer = () => {
                   free to reach out to us for tailored solutions designed
                   specifically for your business needs.
                </p>
-               <div className="flex gap-2 py-6 flex-col items-center md:flex-row md:items-start  w-full">
+               <div className="flex gap-4 py-6 flex-col items-center md:flex-row md:items-start md:gap-3 w-full">
                   <Button
                      variant="outline"
                      className="w-[60%] md:w-[130px] p-6"

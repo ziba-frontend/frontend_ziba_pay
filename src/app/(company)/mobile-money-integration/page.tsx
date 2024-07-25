@@ -31,13 +31,11 @@ const Integration = () => {
                   src={integ1}
                   alt="ziba momo integration "
                   width={996}
-                 
                />
                <Image
                   src={momo}
                   alt="ziba momo integration"
                   className="absolute bottom-10 md:-left-[35px] lg:-left-20 w-[90px] -left-[30px] lg:w-[200px] md:w-[150px]"
-
                />
                <Image
                   src={airtel}
@@ -98,7 +96,7 @@ const Integration = () => {
                            className="ml-[50%] -translate-x-[50%]"
                         />
                      </div>
-                     <h1>1</h1>
+                     <h1 className="text-xl md:text-3xl">1</h1>
                   </div>
                   <div className="flex items-center gap-8 flex-row-reverse md:flex-row">
                      <div className="flex flex-col gap-4 bg-white rounded-[15px] sm:w-[388px] p-4 my-8 2xl:ml-[300px] xl:ml-[200px] lg:ml-[100px]">
@@ -117,11 +115,11 @@ const Integration = () => {
                            className="ml-[50%] -translate-x-[50%]"
                         />
                      </div>
-                     <h1>2</h1>
+                     <h1 className="text-xl md:text-3xl">2</h1>
                   </div>
                   <div className="flex items-center gap-8 2xl:ml-[600px] xl:ml-[400px] lg:ml-[200px]">
-                     <h1 className="text-[40px]">3</h1>
-                     <div className="flex flex-col gap-4 bg-white rounded-[15px] sm:w-[388px] p-4 my-8">
+                     <h1 className="text-xl md:text-3xl">3</h1>
+                     <div className="flex flex-col gap-4 bg-white rounded-[15px] sm:w-[388px] p-4 my-8 ">
                         <div>
                            <h3 className="text-[40px]">Link Accounts</h3>
                            <p className="text-[20px]">
@@ -138,7 +136,7 @@ const Integration = () => {
                      </div>
                   </div>
                   <div className="flex items-center gap-8 2xl:ml-[800px] xl:ml-[600px] lg:ml-[400px]">
-                     <h1>4</h1>
+                     <h1 className="text-xl md:text-3xl">4</h1>
                      <div className="flex flex-col gap-4 bg-white rounded-[15px] sm:w-[388px] p-4 my-8">
                         <div>
                            <h3 className="text-[40px]">Start Transacting</h3>

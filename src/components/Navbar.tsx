@@ -87,17 +87,22 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onOpenChange }) => {
    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
    const handleItemClick = () => {
-      onOpenChange(false);
+      setIsDropdownOpen(false);
+      onOpenChange(false); // Notify parent to close
    };
 
    return (
       <DropdownMenu
+         open={isDropdownOpen}
          onOpenChange={(isOpen) => {
             setIsDropdownOpen(isOpen);
             onOpenChange(isOpen);
          }}
       >
-         <DropdownMenuTrigger className="cursor-pointer text-[16px]">
+         <DropdownMenuTrigger
+            className="cursor-pointer text-[16px]"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)} // Toggle dropdown
+         >
             {title}
          </DropdownMenuTrigger>
          <DropdownMenuContent
@@ -125,20 +130,21 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onOpenChange }) => {
                   className="flex flex-col p-2 justify-start"
                >
                   {title === "Products" ? (
-                     <div
-                        className="flex items-start gap-0 "
-                        onClick={handleItemClick}
-                     >
+                     <div className="flex items-start gap-0 ">
                         <Image
                            src={item.img!}
                            alt={item.label}
                            width={80}
                            height={80}
                         />
-
                         <div className="flex flex-col">
                            <h4 className=" hover:text-main">
-                              <Link href={item.href}>{item.label}</Link>
+                              <Link
+                                 href={item.href}
+                                 onClick={handleItemClick}
+                              >
+                                 {item.label}
+                              </Link>
                            </h4>
                            <span className="text-sm">{item.description}</span>
                         </div>
@@ -149,7 +155,7 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onOpenChange }) => {
                         className="w-full text-left hover:text-main my-1"
                         onClick={handleItemClick}
                      >
-                        <h4> {item.label}</h4>
+                        <h4>{item.label}</h4>
                      </Link>
                   )}
                </DropdownMenuItem>

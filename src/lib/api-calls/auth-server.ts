@@ -3,10 +3,7 @@ import axios from 'axios';
 interface User {
     name: string | null;
     email: string | null;
-    phoneNumber: string | null;
-    businessName: string | null;
     businessType: string | null;
-    country: string | null;
     password: string | null;
 }
 
