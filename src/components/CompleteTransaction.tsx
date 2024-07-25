@@ -32,9 +32,9 @@ const CompleteTransaction = ({
     try {
       let response;
       if (type === "complete") {
-        response = await completeTransaction(transactionId, userId);
+        response = await completeTransaction(transactionId);
       } else if (type === "cancel") {
-        response = await cancelTransaction(transactionId, userId);
+        response = await cancelTransaction(transactionId);
       }
       setOpen(false);
     } catch (error) {
@@ -44,7 +44,7 @@ const CompleteTransaction = ({
     }
   };
 
-  
+
 
   let buttonLabel;
   switch (type) {
