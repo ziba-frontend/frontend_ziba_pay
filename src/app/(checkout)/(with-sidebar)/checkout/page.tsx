@@ -88,7 +88,7 @@ const Checkout = () => {
          };
          const result = await initiateMtnPayment(paymentData);
          console.log("Payment successful:", result);
-         router.push("/confirm");
+         router.push("/dashboard/transactions");
       } catch (error) {
          console.error("Payment failed:", error);
       }

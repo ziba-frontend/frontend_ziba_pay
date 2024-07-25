@@ -14,22 +14,29 @@ const BASE_URL = 'http://localhost:8080/api/v1/transactions';
 
 
 
-export const getSentTransaction = async () => {
+export const getSentTransaction = async (queryParams = {}) => {
     try {
-        const response = await axios.get(`${BASE_URL}/sent`, { withCredentials: true});
+        const response = await axios.get(`${BASE_URL}/sent`, {
+            params: queryParams,
+            withCredentials: true
+        });
         return response.data;
     } catch (error) {
-        console.error("Error while getting All transaction");
+        console.error("Error while getting sent transactions");
         throw error;
     }
-}
+};
 
-export const getReceivedTransactions = async() => {
-    try{
-        const response = await axios.get(`${BASE_URL}/received`, { withCredentials: true});
+export const getReceivedTransactions = async(queryParams = {}) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/received`, {
+            params: queryParams,
+            withCredentials: true
+        });
         return response.data;
-    }catch(error){
-        console.error("Error while getting received transactions")
+    } catch (error) {
+        console.error("Error while getting received transactions");
+        throw error;
     }
 }
 
@@ -74,3 +81,23 @@ export const generateCSVTransactions = async() => {
         throw error;
     }
 }
+
+export const completeTransaction = async (transactionId: string) => {
+    try {
+      const response = await axios.patch(`${BASE_URL}/${transactionId}/approve`, {}, { withCredentials: true });
+      return response.data;
+    } catch (error) {
+      console.error("Error while completing transaction:", error);
+      throw error;
+    }
+  };
+  
+  export const cancelTransaction = async (transactionId: string) => {
+    try {
+      const response = await axios.patch(`${BASE_URL}/${transactionId}/cancel`, {}, { withCredentials: true });
+      return response.data;
+    } catch (error) {
+      console.error("Error while canceling transaction:", error);
+      throw error;
+    }
+  };
