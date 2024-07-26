@@ -1,9 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { z, ZodType } from "zod";
 import { Button } from "@/components/ui/button";
 import logo from "../../../../public/svg/logo.svg";
 import {
@@ -22,30 +23,35 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import RiseLoader from "react-spinners/RiseLoader";
 import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
 
-// Define the schema
 const formSchema = z.object({
    email: z.string().email({ message: "Invalid email address." }),
    password: z.string().min(1, { message: "Password is required." }),
 });
+
+type FormData = z.infer<typeof formSchema>;
 
 const Login = () => {
    const router = useRouter();
    const [isLoading, setIsLoading] = useState(false);
    const [showPassword, setShowPassword] = useState(false);
 
-   const form = useForm({
+   const form = useForm<FormData>({
       resolver: zodResolver(formSchema),
       mode: "onChange",
    });
 
-   // Define the onSubmit handler
-   const onSubmit = async (data: any) => {
+   const onSubmit = async (data: FormData) => {
       setIsLoading(true);
-      await loginApi(data);
-      setIsLoading(false);
-      router.push("/dashboard");
-      console.log(data);
+      try {
+         await loginApi(data);
+         router.push("/dashboard");
+      } catch (error) {
+         toast.error("Invalid Credentials");
+      } finally {
+         setIsLoading(false);
+      }
    };
 
    return (
@@ -119,14 +125,22 @@ const Login = () => {
                                        <Input
                                           className="bg-white p-6 border pr-10"
                                           placeholder="******"
-                                          type={showPassword ? "text" : "password"}
+                                          type={
+                                             showPassword ? "text" : "password"
+                                          }
                                           {...field}
                                        />
                                        <div
                                           className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
-                                          onClick={() => setShowPassword((prev) => !prev)}
+                                          onClick={() =>
+                                             setShowPassword((prev) => !prev)
+                                          }
                                        >
-                                          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                          {showPassword ? (
+                                             <EyeOff size={20} />
+                                          ) : (
+                                             <Eye size={20} />
+                                          )}
                                        </div>
                                     </div>
                                  </FormControl>
@@ -172,5 +186,4 @@ const Login = () => {
       </div>
    );
 };
-
 export default Login;
