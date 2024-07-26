@@ -20,20 +20,23 @@ import login from "../../../../public/images/login.png";
 import { Checkbox } from "@/components/ui/checkbox";
 import { loginApi } from "@/lib/api-calls/auth-server";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter ,useSearchParams} from "next/navigation";
 import RiseLoader from "react-spinners/RiseLoader";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
 const formSchema = z.object({
    email: z.string().email({ message: "Invalid email address." }),
-   password: z.string().min(1, { message: "Password is required." }),
+   password: z
+      .string()
+      .min(8, { message: "Password must be atleast 8 characters long" }),
 });
 
 type FormData = z.infer<typeof formSchema>;
 
 const Login = () => {
    const router = useRouter();
+   const searchParams = useSearchParams(); 
    const [isLoading, setIsLoading] = useState(false);
    const [showPassword, setShowPassword] = useState(false);
 
@@ -42,11 +45,16 @@ const Login = () => {
       mode: "onChange",
    });
 
+   const { watch, formState } = form;
+   const email = watch("email");
+   const password = watch("password");
+
    const onSubmit = async (data: FormData) => {
       setIsLoading(true);
       try {
          await loginApi(data);
-         router.push("/dashboard");
+         const redirectTo = searchParams.get('redirect') || '/dashboard';
+         window.location.href = redirectTo; 
       } catch (error) {
          toast.error("Invalid Credentials");
       } finally {
@@ -109,7 +117,11 @@ const Login = () => {
                                     {...field}
                                  />
                               </FormControl>
-                              <FormMessage />
+                              {formState.errors.email && (
+                                 <p className="text-red-500 text-sm">
+                                    {formState.errors.email.message}
+                                 </p>
+                              )}
                            </FormItem>
                         )}
                      />
@@ -144,12 +156,17 @@ const Login = () => {
                                        </div>
                                     </div>
                                  </FormControl>
-                                 <FormMessage />
+                                 {formState.errors.password && (
+                                    <p className="text-red-500 text-sm">
+                                       {formState.errors.password.message}
+                                    </p>
+                                 )}
                               </FormItem>
                            )}
                         />
                         <Link
                            href="/forgot-password"
+                           target="_blank"
                            className="text-main absolute right-0 -bottom-10 underline"
                         >
                            Forgot password?
@@ -157,7 +174,7 @@ const Login = () => {
                      </div>
                      <div className="flex gap-4 items-center pt-20">
                         <Checkbox />
-                        <p>Keep me signed in</p>
+                        <p className="text-[16px]">Keep me signed in</p>
                      </div>
                      <Button
                         type="submit"
@@ -186,4 +203,5 @@ const Login = () => {
       </div>
    );
 };
+
 export default Login;

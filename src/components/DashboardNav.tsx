@@ -28,7 +28,7 @@ const DashboardNav = () => {
    const handleLogout = async () => {
       try {
          await logoutApi();
-         router.push("/login");
+         window.location.href = "/login";
       } catch (error) {
          console.error("Failed to logout:", error);
       }
