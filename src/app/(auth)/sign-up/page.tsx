@@ -49,6 +49,7 @@ const SignUp = () => {
 
     const form = useForm({
         resolver: zodResolver(formSchema),
+        mode: "onChange",
         defaultValues: {
             name: "",
             email: "",
@@ -57,6 +58,9 @@ const SignUp = () => {
             agreeTerms: false,
         },
     });
+
+    const { watch, handleSubmit, control, formState: { errors, isValid } } = form;
+    const watchedFields = watch();
 
     const onSubmit = async (data: any) => {
         setIsLoading(true);
@@ -109,7 +113,7 @@ const SignUp = () => {
 
                 <Form {...form}>
                     <form
-                        onSubmit={form.handleSubmit(onSubmit)}
+                        onSubmit={handleSubmit(onSubmit)}
                         className="space-y-8 w-full sm:w-5/6 md:w-[70%] lg:w-[60%] z-20 container p-10 shadow bg-white rounded md:px-[60px] lg:px-[100px]"
                     >
                         <h4 className="text-center my-6">
@@ -117,7 +121,7 @@ const SignUp = () => {
                         </h4>
                         <div className="grid grid-cols-1 gap-8 items-center justify-center">
                             <FormField
-                                control={form.control}
+                                control={control}
                                 name="name"
                                 render={({ field }) => (
                                     <FormItem>
@@ -129,16 +133,16 @@ const SignUp = () => {
                                                 {...field}
                                             />
                                         </FormControl>
-                                        <FormMessage />
+                                        <FormMessage>{errors.name?.message}</FormMessage>
                                     </FormItem>
                                 )}
                             />
                             <FormField
-                                control={form.control}
+                                control={control}
                                 name="email"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel> Email Address *</FormLabel>
+                                        <FormLabel>Email Address *</FormLabel>
                                         <FormControl>
                                             <Input
                                                 className="bg-white p-6 border"
@@ -146,12 +150,12 @@ const SignUp = () => {
                                                 {...field}
                                             />
                                         </FormControl>
-                                        <FormMessage />
+                                        <FormMessage>{errors.email?.message}</FormMessage>
                                     </FormItem>
                                 )}
                             />
                             <FormField
-                                control={form.control}
+                                control={control}
                                 name="password"
                                 render={({ field }) => (
                                     <FormItem>
@@ -178,12 +182,12 @@ const SignUp = () => {
                                                 </div>
                                             </div>
                                         </FormControl>
-                                        <FormMessage />
+                                        <FormMessage>{errors.password?.message}</FormMessage>
                                     </FormItem>
                                 )}
                             />
                             <FormField
-                                control={form.control}
+                                control={control}
                                 name="businessType"
                                 render={({ field }) => (
                                     <FormItem>
@@ -195,14 +199,14 @@ const SignUp = () => {
                                                 {...field}
                                             />
                                         </FormControl>
-                                        <FormMessage />
+                                        <FormMessage>{errors.businessType?.message}</FormMessage>
                                     </FormItem>
                                 )}
                             />
                         </div>
-                        <div className="">
+                        <div>
                             <FormField
-                                control={form.control}
+                                control={control}
                                 name="agreeTerms"
                                 render={({ field }) => (
                                     <FormItem className="flex gap-3 items-start ">
@@ -234,7 +238,7 @@ const SignUp = () => {
                                             create this account and provide their personal
                                             data.
                                         </p>
-                                        <FormMessage />
+                                        <FormMessage>{errors.agreeTerms?.message}</FormMessage>
                                     </FormItem>
                                 )}
                             />
@@ -242,7 +246,7 @@ const SignUp = () => {
                         <Button
                             type="submit"
                             className="w-full my-6 p-7"
-                            disabled={!form.formState.isValid || isLoading}
+                            disabled={!isValid || isLoading}
                         >
                             {isLoading ? (
                                 <div className="flex items-center justify-center gap-2">
