@@ -19,8 +19,7 @@ import {
    generateCSVTransactions,
 } from "@/lib/api-calls/transaction";
 import Link from "next/link";
-import BounceLoader from "react-spinners/BounceLoader"
-import RiseLoader from "react-spinners/RiseLoader";
+import BounceLoader from "react-spinners/BounceLoader";
 import { getUserProfile } from "@/lib/api-calls/auth-server";
 import { formatDate } from "@/constants/constants";
 import CompleteTransaction from "@/components/modals/CompleteTransaction";
@@ -29,13 +28,13 @@ type Payment = {
    id: string;
    userId: string;
    user: {
-      id: string
+      id: string;
       name: string;
       phoneNumber: string;
    };
    date: string;
    amount: number;
-   status: string;
+   status: "completed" | "pending" | "failed"; // Ensure status is of type Status
    paymentMethod: string;
    createdAt: string;
 };
@@ -44,6 +43,7 @@ const columns: ColumnDef<Payment>[] = [
    {
       header: "ID",
       cell: ({ row }) => {
+         return <p className="text-14-medium text-dark-700">{row.index + 1}</p>;
          return <p className="text-14-medium text-dark-700">{row.index + 1}</p>;
       },
    },
@@ -87,31 +87,26 @@ const columns: ColumnDef<Payment>[] = [
                <StatusBadge status={status} />
             </div>
          );
-      }
+      },
    },
-
    {
       accessorKey: "createdAt",
       header: "Date",
       cell: ({ row }) => {
          const date = row.original.createdAt;
-         return (
-            <p>{formatDate(date)}</p>
-         )
-      }
+         return <p>{formatDate(date)}</p>;
+      },
    },
    {
       accessorKey: "paymentMethod",
       header: "Provider",
       cell: ({ row }) => {
          const provider = row.original.paymentMethod;
-         return (
-            <p className="font-bold uppercase">{provider}</p>
-         )
-      }
+         return <p className="font-bold uppercase">{provider}</p>;
+      },
    },
    {
-      id: 'actions',
+      id: "actions",
       header: () => <div className="pl-4">Actions</div>,
       cell: ({ row }) => {
          const transaction = row.original;
@@ -140,7 +135,11 @@ const Summary = () => {
    const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
    const [drawerTitle, setDrawerTitle] = useState<string>("");
    const [data, setData] = useState<Payment[]>([]);
-   const [filters, setFilters] = useState<{ kind?: string; status?: string; provider?: string }>({});
+   const [filters, setFilters] = useState<{
+      kind?: string;
+      status?: string;
+      provider?: string;
+   }>({});
    const [sort, setSort] = useState<string | null>(null);
    const [profile, setProfile] = useState<{
       balance: number;
@@ -195,7 +194,7 @@ const Summary = () => {
             sort,
             page,
          });
-         const transactions = response;
+         const transactions: Payment[] = response; // Ensure response is of type Payment[]
          console.log("Transactions retrieved are:", transactions);
          setData(transactions);
       } catch (error) {
@@ -222,6 +221,7 @@ const Summary = () => {
    if (loading) {
       return (
          <div className="w-full h-screen flex items-center justify-center">
+            <BounceLoader color="#3BD64A" />
             <BounceLoader color="#3BD64A" />
          </div>
       );
@@ -259,7 +259,11 @@ const Summary = () => {
 
          <div className="gap-6 flex flex-wrap p-1 sm:p-6 border my-6">
             <div>
-               <Select onValueChange={(value) => setFilters((prev) => ({ ...prev, kind: value }))}>
+               <Select
+                  onValueChange={(value) =>
+                     setFilters((prev) => ({ ...prev, kind: value }))
+                  }
+               >
                   <SelectTrigger>
                      <SelectValue placeholder="Kind" />
                   </SelectTrigger>
@@ -270,81 +274,50 @@ const Summary = () => {
                </Select>
             </div>
             <div>
-               <Select onValueChange={(value) => setFilters((prev) => ({ ...prev, status: value }))}>
+               <Select
+                  onValueChange={(value) =>
+                     setFilters((prev) => ({ ...prev, status: value }))
+                  }
+               >
                   <SelectTrigger>
                      <SelectValue placeholder="Status" />
                   </SelectTrigger>
-                  <SelectContent className="bg-white p-1 sm:p-2">
-                     <SelectItem value="pending">Pending</SelectItem>
-                     <SelectItem value="completed">Completed</SelectItem>
+                  <SelectContent className="bg-white p-2">
+                     <SelectItem value="Completed">Completed</SelectItem>
+                     <SelectItem value="Pending">Pending</SelectItem>
+                     <SelectItem value="Failed">Failed</SelectItem>
                   </SelectContent>
                </Select>
             </div>
             <div>
-               <Select onValueChange={(value) => setFilters((prev) => ({ ...prev, paymentMethod: value }))}>
+               <Select
+                  onValueChange={(value) =>
+                     setFilters((prev) => ({ ...prev, provider: value }))
+                  }
+               >
                   <SelectTrigger>
                      <SelectValue placeholder="Provider" />
                   </SelectTrigger>
                   <SelectContent className="bg-white p-2">
-                     <SelectItem value="mtn">MTN</SelectItem>
-                     <SelectItem value="airtel">Airtel</SelectItem>
+                     <SelectItem value="Bank">Bank</SelectItem>
+                     <SelectItem value="Airtel">Airtel</SelectItem>
+                     <SelectItem value="MTN">MTN</SelectItem>
                   </SelectContent>
                </Select>
             </div>
-            <div>
-               <Select onValueChange={(value) => setSort(value)}>
-                  <SelectTrigger>
-                     <SelectValue placeholder="Sort by" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white p-2">
-                     <SelectItem value="createdAt">Date</SelectItem>
-                     <SelectItem value="amount">Amount</SelectItem>
-                  </SelectContent>
-               </Select>
-            </div>
-            <div className="border-2 flex w-fit flex-col gap-2 items-end rounded p-2 ">
-               <Link href="/checkout">
-                  Checkout
-               </Link>
-            </div>
-            <div
-               className="flex items-center justify-center border px-4 cursor-pointer"
-               onClick={() => handleOpenDrawer("Cash In")}
-            >
-               CashIn
-            </div>
-            <div
-               className="flex items-center justify-center border px-4 cursor-pointer"
-               onClick={() => handleOpenDrawer("Cash Out")}
-            >
-               CashOut
-            </div>
-            <div
-               className="flex items-center justify-center border px-4 cursor-pointer"
-               onClick={() => handleOpenDrawer("Transfer")}
-            >
-               Transfer
-            </div>
-
-
          </div>
 
-         <div className="py-6 w-full ">
-            {data?.length > 0 ? (
-               <DataTable
-                  columns={columns}
-                  data={data}
-               />
-            ) : (
-               <div className="flex items-center justify-center p-12 bg-br my-6">
-                  No transactions available.
-               </div>
-            )}
+         <div className="overflow-x-auto bg-white border border-dark-100 rounded my-6">
+            <DataTable
+               data={data}
+               columns={columns}
+            />
          </div>
+
          <DrawerForm
+            title={drawerTitle}
             isOpen={isDrawerOpen}
             onClose={() => setIsDrawerOpen(false)}
-            title={drawerTitle}
          />
       </div>
    );

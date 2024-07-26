@@ -7,10 +7,7 @@ const Account = () => {
    const [user, setUser] = useState({
       name: "",
       email: "",
-      phoneNumber: "",
-      businessName: "",
       businessType: "",
-      country: "",
    });
    const [loading, setLoading] = useState<boolean>(true);
 
@@ -58,20 +55,8 @@ const Account = () => {
                <p>{user.email}</p>
             </div>
             <div className="flex flex-col gap-2">
-               <h3>Phone Number</h3>
-               <p>{user.phoneNumber}</p>
-            </div>
-            <div className="flex flex-col gap-2">
-               <h3>Business Name</h3>
-               <p>{user.businessName}</p>
-            </div>
-            <div className="flex flex-col gap-2">
                <h3>Business Type</h3>
                <p>{user.businessType}</p>
-            </div>
-            <div className="flex flex-col gap-2">
-               <h3>Country</h3>
-               <p>{user.country}</p>
             </div>
          </div>
       </div>

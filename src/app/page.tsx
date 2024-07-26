@@ -73,7 +73,7 @@ const Home = () => {
                   Ziba Pay offers businesses a streamlined and effective online
                   payment collection solution
                </p>
-               <div className="flex gap-2 my-4 pt-8">
+               <div className="flex gap-6 my-4 pt-8">
                   <Link href="/login">
                      <Button
                         className="w-[107px] sm:w-[130px] p-6"
@@ -132,7 +132,7 @@ const Home = () => {
                />
                <div className="pt-40 flex items-center flex-col gap-6 container">
                   <h1>Our Features</h1>
-                  <p className="text-center mb-6 text-[#000000] text-[20px]">
+                  <p className="text-center mb-6 text-[#000000] text-[20px] md:w-5/6">
                      With features like customizable dashboards, real-time
                      alerts, and secure data encryption, you can effortlessly
                      manage your transactions and take control of your financial

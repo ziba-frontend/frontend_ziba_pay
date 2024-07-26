@@ -22,3 +22,14 @@ export const getAllApiKeys = async() => {
         throw error;
     }
 }
+
+
+export const deleteApiKey = async(id: string) => {
+    try{
+        const response = await axios.delete(`${BASE_URL}/delete/${id}`, {withCredentials: true});
+        return response.data;
+    }catch (error) {
+        console.error("Error while Deleting API Gateway Key");
+        throw error;
+    }
+}

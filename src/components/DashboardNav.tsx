@@ -43,9 +43,9 @@ const DashboardNav = () => {
                   alt="zibaPay"
                />
             </Link>
-            <h1 className="ml-6 hidden md:block">
+            <h3 className="ml-6 hidden md:block">
                {`Welcome Back ${firstName} 🖐️`}
-            </h1>
+            </h3>
          </div>
          <button
             onClick={handleLogout}

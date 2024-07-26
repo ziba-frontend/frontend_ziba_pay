@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import ApplicationForm from "../form/ApplicationForm";
 
-const ApplicationModal = ({ onSuccess }) => {
+const ApplicationModal = ({ onSuccess } : { onSuccess?: any}) => {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => setOpen(false);

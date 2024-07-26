@@ -17,7 +17,7 @@ const Blogs = () => {
           <p className="my-4 md:w-3/4">
             Welcome to the Ziba Pay Blog! Here, you&apos;ll find the latest insights, tips, and news about online payments, financial management, and how Ziba Pay is making a difference for businesses across Africa.
           </p>
-          <Image src="/images/blogs1.png" alt="blog" width={900} height={582}/>
+          <Image src="/images/blogs1.png" alt="blog" width={1000} height={582}/>
         </div>
       </div>
 
@@ -26,7 +26,7 @@ const Blogs = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 p-2 gap-8 items-center justify-center mx-auto">
           {blogs.map((blog) => (
             <Link href={`/blogs/${blog.slug}`} key={blog.id} legacyBehavior>
-              <a className="flex flex-col gap-2 bg-white w-full md:w-[320px] lg:w-[380px] md:h-[500px] shadow-sm rounded">
+              <a className="flex flex-col gap-2 bg-white w-full md:w-[320px] lg:w-[400px] 2xl:w-[418px] md:h-[500px] shadow-sm rounded">
                 <Image src={blog.image} alt={blog.title} className="w-full" />
                 <div className="p-4">
                   <h3 className="my-2">{blog.title}</h3>

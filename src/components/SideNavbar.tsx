@@ -13,10 +13,12 @@ import {
    Link,
    ArrowUpLeftSquare,
    Phone,
+   Sidebar,
 } from "lucide-react";
 import { FaBars } from "react-icons/fa";
 import { useWindowWidth } from "@react-hook/window-size";
 import { Nav } from "./ui/nav";
+
 
 type Props = {
    isCollapsed: boolean;
@@ -92,7 +94,7 @@ export default function SideNavbar({ isCollapsed, toggleSidebar }: Props) {
             />
          </div>
 
-         <div className="py-2 border-t">
+         <div className="py-2 border-t ">
             {!(isCollapsed || mobileWidth) && <p className="ml-4 my-2">Admin</p>}
             <Nav
                isCollapsed={mobileWidth ? true : isCollapsed}
@@ -120,8 +122,8 @@ export default function SideNavbar({ isCollapsed, toggleSidebar }: Props) {
          </div>
 
          {/* Toggle Button */}
-         <div className="mt-auto pt-4 border-t">
-            <FaBars
+         <div className="mt-auto pt-4 border-t pb-6">
+            <Sidebar
                onClick={toggleSidebar}
                className="cursor-pointer"
             />

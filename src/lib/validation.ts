@@ -7,3 +7,5 @@ export const CreateApplicationSchema = z.object({
     .max(50, "Name must be at most 50 characters"),
     description: z.string().min(2, "Description must have atleast 2 characters")
 })
+
+

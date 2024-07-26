@@ -45,13 +45,11 @@ const columns: ColumnDef<GatewayConfig>[] = [
           <div className="flex gap-1">
              <CompleteTransaction
                 type="configure"
-                transactionId={id}
-                userId={userId}
+                gatewayId={id}
              />
              <CompleteTransaction
                 type="delete"
-                transactionId={id}
-                userId={userId}
+                gatewayId={id}
              />
           </div>
        )
