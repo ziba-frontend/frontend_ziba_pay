@@ -11,21 +11,24 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import SubmitButton from "./SubmitButton";
+import SubmitButton from "../SubmitButton";
 import { cancelTransaction, completeTransaction } from "@/lib/api-calls/transaction";
-
+import { useRouter } from "next/navigation";
 
 const CompleteTransaction = ({
   type,
   transactionId,
   userId,
+  onSuccess,
 }: {
-  type: "complete" | "cancel";
+  type: "complete" | "cancel" | "delete" | "configure";
   transactionId: string;
   userId: string;
+  onSuccess?: () => void;
 }) => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter()
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -33,18 +36,19 @@ const CompleteTransaction = ({
       let response;
       if (type === "complete") {
         response = await completeTransaction(transactionId);
+        router.refresh()
       } else if (type === "cancel") {
         response = await cancelTransaction(transactionId);
+        router.refresh()
       }
       setOpen(false);
+      if (onSuccess) onSuccess();
     } catch (error) {
       console.error(`Error while ${type}ing transaction:`, error);
     } finally {
       setIsLoading(false);
     }
   };
-
-
 
   let buttonLabel;
   switch (type) {

@@ -23,7 +23,7 @@ import BounceLoader from "react-spinners/BounceLoader"
 import RiseLoader from "react-spinners/RiseLoader";
 import { getUserProfile } from "@/lib/api-calls/auth-server";
 import { formatDate } from "@/constants/constants";
-import CompleteTransaction from "@/components/CompleteTransaction";
+import CompleteTransaction from "@/components/modals/CompleteTransaction";
 
 type Payment = {
    id: string;
@@ -44,9 +44,9 @@ const columns: ColumnDef<Payment>[] = [
    {
       header: "ID",
       cell: ({ row }) => {
-        return <p className="text-14-medium text-dark-700">{row.index + 1}</p>;
+         return <p className="text-14-medium text-dark-700">{row.index + 1}</p>;
       },
-    },
+   },
    {
       accessorKey: "user.name",
       header: "User",
@@ -114,25 +114,25 @@ const columns: ColumnDef<Payment>[] = [
       id: 'actions',
       header: () => <div className="pl-4">Actions</div>,
       cell: ({ row }) => {
-        const transaction = row.original;
-        const userId = transaction.userId;
-  
-        return (
-          <div className="flex gap-1">
-            <CompleteTransaction
-              type="complete"
-              transactionId={transaction.id}
-              userId={userId}
-            />
-            <CompleteTransaction
-              type="cancel"
-              transactionId={transaction.id}
-              userId={userId}
-            />
-          </div>
-        )
+         const transaction = row.original;
+         const userId = transaction.userId;
+
+         return (
+            <div className="flex gap-1">
+               <CompleteTransaction
+                  type="complete"
+                  transactionId={transaction.id}
+                  userId={userId}
+               />
+               <CompleteTransaction
+                  type="cancel"
+                  transactionId={transaction.id}
+                  userId={userId}
+               />
+            </div>
+         )
       }
-    }
+   }
 
 ];
 
@@ -222,7 +222,7 @@ const Summary = () => {
    if (loading) {
       return (
          <div className="w-full h-screen flex items-center justify-center">
-            <BounceLoader color="#3BD64A"/>
+            <BounceLoader color="#3BD64A" />
          </div>
       );
    }

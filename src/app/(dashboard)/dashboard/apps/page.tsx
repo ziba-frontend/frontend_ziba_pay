@@ -1,13 +1,63 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { createApiGateway, getAllApiKeys } from "@/lib/api-calls/developer";
+import { getAllApiKeys } from "@/lib/api-calls/developer";
 import RiseLoader from "react-spinners/RiseLoader";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { ColumnDef } from "@tanstack/react-table";
+import { DataTable } from "@/components/DataTable";
+import ApplicationModal from "@/components/modals/ApplicationModal";
+import CompleteTransaction from "@/components/modals/CompleteTransaction";
 
 interface GatewayConfig {
+  id: string;
+  name: string;
+  description: string;
   apiKey: string;
   apiSecret: string;
 }
+
+const columns: ColumnDef<GatewayConfig>[] = [
+  {
+    header: "ID",
+    cell: ({ row }) => {
+      return <p className="text-14-medium text-dark-700">{row.index + 1}</p>;
+    },
+  },
+  {
+    accessorKey: "name",
+    header: "Name",
+  },
+  {
+    accessorKey: "description",
+    header: "Description",
+  },
+  {
+    accessorKey: "apiKey",
+    header: "API Key",
+  },
+  {
+    id: 'actions',
+    header: () => <div className="pl-4">Actions</div>,
+    cell: ({ row }) => {
+       const gateway = row.original;
+       const id = gateway.id;
+
+       return (
+          <div className="flex gap-1">
+             <CompleteTransaction
+                type="configure"
+                transactionId={id}
+                userId={userId}
+             />
+             <CompleteTransaction
+                type="delete"
+                transactionId={id}
+                userId={userId}
+             />
+          </div>
+       )
+    }
+ }
+];
 
 const Summary = () => {
   const [gatewayConfigs, setGatewayConfigs] = useState<GatewayConfig[]>([]);
@@ -16,6 +66,7 @@ const Summary = () => {
   const [visibleSecrets, setVisibleSecrets] = useState<Record<number, boolean>>({});
 
   const fetchApiKeys = async () => {
+    setLoading(true);
     try {
       const apiKeys = await getAllApiKeys();
       setGatewayConfigs(apiKeys);
@@ -23,26 +74,14 @@ const Summary = () => {
     } catch (error) {
       console.error("Error while fetching keys", error);
       setError("Failed to fetch gateway configurations");
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchApiKeys();
   }, []);
-
-  const handleCreateGatewayConfig = async () => {
-    setLoading(true);
-    try {
-      const apiKeys = await createApiGateway();
-      setGatewayConfigs([...gatewayConfigs, apiKeys]);
-      setError(null);
-    } catch (error) {
-      console.error("Error while creating keys", error);
-      setError("Failed to create gateway configuration");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const toggleSecretVisibility = (index: number) => {
     setVisibleSecrets((prev) => ({ ...prev, [index]: !prev[index] }));
@@ -56,47 +95,26 @@ const Summary = () => {
           <div className="bg-green-500 text-white flex gap-2 items-center rounded p-2 border">
             <p className="text-lg font-medium">Application</p>
           </div>
-          <button
-            onClick={handleCreateGatewayConfig}
-            className="bg-black flex items-center justify-center rounded p-2 text-white"
-            disabled={loading}
-          >
-            {loading ? (
-              <RiseLoader color="#ffffff" size={10} />
-            ) : (
-              <p>Create</p>
-            )}
-          </button>
+          <ApplicationModal onSuccess={fetchApiKeys} />
         </div>
       </div>
       {error && <div className="text-red-500 my-4">{error}</div>}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {gatewayConfigs.length > 0 ? (
-          gatewayConfigs.map((config, index) => (
-            <div key={index} className="bg-white shadow-md rounded-lg p-4 border border-gray-300">
-              <p className="text-sm font-medium truncate">
-                API Key: <span className="font-mono">{config.apiKey}</span>
-              </p>
-              <div className="flex items-center mt-2">
-                <p className="text-sm font-medium truncate">
-                  API Secret:{" "}
-                  <span className="font-mono">
-                    {visibleSecrets[index] ? config.apiSecret : "•".repeat(config.apiSecret.length)}
-                  </span>
-                </p>
-                <button
-                  onClick={() => toggleSecretVisibility(index)}
-                  className="ml-2 text-gray-600"
-                >
-                  {visibleSecrets[index] ? <FaEyeSlash /> : <FaEye />}
-                </button>
-              </div>
-            </div>
-          ))
-        ) : (
-          <div className="col-span-full flex flex-col items-center justify-center p-12 bg-gray-100 rounded-lg">
-            <p className="text-lg font-medium">You don’t have any applications.</p>
+      <div className="py-6 w-full">
+        {loading ? (
+          <div className="col-span-full flex justify-center items-center">
+            <RiseLoader color="#000" size={15} />
           </div>
+        ) : (
+          gatewayConfigs.length > 0 ? (
+            <DataTable
+              columns={columns}
+              data={gatewayConfigs}
+            />
+          ) : (
+            <div className="col-span-full flex flex-col items-center justify-center p-12 bg-gray-100 rounded-lg">
+              <p className="text-lg font-medium">You don’t have any applications.</p>
+            </div>
+          )
         )}
       </div>
     </div>
