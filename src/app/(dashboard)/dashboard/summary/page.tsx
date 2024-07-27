@@ -22,7 +22,7 @@ import Link from "next/link";
 import BounceLoader from "react-spinners/BounceLoader";
 import { getUserProfile } from "@/lib/api-calls/auth-server";
 import { formatDate } from "@/constants/constants";
-import CompleteTransaction from "@/components/CompleteTransaction";
+import CompleteTransaction from "@/components/modals/CompleteTransaction";
 
 type Payment = {
    id: string;
@@ -43,6 +43,7 @@ const columns: ColumnDef<Payment>[] = [
    {
       header: "ID",
       cell: ({ row }) => {
+         return <p className="text-14-medium text-dark-700">{row.index + 1}</p>;
          return <p className="text-14-medium text-dark-700">{row.index + 1}</p>;
       },
    },
@@ -124,9 +125,10 @@ const columns: ColumnDef<Payment>[] = [
                   userId={userId}
                />
             </div>
-         );
-      },
-   },
+         )
+      }
+   }
+
 ];
 
 const Summary = () => {
@@ -219,6 +221,7 @@ const Summary = () => {
    if (loading) {
       return (
          <div className="w-full h-screen flex items-center justify-center">
+            <BounceLoader color="#3BD64A" />
             <BounceLoader color="#3BD64A" />
          </div>
       );

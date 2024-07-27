@@ -101,3 +101,29 @@ export const completeTransaction = async (transactionId: string) => {
       throw error;
     }
   };
+
+  export const deposit = async (paymentMethod: string, amount: number) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/deposit`, {
+            paymentMethod,
+            amount
+        }, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.error("Error while depositing:", error);
+        throw error;
+    }
+};
+
+export const withdraw = async (paymentMethod: string, amount: number) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/withdraw`, {
+            paymentMethod,
+            amount
+        }, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.error("Error while withdrawing:", error);
+        throw error;
+    }
+};

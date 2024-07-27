@@ -18,7 +18,7 @@ import { getSentTransaction } from "@/lib/api-calls/transaction";
 import { getUserProfile } from "@/lib/api-calls/auth-server";
 import { StatusBadge } from "@/components/StatusBadge";
 import { formatDate } from "@/constants/constants";
-import CompleteTransaction from "@/components/CompleteTransaction";
+import CompleteTransaction from "@/components/modals/CompleteTransaction";
 
 const formSchema = z.object({
    username: z.string().min(2, {
@@ -276,13 +276,13 @@ const Transactions = () => {
             </div>
             <div
                className="flex items-center justify-center border px-4 cursor-pointer"
-               onClick={() => handleOpenDrawer("Cash In")}
+               onClick={() => handleOpenDrawer("Cash-in")}
             >
                CashIn
             </div>
             <div
                className="flex items-center justify-center border px-4 cursor-pointer"
-               onClick={() => handleOpenDrawer("Cash Out")}
+               onClick={() => handleOpenDrawer("Cash-out")}
             >
                CashOut
             </div>

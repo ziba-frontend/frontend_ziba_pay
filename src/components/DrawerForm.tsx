@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import FocusLock from "react-focus-lock";
 import { FaTimes } from "react-icons/fa";
 import { useForm } from "react-hook-form";
@@ -22,11 +22,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { deposit, withdraw } from "@/lib/api-calls/transaction";
+import { useRouter } from "next/navigation";
+
 
 // Define the schema
 const formSchema = z.object({
    amount: z.string().min(1, { message: "Amount is required." }),
    phone: z.string().min(1, { message: "Phone number is required." }),
+   paymentMethod: z.enum(["mtn", "airtel"], { required_error: "Payment method is required." }),
 });
 
 interface DrawerFormProps {
@@ -36,16 +40,15 @@ interface DrawerFormProps {
 }
 
 const DrawerForm: React.FC<DrawerFormProps> = ({ isOpen, onClose, title }) => {
+   const [isLoading, setIsLoading] = useState(false);
+   const router = useRouter()
    const drawerRef = useRef<HTMLDivElement>(null);
    const form = useForm({
       resolver: zodResolver(formSchema),
    });
 
    const handleOutsideClick = (event: MouseEvent) => {
-      if (
-         drawerRef.current &&
-         !drawerRef.current.contains(event.target as Node)
-      ) {
+      if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
          onClose();
       }
    };
@@ -62,8 +65,25 @@ const DrawerForm: React.FC<DrawerFormProps> = ({ isOpen, onClose, title }) => {
       };
    }, [isOpen]);
 
-   const onSubmit = (data: any) => {
-      console.log(data);
+   const onSubmit = async (data: any) => {
+      const amount = parseFloat(data.amount);
+      const paymentMethod = data.paymentMethod;
+
+      try {
+         let result
+         if (title === 'Cash-in') {
+            result = await deposit(paymentMethod, amount);
+            console.log(result);
+            router.refresh()
+         } else if (title === 'Cash-out') {
+            result = await withdraw(paymentMethod, amount);
+            router.refresh()
+         }
+         alert('Transaction successful');
+         onClose();
+      } catch (error) {
+         alert('Transaction failed');
+      }
    };
 
    return (
@@ -76,19 +96,13 @@ const DrawerForm: React.FC<DrawerFormProps> = ({ isOpen, onClose, title }) => {
             >
                <DrawerHeader className="bg-background flex justify-between items-center">
                   <DrawerTitle>{title}</DrawerTitle>
-                  <button
-                     onClick={onClose}
-                     className="text-main"
-                  >
+                  <button onClick={onClose} className="text-main">
                      <FaTimes />
                   </button>
                </DrawerHeader>
 
                <Form {...form}>
-                  <form
-                     onSubmit={form.handleSubmit(onSubmit)}
-                     className="space-y-8 w-5/6 md:w-full p-6 bg-white"
-                  >
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-5/6 md:w-full p-6 bg-white">
                      <FormField
                         control={form.control}
                         name="amount"
@@ -123,12 +137,25 @@ const DrawerForm: React.FC<DrawerFormProps> = ({ isOpen, onClose, title }) => {
                            </FormItem>
                         )}
                      />
+                     <FormField
+                        control={form.control}
+                        name="paymentMethod"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormLabel>Payment Method</FormLabel>
+                              <FormControl>
+                                 <select {...field} className="bg-white p-6 outline-none border">
+                                    <option value="mtn">MTN</option>
+                                    <option value="airtel">Airtel</option>
+                                 </select>
+                              </FormControl>
+                              <FormMessage />
+                           </FormItem>
+                        )}
+                     />
 
                      <div className="flex gap-4 flex-row items-center ">
-                        <p
-                           className="text-red-600 cursor-pointer"
-                           onClick={onClose}
-                        >
+                        <p className="text-red-600 cursor-pointer" onClick={onClose}>
                            Cancel
                         </p>
                         <Button type="submit">{title}</Button>
