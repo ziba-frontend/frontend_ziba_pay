@@ -31,7 +31,7 @@ const Partnership = () => {
                   success. Partnering with us opens the door to a wide range of
                   benefits and opportunities for your business.
                </p>
-               <Button className="w-fit">Become a partner</Button>
+               <Button className="w-fit p-6">Become a partner</Button>
             </div>
          </div>
          <div className="bg-br py-6 relative">
@@ -40,7 +40,7 @@ const Partnership = () => {
                alt="ziba"
                className="absolute top-0 left-0 w-full "
             />
-            <div className="flex container pt-20 flex-col md:flex-row gap-6 items-center justify-center ">
+            <div className="flex container pt-6 md:pt-20 flex-col md:flex-row gap-6 items-center justify-center ">
                <div className="  pt-10">
                   <h2 className="my-4">
                      Start your journey towards becoming a Ziba pay partner
@@ -121,10 +121,10 @@ const Partnership = () => {
                   </div>
                  
                </div>
-               <Button className="mt-20">Become A Strategic Partner</Button>
+               <Button className="mt-20 p-6">Become A Strategic Partner</Button>
             </div>
          </div>
-         <div className="relative py-20">
+         <div className="relative py-10 md:py-20">
             <Image
                src={rect}
                alt="ziba"
@@ -146,7 +146,7 @@ const Partnership = () => {
                         
                      </div>
 
-                     <Button className="mt-4">
+                     <Button className="mt-4 p-6">
                         Become an incentive partner
                      </Button>
                   </div>

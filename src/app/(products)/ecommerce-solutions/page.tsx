@@ -11,7 +11,7 @@ import Link from "next/link";
 
 const Ecommerce = () => {
    return (
-      <div className="pt-20">
+      <div className="md:pt-20">
          <div className="my-10 container">
             <div className="flex-col flex md:flex-row items-center justify-center gap-6">
                <div className="">
@@ -21,11 +21,10 @@ const Ecommerce = () => {
                   <p>
                      Your e-commerce platform can accept payments online from
                      customers anywhere in the world in several currencies.
-                  </p>
-                  <Link href="/sign-up">
-                     {" "}
-                     <Button className="w-fit my-6">Get Started</Button>
-                  </Link>
+                  </p>{" "}
+                  <Button className="w-fit my-6  sm:w-[130px] p-6 ">
+                     <Link href="/sign-up">Get Started </Link>
+                  </Button>
                </div>
                <Image
                   src={comm1}
@@ -112,12 +111,12 @@ const Ecommerce = () => {
             </div>
          </div>
 
-         <div className="py-40 container">
+         <div className="py-10 md:py-40 container">
             <h2 className="my-4">
                Improve customer experience and retention with easy payments and
                quick conversions using Ziba pay Pay-In solutions.
             </h2>
-            <Button>
+            <Button className="w-fit p-6">
                <Link href="/checkout">Go To Checkout</Link>
             </Button>
          </div>

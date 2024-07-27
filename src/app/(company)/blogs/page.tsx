@@ -7,8 +7,8 @@ import { blogs } from "@/lib/blog";
 
 const Blogs = () => {
   return (
-    <div className="container pt-10">
-      <div className="flex items-center justify-center py-10">
+    <div className="container md:pt-10">
+      <div className="flex items-center justify-center py-6 md:py-10">
         <div className="flex flex-col gap-2 justify-center md:justify-start md:w-5/6">
           <h1>Ziba Pay Blogs</h1>
           <p className="text-[#0000008F]">
@@ -38,12 +38,12 @@ const Blogs = () => {
         </div>
       </div>
 
-      <div className="py-40">
+      <div className="py-10 md:py-40">
         <h1 className="my-3">Subscribe to Our Newsletter</h1>
         <p className="mb-6">
           Don&apos;t miss out on the latest updates from Ziba Pay. Subscribe to our newsletter to receive our latest blog posts, news, and special offers directly in your inbox.
         </p>
-        <Button>
+        <Button className="p-6">
           Email <FaArrowRight className="ml-2" />
         </Button>
       </div>

@@ -10,7 +10,7 @@ import Link from "next/link";
 
 const Healthcare = () => {
    return (
-      <div className="pt-20">
+      <div className="md:pt-20">
          <div className="my-10 container">
             <div className="flex-col flex md:flex-row items-center justify-center gap-6">
                <div className="">
@@ -20,9 +20,9 @@ const Healthcare = () => {
                      compliance and enhancing efficiency for providers,
                      resulting in improved patient satisfaction.
                   </p>
-                  <Link href="/sign-up">
-                     <Button className="w-fit my-6">Get Started</Button>
-                  </Link>
+                  
+                     <Button className="w-fit my-6 p-6"><Link href="/sign-up">Get Started</Link></Button>
+                  
                </div>
                <Image
                   src={health1}
@@ -33,14 +33,14 @@ const Healthcare = () => {
             </div>
          </div>
 
-         <div className="bg-br pt-40 relative mt-10">
+         <div className="bg-br pt-20 md:pt-40 relative mt-10">
             <Image
                src={rect}
                alt="ziba pay"
                className="absolute left-0 top-0 w-full"
             />
-            <div className="mt-10">
-               <div className="flex flex-col items-center justify-center gap-20 md:flex-row py-6 container">
+            <div className="md:mt-10">
+               <div className="flex flex-col items-center justify-center gap-10 md:flex-row py-6 container">
                   <div className="w-full md:w-1/2">
                      <h2 className="my-2">HIPAA-Compliant Payment Processing</h2>
                      <p>
@@ -76,7 +76,7 @@ const Healthcare = () => {
             </div>
          </div>
 
-         <div className="bg-br pt-40 relative mt-10 pb-10">
+         <div className="bg-br pt-10 md:pt-40 relative mt-10 pb-10">
             <Image
                src={rect}
                alt="ziba pay"

@@ -21,7 +21,7 @@ const AboutUs = () => {
 
    return (
       <div>
-         <div className="flex items-center justify-center gap-6 flex-col container py-10 pb-20">
+         <div className="flex items-center justify-center gap-6 flex-col container md:py-10 pb-20">
             <h1 className="text-center my-6 md:w-3/4">
                We&apos;re changing how businesses handle their money with
                payment solutions made just for them. It&apos;s like a party for
@@ -33,14 +33,14 @@ const AboutUs = () => {
                width={1100}
             />
          </div>
-         <div className="relative py-20 bg-br">
+         <div className="relative py-10 md:py-20 bg-br">
             <Image
                src={rect}
                alt="rect"
                className="absolute top-0 left-0 w-full "
             />
 
-            <div className="flex flex-col container items-center justify-center gap-4 mt-20">
+            <div className="flex flex-col container items-center justify-center gap-4 mt-10 md:mt-20">
                <h2 className="lg:text-3xl mt-10">
                   Ziba Pay is a team of passionate professionals dedicated to
                   delivering excellence in payment technology. With a wealth of
@@ -57,8 +57,8 @@ const AboutUs = () => {
             </div>
          </div>
 
-         <div className="flex flex-col container items-center justify-center gap-4 mt-20  pb-20">
-            <div className="flex flex-col container items-center justify-center gap-4 mt-20 py-6">
+         <div className="flex flex-col container items-center justify-center gap-4 md:mt-20  pb-20">
+            <div className="flex flex-col container items-center justify-center gap-4 mt-6 md:mt-20 py-6">
                <h2 className="my-4 lg:text-3xl">
                   At Ziba Pay, we offer a comprehensive suite of payment
                   solutions designed to streamline operations, enhance customer
@@ -90,8 +90,8 @@ const AboutUs = () => {
                className="absolute top-0 left-0 w-full "
             />
 
-            <div className="flex flex-col container items-start justify-start gap-6 mt-20 py-10 relative">
-               <h2 className="text-start mt-20 ">
+            <div className="flex flex-col container items-start justify-start gap-6 md:mt-20 py-10 relative">
+               <h2 className="text-start md:mt-20 ">
                   We offer our full suite of products through an API, empowering
                   developers to innovate and businesses to scale up, providing
                   top-notch payment solutions.
@@ -137,7 +137,7 @@ const AboutUs = () => {
                </div>
             </div>
          </div>
-         <div className="container bg-br md:bg-background pt-40 relative ">
+         <div className="container bg-br md:bg-background pt-10 md:pt-40 relative ">
          <Image
                src={rect}
                alt="rect"

@@ -11,16 +11,16 @@ import Link from "next/link";
 
 const PaymentProcessing = () => {
    return (
-      <div className="py-10">
-         <div className="container flex items-center justify-center flex-col gap-4 py-[150px]">
+      <div className="py-4 md:py-10">
+         <div className="container flex items-center justify-center flex-col gap-4 py-[50px] md:py-[150px]">
             <h4>
                At Ziba <span className="text-main">Pay</span>
             </h4>
-            <h1 className="text-center text-[48px] md:w-5/6">
-               We are dedicated to simplifying payments for 
-               businesses in Africa.{" "}
+            <h1 className="text-center  md:w-5/6 lg:w-3/4">
+               We are dedicated to simplifying payments for businesses in
+               Africa.{" "}
             </h1>
-            <p className="text-center text-[20px] mb-6 md:w-5/6">
+            <p className="text-center  mb-6 md:w-5/6">
                Our comprehensive payment processing solutions empower businesses
                of all sizes to streamline operations and drive growth. From
                online transactions to mobile payments and in-person sales.
@@ -30,7 +30,7 @@ const PaymentProcessing = () => {
                alt="ziba"
             />
             <div className="relative flex items-center justify-center mt-[75px]">
-               <h2 className="text-center text-[48px] md:w-5/6">
+               <h2 className="text-center  md:w-5/6">
                   Let’s Explore how Ziba pay can transform your business
                </h2>
                <Image
@@ -48,9 +48,7 @@ const PaymentProcessing = () => {
             />
             <div className="flex flex-col md:flex-row gap-6 md:gap-0 items-center justify-center pt-20 container ">
                <div className="flex flex-col gap-4">
-                  <h2 className="text-[40px]">
-                  Online Payment Processing
-                  </h2>
+                  <h2>Online Payment Processing</h2>
                   <p>
                      Ziba pay’s online payment processing solutions empowers
                      businesses to accept payments securely through their
@@ -68,7 +66,7 @@ const PaymentProcessing = () => {
          <div className="">
             <div className="flex flex-col md:flex-row gap-6 items-center justify-center pt-20 container ">
                <div className="flex flex-col gap-4">
-                  <h2 className="text-[40px]">Mobile Payment Solutions</h2>
+                  <h2>Mobile Payment Solutions</h2>
                   <p>
                      Ziba Pay&apos;s mobile payment solutions enable businesses
                      to easily accept payments on-the-go using a mobile device
@@ -92,7 +90,7 @@ const PaymentProcessing = () => {
             />
             <div className="flex flex-col md:flex-row gap-6 md:gap-0 items-center justify-center py-20 container ">
                <div className="flex flex-col gap-4">
-                  <h2 className="text-[40px]">Point-of-Sale (POS) Systems</h2>
+                  <h2>Point-of-Sale (POS) Systems</h2>
                   <p>
                      Ziba Pay&apos;s point-of-sale (POS) systems are designed to
                      streamline in-person transactions with integrated POS
@@ -111,14 +109,13 @@ const PaymentProcessing = () => {
          </div>
          <div className="">
             <div className="container flex flex-col gap-8  justify-center min-h-[40vh]">
-               <h2 className="text-[48px]">
+               <h1 className="md:w-5/6 lg:w-3/4">
                   Get started with Ziba Pay&apos;s online payment processing{" "}
-                  <br /> solution today!
-               </h2>
-               <Link href="/sign-up">
-                  {" "}
-                  <Button className="w-fit">Create Account</Button>
-               </Link>
+                  solution today!
+               </h1>{" "}
+               <Button className="w-[107px] sm:w-[130px] p-6">
+                  <Link href="/sign-up">Create Account</Link>
+               </Button>
             </div>
          </div>
       </div>

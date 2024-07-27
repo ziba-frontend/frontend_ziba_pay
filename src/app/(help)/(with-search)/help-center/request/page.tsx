@@ -42,8 +42,9 @@ const Request = () => {
          <Form {...form}>
             <form
                onSubmit={form.handleSubmit(onSubmit)}
-               className="space-y-8 w-5/6 md:w-3/4 p-6"
+               className="space-y-8  md:w-3/4 p-6"
             >
+               <h2>Submit a request</h2>
                <FormField
                   control={form.control}
                   name="issue"
@@ -102,7 +103,12 @@ const Request = () => {
                      issue you’re about to report.
                   </p>
                </div>
-               <Button type="submit">Submit</Button>
+               <Button
+                  type="submit"
+                  className="p-6"
+               >
+                  Submit
+               </Button>
             </form>
          </Form>
       </div>

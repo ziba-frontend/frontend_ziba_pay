@@ -10,10 +10,10 @@ import Link from "next/link";
 
 const Solution = () => {
    return (
-      <div className="py-20 container">
+      <div className="py-10 md:py-20 container">
          <div className="flex-col flex md:flex-row items-center md:items-start justify-center gap-6">
             <div className="w-full md:w-1/2 mt-6">
-               <h1 className="my-4 text-[48px]">
+               <h1 className="my-4 ">
                   Tailored solutions designed to meet the unique needs of your
                   industry or business, whether you&apos;re in e-commerce,
                   healthcare, hospitality, or education.
@@ -41,7 +41,7 @@ const Solution = () => {
                   experience for your customers.
                </p>
 
-               <Button className="w-fit mb-4">
+               <Button className="w-[107px] sm:w-[130px] p-6 mb-4">
                   <Link href="ecommerce-solutions">Learn More</Link>
                </Button>
 
@@ -58,7 +58,7 @@ const Solution = () => {
                   compliance, improve patient satisfaction, and accelerate
                   revenue cycles with our secure and efficient payment platform
                </p>
-               <Button className="w-fit mb-4">
+               <Button className="w-[107px] sm:w-[130px] p-6 mb-4">
                   <Link href="/health-care-payment-solutions">Learn More</Link>
                </Button>
                <Image
@@ -77,7 +77,7 @@ const Solution = () => {
                   check-in to integrated POS systems, we provide the tools you
                   need to streamline operations and deliver exceptional service.
                </p>
-               <Button className="w-fit mb-4">
+               <Button className="w-[107px] sm:w-[130px] p-6 mb-4">
                   <Link href="/hospitality">Learn More</Link>
                </Button>
                <Image
@@ -93,7 +93,7 @@ const Solution = () => {
                   management, automate recurring payments, and improve financial
                   transparency for educational institutions of all sizes.
                </p>
-               <Button className="w-fit mb-4">
+               <Button className="w-[107px] sm:w-[130px] p-6 mb-4">
                   <Link href="/education">Learn More</Link>
                </Button>
                <Image

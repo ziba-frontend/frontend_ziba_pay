@@ -61,15 +61,18 @@ const Careers = () => {
 
    return (
       <div>
-         <div className="flex items-center justify-center flex-col gap-5 mt-12 container py-10">
+         <div className="flex items-center justify-center flex-col gap-5 md:mt-12 container md:py-10">
             <h1 className="text-center">Careers at Ziba Pay</h1>
-            <p className="text-center">
+            <p className="text-center lg:w-5/6">
                We&apos;re looking for passionate individuals who are ready to
-               join us in this <br /> journey of innovation and growth. If
-               you&apos;re driven, creative, and eager to <br />
-               make a difference, we want to hear from you!
+               join us in this journey of innovation and growth. If you&apos;re
+               driven, creative, and eager to make a difference, we want to hear
+               from you!
             </p>
-            <Button onClick={handleScrollToPositions}>
+            <Button
+               onClick={handleScrollToPositions}
+               className="p-6"
+            >
                Explore Job Openings
             </Button>
          </div>
@@ -96,7 +99,9 @@ const Careers = () => {
                   payments.
                </p>
             </div>
-            <h4>At the moment, we don&apos;t have any available positions</h4>
+            <h4 className="text-center md:text-start">
+               At the moment, we don&apos;t have any available positions
+            </h4>
          </div>
 
          <div className="bg-br relative">
@@ -106,8 +111,8 @@ const Careers = () => {
                className="absolute w-full left-0 top-0"
             />
             <div className="flex flex-col gap-12 container py-20 relative z-10">
-               <div className="mt-20 sm:mt-40">
-                  <h2 className="mt-6">Benefits</h2>
+               <div className="mt-10 sm:mt-40">
+                  <h2 className="md:mt-6">Benefits</h2>
                   <p className="mt-2 mb-2">
                      Ziba Pay provides competitive salaries and a comprehensive
                      benefits package to support your professional growth and
@@ -206,7 +211,7 @@ const Careers = () => {
             </div>
          </div>
 
-         <div className="container flex flex-col md:flex-row items-center justify-between min-h-[40vh]">
+         <div className="container flex flex-col md:flex-row items-center gap-10  justify-center md:justify-between min-h-[40vh]">
             <div className="text-center md:text-left">
                <h1 className="my-4">Take a Chance!</h1>
                <p>Send us your CV, and our team will review it</p>

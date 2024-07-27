@@ -100,8 +100,8 @@ const WithSearchLayout: React.FC<{ children: React.ReactNode }> = ({
             </div>
          </div>
 
-         <section className="min-h-[75vh] border-b">{children}</section>
-         <div className="flex items-start h-[80px] container">
+         <section className="min-h-[75vh] border-b ">{children}</section>
+         <div className="flex items-start h-[80px] container pt-4">
             <Link href="/">
                <h4>Ziba Pay</h4>
             </Link>

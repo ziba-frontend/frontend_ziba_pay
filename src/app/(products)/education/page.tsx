@@ -13,7 +13,7 @@ import Link from "next/link";
 
 const Education = () => {
    return (
-      <div className="pt-20">
+      <div className="md:pt-20">
          <div className="my-10 container">
             <div className="flex-col flex md:flex-row items-center justify-center gap-6">
                <div className="">
@@ -24,11 +24,11 @@ const Education = () => {
                      Ziba Pay&apos;s education payment solutions streamline the
                      process of collecting tuition and managing fees for
                      educational institutions.
-                  </p>
-                  <Link href="/sign-up">
+                  </p>{" "}
+                  <Button className="w-fit my-6 p-6">
                      {" "}
-                     <Button className="w-fit my-6">Get Started</Button>
-                  </Link>
+                     <Link href="/sign-up">Get Started </Link>
+                  </Button>
                </div>
                <Image
                   src={edu1}
@@ -38,7 +38,7 @@ const Education = () => {
             </div>
          </div>
 
-         <div className="bg-br pt-40 relative mt-10">
+         <div className="bg-br pt-10 md:pt-40 relative mt-10">
             <Image
                src={rect}
                alt="ziba pay"
@@ -83,7 +83,7 @@ const Education = () => {
             </div>
          </div>
 
-         <div className="bg-br pt-40 relative mt-10">
+         <div className="bg-br pt-10 md:pt-40 relative mt-10">
             <Image
                src={rect}
                alt="ziba pay"
