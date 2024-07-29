@@ -82,8 +82,8 @@ const Footer = () => {
       >
          <div className="  h-full py-20">
             <div className="flex flex-col gap-4 p-[52px] w-5/6 bg-white/80 mx-auto rounded-md my-2 relative items-center md:items-start">
-               <h3 className="py-6  text-[32px]">Ready to get started ?</h3>
-               <p className="text-xl text-center md:text-start md:w-5/6">
+               <h3 className="py-6  tmd:ext-[32px]">Ready to get started ?</h3>
+               <p className=" text-center md:text-start md:w-5/6">
                   Create an account instantly and start accepting payments.Feel
                   free to reach out to us for tailored solutions designed
                   specifically for your business needs.
@@ -135,10 +135,10 @@ const Footer = () => {
                   </div>
                   {Links.map((link, index) => (
                      <div key={index}>
-                        <h3 className="text-xl font-medium mb-4">
+                        <h3 className=" font-medium mb-4">
                            {link.title}
                         </h3>
-                        <ul className="text-sm space-y-3">
+                        <ul className=" space-y-3">
                            {link.links.map((text, subIndex) => (
                               <li key={subIndex}>
                                  <Link

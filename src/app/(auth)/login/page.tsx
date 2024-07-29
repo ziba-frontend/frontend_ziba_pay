@@ -20,7 +20,7 @@ import login from "../../../../public/images/login.png";
 import { Checkbox } from "@/components/ui/checkbox";
 import { loginApi } from "@/lib/api-calls/auth-server";
 import Link from "next/link";
-import { useRouter ,useSearchParams} from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import RiseLoader from "react-spinners/RiseLoader";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
@@ -36,7 +36,7 @@ type FormData = z.infer<typeof formSchema>;
 
 const Login = () => {
    const router = useRouter();
-   const searchParams = useSearchParams(); 
+   const searchParams = useSearchParams();
    const [isLoading, setIsLoading] = useState(false);
    const [showPassword, setShowPassword] = useState(false);
 
@@ -53,8 +53,8 @@ const Login = () => {
       setIsLoading(true);
       try {
          await loginApi(data);
-         const redirectTo = searchParams.get('redirect') || '/dashboard';
-         window.location.href = redirectTo; 
+         const redirectTo = searchParams.get("redirect") || "/dashboard";
+         window.location.href = redirectTo;
       } catch (error) {
          toast.error("Invalid Credentials");
       } finally {
@@ -70,12 +70,18 @@ const Login = () => {
             className="fixed top-0 left-0 bottom-0 w-[500px] h-screen z-10 hidden md:block"
          />
          <div className="flex flex-col gap-6 items-center justify-center min-h-screen z-20">
-            <Image
-               src={logo}
-               alt="zibaPay"
-               width={120}
-               className="block md:hidden py-6"
-            />
+            <Link
+               href="/"
+               className="block md:hidden my-6"
+            >
+               {" "}
+               <Image
+                  src={logo}
+                  alt="zibaPay"
+                  width={120}
+               />
+            </Link>
+
             <Image
                src={login}
                alt="login ziba"

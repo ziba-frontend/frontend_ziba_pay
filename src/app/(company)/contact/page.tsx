@@ -10,7 +10,7 @@ import ContactSlider from "@/components/ContactSlider";
 
 const Contact = () => {
    return (
-      <div className="py-10">
+      <div className="md:py-10">
          <div className="flex flex-col md:flex-row gap-6 items-center justify-center container">
             <div className="flex flex-col gap-8">
                <h1>We are here to assist you. Get in touch with us today.</h1>

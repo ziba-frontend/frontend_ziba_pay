@@ -256,18 +256,20 @@ const Navbar: React.FC = () => {
                               <AccordionTrigger>{title}</AccordionTrigger>
                               <AccordionContent className="bg-[#3BD64A1A] w-full py-4">
                                  {items.map((item, index) => (
-                                    <div
+                                    <ul
+                                       className="flex flex-col gap-3 list-disc list-inside py-2 items-start pl-4"
                                        key={index}
-                                       className="py-2 flex items-start gap-2 "
                                     >
-                                       <Link
-                                          href={item.href}
-                                          onClick={toggleMenu}
-                                          className="text-[16px]"
-                                       >
-                                          {item.label}
-                                       </Link>
-                                    </div>
+                                       <li>
+                                          <Link
+                                             href={item.href}
+                                             onClick={toggleMenu}
+                                             className="text-[16px]"
+                                          >
+                                             {item.label}
+                                          </Link>
+                                       </li>
+                                    </ul>
                                  ))}
                               </AccordionContent>
                            </AccordionItem>

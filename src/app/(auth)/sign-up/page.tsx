@@ -88,12 +88,17 @@ const SignUp = () => {
                 className="fixed top-0 right-0 hidden md:block"
             />
             <div className="flex flex-col gap-6 items-center justify-center min-h-screen">
-                <Image
-                    src={logo}
-                    alt="zibaPay"
-                    width={120}
-                    className="block md:hidden py-6"
-                />
+            <Link
+               href="/"
+               className="block md:hidden my-6"
+            >
+               {" "}
+               <Image
+                  src={logo}
+                  alt="zibaPay"
+                  width={120}
+               />
+            </Link>
                 <Image
                     src={signup}
                     alt="signup ziba"

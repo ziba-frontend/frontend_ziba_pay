@@ -56,7 +56,7 @@ const Home = () => {
          <Navbar />
          <div>
             {/* ===============HERO SECTION================== */}
-            <div className="flex items-center mx-auto text-center flex-col py-4  container my-8 md:min-h-[60vh] lg:min-h-[80vh] justify-center pt-20">
+            <div className="flex items-center mx-auto text-center flex-col py-4  container my-8 md:min-h-[60vh] lg:min-h-[80vh] justify-center pt-[100px] md:pt-20">
                <Image
                   src={oval}
                   alt="oval"
@@ -91,7 +91,7 @@ const Home = () => {
                </div>
             </div>
             <div className="flex flex-col container">
-               <p className="text-[28px]">
+               <p className="md:text-[28px]">
                   We are trusted by 1Million+ businesses
                </p>
                <div className="flex gap-12 flex-wrap items-center my-10">
@@ -132,7 +132,7 @@ const Home = () => {
                />
                <div className="pt-40 flex items-center flex-col gap-6 container">
                   <h1>Our Features</h1>
-                  <p className="text-center mb-6 text-[#000000] text-[20px] md:w-5/6">
+                  <p className="text-center mb-6 text-[#000000]  md:w-5/6">
                      With features like customizable dashboards, real-time
                      alerts, and secure data encryption, you can effortlessly
                      manage your transactions and take control of your financial
@@ -143,7 +143,7 @@ const Home = () => {
                         <div className="flex flex-row gap-2 bg-submain p-[35px] lg:h-[402px] rounded-[28px]  text-white w-full    xl:w-[581px] items-center ">
                            <div>
                               <h3 className="my-2">Real-time Alerts</h3>
-                              <p className="text-xl">
+                              <p>
                                  Stay on top of your finances with our real-time
                                  alert feature! Get instant notifications about
                                  account activity, upcoming bills, and
@@ -162,7 +162,7 @@ const Home = () => {
                         <div className="flex flex-row gap-2 bg-submain p-[35px] lg:h-[400px] rounded-[28px]  text-white w-full  xl:w-[581px] items-center">
                            <div>
                               <h3 className="my-2">Customizable Dashboard</h3>
-                              <p className="text-xl">
+                              <p>
                                  Easily track spending, monitor balances, and
                                  view transaction history all in one place. Take
                                  control of your finances and see the
@@ -187,7 +187,7 @@ const Home = () => {
                            />
                            <div>
                               <h3 className="my-2">Ziba pay fraud detection</h3>
-                              <p className="text-xl">
+                              <p>
                                  Your money is 100% safe and secure on Ziba pay.
                                  No hassles, no glitches, get access to your
                                  money anytime.
@@ -197,7 +197,7 @@ const Home = () => {
                         <div className="flex flex-row gap-2 bg-submain p-6 lg:h-[420px] rounded-[28px]  text-white w-full  xl:w-[794px] items-center">
                            <div>
                               <h3 className="my-2">Friendly Interface</h3>
-                              <p className="text-xl">
+                              <p>
                                  Navigating through Ziba Pay is a breeze, thanks
                                  to our clean and clutter-free interface.
                                  Whether you&apos;re setting up payment
@@ -233,7 +233,7 @@ const Home = () => {
                   <div className="flex flex-col gap-12 md:gap-0 md:flex-row items-center justify-center">
                      <div className="md:w-1/2">
                         <h2 className="mb-2">Simplifying Payment Collection</h2>
-                        <p className="text-[20px]">
+                        <p>
                            Because starting a business is tough enough, but
                            collecting money should be the easy part! At Ziba
                            Pay, we&apos;re here to streamline the process and
@@ -258,7 +258,7 @@ const Home = () => {
                <div className="flex flex-col gap-12 md:gap-[1.5px] md:flex-row items-center justify-center mt-[8rem] container">
                   <div className="md:w-1/2">
                      <h2 className="my-4">Easy tracking</h2>
-                     <p className="text-[20.49px]">
+                     <p className="md:text-[20.49px]">
                         Easily track your payments with our payment tracking{" "}
                         feature. Monitor your bills and payments in one place,
                         and get alerts when bills are due, so you never miss a
@@ -312,7 +312,7 @@ const Home = () => {
             <div className="bg-br py-20">
                <div className="flex flex-col md:flex-row gap-8 mx-auto items-center justify-center container">
                   <div className=" md:h-[756px] justify-center bg-white  rounded-[25px] p-[30px] w-full sm:w-5/6 md:w-[613px] ">
-                     <h3 className="my-4 text-[40px]">
+                     <h3 className="my-4 ">
                         Send and receive without borders with Mobile Money
                      </h3>
                      <Image
@@ -323,7 +323,7 @@ const Home = () => {
                      />
                   </div>
                   <div className=" md:h-[756px] flex flex-col   bg-submain  text-white rounded-[25px] p-[30px] md:w-[548px] w-full sm:w-5/6 ">
-                     <h3 className="my-2 text-[40px]">
+                     <h3 className="my-2">
                         Invoices that work smarter
                      </h3>
 
@@ -375,10 +375,10 @@ const Home = () => {
 
                <div className="container z-20">
                   <div className="text-black w-5/6">
-                     <h2 className="my-4 text-[48px]">
+                     <h2 className="my-4">
                         Mobile Money Integration
                      </h2>
-                     <p className="my-4 text-[20px]  font-[700]">
+                     <p className="my-4  font-[700]">
                         Expand your payment options with Ziba Pay by integrating
                         MTN Mobile Money and Airtel Mobile Money Offer your
                         customers the convenience of paying directly from their
@@ -389,7 +389,7 @@ const Home = () => {
                      href="/mobile-money-integration"
                      className=""
                   >
-                     <h4 className="text-black underline text-[32px] font-[900] ">
+                     <h4 className="text-black underline md:text-[32px] font-[900] ">
                         Learn more about MoMo
                      </h4>{" "}
                   </Link>
@@ -413,7 +413,7 @@ const Home = () => {
                   <p className="mt-40 text-center">
                      5000+ Happy Ziba pay Users
                   </p>
-                  <h2 className="text-center text-[48px]">
+                  <h2 className="text-center">
                      Don’t just take our words
                   </h2>
                   {/* reviews */}
