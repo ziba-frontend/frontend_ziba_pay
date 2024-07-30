@@ -141,10 +141,11 @@ const DrawerForm: React.FC<DrawerFormProps> = ({ isOpen, onClose, title }) => {
                         control={form.control}
                         name="paymentMethod"
                         render={({ field }) => (
-                           <FormItem>
+                           <FormItem className="flex items-center gap-2">
                               <FormLabel>Payment Method</FormLabel>
                               <FormControl>
-                                 <select {...field} className="bg-white p-6 outline-none border">
+                                 <select {...field} className="bg-white p-2 outline-none border">
+                                    <option value="">Payment Method</option>
                                     <option value="mtn">MTN</option>
                                     <option value="airtel">Airtel</option>
                                  </select>
