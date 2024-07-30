@@ -104,7 +104,7 @@ export const completeTransaction = async (transactionId: string) => {
 
   export const deposit = async (paymentMethod: string, amount: number) => {
     try {
-        const response = await axios.post(`${BASE_URL}/deposit`, {
+        const response = await axios.post(`${BASE_URL}/cash-in`, {
             paymentMethod,
             amount
         }, { withCredentials: true });
@@ -117,7 +117,7 @@ export const completeTransaction = async (transactionId: string) => {
 
 export const withdraw = async (paymentMethod: string, amount: number) => {
     try {
-        const response = await axios.post(`${BASE_URL}/withdraw`, {
+        const response = await axios.post(`${BASE_URL}/cash-out`, {
             paymentMethod,
             amount
         }, { withCredentials: true });

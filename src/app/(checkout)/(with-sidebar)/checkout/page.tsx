@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import im1 from "../../../../../public/images/mobile_checkout.svg";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,6 +24,7 @@ import {
    SelectValue,
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
+import SubmitButton from "@/components/SubmitButton";
 
 interface PaymentData {
    amount: number | null;
@@ -64,6 +65,7 @@ const formSchema = z.object({
 });
 
 const Checkout = () => {
+   const [isLoading , setIsLoading] = useState(false)
    const form = useForm({
       resolver: zodResolver(formSchema),
       defaultValues: {
@@ -78,7 +80,9 @@ const Checkout = () => {
    const router = useRouter();
    // Define the onSubmit handler
    const onSubmit = async (data: any) => {
+      
       try {
+         setIsLoading(true);
          const paymentData: PaymentData = {
             amount: data.amount,
             currency: data.currency,
@@ -91,6 +95,8 @@ const Checkout = () => {
          router.push("/dashboard/transactions");
       } catch (error) {
          console.error("Payment failed:", error);
+      } finally{
+         setIsLoading(false)
       }
    };
 
@@ -207,12 +213,13 @@ const Checkout = () => {
                         </FormItem>
                      )}
                   />
-                  <Button
-                     type="submit"
-                     className="w-full"
+                  <SubmitButton
+                    isLoading={isLoading}
                   >
                      Confirm
-                  </Button>
+                  </SubmitButton>
+
+
                </form>
             </Form>
          </div>

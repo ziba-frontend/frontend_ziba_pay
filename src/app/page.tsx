@@ -1,7 +1,8 @@
+"use client"
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import uber from "../../public/images/uber.png";
 import mtn from "../../public/images/mtn.png";
@@ -42,15 +43,30 @@ import elp7 from "../../public/images/elp7.png";
 import money from "../../public/images/money.png";
 import checkMark from "../../public/images/checkmark.png";
 import rect2 from "../../public/images/rect2.png";
+import { getUserProfile } from "@/lib/api-calls/auth-server";
+
 
 
 const Home = () => {
+   const [user, setUser] = useState(null)
    const checkListItems = [
       { text: "Rapid Fund Transfers", img: checkMark },
       { text: "Simple and Recurring Payment Setup", img: checkMark },
       { text: "Transaction Authetication", img: checkMark },
       { text: "Customer Identity Verification", img: checkMark },
    ];
+
+
+   useEffect(() => {
+      const getUser = async () => {
+         const user = await getUserProfile()
+         console.log("Here is the user: ", user)
+         setUser(user);
+      }
+      getUser();
+   }, [])
+
+   console.log("Here is another user: ", user)
    return (
       <>
          <Navbar />
@@ -74,20 +90,24 @@ const Home = () => {
                   payment collection solution
                </p>
                <div className="flex gap-6 my-4 pt-8">
-                  <Link href="/login">
-                     <Button
-                        className="w-[107px] sm:w-[130px] p-6"
-                        variant="outline"
-                     >
-                        Login
-                     </Button>
-                  </Link>
-                  <Link href="/sign-up">
-                     {" "}
-                     <Button className="w-[107px] sm:w-[130px] p-6">
-                        Create Account
-                     </Button>
-                  </Link>
+                  {!user ? (
+                     <div className="flex gap-6 my-4 pt-8">
+                        <Link href="/login">
+                           <Button
+                              className="w-[107px] sm:w-[130px] p-6"
+                              variant="outline"
+                           >
+                              Login
+                           </Button>
+                        </Link>
+                        <Link href="/sign-up">
+                           {" "}
+                           <Button className="w-[107px] sm:w-[130px] p-6">
+                              Create Account
+                           </Button>
+                        </Link>
+                     </div>
+                  ) : null}
                </div>
             </div>
             <div className="flex flex-col container">
