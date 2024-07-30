@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { forgotPassword } from "@/lib/api-calls/auth-server";
+import toast from 'react-hot-toast';
 
 const formSchema = z.object({
    email: z.string().email({ message: "Invalid email address." }),
@@ -27,12 +28,10 @@ const ForgotPassword = () => {
    const onSubmit = async (data: any) => {
       try {
          await forgotPassword(data.email);
-         alert("Password reset link has been sent to your email.");
+         toast.success("Password reset link has been sent to your email.");
       } catch (error) {
          console.error("Error sending password reset link:", error);
-         alert(
-            "An error occurred while sending the password reset link. Please try again."
-         );
+         toast.error("An error occurred while sending the password reset link. Please try again.");
       }
    };
 

@@ -33,7 +33,7 @@ const Uploader: React.FC = () => {
       } as DropzoneOptions);
 
    return (
-      <div className="w-full text-center flex-colo gap-6">
+      <div className="w-full text-center  gap-6">
          {loading ? (
             <div className="px-6 w-full py-6 border-2 border-border border-dashed bg-dry rounded-md">
                <RiseLoader color="#3BD64A" />
@@ -50,7 +50,7 @@ const Uploader: React.FC = () => {
                <p className="text-sm mt-2">
                   Drag your file here or click to add your file
                </p>
-               <em className="text-xs text-border">
+               <em className="text-xs ">
                   {isDragActive
                      ? "Drop it like it's hot!"
                      : isDragReject

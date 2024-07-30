@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { DataTable } from "@/components/DataTable";
 import { ColumnDef } from "@tanstack/react-table";
@@ -13,6 +12,7 @@ import { getUserProfile } from "@/lib/api-calls/auth-server";
 import { Button } from "@/components/ui/button";
 
 type User = {
+   role: string;
    id: string;
    name: string;
    email: string;
@@ -70,18 +70,22 @@ const ActionButtons: React.FC<{ user: User }> = ({ user }) => {
 
    return (
       <div className="flex gap-2">
-         <button
-            onClick={handleUpdate}
-            className="text-blue-500"
-         >
-            Update
-         </button>
-         <button
-            onClick={handleDelete}
-            className="text-red-500"
-         >
-            Delete
-         </button>
+         {user.role !== "admin" && (
+            <>
+               <button
+                  onClick={handleUpdate}
+                  className="text-blue-500"
+               >
+                  Update
+               </button>
+               <button
+                  onClick={handleDelete}
+                  className="text-red-500"
+               >
+                  Delete
+               </button>
+            </>
+         )}
       </div>
    );
 };
@@ -115,17 +119,11 @@ export default function UsersPage() {
       fetchData();
    }, []);
 
-   const handleAddUser = () => {
-      setCurrentUser(null);
-      setModalOpen(true);
-   };
-
    const handleCloseModal = () => {
       setModalOpen(false);
    };
 
    const handleSuccess = () => {
-      handleCloseModal();
       const fetchData = async () => {
          try {
             const users = await getAllUsers();
@@ -147,12 +145,6 @@ export default function UsersPage() {
       >
          <div className="flex flex-col gap-5 w-full">
             <PageTitle title="Users" />
-            <Button
-               onClick={handleAddUser}
-               className="self-end"
-            >
-               Add New User
-            </Button>
             <DataTable
                columns={columns}
                data={data}

@@ -25,16 +25,6 @@ export const getAllUsers = async () => {
     }
 };
 
-export const createUser = async (userData: any) => {
-    try {
-        const response = await axios.post(`${BASE_URL}/`, userData, { withCredentials: true });
-        return response.data;
-    } catch (error: any) {
-        toast.error('Failed to create user');
-        console.error('Error creating user:', error);
-        throw error;
-    }
-};
 
 export const updateUser = async (userId: string, userData: any) => {
     try {

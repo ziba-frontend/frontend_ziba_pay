@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,7 +5,6 @@ import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-
 
 type User = {
   id: string;
@@ -68,12 +65,11 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSubmit, onClose }) => {
           </FormControl>
           <FormMessage />
         </FormItem>
-        
         <div className="flex justify-end space-x-4">
           <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button type="submit">{user ? "Update" : "Create"}</Button>
+          <Button type="submit">Update</Button> 
         </div>
       </form>
     </Form>
