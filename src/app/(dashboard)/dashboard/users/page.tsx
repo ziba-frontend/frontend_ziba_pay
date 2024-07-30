@@ -1,39 +1,30 @@
-/**
- * eslint-disable @next/next/no-img-element
- *
- * @format
- */
-
-/** @format */
 "use client";
 
+import { useEffect, useState } from "react";
 import { DataTable } from "@/components/DataTable";
 import { ColumnDef } from "@tanstack/react-table";
 import React from "react";
 import PageTitle from "@/components/PageTitle";
-import Image from "next/image";
-import Ab1 from "../../../../../public/images/about1.png"
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { deleteUser, getAllUsers } from "@/lib/api-calls/admin";
+import UserModal from "@/components/modals/UserModal";
+import { getUserProfile } from "@/lib/api-calls/auth-server";
+import { Button } from "@/components/ui/button";
 
-type Props = {};
-type Payment = {
+type User = {
+   id: string;
    name: string;
    email: string;
-   lastOrder: string;
-   method: string;
 };
 
-const columns: ColumnDef<Payment>[] = [
+const columns: ColumnDef<User>[] = [
    {
       accessorKey: "name",
       header: "Name",
       cell: ({ row }) => {
          return (
-            <div className="flex gap-2 items-center">
-               <Image
-                  className="h-10 w-10"
-                  src={Ab1}
-                  alt="user-image"
-               />
+            <div>
                <p>{row.getValue("name")} </p>
             </div>
          );
@@ -44,116 +35,136 @@ const columns: ColumnDef<Payment>[] = [
       header: "Email",
    },
    {
-      accessorKey: "lastOrder",
-      header: "Last Order",
-   },
-   {
-      accessorKey: "method",
-      header: "Method",
-   },
-];
-
-const data: Payment[] = [
-   {
-      name: "John Doe",
-      email: "john@example.com",
-      lastOrder: "2023-01-01",
-      method: "Credit Card",
-   },
-   {
-      name: "Alice Smith",
-      email: "alice@example.com",
-      lastOrder: "2023-02-15",
-      method: "PayPal",
-   },
-   {
-      name: "Bob Johnson",
-      email: "bob@example.com",
-      lastOrder: "2023-03-20",
-      method: "Stripe",
-   },
-   {
-      name: "Emma Brown",
-      email: "emma@example.com",
-      lastOrder: "2023-04-10",
-      method: "Venmo",
-   },
-   {
-      name: "Michael Davis",
-      email: "michael@example.com",
-      lastOrder: "2023-05-05",
-      method: "Cash",
-   },
-   {
-      name: "Sophia Wilson",
-      email: "sophia@example.com",
-      lastOrder: "2023-06-18",
-      method: "Bank Transfer",
-   },
-   {
-      name: "Liam Garcia",
-      email: "liam@example.com",
-      lastOrder: "2023-07-22",
-      method: "Payoneer",
-   },
-   {
-      name: "Olivia Martinez",
-      email: "olivia@example.com",
-      lastOrder: "2023-08-30",
-      method: "Apple Pay",
-   },
-   {
-      name: "Noah Rodriguez",
-      email: "noah@example.com",
-      lastOrder: "2023-09-12",
-      method: "Google Pay",
-   },
-   {
-      name: "Ava Lopez",
-      email: "ava@example.com",
-      lastOrder: "2023-10-25",
-      method: "Cryptocurrency",
-   },
-   {
-      name: "Elijah Hernandez",
-      email: "elijah@example.com",
-      lastOrder: "2023-11-05",
-      method: "Alipay",
-   },
-   {
-      name: "Mia Gonzalez",
-      email: "mia@example.com",
-      lastOrder: "2023-12-08",
-      method: "WeChat Pay",
-   },
-   {
-      name: "James Perez",
-      email: "james@example.com",
-      lastOrder: "2024-01-18",
-      method: "Square Cash",
-   },
-   {
-      name: "Charlotte Carter",
-      email: "charlotte@example.com",
-      lastOrder: "2024-02-22",
-      method: "Zelle",
-   },
-   {
-      name: "Benjamin Taylor",
-      email: "benjamin@example.com",
-      lastOrder: "2024-03-30",
-      method: "Stripe",
+      id: "actions",
+      header: "Actions",
+      cell: ({ row }) => {
+         const user = row.original;
+         return <ActionButtons user={user} />;
+      },
    },
 ];
 
-export default function UsersPage({}: Props) {
+const ActionButtons: React.FC<{ user: User }> = ({ user }) => {
+   const router = useRouter();
+   const { setModalOpen, setCurrentUser, isAdmin } =
+      React.useContext(UsersPageContext);
+
+   if (isAdmin) {
+      return null;
+   }
+
+   const handleUpdate = () => {
+      setCurrentUser(user);
+      setModalOpen(true);
+   };
+
+   const handleDelete = async () => {
+      try {
+         await deleteUser(user.id);
+         toast.success("User deleted successfully");
+         router.refresh();
+      } catch (error) {
+         toast.error("Failed to delete user");
+      }
+   };
+
    return (
-      <div className="flex flex-col gap-5  w-full">
-         <PageTitle title="Users" />
-         <DataTable
-            columns={columns}
-            data={data}
-         />
+      <div className="flex gap-2">
+         <button
+            onClick={handleUpdate}
+            className="text-blue-500"
+         >
+            Update
+         </button>
+         <button
+            onClick={handleDelete}
+            className="text-red-500"
+         >
+            Delete
+         </button>
       </div>
+   );
+};
+
+const UsersPageContext = React.createContext<{
+   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+   setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>;
+   isAdmin: boolean;
+}>({
+   setModalOpen: () => {},
+   setCurrentUser: () => {},
+   isAdmin: false,
+});
+
+export default function UsersPage() {
+   const [data, setData] = useState<User[]>([]);
+   const [isModalOpen, setModalOpen] = useState(false);
+   const [currentUser, setCurrentUser] = useState<User | null>(null);
+   const [isAdmin, setIsAdmin] = useState(false);
+
+   useEffect(() => {
+      const fetchData = async () => {
+         try {
+            const users = await getAllUsers();
+            setData(users);
+         } catch (error) {
+            toast.error("Failed to fetch users");
+         }
+      };
+
+      fetchData();
+   }, []);
+
+   const handleAddUser = () => {
+      setCurrentUser(null);
+      setModalOpen(true);
+   };
+
+   const handleCloseModal = () => {
+      setModalOpen(false);
+   };
+
+   const handleSuccess = () => {
+      handleCloseModal();
+      const fetchData = async () => {
+         try {
+            const users = await getAllUsers();
+            setData(users);
+            const currentUser = await getUserProfile();
+            setCurrentUser(currentUser);
+            setIsAdmin(currentUser.role === "admin");
+         } catch (error) {
+            toast.error("Failed to fetch users");
+         }
+      };
+
+      fetchData();
+   };
+
+   return (
+      <UsersPageContext.Provider
+         value={{ setModalOpen, setCurrentUser, isAdmin }}
+      >
+         <div className="flex flex-col gap-5 w-full">
+            <PageTitle title="Users" />
+            <Button
+               onClick={handleAddUser}
+               className="self-end"
+            >
+               Add New User
+            </Button>
+            <DataTable
+               columns={columns}
+               data={data}
+            />
+            {isModalOpen && (
+               <UserModal
+                  user={currentUser}
+                  onClose={handleCloseModal}
+                  onSuccess={handleSuccess}
+               />
+            )}
+         </div>
+      </UsersPageContext.Provider>
    );
 }

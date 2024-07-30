@@ -4,6 +4,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { FaSearch, FaBars } from "react-icons/fa";
 import { Button } from "./ui/button";
+import {
+   Accordion,
+   AccordionContent,
+   AccordionItem,
+   AccordionTrigger,
+} from "@/components/ui/accordion";
 
 interface SearchResult {
    id: string;
@@ -26,7 +32,9 @@ const DocsNavbar = () => {
          if (response.ok) {
             const results: SearchResult[] = await response.json();
             console.log("Fetched results:", results);
-            setSearchResults(results.filter(result=>result.type==="text"));
+            setSearchResults(
+               results.filter((result) => result.type === "text")
+            );
          } else {
             console.error(
                "Error fetching search results:",
@@ -69,6 +77,9 @@ const DocsNavbar = () => {
          router.push(searchResults[0].url);
          setSearchResults([]);
          setSearchQuery("");
+         if (isMenuOpen) {
+            setIsMenuOpen(false); // Close the menu on search
+         }
       }
    };
 
@@ -76,6 +87,9 @@ const DocsNavbar = () => {
       router.push(url);
       setSearchResults([]);
       setSearchQuery("");
+      if (isMenuOpen) {
+         setIsMenuOpen(false); // Close the menu on link click
+      }
    };
 
    const toggleMenu = () => {
@@ -143,8 +157,8 @@ const DocsNavbar = () => {
             </div>
          </div>
          {isMenuOpen && (
-            <div className="md:hidden bg-background shadow-lg p-10 absolute top-[90px] right-0 w-fit">
-               <div className="flex flex-col gap-4">
+            <div className="md:hidden bg-background shadow-lg p-6 absolute top-[90px] left-0 w-full h-screen overflow-y-scroll pb-20 no-scrollbar">
+               <div className="flex flex-col gap-4 ">
                   <Link
                      href="#"
                      onClick={() => setIsMenuOpen(false)}
@@ -157,12 +171,170 @@ const DocsNavbar = () => {
                   >
                      Support
                   </Link>
-                  <Link
-                     href="/login"
+
+                  <Button
+                     className="bg-main w-fit p-6"
                      onClick={() => setIsMenuOpen(false)}
                   >
-                     <Button className="bg-main w-full">Sign in</Button>
-                  </Link>
+                     <Link href="/login">Sign in</Link>
+                  </Button>
+
+                  <Accordion
+                     type="single"
+                     collapsible
+                     className="w-full"
+                  >
+                     <AccordionItem
+                        value="item-1"
+                        className="border-b border-black/30 py-4"
+                     >
+                        <AccordionTrigger className="font-bold">
+                           Get started
+                        </AccordionTrigger>
+                        <AccordionContent className="flex gap-4 flex-col pl-6">
+                           <Link
+                              href="./introduction"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Introduction
+                           </Link>
+                           <Link
+                              href="./quick"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Quick Start
+                           </Link>
+                           <Link
+                              href="./client"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Client
+                           </Link>
+                           <Link
+                              href="./libraries"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Libraries
+                           </Link>
+                        </AccordionContent>
+                     </AccordionItem>
+                     <AccordionItem
+                        value="item-2"
+                        className="border-b border-black/30 py-4"
+                     >
+                        <AccordionTrigger className="font-bold">
+                           Guide
+                        </AccordionTrigger>
+                        <AccordionContent className="flex gap-4 flex-col pl-6">
+                           <Link
+                              href="/api-docs/guide/authentication"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Authentication
+                           </Link>
+                           <Link
+                             href="/api-docs/guide/error-handling"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Error Handling
+                           </Link>
+                           <Link
+                              href="/api-docs/guide/response"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Response
+                           </Link>
+                           <Link
+                              href="/api-docs/guide/request"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Request
+                           </Link>
+                           <Link
+                              href="/api-docs/guide/pagination"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Pagination
+                           </Link>
+                           <Link
+                              href="/api-docs/guide/webhook"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Webhook
+                           </Link>
+                        </AccordionContent>
+                     </AccordionItem>
+                     <AccordionItem
+                        value="item-3"
+                        className="border-b border-black/30 py-4"
+                     >
+                        <AccordionTrigger className="font-bold">
+                           Core Resources
+                        </AccordionTrigger>
+                        <AccordionContent className="flex gap-4 flex-col pl-6">
+                           <Link
+                              href="/api-docs/core/payment"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Payment
+                           </Link>
+                           <Link
+                              href="/api-docs/core/overview"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Overview
+                           </Link>
+                           <Link
+                              href="/api-docs/core/accept-payment"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Accept Payment
+                           </Link>
+                           <Link
+                              href="/api-docs/core/subscription"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Subscription
+                           </Link>
+                           <Link
+                              href="/api-docs/core/payout"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Payout
+                           </Link>
+                           <Link
+                              href="/api-docs/core/refund"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Refund
+                           </Link>
+                           <Link
+                              href="/api-docs/core/split-payment"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Split Payment
+                           </Link>
+                           <Link
+                              href="/api-docs/core/transaction-search"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Transaction Search
+                           </Link>
+                           <Link
+                              href="/api-docs/core/orders"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Orders
+                           </Link>
+                           <Link
+                              href="/api-docs/core/invoicing"
+                              onClick={() => setIsMenuOpen(false)}
+                           >
+                              Invoicing
+                           </Link>
+                        </AccordionContent>
+                     </AccordionItem>
+                  </Accordion>
                </div>
             </div>
          )}

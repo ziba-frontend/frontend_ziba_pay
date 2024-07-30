@@ -84,7 +84,7 @@ const Careers = () => {
     <div>
       <div className="flex items-center justify-center flex-col gap-5 md:mt-12 container md:py-10">
         <h1 className="text-center">Careers at Ziba Pay</h1>
-        <p className="text-center lg:w-5/6">
+        <p className="text-center lg:w-3/4">
           We&apos;re looking for passionate individuals who are ready to join us in this journey of innovation and growth. If you&apos;re driven, creative, and eager to make a difference, we want to hear from you!
         </p>
         <Button onClick={handleScrollToPositions} className="p-6">
