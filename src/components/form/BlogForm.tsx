@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -13,27 +13,29 @@ import {
    FormLabel,
    FormMessage,
 } from "@/components/ui/form";
-import { Textarea } from "../ui/textarea";
+import dynamic from "next/dynamic";
 import Uploader from "../Uploader";
-import ReactQuill from "react-quill";
+
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 
 type Blog = {
    id: string;
    title: string;
-   image: string;
+   image?: string;
    description: string;
    content: string;
 };
 
 const BlogSchema = z.object({
    title: z.string().min(1, "Title is required"),
-   image: z.string().min(1, "Image URL is required"),
+   image: z
+     .union([z.string().min(1, "Image URL is required").optional(), z.instanceof(File).optional()])
+     .optional(),
    description: z.string().min(1, "Description is required"),
    content: z.string().min(1, "Content is required"),
 });
-
-type BlogFormValues = z.infer<typeof BlogSchema>;
+export type BlogFormValues = z.infer<typeof BlogSchema>;
 
 interface BlogFormProps {
    blog?: Blog | null;
@@ -42,6 +44,12 @@ interface BlogFormProps {
 }
 
 const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onClose }) => {
+   const [isClient, setIsClient] = useState(false);
+
+   useEffect(() => {
+      setIsClient(true);
+   }, []);
+
    const form = useForm<BlogFormValues>({
       resolver: zodResolver(BlogSchema),
       defaultValues: blog || {
@@ -56,13 +64,26 @@ const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onClose }) => {
       if (blog) {
          form.reset(blog);
       }
-   }, [blog]);
+   }, [blog, form]);
+
+   const handleSubmit = (data: BlogFormValues) => {
+      console.log("Form submitted with data:", data);
+      onSubmit(data);
+   };
+
+   const handleFileSelect = (file: File | null) => {
+      form.setValue("image", file as any);  // Set the selected file to the form
+   };
+
+   if (!isClient) {
+      return null; // or some placeholder content
+   }
 
    return (
       <Form {...form}>
          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 "
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-8"
          >
             <FormItem>
                <FormLabel>Title</FormLabel>
@@ -78,14 +99,14 @@ const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onClose }) => {
                      )}
                   />
                </FormControl>
-               <FormMessage />
+               <FormMessage>{form.formState.errors.title?.message}</FormMessage>
             </FormItem>
             <FormItem>
-               <FormLabel>Image </FormLabel>
+               <FormLabel>Image</FormLabel>
                <FormControl>
-                  <Uploader />
+                  <Uploader onFileSelect={handleFileSelect} />
                </FormControl>
-               <FormMessage />
+               <FormMessage>{form.formState.errors.image?.message}</FormMessage>
             </FormItem>
             <FormItem>
                <FormLabel>Description</FormLabel>
@@ -101,7 +122,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onClose }) => {
                      )}
                   />
                </FormControl>
-               <FormMessage />
+               <FormMessage>{form.formState.errors.description?.message}</FormMessage>
             </FormItem>
             <FormItem>
                <FormLabel>Content</FormLabel>
@@ -111,13 +132,14 @@ const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onClose }) => {
                      control={form.control}
                      render={({ field }) => (
                         <ReactQuill
-                        placeholder='Content'
-                        className='rounded'
-                     />
+                           placeholder="Content"
+                           className="rounded"
+                           {...field}
+                        />
                      )}
                   />
                </FormControl>
-               <FormMessage />
+               <FormMessage>{form.formState.errors.content?.message}</FormMessage>
             </FormItem>
             <div className="flex justify-end space-x-4">
                <Button
@@ -126,7 +148,11 @@ const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onClose }) => {
                >
                   Cancel
                </Button>
-               <Button type="submit">{blog ? "Update" : "Create"}</Button>
+               <Button
+                  type="submit"
+               >
+                  {blog ? "Update" : "Create"}
+               </Button>
             </div>
          </form>
       </Form>

@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import SubmitButton from "@/components/SubmitButton";
+import toast from "react-hot-toast";
 
 interface PaymentData {
    amount: number | null;
@@ -91,9 +92,12 @@ const Checkout = () => {
             description: data.description || null,
          };
          const result = await initiateMtnPayment(paymentData);
+         toast.success('Payment successful')
          console.log("Payment successful:", result);
          router.push("/dashboard/transactions");
       } catch (error) {
+
+         
          console.error("Payment failed:", error);
       } finally{
          setIsLoading(false)

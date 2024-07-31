@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation"; // useParams for extracting token from URL
 import { resetPassword } from "@/lib/api-calls/auth-server";
+import toast from "react-hot-toast";
 
 const formSchema = z
    .object({
@@ -53,10 +54,10 @@ const ResetPasswordPage: React.FC = () => {
       }
       try {
          await resetPassword(token as string, data.password);
-         alert("Password has been reset.");
+         toast.success('Password has been reset.')
          router.push("/login");
       } catch (error) {
-         alert("Failed to reset password. Please try again.");
+         toast.error("Failed to reset password. Please try again.");
       }
    };
 
