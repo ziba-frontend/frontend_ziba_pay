@@ -127,3 +127,18 @@ export const withdraw = async (paymentMethod: string, amount: number) => {
         throw error;
     }
 };
+
+export const getWithdrawalHistory = async(queryParams ={}) => {
+    try{
+        const response = await axios.get(`${BASE_URL}/withdraw-history`, {
+            withCredentials: true,
+            params: queryParams
+        });
+        return response.data;
+        
+    }catch(error){
+        console.error("Error while retrieving all withdrawal history!")
+        throw error;
+    }
+
+}
