@@ -50,7 +50,7 @@ const BlogModal: React.FC<BlogModalProps> = ({ blog, onClose, onSuccess }) => {
       } catch (error) {
          toast.error("Failed to save blog");
       } finally {
-         setOpen(false); // Close the modal
+         setOpen(false); 
          onClose();
       }
    };
@@ -64,9 +64,8 @@ const BlogModal: React.FC<BlogModalProps> = ({ blog, onClose, onSuccess }) => {
       <Dialog
          open={open}
          onOpenChange={handleClose}
-         
       >
-         <DialogContent className=" max-h-[90vh] overflow-y-scroll no-scrollbar">
+         <DialogContent className=" max-h-[90vh] overflow-y-scroll no-scrollbar ">
             <DialogHeader className="mb-4 space-y-3 ">
                <DialogTitle>{blog ? "Update Blog" : "Create Blog"}</DialogTitle>
             </DialogHeader>

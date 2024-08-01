@@ -2,7 +2,7 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import uber from "../../public/images/uber.png";
 import mtn from "../../public/images/mtn.png";
@@ -22,7 +22,6 @@ import send2 from "../../public/images/send2.png";
 import oval from "../../public/images/oval.png";
 import curvedImg from "../../public/images/rect1.png";
 import Link from "next/link";
-import phone from "../../public/images/phone.gif";
 import {
    Accordion,
    AccordionContent,
@@ -31,11 +30,8 @@ import {
 } from "@/components/ui/accordion";
 import CheckList from "@/components/CheckList";
 import Slider from "@/components/Slider";
-import momo1 from "../../public/images/momo1.png";
-import ball from "../../public/images/ball.png";
 import ball2 from "../../public/images/ball2.png";
 import elp1 from "../../public/images/elp1.png";
-import elp2 from "../../public/images/elp2.png";
 import elp4 from "../../public/images/elp4.png";
 import elp5 from "../../public/images/elp5.png";
 import elp6 from "../../public/images/elp6.png";
@@ -43,7 +39,7 @@ import elp7 from "../../public/images/elp7.png";
 import money from "../../public/images/money.png";
 import checkMark from "../../public/images/checkmark.png";
 import rect2 from "../../public/images/rect2.png";
-import { getUserProfile } from "@/lib/api-calls/auth-server";
+import { Metadata } from "next";
 
 
 
@@ -57,16 +53,7 @@ const Home = () => {
    ];
 
 
-   useEffect(() => {
-      const getUser = async () => {
-         const user = await getUserProfile()
-         console.log("Here is the user: ", user)
-         setUser(user);
-      }
-      getUser();
-   }, [])
 
-   console.log("Here is another user: ", user)
    return (
       <>
          <Navbar />
@@ -90,7 +77,7 @@ const Home = () => {
                   payment collection solution
                </p>
                <div className="flex gap-6 my-4 pt-8">
-                  {!user ? (
+                 
                      <div className="flex gap-6 my-4 pt-8">
                         <Link href="/login">
                            <Button
@@ -107,7 +94,7 @@ const Home = () => {
                            </Button>
                         </Link>
                      </div>
-                  ) : null}
+             
                </div>
             </div>
             <div className="flex flex-col container">

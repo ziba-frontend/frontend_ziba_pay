@@ -7,6 +7,13 @@ import rect from "../../../../public/images/rect1.png";
 import partn3 from "../../../../public/images/partnership3.png";
 import CheckList from "@/components/CheckList";
 import checkMark from "../../../../public/images/check.png";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+   title: "Partnership - Ziba Pay",
+   description:
+      "Join forces with Ziba Pay and unlock new opportunities for growth and innovation",
+};
 
 const Partnership = () => {
    const checkListItems = [
@@ -15,7 +22,7 @@ const Partnership = () => {
       { text: "Expand Your Reach", img: checkMark },
       { text: "Trusted Partnership", img: checkMark },
       { text: "Marketing Support", img: checkMark },
-    ];
+   ];
    return (
       <div>
          <div className="flex flex-col py-6 md:flex-row gap-6 container items-center ">
@@ -85,7 +92,7 @@ const Partnership = () => {
          <div className="bg-white">
             <div className="py-20 container">
                <h2 className="mb-8">
-                  Boost Your Earnings as a Strategic  Partner
+                  Boost Your Earnings as a Strategic Partner
                </h2>
                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   <div className="flex flex-col w-5/6 sm:w-[300px]">
@@ -98,28 +105,34 @@ const Partnership = () => {
                   <div className="flex flex-col w-5/6 sm:w-[300px]">
                      <h4 className="my-3">2. Enhanced Customer Trust</h4>
                      <p>
-                     Build customer loyalty and credibility by aligning your brand with Ziba pay trusted reputation.
+                        Build customer loyalty and credibility by aligning your
+                        brand with Ziba pay trusted reputation.
                      </p>
                   </div>
                   <div className="flex flex-col w-5/6 sm:w-[300px]">
                      <h4 className="my-3">3. Business Referrals</h4>
                      <p>
-                     Expand your customer base and revenue opportunities with referrals from Ziba pay to people in need of your solutions.
+                        Expand your customer base and revenue opportunities with
+                        referrals from Ziba pay to people in need of your
+                        solutions.
                      </p>
                   </div>
                   <div className="flex flex-col w-5/6 sm:w-[300px]">
                      <h4 className="my-3">4. Increased Brand Visibility</h4>
                      <p>
-                     Gain exposure through prominent placement on our website, marketing materials, and digital channels, reaching potential customers within our ecosystem.
+                        Gain exposure through prominent placement on our
+                        website, marketing materials, and digital channels,
+                        reaching potential customers within our ecosystem.
                      </p>
                   </div>
                   <div className="flex flex-col w-5/6 sm:w-[300px]">
                      <h4 className="my-3">5. Networking Opportunities</h4>
                      <p>
-                     Connect with other esteemed Ziba pay Partners for collaboration and business development within our vibrant community.
+                        Connect with other esteemed Ziba pay Partners for
+                        collaboration and business development within our
+                        vibrant community.
                      </p>
                   </div>
-                 
                </div>
                <Button className="mt-20 p-6">Become A Strategic Partner</Button>
             </div>
@@ -142,8 +155,7 @@ const Partnership = () => {
                         Boost Your Earnings as a Strategic <br /> Partner
                      </h2>
                      <div className="my-4">
-                     <CheckList items={checkListItems} />
-                        
+                        <CheckList items={checkListItems} />
                      </div>
 
                      <Button className="mt-4 p-6">

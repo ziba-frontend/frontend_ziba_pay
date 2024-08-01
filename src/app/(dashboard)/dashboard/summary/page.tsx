@@ -23,6 +23,7 @@ import BounceLoader from "react-spinners/BounceLoader";
 import { getUserProfile } from "@/lib/api-calls/auth-server";
 import { formatDate } from "@/constants/constants";
 import CompleteTransaction from "@/components/modals/CompleteTransaction";
+import RiseLoader from "react-spinners/RiseLoader";
 
 type Payment = {
    id: string;
@@ -34,7 +35,7 @@ type Payment = {
    };
    date: string;
    amount: number;
-   status: "completed" | "pending" | "failed"; // Ensure status is of type Status
+   status: "completed" | "pending" | "failed";
    paymentMethod: string;
    createdAt: string;
 };
@@ -43,7 +44,6 @@ const columns: ColumnDef<Payment>[] = [
    {
       header: "ID",
       cell: ({ row }) => {
-         return <p className="text-14-medium text-dark-700">{row.index + 1}</p>;
          return <p className="text-14-medium text-dark-700">{row.index + 1}</p>;
       },
    },
@@ -125,10 +125,9 @@ const columns: ColumnDef<Payment>[] = [
                   userId={userId}
                />
             </div>
-         )
-      }
-   }
-
+         );
+      },
+   },
 ];
 
 const Summary = () => {
@@ -194,7 +193,7 @@ const Summary = () => {
             sort,
             page,
          });
-         const transactions: Payment[] = response; // Ensure response is of type Payment[]
+         const transactions: Payment[] = response;
          console.log("Transactions retrieved are:", transactions);
          setData(transactions);
       } catch (error) {
@@ -221,8 +220,7 @@ const Summary = () => {
    if (loading) {
       return (
          <div className="w-full h-screen flex items-center justify-center">
-            <BounceLoader color="#3BD64A" />
-            <BounceLoader color="#3BD64A" />
+            <RiseLoader color="#3BD64A" />
          </div>
       );
    }

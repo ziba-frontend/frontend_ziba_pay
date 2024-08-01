@@ -10,7 +10,13 @@ import aboutball from "../../../../public/images/aboutball.png";
 import CheckList from "@/components/CheckList";
 import checkMark from "../../../../public/images/check.png";
 import logo from "../../../../public/svg/logo.svg";
+import { Metadata } from "next";
 
+
+export const metadata: Metadata = {
+   title: "About - Ziba Pay",
+   description: "Learn more about Ziba Pay and our mission.",
+};
 const AboutUs = () => {
    const checkListItems = [
       { text: "Innovation", img: checkMark },
@@ -18,6 +24,7 @@ const AboutUs = () => {
       { text: "Customer Service", img: checkMark },
       { text: "Affordability", img: checkMark },
    ];
+
 
    return (
       <div>

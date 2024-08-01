@@ -68,14 +68,14 @@ export default function BarChart({}: Props) {
       <BarGraph data={data}>
         <XAxis
           dataKey={"name"}
-          tickLine={false}
-          axisLine={false}
+          tickLine={true}
+          axisLine={true}
           stroke="#888888"
           fontSize={12}
         />
         <YAxis
-          tickLine={false}
-          axisLine={false}
+          tickLine={true}
+          axisLine={true}
           stroke="#888888"
           fontSize={12}
           tickFormatter={(value) => `$${value}`}

@@ -111,9 +111,9 @@ const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onClose }) => {
                      control={form.control}
                      render={({ field }) => (
                         <ReactQuill
-                        placeholder='Content'
-                        className='rounded'
-                     />
+                           placeholder="Content"
+                           className="rounded"
+                        />
                      )}
                   />
                </FormControl>

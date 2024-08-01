@@ -1,16 +1,53 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { getFeedbackCounts, submitFeedback } from "@/lib/api-calls/feedback";
 
 const VAccounts = () => {
+   const articleId = "virtual-accounts";
+   const [helpfulCount, setHelpfulCount] = useState(0);
+   const [notHelpfulCount, setNotHelpfulCount] = useState(0);
+   const [userFeedback, setUserFeedback] = useState<
+      "helpful" | "notHelpful" | null
+   >(null);
+
+   useEffect(() => {
+      fetchFeedbackCounts();
+   }, []);
+
+   const fetchFeedbackCounts = async () => {
+      try {
+         const { helpfulCount, notHelpfulCount } = await getFeedbackCounts(
+            articleId
+         );
+         setHelpfulCount(helpfulCount);
+         setNotHelpfulCount(notHelpfulCount);
+      } catch (error) {
+         console.error("Failed to fetch feedback counts", error);
+      }
+   };
+
+   const handleFeedback = async (isHelpful: boolean) => {
+      if (userFeedback) return; // Prevent multiple submissions
+
+      try {
+         await submitFeedback(articleId, isHelpful);
+         setUserFeedback(isHelpful ? "helpful" : "notHelpful");
+         fetchFeedbackCounts(); // Update feedback counts
+      } catch (error) {
+         console.error("Failed to submit feedback", error);
+      }
+   };
+
    return (
       <div className="container ">
          <div className="mt-6 mb-6 ">
             <p>
                <span className="hover:text-main cursor-default mr-2">
-                  {" "}<Link href="/zibapay-help-center">
-                  Ziba pay
-                  </Link>
+                  {" "}
+                  <Link href="/zibapay-help-center">Ziba pay</Link>
                </span>
                {">"}
                <span className="hover:text-main cursor-default mx-2">
@@ -22,7 +59,7 @@ const VAccounts = () => {
          </div>
          <div>
             <div className="my-4 mt-20 flex gap-20 flex-col md:flex-row">
-            <div className="mt-6 sm:mt-0 hidden md:flex flex-col gap-3">
+               <div className="mt-6 sm:mt-0 hidden md:flex flex-col gap-3">
                   <h4 className="">Articles in this section</h4>
                   <p>
                      {" "}
@@ -47,15 +84,17 @@ const VAccounts = () => {
                      <div className="mt-10">
                         <ul className="flex flex-col gap-6">
                            <li>
-                              <h4 className="my-4">What is a Virtual Account?</h4>
+                              <h4 className="my-4">
+                                 What is a Virtual Account?
+                              </h4>
                               <p>
                                  A virtual account is a type of bank account
                                  that exists digitally and is typically used for
                                  specific purposes such as receiving payments,
                                  making transactions, or managing funds online.
                                  Unlike traditional bank accounts, virtual
-                                 accounts often don&apos;t have physical counterparts
-                                 like debit cards or checkbooks.
+                                 accounts often don&apos;t have physical
+                                 counterparts like debit cards or checkbooks.
                               </p>
                            </li>
                            <li>
@@ -166,19 +205,26 @@ const VAccounts = () => {
                         <Button
                            variant="outline"
                            className="mx-2"
+                           onClick={() => handleFeedback(true)}
+                           disabled={userFeedback === "helpful"}
                         >
                            Yes
                         </Button>
                         <Button
                            variant="outline"
                            className="mx-2"
+                           onClick={() => handleFeedback(false)}
+                           disabled={userFeedback === "notHelpful"}
                         >
                            No
                         </Button>
                      </div>
-                     <p>0 out of 0 found it helpful</p>
                      <p>
-                        Have more questions ?{" "}
+                        {helpfulCount} out of {helpfulCount + notHelpfulCount}{" "}
+                        found it helpful
+                     </p>
+                     <p>
+                        Have more questions?{" "}
                         <Link href="request">Submit a request</Link>
                      </p>
                   </div>
