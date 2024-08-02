@@ -8,6 +8,12 @@ import comm4 from "../../../../public/images/comm4.png";
 import comm5 from "../../../../public/images/comm5.png";
 import comm6 from "../../../../public/images/comm6.png";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+   title: "E-commerce Solutions - Ziba Pay",
+   description: "Boost online sales with Zibapay's seamless e-commerce payment solutions.",
+};
 
 const Ecommerce = () => {
    return (

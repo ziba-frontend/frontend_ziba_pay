@@ -24,7 +24,6 @@ import { createPortal } from "react-dom";
 import close from "../../public/images/close.png";
 import { getUserProfile } from "@/lib/api-calls/auth-server";
 
-
 type MenuItems = {
    [key: string]: {
       label: string;
@@ -201,8 +200,14 @@ const Navbar: React.FC = () => {
       <div className="fixed z-[80] top-0 left-0 w-full bg-background border-b border-black md:border-none">
          <div className="container mx-auto p-4 flex items-center justify-between h-[100px]">
             <div className="flex items-center">
-               <Link href="/" className="">
-                  <Image src={logo} alt="ZibaPay" />
+               <Link
+                  href="/"
+                  className=""
+               >
+                  <Image
+                     src={logo}
+                     alt="ZibaPay"
+                  />
                </Link>
                <div className="hidden md:flex w-1/2 gap-12 ml-8">
                   {Object.entries(menuItems).map(([title, items]) => (
@@ -213,7 +218,11 @@ const Navbar: React.FC = () => {
                         onOpenChange={(isOpen) => setIsDropdownOpen(isOpen)}
                      />
                   ))}
-                  <Link href="/api-docs/start/introduction" className="text-[16px]" target="_blank">
+                  <Link
+                     href="/api-docs/start/introduction"
+                     className="text-[16px]"
+                     target="_blank"
+                  >
                      Developer
                   </Link>
                </div>
@@ -221,27 +230,48 @@ const Navbar: React.FC = () => {
             <div className="hidden md:flex gap-6">
                {loading ? null : user ? (
                   <Link href="/dashboard">
-                     <Button className="w-[107px] sm:w-[130px] p-6">Dashboard</Button>
+                     <Button className="w-[107px] sm:w-[130px] p-6">
+                        Dashboard
+                     </Button>
                   </Link>
                ) : (
                   <>
                      <Link href="/login">
-                        <Button className="w-[107px] sm:w-[130px] p-6" variant="outline">
+                        <Button
+                           className="w-[107px] sm:w-[130px] p-6"
+                           variant="outline"
+                        >
                            Login
                         </Button>
                      </Link>
-                     <Link href="/sign-up" className="md:hidden lg:block">
-                        <Button className="w-[107px] sm:w-[130px] p-6">Create Account</Button>
+                     <Link
+                        href="/sign-up"
+                        className="md:hidden lg:block"
+                     >
+                        <Button className="w-[107px] sm:w-[130px] p-6">
+                           Create Account
+                        </Button>
                      </Link>
                   </>
                )}
             </div>
             <div className="md:hidden flex items-center">
-               <button onClick={toggleMenu} className="text-2xl">
+               <button
+                  onClick={toggleMenu}
+                  className="text-2xl"
+               >
                   {isOpen ? (
-                     <Image src={close} alt="close" width={40} />
+                     <Image
+                        src={close}
+                        alt="close"
+                        width={40}
+                     />
                   ) : (
-                     <Image src={hamburger} alt="menu" width={40} />
+                     <Image
+                        src={hamburger}
+                        alt="menu"
+                        width={40}
+                     />
                   )}
                </button>
             </div>
@@ -249,7 +279,12 @@ const Navbar: React.FC = () => {
                <div className="absolute top-[100px] left-0 w-full bg-background md:hidden h-screen overflow-y-auto">
                   <div className="flex flex-col items-center p-4 gap-5 text-2xl">
                      {Object.entries(menuItems).map(([title, items]) => (
-                        <Accordion type="single" collapsible className="w-full " key={title}>
+                        <Accordion
+                           type="single"
+                           collapsible
+                           className="w-full "
+                           key={title}
+                        >
                            <AccordionItem value={title}>
                               <AccordionTrigger>{title}</AccordionTrigger>
                               <AccordionContent className="bg-[#3D3939] text-[16px]">
@@ -312,6 +347,11 @@ const Navbar: React.FC = () => {
                </div>
             )}
          </div>
+         {isDropdownOpen &&
+            createPortal(
+               <div className="fixed inset-0 bg-black opacity-50 z-[92]"></div>,
+               document.body
+            )}
       </div>
    );
 };

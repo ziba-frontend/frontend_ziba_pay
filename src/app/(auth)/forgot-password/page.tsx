@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -14,38 +14,95 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { forgotPassword } from "@/lib/api-calls/auth-server";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
+import Image from "next/image";
+import emailSent from "../../../../public/images/email-sent.png";
 
 const formSchema = z.object({
    email: z.string().email({ message: "Invalid email address." }),
 });
 
 const ForgotPassword = () => {
+   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+   const [email, setEmail] = useState("");
    const form = useForm({
       resolver: zodResolver(formSchema),
    });
 
    const onSubmit = async (data: any) => {
+      setEmail(data.email);
       try {
          await forgotPassword(data.email);
-         toast.success("Password reset link has been sent to your email.");
+         setStatus("success");
       } catch (error) {
          console.error("Error sending password reset link:", error);
-         toast.error("An error occurred while sending the password reset link. Please try again.");
+         setStatus("error");
       }
    };
 
+   const handleResend = async () => {
+      try {
+         await forgotPassword(email);
+         toast.success("Password reset link has been resent to your email.");
+      } catch (error) {
+         console.error("Error resending password reset link:", error);
+         toast.error("An error occurred while resending the password reset link. Please try again.");
+      }
+   };
+
+   const handleChangeEmail = () => {
+      setStatus("idle");
+   };
+
+   if (status === "success") {
+      return (
+         <div className="flex justify-center items-center h-screen bg-gray-100">
+            <div className="bg-white p-10 shadow-md w-full max-w-xl ">
+               <div className="flex items-center">
+                  <Image src={emailSent} alt="email-sent" />
+                  <h1 className="text-2xl font-semibold mb-4 ml-4">Email Sent</h1>
+               </div>
+               <p className="my-2">
+                  We have sent an email to {email}. Please check your inbox and follow the instructions to reset your account password.
+               </p>
+               <div className="my-6">
+                  <p>
+                     Did not receive the Email?{" "}
+                     <span className="cursor-pointer text-main ml-4 underline pb-2" onClick={handleResend}>
+                        Resend Email
+                     </span>
+                  </p>
+               </div>
+               <div className="my-6">
+                  <p>
+                     Wrong Email Address?
+                     <span className="cursor-pointer text-main ml-4 underline pb-2" onClick={handleChangeEmail}>
+                        Change Email Address
+                     </span>
+                  </p>
+               </div>
+            </div>
+         </div>
+      );
+   }
+
    return (
       <div className="flex justify-center items-center h-screen bg-gray-100">
-         <div className="bg-white p-8 shadow-md w-full max-w-md">
-            <h1 className="text-2xl font-semibold mb-4 text-main">
-               Forgot Password
-            </h1>
+         <div className="bg-white p-8 shadow-md w-full max-w-lg">
+            <h1 className="text-2xl font-semibold mb-4">Forgot Password</h1>
+            {status === "error" && (
+               <p className="text-red-500 mb-4">
+                  An error occurred while sending the password reset link. Please try again.
+               </p>
+            )}
             <Form {...form}>
                <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-4"
+                  className="space-y-4 flex flex-col gap-6"
                >
+                  <p className="my-2">
+                     Enter the email address you used to create the account, and we will email you instructions to reset your password.
+                  </p>
                   <FormField
                      control={form.control}
                      name="email"
@@ -54,7 +111,7 @@ const ForgotPassword = () => {
                            <FormLabel>Email Address *</FormLabel>
                            <FormControl>
                               <Input
-                                 className="bg-white p-4 outline-none border"
+                                 className="bg-white p-6 outline-none border"
                                  placeholder="email"
                                  {...field}
                               />
@@ -65,7 +122,7 @@ const ForgotPassword = () => {
                   />
                   <Button
                      type="submit"
-                     className="w-full"
+                     className="w-full p-6"
                   >
                      Send Reset Link
                   </Button>

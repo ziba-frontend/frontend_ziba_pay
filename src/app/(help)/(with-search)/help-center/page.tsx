@@ -1,5 +1,11 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
+
+export const metadata: Metadata = {
+   title: "Zibapay help center",
+   description: "Get support and answers with Zibapay's comprehensive help center.",
+};
 
 const HelpCenter = () => {
    return (

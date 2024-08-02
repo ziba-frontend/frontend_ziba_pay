@@ -10,6 +10,12 @@ import edu1 from "../../../../public/images/edu1.png";
 import edu2 from "../../../../public/images/edu2.png";
 import edu3 from "../../../../public/images/edu3.png";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+   title: "Education Payment Solutions - Ziba Pay",
+   description: "Streamline tuition and fees with Zibapay's education payment solutions.",
+};
 
 const Education = () => {
    return (

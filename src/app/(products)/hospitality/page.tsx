@@ -7,6 +7,12 @@ import hospi2 from "../../../../public/images/hospi2.png";
 import hospi3 from "../../../../public/images/hospi3.png";
 import hospi4 from "../../../../public/images/hospi4.png";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+   title: "Hospitality Payment Solutions - Ziba Pay",
+   description: "Enhance guest experiences with Zibapay's hospitality payment solutions.",
+};
 
 const Healthcare = () => {
    return (

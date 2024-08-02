@@ -42,7 +42,7 @@ type Payment = {
 
 const columns: ColumnDef<Payment>[] = [
    {
-      header: "ID",
+      header: "#",
       cell: ({ row }) => {
          return <p className="text-14-medium text-dark-700">{row.index + 1}</p>;
       },

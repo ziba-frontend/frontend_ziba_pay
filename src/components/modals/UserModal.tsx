@@ -46,7 +46,7 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess }) => {
       } catch (error) {
          toast.error("Failed to save user");
       } finally {
-         setOpen(false); // Close the modal
+         setOpen(false);
          onClose();
       }
    };

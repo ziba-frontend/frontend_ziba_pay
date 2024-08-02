@@ -28,7 +28,7 @@ const formSchema = z.object({
    email: z.string().email({ message: "Invalid email address." }),
    subject: z.string().min(1, { message: "Subject is required." }),
 });
-declare type Status = "completed" | "pending" | "failed";
+export declare type Status = "completed" | "pending" | "failed";
 type Payment = {
    id: string;
    userId: string;

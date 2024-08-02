@@ -7,6 +7,12 @@ import sol3 from "../../../../public/images/sol3.png";
 import sol4 from "../../../../public/images/sol4.png";
 import sol5 from "../../../../public/images/sol5.png";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+   title: "Custom Solution For Businesses - Ziba Pay",
+   description: "Tailored payment solutions designed specifically for your business needs.",
+};
 
 const Solution = () => {
    return (

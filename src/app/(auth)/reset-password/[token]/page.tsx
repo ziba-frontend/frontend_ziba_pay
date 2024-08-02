@@ -17,6 +17,8 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation"; // useParams for extracting token from URL
 import { resetPassword } from "@/lib/api-calls/auth-server";
+import toast from "react-hot-toast";
+import Link from "next/link";
 
 const formSchema = z
    .object({
@@ -37,10 +39,9 @@ interface FormData {
    passwordConfirm: string;
 }
 
-
 const ResetPasswordPage: React.FC = () => {
    const router = useRouter();
-   const { token } = useParams(); 
+   const { token } = useParams();
 
    const form = useForm<FormData>({
       resolver: zodResolver(formSchema),
@@ -53,10 +54,10 @@ const ResetPasswordPage: React.FC = () => {
       }
       try {
          await resetPassword(token as string, data.password);
-         alert("Password has been reset.");
+         toast.success("Password has been reset.");
          router.push("/login");
       } catch (error) {
-         alert("Failed to reset password. Please try again.");
+         toast.error("Failed to reset password. Please try again.");
       }
    };
 
@@ -66,10 +67,19 @@ const ResetPasswordPage: React.FC = () => {
 
    return (
       <div className="flex justify-center items-center h-screen bg-gray-100">
-         <div className="bg-white p-8 shadow-md w-full max-w-md">
-            <h1 className="text-2xl font-semibold mb-4 text-main">Reset Password</h1>
+         <div className="bg-white p-8 shadow-md w-full max-w-xl">
+            <h1 className="text-2xl font-semibold mb-4 ">
+               Create New Password
+            </h1>
             <Form {...form}>
-               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+               <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-4 flex flex-col gap-6"
+               >
+                  <p>
+                     Your new password must be different be different from any
+                     of your previous passwords
+                  </p>
                   <FormField
                      control={form.control}
                      name="password"
@@ -96,7 +106,7 @@ const ResetPasswordPage: React.FC = () => {
                            <FormLabel>Confirm New Password *</FormLabel>
                            <FormControl>
                               <Input
-                                 className="bg-white p-4 outline-none border"
+                                 className="bg-white p-6 outline-none border"
                                  type="password"
                                  placeholder="******"
                                  {...field}
@@ -106,11 +116,25 @@ const ResetPasswordPage: React.FC = () => {
                         </FormItem>
                      )}
                   />
-                  <Button type="submit" className="w-full">
+                  <Button
+                     type="submit"
+                     className="w-full p-6"
+                  >
                      Reset Password
                   </Button>
                </form>
             </Form>
+            <div className="flex mt-6">
+               <p>
+                  Remember password?{" "}
+                  <Link
+                     href="/login"
+                     className="text-main"
+                  >
+                     Login
+                  </Link>
+               </p>
+            </div>
          </div>
       </div>
    );

@@ -7,14 +7,14 @@ import {
    DialogHeader,
    DialogTitle,
 } from "@/components/ui/dialog";
-import { createBlog, updateBlog } from "@/lib/api-calls/admin";
+import { createBlog, updateBlog } from "@/lib/api-calls/blog";
 import { toast } from "react-hot-toast";
-import BlogForm from "../form/BlogForm";
+import BlogForm, { BlogFormValues } from "../form/BlogForm";
 
 type Blog = {
    id: string;
    title: string;
-   image: string;
+   image?: string;
    description: string;
    content: string;
 };
@@ -32,18 +32,22 @@ const BlogModal: React.FC<BlogModalProps> = ({ blog, onClose, onSuccess }) => {
       setOpen(true);
    }, [blog]);
 
-   const handleSubmit = async (data: {
-      title: string;
-      image: string;
-      description: string;
-      content: string;
-   }) => {
+   const handleSubmit = async (data: BlogFormValues) => {
+
+      const formData = new FormData();
+      formData.append('title', data.title);
+      formData.append('description', data.description);
+      formData.append('content', data.content);
+
+      if (data.image instanceof File) {
+         formData.append('image', data.image);
+     }
       try {
          if (blog) {
-            await updateBlog(blog.id, data);
+            await updateBlog(blog.id, formData);
             toast.success("Blog updated successfully");
          } else {
-            await createBlog(data);
+            await createBlog(formData);
             toast.success("Blog created successfully");
          }
          onSuccess();
@@ -65,7 +69,7 @@ const BlogModal: React.FC<BlogModalProps> = ({ blog, onClose, onSuccess }) => {
          open={open}
          onOpenChange={handleClose}
       >
-         <DialogContent className=" max-h-[90vh] overflow-y-scroll no-scrollbar ">
+         <DialogContent className=" max-h-[90vh] overflow-y-scroll no-scrollbar max-w-4xl">
             <DialogHeader className="mb-4 space-y-3 ">
                <DialogTitle>{blog ? "Update Blog" : "Create Blog"}</DialogTitle>
             </DialogHeader>

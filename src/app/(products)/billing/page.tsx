@@ -4,6 +4,12 @@ import rect from "../../../../public/images/rect1.png";
 import billing1 from "../../../../public/images/billing1.png";
 import billing2 from "../../../../public/images/billing2.png";
 import billing3 from "../../../../public/images/billing3.png";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+   title: "Invoicing And Billing - Ziba Pay",
+   description: "Streamline invoicing and billing with Zibapay's automated solutions.",
+};
 
 const Billing = () => {
    return (

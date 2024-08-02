@@ -8,6 +8,13 @@ import fin4 from "../../../../public/images/fin4.png";
 import fin5 from "../../../../public/images/fin5.png";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+   title: "Financial Management Tool - Ziba Pay",
+   description: "Optimize finances with Zibapay's comprehensive financial management tool.",
+};
 
 const FinancialManagement = () => {
    return (

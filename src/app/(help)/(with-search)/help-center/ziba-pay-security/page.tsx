@@ -1,6 +1,11 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
 
+export const metadata: Metadata = {
+   title: "How Secure is zibapay ?",
+   description: "Zibapay uses advanced encryption and compliance standards for maximum security.",
+};
 const ZibaSec = () => {
    return (
       <div className="container ">

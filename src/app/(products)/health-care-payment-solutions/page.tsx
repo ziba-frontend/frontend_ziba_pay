@@ -7,6 +7,12 @@ import health2 from "../../../../public/images/health2.png";
 import health3 from "../../../../public/images/health3.png";
 import health4 from "../../../../public/images/health4.png";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+   title: "Health Care Payment Solutions - Ziba Pay",
+   description: "Secure and efficient payment solutions tailored for healthcare providers.",
+};
 
 const Healthcare = () => {
    return (

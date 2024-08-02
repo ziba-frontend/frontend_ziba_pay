@@ -8,6 +8,12 @@ import payp from "../../../../public/svg/payp.svg";
 import rect from "../../../../public/images/rect1.png";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+   title: "Payment Processing Solutions - Ziba Pay",
+   description: "Efficient and secure payment processing solutions with Zibapay.",
+};
 
 const PaymentProcessing = () => {
    return (

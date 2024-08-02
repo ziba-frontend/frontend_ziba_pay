@@ -12,6 +12,12 @@ import ball1 from "../../../../public/images/ball1.png";
 import momo from "../../../../public/images/momo.png";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+   title: "Mobile Money Integration - Ziba Pay",
+   description: "How to integrate zibapay with mobile money",
+};
 
 const Integration = () => {
    return (
