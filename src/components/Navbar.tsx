@@ -307,7 +307,7 @@ const Navbar: React.FC = () => {
                      <Link
                         href="/api-docs/start/introduction"
                         target="_blank"
-                        className="hover:text-main text-[16px]"
+                        className="hover:text-main "
                         onClick={toggleMenu}
                      >
                         Developer

@@ -14,7 +14,7 @@ export default async function BlogPost({ params }: BlogPostProps) {
 
   try {
     blog = await getBlogBySlug(slug);
-  } catch (error:any) {
+  } catch (error: any) {
     console.error(`Error fetching blog with slug ${slug}:`, error.message);
     notFound();
     return;
@@ -65,7 +65,14 @@ export default async function BlogPost({ params }: BlogPostProps) {
 }
 
 export async function generateStaticParams() {
-  const blogs = await getAllBlogs();
+  let blogs = [];
+  try {
+    blogs = await getAllBlogs();
+  } catch (error: any) {
+    console.error(`Error fetching blogs:`, error.message);
+    // Return an empty array if there's an error fetching blogs
+    return [];
+  }
   return blogs.map((blog: { slug: any }) => ({
     slug: [blog.slug],
   }));
@@ -73,7 +80,14 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: { slug: string[] } }) {
   const slug = params.slug.join("/");
-  const blogs = await getAllBlogs();
+  let blogs = [];
+  try {
+    blogs = await getAllBlogs();
+  } catch (error: any) {
+    console.error(`Error fetching blogs:`, error.message);
+    notFound();
+    return;
+  }
   const blog = blogs.find((blog: { slug: string }) => blog.slug === slug);
 
   if (!blog) {
