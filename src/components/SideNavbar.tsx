@@ -14,6 +14,7 @@ import {
    ArrowUpLeftSquare,
    Phone,
    Sidebar,
+   PenSquare,
 } from "lucide-react";
 import { FaBars } from "react-icons/fa";
 import { useWindowWidth } from "@react-hook/window-size";
@@ -133,7 +134,7 @@ export default function SideNavbar({ isCollapsed, toggleSidebar }: Props) {
                      {
                         title: "Blogs",
                         href: "/dashboard/blogs",
-                        icon: GitGraph,
+                        icon:PenSquare,
                         variant: "ghost",
                      },
                      {

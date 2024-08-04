@@ -89,7 +89,7 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onOpenChange }) => {
 
    const handleItemClick = () => {
       setIsDropdownOpen(false);
-      onOpenChange(false); // Notify parent to close
+      onOpenChange(false);
    };
 
    return (
@@ -102,7 +102,7 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onOpenChange }) => {
       >
          <DropdownMenuTrigger
             className="cursor-pointer text-[16px]"
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)} // Toggle dropdown
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
          >
             {title}
          </DropdownMenuTrigger>
@@ -220,7 +220,7 @@ const Navbar: React.FC = () => {
                   ))}
                   <Link
                      href="/api-docs/start/introduction"
-                     className="text-[16px]"
+                     className="text-[16px] text-start"
                      target="_blank"
                   >
                      Developer
@@ -230,7 +230,7 @@ const Navbar: React.FC = () => {
             <div className="hidden md:flex gap-6">
                {loading ? null : user ? (
                   <Link href="/dashboard">
-                     <Button className="w-[107px] sm:w-[130px] p-6">
+                     <Button className="w-[107px] sm:w-[130px] p-6 ">
                         Dashboard
                      </Button>
                   </Link>
@@ -277,7 +277,7 @@ const Navbar: React.FC = () => {
             </div>
             {isOpen && (
                <div className="absolute top-[100px] left-0 w-full bg-background md:hidden h-screen overflow-y-auto">
-                  <div className="flex flex-col items-center p-4 gap-5 text-2xl">
+                  <div className="flex flex-col items-start p-4 gap-5 text-2xl">
                      {Object.entries(menuItems).map(([title, items]) => (
                         <Accordion
                            type="single"
@@ -287,25 +287,19 @@ const Navbar: React.FC = () => {
                         >
                            <AccordionItem value={title}>
                               <AccordionTrigger>{title}</AccordionTrigger>
-                              <AccordionContent className="bg-[#3D3939] text-[16px]">
-                                 {items.map((item, index) => (
-                                    <Link
-                                       key={index}
-                                       href={item.href}
-                                       className="flex items-center gap-2 p-2 hover:text-main"
-                                       onClick={toggleMenu}
-                                    >
-                                       {item.img && (
-                                          <Image
-                                             src={item.img}
-                                             alt={item.label}
-                                             width={40}
-                                             height={40}
-                                          />
-                                       )}
-                                       <span>{item.label}</span>
-                                    </Link>
-                                 ))}
+                              <AccordionContent className="bg-[#3BD64A1A] text-[16px]">
+                                 <ul className="list-disc list-inside">
+                                    {items.map((item, index) => (
+                                       <Link
+                                          key={index}
+                                          href={item.href}
+                                          className="flex items-center gap-2 p-2 hover:text-main"
+                                          onClick={toggleMenu}
+                                       >
+                                          <li className="ml-4">{item.label}</li>
+                                       </Link>
+                                    ))}
+                                 </ul>
                               </AccordionContent>
                            </AccordionItem>
                         </Accordion>
@@ -313,36 +307,36 @@ const Navbar: React.FC = () => {
                      <Link
                         href="/api-docs/start/introduction"
                         target="_blank"
-                        className="hover:text-main"
+                        className="hover:text-main text-[16px]"
                         onClick={toggleMenu}
                      >
                         Developer
                      </Link>
-                     {loading ? null : user ? (
-                        <Link
-                           href="/dashboard"
-                           className="text-[16px] p-6 w-full text-center border border-primary text-primary rounded"
+
+                     <div className="flex flex-col gap-6 mt-4  w-full border-t justify-center items-center pt-6">
+                        <Button
+                           variant="outline"
+                           className="w-5/6 p-6"
                         >
-                           Dashboard
-                        </Link>
-                     ) : (
-                        <>
+                           {" "}
                            <Link
                               href="/login"
-                              className="text-[16px] p-6 w-full text-center border border-primary text-primary rounded"
                               onClick={toggleMenu}
                            >
-                              Login
+                              Login{" "}
                            </Link>
+                        </Button>
+
+                        <Button className="w-5/6 p-6">
+                           {" "}
                            <Link
                               href="/sign-up"
-                              className="text-[16px] p-6 w-full text-center border border-primary text-primary rounded"
                               onClick={toggleMenu}
                            >
                               Create Account
                            </Link>
-                        </>
-                     )}
+                        </Button>
+                     </div>
                   </div>
                </div>
             )}

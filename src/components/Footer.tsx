@@ -22,7 +22,7 @@ const Footer = () => {
             },
             {
                name: "Financial management tools",
-               link: "/financial-management-tools",
+               link: "/financial-management-tool",
             },
             {
                name: "Custom solutions",
@@ -53,7 +53,12 @@ const Footer = () => {
       },
       {
          title: "Developers",
-         links: [],
+         links: [
+            {
+               name: "Api-docs",
+               link: "/api-docs/start/introduction",
+            },
+         ],
       },
       {
          title: "Support",
@@ -135,14 +140,15 @@ const Footer = () => {
                   </div>
                   {Links.map((link, index) => (
                      <div key={index}>
-                        <h3 className=" font-medium mb-4">
-                           {link.title}
-                        </h3>
+                        <h3 className=" font-medium mb-4">{link.title}</h3>
                         <ul className=" space-y-3">
                            {link.links.map((text, subIndex) => (
                               <li key={subIndex}>
                                  <Link
                                     href={text.link}
+                                    target={`${
+                                       text.name == "Api-docs" ? "_blank" : ""
+                                    } `}
                                     className="hover:underline"
                                  >
                                     {text.name}

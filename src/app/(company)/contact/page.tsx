@@ -7,7 +7,12 @@ import {
    FaPhone,
 } from "react-icons/fa";
 import ContactSlider from "@/components/ContactSlider";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+   title: "Contact - Zibapay",
+   description: "Contact zibapay",
+};
 const Contact = () => {
    return (
       <div className="md:py-10">
