@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Blog } from '@/lib/blog';
 import { getAllBlogs } from '@/lib/api-calls/blog';
+import { toast } from 'react-hot-toast';
 
 interface BlogListProps {
   blogs: Blog[];
@@ -44,14 +45,16 @@ export const BlogList: React.FC<BlogListProps> = ({ blogs }) => {
 const BlogListWrapper: React.FC = () => {
   const [blogs, setBlogs] = React.useState<Blog[]>([]);
   const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const data = await getAllBlogs();
         setBlogs(data);
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
+      } catch (error:any) {
+        setError(error.message);
+        toast.error(`Failed to fetch blogs: ${error.message}`);
       } finally {
         setLoading(false);
       }
@@ -62,6 +65,10 @@ const BlogListWrapper: React.FC = () => {
 
   if (loading) {
     return <div>Loading blogs...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red-500">{error}</div>;
   }
 
   return <BlogList blogs={blogs} />;

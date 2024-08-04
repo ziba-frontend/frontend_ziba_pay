@@ -14,8 +14,8 @@ export default async function BlogPost({ params }: BlogPostProps) {
 
   try {
     blog = await getBlogBySlug(slug);
-  } catch (error) {
-    console.error(`Error fetching blog with slug ${slug}:`, error);
+  } catch (error:any) {
+    console.error(`Error fetching blog with slug ${slug}:`, error.message);
     notFound();
     return;
   }
