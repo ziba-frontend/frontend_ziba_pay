@@ -10,7 +10,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
    useEffect(() => {
       setIsClient(true);
 
-      // Automatically collapse sidebar on small screens
       const handleResize = () => {
          if (window.innerWidth < 768) {
             setIsCollapsed(true);
@@ -19,13 +18,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
          }
       };
 
-      // Add event listener
       window.addEventListener("resize", handleResize);
-
-      // Check initial size
       handleResize();
 
-      // Remove event listener on cleanup
       return () => window.removeEventListener("resize", handleResize);
    }, []);
 
@@ -34,22 +29,14 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
    };
 
    if (!isClient) {
-      // Render nothing on the server
       return null;
    }
 
    return (
       <div className="flex bg-white min-h-screen overflow-x-scroll">
          <DashboardNav />
-         <SideNavbar
-            isCollapsed={isCollapsed}
-            toggleSidebar={toggleSidebar}
-         />
-         <div
-            className={`transition-all duration-300 py-6 pr-4 md:pr-10 ${
-               isCollapsed ? "ml-[80px]" : "ml-[px] md:ml-[260px]"
-            } mt-[140px] w-full`}
-         >
+         <SideNavbar isCollapsed={isCollapsed} toggleSidebar={toggleSidebar} />
+         <div className={`transition-all duration-300 py-6 pr-4 md:pr-10 ${isCollapsed ? "ml-[80px]" : "ml-[px] md:ml-[260px]"} mt-[140px] w-full`}>
             {children}
          </div>
       </div>

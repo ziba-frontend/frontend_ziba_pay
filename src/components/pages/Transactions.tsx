@@ -298,10 +298,6 @@ const Transactions = () => {
             >
                Donate
             </div>
-            <div className="cursor-pointer flex gap-2 justify-between p-2 border">
-               <Settings size={20} />
-               <h4>Settings</h4>
-            </div>
          </div>
          <DataTable
             columns={columns}
