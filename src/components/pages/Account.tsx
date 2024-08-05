@@ -11,8 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "react-hot-toast";
 import ProfileForm from "../form/ProfileForm";
-import { getUserProfile } from "@/lib/api-calls/auth-server";
-
+import { getUserProfile, logoutApi } from "@/lib/api-calls/auth-server";
 
 interface UserProfile {
    id: string;
@@ -30,7 +29,8 @@ const Account = () => {
    });
    const [loading, setLoading] = useState<boolean>(true);
    const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false);
+   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] =
+      useState(false);
 
    useEffect(() => {
       const fetchUserProfile = async () => {
@@ -61,7 +61,9 @@ const Account = () => {
    const handleDeleteProfile = async () => {
       try {
          await deleteUser(user.id);
+         await logoutApi();
          toast.success("Profile deleted successfully");
+         window.location.href = "/login";
       } catch (error) {
          toast.error("Failed to delete profile");
       } finally {
@@ -82,8 +84,15 @@ const Account = () => {
          <div className="flex items-center justify-between my-2">
             <h2 className="text-xl font-bold">Profile</h2>
             <div className="flex space-x-2">
-               <Button onClick={() => setIsUpdateModalOpen(true)}>Update Profile</Button>
-               <Button onClick={() => setIsDeleteConfirmationOpen(true)} variant="destructive">Delete Profile</Button>
+               <Button onClick={() => setIsUpdateModalOpen(true)}>
+                  Update Profile
+               </Button>
+               <Button
+                  onClick={() => setIsDeleteConfirmationOpen(true)}
+                  variant="destructive"
+               >
+                  Delete Profile
+               </Button>
             </div>
          </div>
          <div className="border-b py-2">
@@ -104,25 +113,49 @@ const Account = () => {
             </div>
          </div>
 
-         <Dialog open={isUpdateModalOpen} onOpenChange={() => setIsUpdateModalOpen(false)}>
+         {/* Update Profile Modal */}
+         <Dialog
+            open={isUpdateModalOpen}
+            onOpenChange={() => setIsUpdateModalOpen(false)}
+         >
             <DialogContent className="max-w-2xl">
                <DialogHeader>
                   <DialogTitle>Update Profile</DialogTitle>
                </DialogHeader>
-               <ProfileForm user={user} onSubmit={handleUpdateProfile} onClose={() => setIsUpdateModalOpen(false)} />
+               <ProfileForm
+                  user={user}
+                  onSubmit={handleUpdateProfile}
+                  onClose={() => setIsUpdateModalOpen(false)}
+               />
             </DialogContent>
          </Dialog>
 
-  
-         <Dialog open={isDeleteConfirmationOpen} onOpenChange={() => setIsDeleteConfirmationOpen(false)}>
+         {/* Delete Profile Confirmation Dialog */}
+         <Dialog
+            open={isDeleteConfirmationOpen}
+            onOpenChange={() => setIsDeleteConfirmationOpen(false)}
+         >
             <DialogContent className="max-w-sm">
                <DialogHeader>
                   <DialogTitle>Confirm Deletion</DialogTitle>
                </DialogHeader>
-               <p>Are you sure you want to delete your profile? This action cannot be undone.</p>
+               <p>
+                  Are you sure you want to delete your profile? This action
+                  cannot be undone.
+               </p>
                <div className="flex justify-end space-x-4 mt-4">
-                  <Button variant="outline" onClick={() => setIsDeleteConfirmationOpen(false)}>Cancel</Button>
-                  <Button variant="destructive" onClick={handleDeleteProfile}>Delete</Button>
+                  <Button
+                     variant="outline"
+                     onClick={() => setIsDeleteConfirmationOpen(false)}
+                  >
+                     Cancel
+                  </Button>
+                  <Button
+                     variant="destructive"
+                     onClick={handleDeleteProfile}
+                  >
+                     Delete
+                  </Button>
                </div>
             </DialogContent>
          </Dialog>
