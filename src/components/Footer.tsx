@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import { FaFacebook, FaGithub, FaInstagram } from "react-icons/fa";
-import { url } from "inspector";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import logo from "../../public/svg/logo.svg";
@@ -22,7 +21,7 @@ const Footer = () => {
             },
             {
                name: "Financial management tools",
-               link: "/financial-management-tools",
+               link: "/financial-management-tool",
             },
             {
                name: "Custom solutions",
@@ -53,7 +52,12 @@ const Footer = () => {
       },
       {
          title: "Developers",
-         links: [],
+         links: [
+            {
+               name: "Api-docs",
+               link: "/api-docs/start/introduction",
+            },
+         ],
       },
       {
          title: "Support",
@@ -75,24 +79,21 @@ const Footer = () => {
    ];
    return (
       <div
-         className="bg-center  bg-cover mt-40 h-auto bg-black/20"
+         className="bg-center bg-cover mt-40 h-auto bg-black/20"
          style={{
             backgroundImage: "url('/images/footer.png')",
          }}
       >
-         <div className="  h-full py-20">
+         <div className="h-full py-20">
             <div className="flex flex-col gap-4 p-[52px] w-5/6 bg-white/80 mx-auto rounded-md my-2 relative items-center md:items-start">
-               <h3 className="py-6  tmd:ext-[32px]">Ready to get started ?</h3>
-               <p className=" text-center md:text-start md:w-5/6">
-                  Create an account instantly and start accepting payments.Feel
+               <h3 className="py-6 text-[32px]">Ready to get started ?</h3>
+               <p className="text-center md:text-start md:w-5/6">
+                  Create an account instantly and start accepting payments. Feel
                   free to reach out to us for tailored solutions designed
                   specifically for your business needs.
                </p>
-               <div className="flex gap-6 py-6 flex-col items-center md:flex-row md:items-start  w-full">
-                  <Button
-                     variant="outline"
-                     className="w-[60%] md:w-[130px] p-6"
-                  >
+               <div className="flex gap-6 py-6 flex-col items-center md:flex-row md:items-start w-full">
+                  <Button variant="outline" className="w-[60%] md:w-[130px] p-6">
                      <Link href="/login">Login</Link>
                   </Button>
 
@@ -103,17 +104,14 @@ const Footer = () => {
                <Image
                   src={zp}
                   alt="zp"
-                  className="absolute  w-[50px] md:w-[78px] top-2 right-2 md:top-16 md:right-16 "
+                  className="absolute w-[50px] md:w-[78px] top-2 right-2 md:top-16 md:right-16"
                />
             </div>
-            <div className="container mx-auto px-4 border-b border-black py-6 flex  items-start ">
-               <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-center items-start mt-4">
-                  <div className="flex flex-col justify-between  h-full">
+            <div className="container mx-auto px-4 border-b border-black py-6 flex items-start">
+               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-center items-start mt-4">
+                  <div className="flex flex-col justify-between h-full">
                      <div>
-                        <Image
-                           src={logo}
-                           alt="zibaPay"
-                        />
+                        <Image src={logo} alt="zibaPay" />
                         <p>
                            <span className="text-[#3BD64A]">
                               Simplifying payments
@@ -135,14 +133,13 @@ const Footer = () => {
                   </div>
                   {Links.map((link, index) => (
                      <div key={index}>
-                        <h3 className=" font-medium mb-4">
-                           {link.title}
-                        </h3>
-                        <ul className=" space-y-3">
+                        <h3 className="font-medium mb-4">{link.title}</h3>
+                        <ul className="space-y-3">
                            {link.links.map((text, subIndex) => (
                               <li key={subIndex}>
                                  <Link
                                     href={text.link}
+                                    target={text.name === "Api-docs" ? "_blank" : undefined}
                                     className="hover:underline"
                                  >
                                     {text.name}
@@ -154,7 +151,7 @@ const Footer = () => {
                   ))}
                </div>
             </div>
-            <p className="text-center my-3 mt-6 ">
+            <p className="text-center my-3 mt-6">
                &copy;<span className="mx-2">Copyright 2024</span>All rights
                reserved by Ziba Pay
             </p>

@@ -42,7 +42,7 @@ export function generateMetadata({ params }: { params: { slug?: string[] } }) {
    if (page == null) notFound();
 
    return {
-      title: page.data.title,
+      title:` ${page.data.title} - Zibapay Documentation`,
       description: page.data.description,
    } satisfies Metadata;
 }

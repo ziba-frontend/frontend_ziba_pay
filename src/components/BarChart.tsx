@@ -2,86 +2,43 @@
 "use client";
 import React from "react";
 import {
-  BarChart as BarGraph,
-  ResponsiveContainer,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
-  Bar
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
 } from "recharts";
 
-type Props = {};
+type Props = {
+  data: { name: string; total: number }[];
+};
 
-const data = [
-  {
-    name: "Jan",
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: "Feb",
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: "Mar",
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: "Apr",
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: "May",
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: "Jun",
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: "Jul",
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: "Aug",
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: "Sep",
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: "Oct",
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: "Nov",
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: "Dec",
-    total: Math.floor(Math.random() * 5000) + 1000
-  }
-];
+const BarChartComponent: React.FC<Props> = ({ data }) => {
+  const yTicks = [0, 10, 50, 100, 1000];
 
-export default function BarChart({}: Props) {
   return (
-    <ResponsiveContainer width={"100%"} height={350}>
-      <BarGraph data={data}>
-        <XAxis
-          dataKey={"name"}
-          tickLine={true}
-          axisLine={true}
-          stroke="#888888"
-          fontSize={12}
-        />
-        <YAxis
-          tickLine={true}
-          axisLine={true}
-          stroke="#888888"
-          fontSize={12}
-          tickFormatter={(value) => `$${value}`}
-        />
-        <Bar dataKey={"total"} radius={[4, 4, 0, 0]} fill="#3BD64A"/>
-      </BarGraph>
+    <ResponsiveContainer width="100%" height={350}>
+      <BarChart
+        data={data}
+        margin={{
+          top: 5,
+          right: 30,
+          left: 20,
+          bottom: 5,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis ticks={yTicks} />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="total" fill="#8884d8" />
+      </BarChart>
     </ResponsiveContainer>
   );
-}
+};
+
+export default BarChartComponent;

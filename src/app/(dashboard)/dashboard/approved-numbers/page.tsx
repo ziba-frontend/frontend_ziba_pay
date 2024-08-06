@@ -89,4 +89,4 @@ const NumbersComponent: React.FC = () => {
    );
 };
 
-export default NumbersComponent;
+export default page;

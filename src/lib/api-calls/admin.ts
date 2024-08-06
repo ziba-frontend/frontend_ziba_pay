@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import { getUserProfile } from './auth-server';
 
 type Blog = {
     id: string;
@@ -13,6 +14,17 @@ type Blog = {
   
 
 const BASE_URL = 'http://localhost:8080/api/v1/admin';
+
+
+export const checkIfAdmin = async () => {
+    try {
+        const user = await getUserProfile();
+        return user?.role === 'admin';
+    } catch (error) {
+        console.error('Error checking if user is admin:', error);
+        return false;
+    }
+};
 
 export const getAllUsers = async () => {
     try {
@@ -58,25 +70,3 @@ export const deleteUser = async (userId: string) => {
     }
 };
 
-
-// =========BLOGS============
-
-export const createBlog = async (data: Partial<Blog>) => {
-    const response = await axios.post("/api/blogs", data);
-    return response.data;
-  };
-  
-  export const updateBlog = async (id: string, data: Partial<Blog>) => {
-    const response = await axios.put(`/api/blogs/${id}`, data);
-    return response.data;
-  };
-  
-  export const deleteBlog = async (id: string) => {
-    const response = await axios.delete(`/api/blogs/${id}`);
-    return response.data;
-  };
-  
-  export const getAllBlogs = async () => {
-    const response = await axios.get("/api/blogs");
-    return response.data;
-  };

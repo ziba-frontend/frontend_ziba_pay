@@ -147,7 +147,7 @@ const Home = () => {
                   </p>
                   <div className="flex items-center">
                      <div className="flex flex-wrap  gap-5 mx-auto items-center lg:items-start justify-center">
-                        <div className="flex flex-row gap-2 bg-submain p-[35px] lg:h-[402px] rounded-[28px]  text-white w-full    xl:w-[581px] items-center ">
+                        <div className="flex flex-row gap-2 bg-submain p-[35px] lg:h-[350px] rounded-[28px]  text-white w-full    xl:w-[581px] items-center ">
                            <div>
                               <h3 className="my-2">Real-time Alerts</h3>
                               <p>
@@ -166,7 +166,7 @@ const Home = () => {
                               className="ml-2 hidden sm:block"
                            />
                         </div>
-                        <div className="flex flex-row gap-2 bg-submain p-[35px] lg:h-[400px] rounded-[28px]  text-white w-full  xl:w-[581px] items-center">
+                        <div className="flex flex-row gap-2 bg-submain p-[35px] lg:h-[350px] rounded-[28px]  text-white w-full  xl:w-[581px] items-center">
                            <div>
                               <h3 className="my-2">Customizable Dashboard</h3>
                               <p>
@@ -184,7 +184,7 @@ const Home = () => {
                               className="ml-2 hidden sm:block"
                            />
                         </div>
-                        <div className="flex flex-col gap-2 bg-submain p-[35px] lg:h-[449px] rounded-[28px]  text-white w-full   xl:w-[375px] justify-center">
+                        <div className="flex flex-col gap-2 bg-submain p-[35px] lg:h-[420px] rounded-[28px]  text-white w-full   xl:w-[375px] justify-center">
                            <Image
                               src={fr3}
                               alt="fr3"
@@ -201,7 +201,7 @@ const Home = () => {
                               </p>
                            </div>
                         </div>
-                        <div className="flex flex-row gap-2 bg-submain p-6 lg:h-[420px] rounded-[28px]  text-white w-full  xl:w-[794px] items-center">
+                        <div className="flex flex-row gap-2 bg-submain p-6 lg:h-[380px] rounded-[28px]  text-white w-full  xl:w-[794px] items-center">
                            <div>
                               <h3 className="my-2">Friendly Interface</h3>
                               <p>

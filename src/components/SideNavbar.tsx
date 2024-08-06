@@ -14,6 +14,9 @@ import {
    ArrowUpLeftSquare,
    Phone,
    Sidebar,
+   PenSquare,
+   WalletCards,
+   Signal,
 } from "lucide-react";
 import { FaBars } from "react-icons/fa";
 import { useWindowWidth } from "@react-hook/window-size";
@@ -68,13 +71,13 @@ export default function SideNavbar({ isCollapsed, toggleSidebar }: Props) {
                   {
                      title: "Transactions",
                      href: "/dashboard/transactions",
-                     icon: UsersRound,
+                     icon: WalletCards ,
                      variant: "ghost",
                   },
                   {
                      title: "Summary",
                      href: "/dashboard/summary",
-                     icon: GitGraph,
+                     icon: Signal ,
                      variant: "ghost",
                   },
                   {
@@ -133,7 +136,7 @@ export default function SideNavbar({ isCollapsed, toggleSidebar }: Props) {
                      {
                         title: "Blogs",
                         href: "/dashboard/blogs",
-                        icon: GitGraph,
+                        icon:PenSquare,
                         variant: "ghost",
                      },
                      {
@@ -198,3 +201,4 @@ export default function SideNavbar({ isCollapsed, toggleSidebar }: Props) {
       </div>
    );
 }
+

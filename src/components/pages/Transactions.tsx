@@ -1,0 +1,315 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import {
+   Select,
+   SelectContent,
+   SelectItem,
+   SelectTrigger,
+   SelectValue,
+} from "@/components/ui/select";
+import { Settings } from "lucide-react";
+import { DataTable } from "@/components/DataTable";
+import { ColumnDef } from "@tanstack/react-table";
+import DrawerForm from "@/components/DrawerForm";
+import Link from "next/link";
+import RiseLoader from "react-spinners/RiseLoader";
+import { z } from "zod";
+import { getSentTransaction } from "@/lib/api-calls/transaction";
+import { getUserProfile } from "@/lib/api-calls/auth-server";
+import { StatusBadge } from "@/components/StatusBadge";
+import { formatDate } from "@/constants/constants";
+import CompleteTransaction from "@/components/modals/CompleteTransaction";
+
+const formSchema = z.object({
+   username: z.string().min(2, {
+      message: "Username must be at least 2 characters.",
+   }),
+   issue: z.string().min(1, { message: "Issue is required." }),
+   email: z.string().email({ message: "Invalid email address." }),
+   subject: z.string().min(1, { message: "Subject is required." }),
+});
+export declare type Status = "completed" | "pending" | "failed";
+type Payment = {
+   id: string;
+   userId: string;
+   recipient: {
+      id: string;
+      name: string;
+      phoneNumber: string;
+   };
+   date: string;
+   amount: number;
+   status: Status;
+   paymentMethod: string;
+   createdAt: string;
+};
+
+const columns: ColumnDef<Payment>[] = [
+   {
+      header: "ID",
+      cell: ({ row }) => {
+         return <p className="text-14-medium text-dark-700">{row.index + 1}</p>;
+      },
+   },
+   {
+      accessorKey: "recipient.name",
+      header: "Recipient",
+      cell: ({ row }) => {
+         return (
+            <div className="flex gap-2 items-center">
+               <p>{row.original.recipient.name}</p>
+            </div>
+         );
+      },
+   },
+   {
+      accessorKey: "recipient.phoneNumber",
+      header: "Phone Number",
+      cell: ({ row }) => {
+         return (
+            <div className="flex gap-2 items-center">
+               <p>{row.original.recipient.phoneNumber}</p>
+            </div>
+         );
+      },
+   },
+   {
+      accessorKey: "amount",
+      header: "Amount",
+   },
+   {
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) => {
+         const status = row.original.status;
+         return (
+            <div className="min-w-[115px]">
+               <StatusBadge status={status} />
+            </div>
+         );
+      },
+   },
+   {
+      accessorKey: "createdAt",
+      header: "Date",
+      cell: ({ row }) => {
+         const date = row.original.createdAt;
+         return <p>{formatDate(date)}</p>;
+      },
+   },
+   {
+      accessorKey: "paymentMethod",
+      header: "Provider",
+      cell: ({ row }) => {
+         const provider = row.original.paymentMethod;
+         return <p className="font-bold uppercase">{provider}</p>;
+      },
+   },
+
+   {
+      id: "actions",
+      header: () => <div className="pl-4">Actions</div>,
+      cell: ({ row }) => {
+         const transaction = row.original;
+         const userId = transaction.userId;
+
+         return (
+            <div className="flex gap-1">
+               <CompleteTransaction
+                  type="complete"
+                  transactionId={transaction.id}
+                  userId={userId}
+               />
+               <CompleteTransaction
+                  type="cancel"
+                  transactionId={transaction.id}
+                  userId={userId}
+               />
+            </div>
+         );
+      },
+   },
+];
+
+const Transactions = () => {
+   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+   const [drawerTitle, setDrawerTitle] = useState<string>("");
+   const [data, setData] = useState<Payment[]>([]);
+   const [loading, setLoading] = useState<boolean>(true);
+   const [profile, setProfile] = useState<{
+      balance: number;
+      balanceMTN: number;
+      balanceAirtel: number;
+   } | null>(null);
+   const [filters, setFilters] = useState<{
+      kind?: string;
+      status?: string;
+      provider?: string;
+   }>({});
+   const [sort, setSort] = useState<string | null>(null);
+   const [page, setPage] = useState<number>(1);
+
+   const handleOpenDrawer = (title: string) => {
+      setDrawerTitle(title);
+      setIsDrawerOpen(true);
+   };
+
+   const fetchTransactions = async () => {
+      setLoading(true);
+      try {
+         const response = await getSentTransaction({
+            ...filters,
+            sort,
+            page,
+         });
+         const transactions = response.data.transactions;
+         console.log("Transactions retrieved are:", transactions);
+         setData(transactions);
+      } catch (error) {
+         console.error("Error while getting transactions:", error);
+      } finally {
+         setLoading(false);
+      }
+   };
+
+   useEffect(() => {
+      fetchTransactions();
+      const fetchUserProfile = async () => {
+         try {
+            const userProfile = await getUserProfile();
+            setProfile(userProfile);
+            console.log("The user profile: ", userProfile);
+         } catch (error) {
+            console.error("Error fetching user profile:", error);
+         }
+      };
+      fetchUserProfile();
+   }, [filters, sort, page]);
+
+   if (loading) {
+      return (
+         <div className="w-full h-screen flex items-center justify-center">
+            <RiseLoader color="#3BD64A" />
+         </div>
+      );
+   }
+
+   return (
+      <div>
+         <div className="flex md:items-center md:justify-between my-2 flex-col sm:gap-4 md:flex-row gap-6">
+            <h2>Transactions</h2>
+
+            <div className="flex gap-3 flex-row">
+               <div className="bg-black flex w-fit flex-col gap-2 items-end rounded p-2 text-white">
+                  <h5>RWF {profile?.balanceMTN || 0}</h5>
+                  <p>MTN Balance</p>
+               </div>
+               <div className="bg-black flex w-fit flex-col gap-2 items-end rounded p-2 text-white">
+                  <h5>RWF {profile?.balanceAirtel || 0}</h5>
+                  <p>Airtel Balance</p>
+               </div>
+               <div className="bg-black flex w-fit flex-col gap-2 items-end rounded p-2 text-white">
+                  <h5>RWF {profile?.balance || 0}</h5>
+                  <p>Total Balance</p>
+               </div>
+            </div>
+         </div>
+         <div className="gap-6 flex flex-wrap p-1 sm:p-6 border my-6">
+            <div>
+               <Select
+                  onValueChange={(value) =>
+                     setFilters((prev) => ({ ...prev, kind: value }))
+                  }
+               >
+                  <SelectTrigger>
+                     <SelectValue placeholder="Kind" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white p-2">
+                     <SelectItem value="Business">Business</SelectItem>
+                     <SelectItem value="Credit">Credit</SelectItem>
+                  </SelectContent>
+               </Select>
+            </div>
+            <div>
+               <Select
+                  onValueChange={(value) =>
+                     setFilters((prev) => ({ ...prev, status: value }))
+                  }
+               >
+                  <SelectTrigger>
+                     <SelectValue placeholder="Status" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white p-1 sm:p-2">
+                     <SelectItem value="pending">Pending</SelectItem>
+                     <SelectItem value="completed">Completed</SelectItem>
+                  </SelectContent>
+               </Select>
+            </div>
+            <div>
+               <Select
+                  onValueChange={(value) =>
+                     setFilters((prev) => ({ ...prev, paymentMethod: value }))
+                  }
+               >
+                  <SelectTrigger>
+                     <SelectValue placeholder="Provider" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white p-2">
+                     <SelectItem value="mtn">MTN</SelectItem>
+                     <SelectItem value="airtel">Airtel</SelectItem>
+                  </SelectContent>
+               </Select>
+            </div>
+            <div>
+               <Select onValueChange={(value) => setSort(value)}>
+                  <SelectTrigger>
+                     <SelectValue placeholder="Sort by" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white p-2">
+                     <SelectItem value="createdAt">Date</SelectItem>
+                     <SelectItem value="amount">Amount</SelectItem>
+                  </SelectContent>
+               </Select>
+            </div>
+            <div className="border-2 flex w-fit flex-col gap-2 items-end rounded p-2 ">
+               <Link href="/checkout">Checkout</Link>
+            </div>
+            <div
+               className="flex items-center justify-center border px-4 cursor-pointer"
+               onClick={() => handleOpenDrawer("Cash-in")}
+            >
+               CashIn
+            </div>
+            <div
+               className="flex items-center justify-center border px-4 cursor-pointer"
+               onClick={() => handleOpenDrawer("Cash-out")}
+            >
+               CashOut
+            </div>
+            <div
+               className="flex items-center justify-center border px-4 cursor-pointer"
+               onClick={() => handleOpenDrawer("Transfer")}
+            >
+               Transfer
+            </div>
+            <div
+               className="flex items-center justify-center border px-4 cursor-pointer"
+               onClick={() => handleOpenDrawer("Donation")}
+            >
+               Donate
+            </div>
+         </div>
+         <DataTable
+            columns={columns}
+            data={data}
+         />
+         <DrawerForm
+            isOpen={isDrawerOpen}
+            onClose={() => setIsDrawerOpen(false)}
+            title={drawerTitle}
+         />
+      </div>
+   );
+};
+
+export default Transactions;
