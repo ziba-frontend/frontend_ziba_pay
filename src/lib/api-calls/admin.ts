@@ -26,6 +26,16 @@ export const getAllUsers = async () => {
 };
 
 
+export const getUserById = async(userId: any) => {
+    try{
+        const response = await axios.get(`${BASE_URL}/${userId}`,{withCredentials: true})
+        return response.data.data.user;
+    }catch(error){
+        toast.error('Failed to fetch user')
+        console.error("Error while fetching user: ", error);
+        throw error;
+    }
+}
 export const updateUser = async (userId: string, userData: any) => {
     try {
         const response = await axios.patch(`${BASE_URL}/${userId}`, userData, { withCredentials: true });

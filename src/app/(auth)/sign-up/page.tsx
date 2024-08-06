@@ -79,7 +79,7 @@ const SignUp = () => {
       const { agreeTerms, ...userData } = data;
       try {
          await signupApi(userData);
-         router.push("/dashboard");
+         router.push("/login");
       } catch (error) {
          toast.error("Signup failed. Please try again.");
       } finally {

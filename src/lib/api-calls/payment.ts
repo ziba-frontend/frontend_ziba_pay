@@ -1,4 +1,5 @@
 import axios from "axios";
+import apiClient from "./interceptor";
 
 
 interface PaymentData {
@@ -9,13 +10,13 @@ interface PaymentData {
 
 }
 
-const BASE_URL = 'http://localhost:8080/api/v1/payment';
+const BASE_URL = '/api/v1/payment';
 
 
 
 const initiateMtnPayment = async (paymentData: PaymentData) => {
     try {
-        const response = await axios.post(`${BASE_URL}/mtn-momo-pay`, paymentData , { withCredentials: true});
+        const response = await apiClient.post(`${BASE_URL}/mtn-momo-pay`, paymentData , { withCredentials: true});
         return response.data;
     } catch (error) {
         console.error("Error during Mtn momo payment");
