@@ -1,4 +1,5 @@
 import axios from "axios";
+import apiClient from "./interceptor";
 
 
 interface PaymentData {
@@ -10,13 +11,13 @@ interface PaymentData {
 
 }
 
-const BASE_URL = 'http://localhost:8080/api/v1/transactions';
+const BASE_URL = '/api/v1/transactions';
 
 
 
 export const getSentTransaction = async (queryParams = {}) => {
     try {
-        const response = await axios.get(`${BASE_URL}/sent`, {
+        const response = await apiClient.get(`${BASE_URL}/sent`, {
             params: queryParams,
             withCredentials: true
         });
@@ -29,7 +30,7 @@ export const getSentTransaction = async (queryParams = {}) => {
 
 export const getReceivedTransactions = async(queryParams = {}) => {
     try {
-        const response = await axios.get(`${BASE_URL}/received`, {
+        const response = await apiClient.get(`${BASE_URL}/received`, {
             params: queryParams,
             withCredentials: true
         });
@@ -42,7 +43,7 @@ export const getReceivedTransactions = async(queryParams = {}) => {
 
 export const getAllTransactions = async() => {
     try{
-        const response = await axios.get(`${BASE_URL}/all`, { withCredentials: true});
+        const response = await apiClient.get(`${BASE_URL}/all`, { withCredentials: true});
         return response.data;
     }catch(error){
         console.error("Error while getting All transaction");
@@ -52,7 +53,7 @@ export const getAllTransactions = async() => {
 
 export const getAllTransactionStatus = async() => {
     try{
-        const response = await axios.get(`${BASE_URL}/status`, { withCredentials: true});
+        const response = await apiClient.get(`${BASE_URL}/status`, { withCredentials: true});
         return response.data;
     }catch(error){
         console.error("Error while getting All transaction");
@@ -63,7 +64,7 @@ export const getAllTransactionStatus = async() => {
 
 export const generatePDFTransactions = async() => {
     try{
-        const response = await axios.get(`${BASE_URL}/pdf-reports/received`, { withCredentials: true});
+        const response = await apiClient.get(`${BASE_URL}/pdf-reports/received`, { withCredentials: true});
         return response.data;
 
     }catch(error){
@@ -73,7 +74,7 @@ export const generatePDFTransactions = async() => {
 }
 export const generateCSVTransactions = async() => {
     try{
-        const response = await axios.get(`${BASE_URL}/csv-reports/sent`, { withCredentials: true});
+        const response = await apiClient.get(`${BASE_URL}/csv-reports/sent`, { withCredentials: true});
         return response.data;
 
     }catch(error){
@@ -84,7 +85,7 @@ export const generateCSVTransactions = async() => {
 
 export const completeTransaction = async (transactionId: string) => {
     try {
-      const response = await axios.patch(`${BASE_URL}/${transactionId}/approve`, {}, { withCredentials: true });
+      const response = await apiClient.patch(`${BASE_URL}/${transactionId}/approve`, {}, { withCredentials: true });
       return response.data;
     } catch (error) {
       console.error("Error while completing transaction:", error);
@@ -94,7 +95,7 @@ export const completeTransaction = async (transactionId: string) => {
   
   export const cancelTransaction = async (transactionId: string) => {
     try {
-      const response = await axios.patch(`${BASE_URL}/${transactionId}/cancel`, {}, { withCredentials: true });
+      const response = await apiClient.patch(`${BASE_URL}/${transactionId}/cancel`, {}, { withCredentials: true });
       return response.data;
     } catch (error) {
       console.error("Error while canceling transaction:", error);
@@ -104,7 +105,7 @@ export const completeTransaction = async (transactionId: string) => {
 
   export const deposit = async (paymentMethod: string, amount: number) => {
     try {
-        const response = await axios.post(`${BASE_URL}/cash-in`, {
+        const response = await apiClient.post(`${BASE_URL}/cash-in`, {
             paymentMethod,
             amount
         }, { withCredentials: true });
@@ -117,7 +118,7 @@ export const completeTransaction = async (transactionId: string) => {
 
 export const withdraw = async (paymentMethod: string, amount: number) => {
     try {
-        const response = await axios.post(`${BASE_URL}/cash-out`, {
+        const response = await apiClient.post(`${BASE_URL}/cash-out`, {
             paymentMethod,
             amount
         }, { withCredentials: true });
@@ -130,7 +131,7 @@ export const withdraw = async (paymentMethod: string, amount: number) => {
 
 export const getWithdrawalHistory = async(queryParams ={}) => {
     try{
-        const response = await axios.get(`${BASE_URL}/withdraw-history`, {
+        const response = await apiClient.get(`${BASE_URL}/withdraw-history`, {
             withCredentials: true,
             params: queryParams
         });

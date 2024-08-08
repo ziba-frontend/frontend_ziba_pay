@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -15,26 +15,39 @@ import {
    FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { createFeedback } from "@/lib/api-calls/feedback";
+import SubmitButton from "@/components/SubmitButton";
 
-// Define the schema
 const formSchema = z.object({
-   username: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-   }),
    issue: z.string().min(1, { message: "Issue is required." }),
    email: z.string().email({ message: "Invalid email address." }),
    subject: z.string().min(1, { message: "Subject is required." }),
 });
 
 const Request = () => {
-   // Initialize useForm with the schema
+   const [isLoading, setIsLoading] = useState(false);
    const form = useForm({
       resolver: zodResolver(formSchema),
+      defaultValues: {
+         issue: "",
+         email: "",
+         subject: "",
+      },
    });
 
-   // Define the onSubmit handler
-   const onSubmit = (data: any) => {
-      console.log(data);
+
+   const onSubmit = async (data: any) => {
+      setIsLoading(true);
+      try {
+         const feedback = await createFeedback(data.issue, data.email, data.subject);
+         console.log("Here is the feedback: ", feedback);
+         form.reset(); 
+         return feedback;
+      } catch (error) {
+         console.error("Error while creating the feedback: ", error);
+      } finally {
+         setIsLoading(false);
+      }
    };
 
    return (
@@ -42,7 +55,7 @@ const Request = () => {
          <Form {...form}>
             <form
                onSubmit={form.handleSubmit(onSubmit)}
-               className="space-y-8  md:w-3/4 p-6"
+               className="space-y-8 md:w-3/4 p-6"
             >
                <h2>Submit a request</h2>
                <FormField
@@ -87,7 +100,7 @@ const Request = () => {
                         <FormLabel>Subject</FormLabel>
                         <FormControl>
                            <Input
-                              className="bg-white p-6  border md:p-8"
+                              className="bg-white p-6 border md:p-8"
                               placeholder="subject"
                               {...field}
                            />
@@ -103,12 +116,11 @@ const Request = () => {
                      issue you’re about to report.
                   </p>
                </div>
-               <Button
-                  type="submit"
-                  className="p-6"
+               <SubmitButton
+                isLoading={isLoading}
                >
                   Submit
-               </Button>
+               </SubmitButton>
             </form>
          </Form>
       </div>

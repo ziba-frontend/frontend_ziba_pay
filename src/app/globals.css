@@ -111,10 +111,114 @@ button.flex.w-full.flex-row.items-center.gap-2.rounded-md.px-2.text-muted-foregr
    color: black;
    margin-top: 10px;
 }
+.shad-gray-btn {
+   @apply border border-dark-500 cursor-pointer bg-dark-400 text-white !important;
+ }
 
+.table-actions {
+   @apply flex w-full items-center justify-between space-x-2 p-4;
+ }
+ 
 div.ms-2.flex.flex-col.border-s.py-2.ps-2 {
    border-left: none;
 }
+
+.shad-input-label {
+   @apply text-14-medium text-dark-700 !important;
+ }
+
+ .shad-input {
+   @apply bg-dark-400 placeholder:text-dark-600 border-dark-500 h-11 focus-visible:ring-0 focus-visible:ring-offset-0 !important;
+ }
+
+ .shad-input-icon {
+   @apply bg-dark-400 placeholder:text-dark-600 border-dark-500 h-11 focus-visible:ring-0 focus-visible:ring-offset-0 !important;
+ }
+
+ .shad-textArea {
+   @apply bg-dark-400 placeholder:text-dark-600 border-dark-500 focus-visible:ring-0 focus-visible:ring-offset-0 !important;
+ }
+
+ .shad-error {
+   @apply text-red-400 !important;
+ }
+ .shad-otp {
+   @apply w-full flex justify-between !important;
+ }
+
+ .shad-otp-slot {
+   @apply text-36-bold justify-center flex border border-dark-500 rounded-lg size-16 gap-4 !important;
+ }
+
+ .shad-alert-dialog {
+   @apply space-y-5 bg-dark-400 border-dark-500 outline-none !important;
+ }
+ .text-14-medium {
+   @apply text-[14px] leading-[18px] font-medium;
+ }
+ .text-36-bold {
+   @apply text-[36px] leading-[40px] font-bold;
+ }
+
+ .text-24-bold {
+   @apply text-[24px] leading-[28px] font-bold;
+ }
+
+ .text-32-bold {
+   @apply text-[32px] leading-[36px] font-bold;
+ }
+
+ .text-18-bold {
+   @apply text-[18px] leading-[24px] font-bold;
+ }
+
+ .text-16-semibold {
+   @apply text-[16px] leading-[20px] font-semibold;
+ }
+
+ .text-16-regular {
+   @apply text-[16px] leading-[20px] font-normal;
+ }
+
+
+ .text-14-regular {
+   @apply text-[14px] leading-[18px] font-normal;
+ }
+
+ .text-12-regular {
+   @apply text-[12px] leading-[16px] font-normal;
+ }
+
+ .text-12-semibold {
+   @apply text-[12px] leading-[16px] font-semibold;
+ }
+
+
+ .shad-sheet-content button {
+   @apply top-2 focus:ring-0 focus:ring-offset-0 focus-visible:border-none focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+ }
+
+ /* =====  REACT PHONE NUMBER INPUT OVERRIDES */
+ .input-phone {
+   @apply mt-2 h-11 rounded-md px-3 text-sm border bg-white placeholder-gray-600 border-gray-700 !important;
+ }
+ 
+ .PhoneInputInput {
+   outline: none;
+   margin-left: 4px;
+   font-size: 14px;
+   font-weight: 500;
+ }
+ 
+ .PhoneInputInput::placeholder {
+   color: #1a1d21;
+ }
+ 
+
+ /* =====  REACT DATE PICKER OVERRIDES */
+ .date-picker {
+   @apply overflow-hidden border-transparent w-full placeholder:text-dark-600  h-11 text-14-medium rounded-md px-3 outline-none !important;
+ }
 
 div.ms-2.flex.flex-col.border-s.py-2.ps-2 > a {
    color: black;

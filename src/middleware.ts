@@ -5,7 +5,7 @@ export async function middleware(req: NextRequest) {
     const { pathname, origin } = req.nextUrl;
     const token = req.cookies.get('jwt_auth_token')?.value;
 
-    let verifiedToken;
+    let verifiedToken = null;
     if (token) {
         try {
             verifiedToken = await verifyAuth(token);
@@ -13,23 +13,18 @@ export async function middleware(req: NextRequest) {
             console.log('Token verification failed:', err);
         }
     }
-
-    if (!verifiedToken) {
-        if (!pathname.startsWith('/login')) {
-            // Save the original destination to redirect after login
-            const loginUrl = new URL('/login', origin);
-            loginUrl.searchParams.set('redirect', pathname);
-            return NextResponse.redirect(loginUrl);
-        }
-    } else {
-        if (pathname.startsWith('/login')) {
-            return NextResponse.redirect(`${origin}/dashboard`);
-        }
+    if (!verifiedToken && !pathname.startsWith('/login')) {
+        const loginUrl = new URL('/login', origin);
+        loginUrl.searchParams.set('redirect', pathname);
+        return NextResponse.redirect(loginUrl);
+    }
+    if (verifiedToken && pathname.startsWith('/login')) {
+        return NextResponse.redirect(`${origin}/dashboard`);
     }
 
     return NextResponse.next();
 }
 
 export const config = {
-    matcher: ['/dashboard/:path*', '/profile', '/settings', '/login', '/checkout'],
+    matcher: ['/dashboard/:path*', '/profile', '/settings', '/checkout', '/login'],
 };
