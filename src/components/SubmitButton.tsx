@@ -14,7 +14,7 @@ const SubmitButton = ({ isLoading, className, children, onClick }: ButtonProps) 
     <Button
       type="submit"
       disabled={isLoading}
-      className={className ?? "shad-primary-btn w-full"}
+      className={className ?? "shad-primary-btn w-fit p-6"}
       onClick={onClick}
     >
       {isLoading ? (

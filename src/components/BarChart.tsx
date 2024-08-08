@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  Label,
 } from "recharts";
 
 type Props = {
@@ -17,8 +18,7 @@ type Props = {
 };
 
 const BarChartComponent: React.FC<Props> = ({ data }) => {
-  const yTicks = [0, 10, 50, 100, 1000];
-
+  const yTicks = [0,50, 100, 200, 500, 1000]; 
   return (
     <ResponsiveContainer width="100%" height={350}>
       <BarChart
@@ -31,11 +31,15 @@ const BarChartComponent: React.FC<Props> = ({ data }) => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis ticks={yTicks} />
+        <XAxis dataKey="name">
+          <Label value="Months" position="insideBottom" offset={-5} />
+        </XAxis>
+        <YAxis ticks={yTicks}>
+          <Label value="Amount in $" angle={-90} position="insideLeft" />
+        </YAxis>
         <Tooltip />
         <Legend />
-        <Bar dataKey="total" fill="#8884d8" />
+        <Bar dataKey="total" fill="#3BD64A" />
       </BarChart>
     </ResponsiveContainer>
   );

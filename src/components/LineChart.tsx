@@ -10,6 +10,7 @@ import {
    Tooltip,
    Legend,
    ResponsiveContainer,
+   Label
 } from "recharts";
 
 type Props = {
@@ -17,7 +18,7 @@ type Props = {
 };
 
 const LineChartComponent: React.FC<Props> = ({ data }) => {
-   const yTicks = [0, 10, 50, 100, 1000];
+   const yTicks = [0,50, 100, 200, 500, 1000]; 
 
    return (
       <ResponsiveContainer width="100%" height={350}>
@@ -31,20 +32,24 @@ const LineChartComponent: React.FC<Props> = ({ data }) => {
             }}
          >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis ticks={yTicks} />
+            <XAxis dataKey="name">
+               <Label value="Months" position="insideBottom" offset={-5} />
+            </XAxis>
+            <YAxis ticks={yTicks}>
+               <Label value="Amount in $" angle={-90} position="insideLeft" />
+            </YAxis>
             <Tooltip />
             <Legend />
             <Line
                type="monotone"
                dataKey="cashIn"
-               stroke="#8884d8"
+               stroke="#3BD64A"
                activeDot={{ r: 8 }}
             />
             <Line
                type="monotone"
                dataKey="cashOut"
-               stroke="#82ca9d"
+               stroke="#8884d8"
             />
          </LineChart>
       </ResponsiveContainer>
