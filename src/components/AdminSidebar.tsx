@@ -29,7 +29,7 @@ type Props = {
    toggleSidebar: () => void;
 };
 
-export default function SideNavbar({ isCollapsed, toggleSidebar }: Props) {
+export default function AdminSidebar({ isCollapsed, toggleSidebar }: Props) {
    const onlyWidth = useWindowWidth();
    const mobileWidth = onlyWidth < 768;
    const [isAdmin, setIsAdmin] = useState(false);
@@ -64,31 +64,31 @@ export default function SideNavbar({ isCollapsed, toggleSidebar }: Props) {
                links={[
                   {
                      title: "Dashboard",
-                     href: "/dashboard",
+                     href: "/admin",
                      icon: LayoutDashboard,
                      variant: "default",
                   },
                   {
                      title: "Transactions",
-                     href: "/dashboard/transactions",
+                     href: "/admin/transactions",
                      icon: WalletCards ,
                      variant: "ghost",
                   },
                   {
                      title: "Summary",
-                     href: "/dashboard/summary",
+                     href: "/admin/summary",
                      icon: Signal ,
                      variant: "ghost",
                   },
                   {
                      title: "Clients",
-                     href: "/dashboard/clients",
+                     href: "/admin/clients",
                      icon: Users,
                      variant: "ghost",
                   },
                   {
                      title: "Events",
-                     href: "/dashboard/events",
+                     href: "/admin/events",
                      icon: Clock,
                      variant: "ghost",
                   },
@@ -104,13 +104,13 @@ export default function SideNavbar({ isCollapsed, toggleSidebar }: Props) {
                links={[
                   {
                      title: "Application",
-                     href: "/dashboard/apps",
+                     href: "/admin/apps",
                      icon: Blocks,
                      variant: "default",
                   },
                   {
                      title: "Links",
-                     href: "/dashboard/links",
+                     href: "/admin/links",
                      icon: Link,
                      variant: "ghost",
                   },
@@ -129,19 +129,31 @@ export default function SideNavbar({ isCollapsed, toggleSidebar }: Props) {
                   links={[
                      {
                         title: "Withdrawals",
-                        href: "/dashboard/withdrawals",
+                        href: "/admin/withdrawals",
                         icon: ArrowUpLeftSquare,
                         variant: "default",
                      },
                      {
+                        title: "Users",
+                        href: "/admin/users",
+                        icon: Users,
+                        variant: "default",
+                     },
+                     {
+                        title: "Blogs",
+                        href: "/admin/blogs",
+                        icon: PenSquare,
+                        variant: "default",
+                     },
+                     {
                         title: "Approved Numbers",
-                        href: "/dashboard/approved-numbers",
+                        href: "/admin/approved-numbers",
                         icon: Phone,
                         variant: "ghost",
                      },
                      {
                         title: "Account",
-                        href: "/dashboard/account",
+                        href: "/admin/account",
                         icon: Settings,
                         variant: "ghost",
                      },
