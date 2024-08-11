@@ -6,6 +6,7 @@ export const metadata: Metadata = {
    title: "Approved Numbers - Dashboard",
    description: "Approved numbers",
 };
+
 const page = () => {
    return <NumbersComponent />;
 };

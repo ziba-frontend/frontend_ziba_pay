@@ -254,7 +254,7 @@ const Summary = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-between my-2">
+      <div className="flex items-center justify-between my-2 pb-6">
         <h2>Summary</h2>
         <div className="flex gap-3">
           <Form {...form}>
@@ -304,13 +304,13 @@ const Summary = () => {
               />
             </form>
           </Form>
-          <Button variant="outline" onClick={handleRefresh}>
+          <Button  onClick={handleRefresh} className="p-6">
             Refresh
           </Button>
-          <Button variant="outline" onClick={handleGeneratePDF}>
+          <Button  onClick={handleGeneratePDF} className="p-6">
             <FaFilePdf className="mr-2" /> PDF
           </Button>
-          <Button variant="outline" onClick={handleGenerateCSV}>
+          <Button  onClick={handleGenerateCSV} className="p-6">
             <FaFileCsv className="mr-2" /> CSV
           </Button>
         </div>

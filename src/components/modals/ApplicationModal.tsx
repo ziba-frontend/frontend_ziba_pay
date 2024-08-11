@@ -19,7 +19,7 @@ const ApplicationModal = ({ onSuccess } : { onSuccess?: any}) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="capitalize text-green-500">Create</Button>
+        <Button className="capitalize text-green-500 p-6">Create</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader className="mb-4 space-y-3">
