@@ -39,7 +39,13 @@ type Payment = {
   user: {
     id: string;
     name: string;
-    phoneNumber: string;
+    phoneNumber: {
+      id: string;
+      number: string;
+      verified: boolean;
+      verificationToken: string;
+      verificationExpires: string;
+    };
   };
   date: string;
   amount: number;
@@ -67,12 +73,12 @@ const columns: ColumnDef<Payment>[] = [
     },
   },
   {
-    accessorKey: "recipient.phoneNumber",
+    accessorFn: (row) => row.user.phoneNumber?.number,
     header: "Phone Number",
     cell: ({ row }) => {
       return (
         <div className="flex gap-2 items-center">
-          <p>{row.original.user.phoneNumber}</p>
+          <p>{row.original.user.phoneNumber?.number}</p>
         </div>
       );
     },
@@ -258,10 +264,7 @@ const Summary = () => {
         <h2>Summary</h2>
         <div className="flex gap-3">
           <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-8"
-            >
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <FormField
                 control={form.control}
                 name="day"
@@ -274,8 +277,7 @@ const Summary = () => {
                             variant={"outline"}
                             className={cn(
                               "min-w-[150px] p-6 text-left font-normal bg-white",
-                              !field.value &&
-                                "text-muted-foreground"
+                              !field.value && "text-muted-foreground"
                             )}
                           >
                             {field.value ? (
@@ -287,10 +289,7 @@ const Summary = () => {
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
-                      <PopoverContent
-                        className="w-auto p-0"
-                        align="start"
-                      >
+                      <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
                           mode="single"
                           selected={field.value}
