@@ -1,4 +1,3 @@
-// src/api-calls/admin.ts
 
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -19,6 +18,7 @@ const BASE_URL = 'http://localhost:8080/api/v1/admin';
 export const checkIfAdmin = async () => {
     try {
         const user = await getUserProfile();
+        console.log('User Role:', user?.role); 
         return user?.role === 'admin';
     } catch (error) {
         console.error('Error checking if user is admin:', error);
