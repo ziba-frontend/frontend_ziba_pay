@@ -35,7 +35,13 @@ type Payment = {
    recipient: {
       id: string;
       name: string;
-      phoneNumber: string;
+      phoneNumber: {
+         id: string;
+         number: string;
+         verified: boolean;
+         verificationToken: string;
+         verificationExpires: string;
+      };
    };
    date: string;
    amount: number;
@@ -43,6 +49,7 @@ type Payment = {
    paymentMethod: string;
    createdAt: string;
 };
+
 
 const columns: ColumnDef<Payment>[] = [
    {
@@ -63,12 +70,12 @@ const columns: ColumnDef<Payment>[] = [
       },
    },
    {
-      accessorKey: "recipient.phoneNumber",
+      accessorFn: (row) => row.recipient.phoneNumber?.number,
       header: "Phone Number",
       cell: ({ row }) => {
          return (
             <div className="flex gap-2 items-center">
-               <p>{row.original.recipient.phoneNumber}</p>
+               <p>{row.original.recipient.phoneNumber?.number}</p>
             </div>
          );
       },
