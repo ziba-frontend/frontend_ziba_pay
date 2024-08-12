@@ -27,6 +27,7 @@ const ApproavedNums: React.FC = () => {
             setLoading(false);
          }
       };
+
       fetchNumbers();
    }, []);
 
@@ -67,11 +68,7 @@ const ApproavedNums: React.FC = () => {
             <div className="flex items-center justify-center py-6">
                <p>Loading...</p>
             </div>
-         ) : error ? (
-            <div className="flex items-center justify-center py-6">
-               <p>{error}</p>
-            </div>
-         ) : numbers.length > 0 ? (
+         ): numbers.length > 0 ? (
             <div className="py-6 w-full ">
                <DataTable
                   columns={columns}
