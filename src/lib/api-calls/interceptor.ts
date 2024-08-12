@@ -12,11 +12,14 @@ apiClient.interceptors.response.use(
     console.log("Error response:", error.response);
 
     if (error.response && error.response.status === 401) {
-      if (error.response.data.message === 'The user belonging to this token does no longer exist') {
-        if (window.location.pathname !== '/login') {
+      const errorMessage = error.response.data.message;
+
+      if (errorMessage === 'The user belonging to this token does no longer exist') {
+        if (window.location.pathname !== '/login' && window.location.pathname !== '/admin-login') {
           console.log('Redirecting to login');
           toast.error('Your session has expired. Please log in again.');
-          window.location.href = '/login';
+          const isAdminRoute = window.location.pathname.startsWith('/admin');
+          window.location.href = isAdminRoute ? '/admin-login' : '/login';
         }
       }
     }
