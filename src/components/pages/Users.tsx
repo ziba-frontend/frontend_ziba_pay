@@ -12,6 +12,8 @@ import { getUserProfile } from "@/lib/api-calls/auth-server";
 import { Button } from "@/components/ui/button";
 import UserDetailsModal from "../modals/UserDetailsModal";
 import ConfirmDialog from "../modals/ConfirmDeleteUser";
+import { Heart, Pen, Trash, User, Users } from "lucide-react";
+import { FaSearch } from "react-icons/fa";
 
 type User = {
    isEmailVerified: any;
@@ -19,13 +21,13 @@ type User = {
    id: string;
    name: string;
    email: string;
-   createdAt: string; // Add the createdAt field
+   createdAt: string;
 };
 
 const columns: ColumnDef<User>[] = [
    {
       accessorKey: "name",
-      header: "NAME",
+      header: "Name",
       cell: ({ row }) => {
          const user = row.original;
          const { setDetailsUser, setDetailsModalOpen } =
@@ -50,17 +52,19 @@ const columns: ColumnDef<User>[] = [
    },
    {
       accessorKey: "email",
-      header: "EMAIL",
+      header: "Email",
    },
    {
       accessorKey: "role",
-      header: "ROLE",
+      header: "Role",
    },
    {
       accessorKey: "isEmailVerified",
       header: "KYC STATUS",
       cell: ({ row }) => (
-         <span>{row.original.isEmailVerified ? "Verified" : "Not Verified"}</span>
+         <span>
+            {row.original.isEmailVerified ? "Verified" : "Not Verified"}
+         </span>
       ),
    },
    {
@@ -76,60 +80,61 @@ const columns: ColumnDef<User>[] = [
 const ActionButtons: React.FC<{ user: User }> = ({ user }) => {
    const [isConfirmDialogOpen, setConfirmDialogOpen] = useState(false);
    const router = useRouter();
-   const { setModalOpen, setCurrentUser, isAdmin } = React.useContext(UsersPageContext);
+   const { setModalOpen, setCurrentUser, isAdmin } =
+      React.useContext(UsersPageContext);
 
    if (isAdmin) {
-       return null;
+      return null;
    }
 
    const handleUpdate = () => {
-       setCurrentUser(user);
-       setModalOpen(true);
+      setCurrentUser(user);
+      setModalOpen(true);
    };
 
    const handleDelete = async () => {
-       try {
-           await deleteUser(user.id);
-           toast.success("User deleted successfully");
-           router.refresh();
-       } catch (error) {
-           toast.error("Failed to delete user");
-       }
+      try {
+         await deleteUser(user.id);
+         toast.success("User deleted successfully");
+         router.refresh();
+      } catch (error) {
+         toast.error("Failed to delete user");
+      }
    };
 
    const openConfirmDialog = () => {
-       setConfirmDialogOpen(true);
+      setConfirmDialogOpen(true);
    };
 
    const closeConfirmDialog = () => {
-       setConfirmDialogOpen(false);
+      setConfirmDialogOpen(false);
    };
 
    return (
-       <div className="flex gap-2">
-           {user.role !== "admin" && (
-               <>
-                   <button
-                       onClick={handleUpdate}
-                       className="text-blue-500"
-                   >
-                       Update
-                   </button>
-                   <button
-                       onClick={openConfirmDialog}
-                       className="text-red-500"
-                   >
-                       Delete
-                   </button>
-               </>
-           )}
-           <ConfirmDialog
-               open={isConfirmDialogOpen}
-               onClose={closeConfirmDialog}
-               onConfirm={handleDelete}
-               message={`Are you sure you want to delete user ${user.name}? This action cannot be undone.`}
-           />
-       </div>
+      <div className="flex gap-2">
+         {user.role !== "admin" && (
+            <>
+               <button
+                  onClick={handleUpdate}
+                  className="text-blue-500"
+               >
+                  <Pen />
+               </button>
+               <button
+                  onClick={openConfirmDialog}
+                  className="text-red-500"
+               >
+                  <Trash />
+               </button>
+            </>
+         )}
+         <ConfirmDialog
+            open={isConfirmDialogOpen}
+            onClose={closeConfirmDialog}
+            onConfirm={handleDelete}
+            message={`Are you sure you want to delete user ${user.name}? This action cannot be undone.`}
+         />
+      </div>
    );
 };
 
@@ -154,6 +159,7 @@ export default function UsersPage() {
    const [currentUser, setCurrentUser] = useState<User | null>(null);
    const [detailsUser, setDetailsUser] = useState<User | null>(null);
    const [isAdmin, setIsAdmin] = useState(false);
+   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
 
    useEffect(() => {
       const fetchData = async () => {
@@ -201,8 +207,62 @@ export default function UsersPage() {
             isAdmin,
          }}
       >
+         <div className="mb-6 flex flex-col md:flex-row md:justify-between gap-4">
+         <form
+                  className={`flex gap-4 bg-white items-center p-[15px] rounded-lg transition-all  ${
+                     isInputFocused ? "border-2 border-main" : "border"
+                  }`}
+               >
+                  <FaSearch color="gray" />
+                  <input
+                     className="outline-none w-5/6"
+                     placeholder="Search for..."
+                     onFocus={() => setIsInputFocused(true)}
+                     onBlur={() => setIsInputFocused(false)}
+                  />
+               </form>
+               <Button className="bg-main">Add User</Button>
+         </div>
          <div className="flex flex-col gap-5 w-full">
             <PageTitle title="Users" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+               <div className="border p-4 rounded-md flex  gap-4">
+                  <div className="flex items-center justify-center rounded-full bg-gray-500 p-4 h-[50px] w-[50px] ">
+                     <Users />
+                  </div>
+                  <div className="flex items-start flex-col gap-1 font-semibold">
+                     <p>Total Users</p>
+                     <p className=" p-1 flex items-center">250</p>
+                  </div>
+               </div>
+               <div className="border p-4 rounded-md flex  gap-4">
+                  <div className="flex items-center justify-center rounded-full bg-orange-300 p-4 h-[50px] w-[50px] ">
+                     <User className="text-orange-500"/>
+                  </div>
+                  <div className="flex items-start flex-col gap-1 font-semibold">
+                     <p>New Users</p>
+                     <p className=" p-1 flex items-center">15</p>
+                  </div>
+               </div>
+               <div className="border p-4 rounded-md flex  gap-4">
+                  <div className="flex items-center justify-center rounded-full bg-green-300 p-4 h-[50px] w-[50px] ">
+                     <Heart className="text-green-500" />
+                  </div>
+                  <div className="flex items-start flex-col gap-1 font-semibold">
+                     <p>Top Users</p>
+                     <p className=" p-1 flex items-center">200</p>
+                  </div>
+               </div>
+               <div className="border p-4 rounded-md flex  gap-4">
+                  <div className="flex items-center justify-center rounded-full bg-blue-300 p-4 h-[50px] w-[50px] ">
+                     <span className="bg-blue-500  rounded-full flex items-center justify-center h-4 w-4">...</span>
+                  </div>
+                  <div className="flex items-start flex-col gap-1 font-semibold">
+                     <p>Others Users</p>
+                     <p className=" p-1 flex items-center">35</p>
+                  </div>
+               </div>
+            </div>
             <DataTable
                columns={columns}
                data={data}
