@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AdminAreaChart from "./AdminAreaChart";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "../ui/button";
@@ -8,15 +8,35 @@ import admin1 from "../../../public/images/admin1.png";
 import admin2 from "../../../public/images/admin2.png";
 import admin3 from "../../../public/images/admin3.png";
 import AdminPieChart from "../AdminPieChart";
+import { getAllUsers } from "@/lib/api-calls/admin";
 
 const AdminHome = () => {
+
+   const [ users , setUsers]=  useState([]);
+
+   useEffect(() => {
+
+      const getAll = async() => {
+         try{
+            const data = await getAllUsers();
+            console.log(data)
+            setUsers(data);
+         }catch(error){
+            console.log("error while getting All users")
+         }
+      }
+
+      getAll();
+   }, [])
+
+   
    return (
       <>
          <h1 className="ml-4 text-xl md:text-2xl">Dashboard Overview</h1>
          <div className="grid gap-4 md:gap-6 p-4 md:p-6 lg:p-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
             <div className="border p-4 md:p-6 lg:p-10 flex flex-col gap-2 items-start justify-between rounded-[20px] h-[180px] lg:h-[200px]">
                <p className="text-[#979797]">NUMBER OF USERS</p>
-               <h1 className="text-xl md:text-2xl font-bold">5,000</h1>
+               <h1 className="text-xl md:text-2xl font-bold">{users && users.length}</h1>
             </div>
             <div className="border p-4 md:p-6 lg:p-10 flex flex-col gap-2 items-start justify-between rounded-[20px] h-[180px] lg:h-[200px]">
                <p className="text-[#979797]">TODAY'S USERS</p>
