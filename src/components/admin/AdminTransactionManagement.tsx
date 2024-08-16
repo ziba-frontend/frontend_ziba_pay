@@ -12,7 +12,7 @@ import { getUserProfile } from "@/lib/api-calls/auth-server";
 import { Button } from "@/components/ui/button";
 import UserDetailsModal from "../modals/UserDetailsModal";
 import ConfirmDialog from "../modals/ConfirmDeleteUser";
-import { Heart, Pen, Trash, User, Users } from "lucide-react";
+import { ArrowDown, Heart, Pen, Trash, User, Users } from "lucide-react";
 import { FaSearch } from "react-icons/fa";
 
 type User = {
@@ -152,7 +152,7 @@ const UsersPageContext = React.createContext<{
    isAdmin: false,
 });
 
-export default function UsersPage() {
+export default function AdminTransactionManagement() {
    const [data, setData] = useState<User[]>([]);
    const [isModalOpen, setModalOpen] = useState(false);
    const [isDetailsModalOpen, setDetailsModalOpen] = useState(false);
@@ -207,7 +207,7 @@ export default function UsersPage() {
             isAdmin,
          }}
       >
-        <div className="mb-6 flex flex-col md:flex-row md:justify-between gap-4 w-full">
+         <div className="mb-6 flex flex-col md:flex-row md:justify-between gap-4 w-full">
             <form
                className={`flex gap-4 items-center bg-white p-[15px] rounded-lg transition-all ${
                   isInputFocused ? "border-2 border-main" : "border"
@@ -221,48 +221,14 @@ export default function UsersPage() {
                   onBlur={() => setIsInputFocused(false)}
                />
             </form>
-            <Button className="bg-main w-full md:w-auto">Add User</Button>
+            <Button className=" w-full md:w-auto">
+               Export
+               <ArrowDown />
+            </Button>
          </div>
          <div className="flex flex-col gap-5 w-full">
-            <PageTitle title="Users" />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-               <div className="border p-4 rounded-md flex  gap-4">
-                  <div className="flex items-center justify-center rounded-full bg-gray-500 p-4 h-[50px] w-[50px] ">
-                     <Users />
-                  </div>
-                  <div className="flex items-start flex-col gap-1 font-semibold">
-                     <p>Total Users</p>
-                     <p className=" p-1 flex items-center">{data.length}</p>
-                  </div>
-               </div>
-               <div className="border p-4 rounded-md flex  gap-4">
-                  <div className="flex items-center justify-center rounded-full bg-orange-300 p-4 h-[50px] w-[50px] ">
-                     <User className="text-orange-500"/>
-                  </div>
-                  <div className="flex items-start flex-col gap-1 font-semibold">
-                     <p>New Users</p>
-                     <p className=" p-1 flex items-center">0</p>
-                  </div>
-               </div>
-               <div className="border p-4 rounded-md flex  gap-4">
-                  <div className="flex items-center justify-center rounded-full bg-green-300 p-4 h-[50px] w-[50px] ">
-                     <Heart className="text-green-500" />
-                  </div>
-                  <div className="flex items-start flex-col gap-1 font-semibold">
-                     <p>Top Users</p>
-                     <p className=" p-1 flex items-center">0</p>
-                  </div>
-               </div>
-               <div className="border p-4 rounded-md flex  gap-4">
-                  <div className="flex items-center justify-center rounded-full bg-blue-300 p-4 h-[50px] w-[50px] ">
-                     <span className="bg-blue-500  rounded-full flex items-center justify-center h-4 w-4">...</span>
-                  </div>
-                  <div className="flex items-start flex-col gap-1 font-semibold">
-                     <p>Others Users</p>
-                     <p className=" p-1 flex items-center">0</p>
-                  </div>
-               </div>
-            </div>
+            <PageTitle title="Transactions" />
+            
             <DataTable
                columns={columns}
                data={data}
