@@ -1,28 +1,20 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
-   ShoppingCart,
    LayoutDashboard,
-   UsersRound,
    Settings,
-   GitGraph,
-   User,
    Users,
-   Clock,
-   Blocks,
-   Link,
-   ArrowUpLeftSquare,
-   Phone,
    Sidebar,
-   PenSquare,
    WalletCards,
    Signal,
+   LogOut,
 } from "lucide-react";
-import { FaBars } from "react-icons/fa";
 import { useWindowWidth } from "@react-hook/window-size";
+import logo from "../../public/svg/logo.svg";
 import { Nav } from "./ui/nav";
-import { getUserProfile } from "@/lib/api-calls/auth-server";
-import toast from "react-hot-toast";
+import { logoutApi } from "@/lib/api-calls/auth-server";
+import Link from "next/link";
+import Image from "next/image";
 
 type Props = {
    isCollapsed: boolean;
@@ -32,135 +24,81 @@ type Props = {
 export default function AdminSidebar({ isCollapsed, toggleSidebar }: Props) {
    const onlyWidth = useWindowWidth();
    const mobileWidth = onlyWidth < 768;
-   const [isAdmin, setIsAdmin] = useState(false);
 
-   useEffect(() => {
-      const fetchUserProfile = async () => {
-         try {
-            const user = await getUserProfile();
-            if (user.role === "admin") {
-               setIsAdmin(true);
-            }
-         } catch (error) {
-            // toast.error("Error fetching user profile");
-            console.error("Error fetching user profile:", error);
-         }
-      };
+   const handleLogout = async () => {
+      try {
+         await logoutApi();
+         window.location.href = "/login";
+      } catch (error) {
+         console.error("Failed to logout:", error);
+      }
+   };
 
-      fetchUserProfile();
-   }, []);
    return (
       <div
-         className={`fixed top-[100px] left-0 bg-white bottom-0 z-20 overflow-y-scroll no-scrollbar ${
+         className={`fixed top-0 left-0 bg-white bottom-0 z-20 overflow-y-scroll no-scrollbar flex flex-col items-start ${
             isCollapsed || mobileWidth ? "w-[60px]" : "w-[200px] md:w-[250px]"
          } border-r p-4 transition-width duration-300`}
       >
-         <div className="py-2">
-            {!(isCollapsed || mobileWidth) && (
-               <p className="ml-4 my-2">Metrics</p>
-            )}
-            <Nav
-               isCollapsed={mobileWidth ? true : isCollapsed}
-               links={[
-                  {
-                     title: "Dashboard",
-                     href: "/admin",
-                     icon: LayoutDashboard,
-                     variant: "default",
-                  },
-                  {
-                     title: "Transactions",
-                     href: "/admin/transactions",
-                     icon: WalletCards ,
-                     variant: "ghost",
-                  },
-                  {
-                     title: "Summary",
-                     href: "/admin/summary",
-                     icon: Signal ,
-                     variant: "ghost",
-                  },
-                  {
-                     title: "Clients",
-                     href: "/admin/clients",
-                     icon: Users,
-                     variant: "ghost",
-                  },
-                  {
-                     title: "Events",
-                     href: "/admin/events",
-                     icon: Clock,
-                     variant: "ghost",
-                  },
-               ]}
-            />
-         </div>
-         <div className="py-2 border-t">
-            {!(isCollapsed || mobileWidth) && (
-               <p className="ml-4 my-2">Products</p>
-            )}
-            <Nav
-               isCollapsed={mobileWidth ? true : isCollapsed}
-               links={[
-                  {
-                     title: "Application",
-                     href: "/admin/apps",
-                     icon: Blocks,
-                     variant: "default",
-                  },
-                  {
-                     title: "Links",
-                     href: "/admin/links",
-                     icon: Link,
-                     variant: "ghost",
-                  },
-               ]}
-            />
-         </div>
-
-      
-
-            <div className="py-2 border-t ">
+         {!(isCollapsed || mobileWidth) && (
+            <Link href="/">
+               <Image
+                  src={logo}
+                  alt="zibaPay"
+               />
+            </Link>
+         )}
+         <div className="flex justify-between flex-col h-full">
+            <div className="py-2">
                {!(isCollapsed || mobileWidth) && (
-                  <p className="ml-4 my-2">Admin</p>
+                  <p className="my-2">Metrics</p>
                )}
                <Nav
                   isCollapsed={mobileWidth ? true : isCollapsed}
                   links={[
                      {
-                        title: "Withdrawals",
-                        href: "/admin/withdrawals",
-                        icon: ArrowUpLeftSquare,
+                        title: "Dashboard Overview",
+                        href: "/admin",
+                        icon: LayoutDashboard,
                         variant: "default",
                      },
                      {
-                        title: "Users",
-                        href: "/admin/users",
+                        title: "Users Management",
+                        href: "/admin/users-management",
                         icon: Users,
-                        variant: "default",
-                     },
-                     {
-                        title: "Blogs",
-                        href: "/admin/blogs",
-                        icon: PenSquare,
-                        variant: "default",
-                     },
-                     {
-                        title: "Approved Numbers",
-                        href: "/admin/approved-numbers",
-                        icon: Phone,
                         variant: "ghost",
                      },
                      {
-                        title: "Account",
-                        href: "/admin/account",
+                        title: "Transactions Management ",
+                        href: "/admin/transactions-management",
+                        icon: WalletCards,
+                        variant: "ghost",
+                     },
+                     {
+                        title: "System Configuration",
+                        href: "/admin/system-configuration",
                         icon: Settings,
+                        variant: "ghost",
+                     },
+                     {
+                        title: "Reporting & Analytics",
+                        href: "/admin/reporting-and-analytics",
+                        icon: Signal,
                         variant: "ghost",
                      },
                   ]}
                />
             </div>
-     
+            <button
+               onClick={handleLogout}
+               className="flex gap-2 items-center"
+            >
+               <LogOut />
+               {!(isCollapsed || mobileWidth) && (
+                  <p className="hidden sm:block">Logout</p>
+               )}
+            </button>
+         </div>
 
          {/* Toggle Button */}
          <div className="mt-auto pt-4 border-t pb-6">
@@ -172,4 +110,3 @@ export default function AdminSidebar({ isCollapsed, toggleSidebar }: Props) {
       </div>
    );
 }
-
