@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React , { useState , useEffect} from "react";
 import { Button } from "../ui/button";
 import {
    ArrowDown,
@@ -13,8 +14,28 @@ import { AdminRadioChart } from "./AdminRadioChart";
 import { AdminLineChart } from "./AdminLineChart";
 import { AdminToolsChart } from "./AdminToolsChart";
 import { HealthChart } from "./HealthChart";
+import { getAllUsers } from "@/lib/api-calls/admin";
 
 const AdminHome = () => {
+
+   const [ users , setUsers]=  useState([]);
+
+   useEffect(() => {
+
+      const getAll = async() => {
+         try{
+            const data = await getAllUsers();
+            console.log(data)
+            setUsers(data);
+         }catch(error){
+            console.log("error while getting All users")
+         }
+      }
+
+      getAll();
+   }, [])
+
+   
    return (
       <div className="p-4">
          <div className="mb-6 flex flex-col md:flex-row md:justify-between gap-4">

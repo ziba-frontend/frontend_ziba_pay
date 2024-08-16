@@ -120,7 +120,7 @@ button.flex.w-full.flex-row.items-center.gap-2.rounded-md.px-2.text-muted-foregr
  }
 
 .table-actions {
-   @apply flex w-full items-center justify-between space-x-2 p-4;
+   @apply flex w-full items-center justify-end space-x-2 p-4;
  }
  
 div.ms-2.flex.flex-col.border-s.py-2.ps-2 {

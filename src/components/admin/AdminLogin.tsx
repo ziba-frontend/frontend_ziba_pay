@@ -1,8 +1,7 @@
 "use client";
-
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -19,14 +18,11 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
-import {
-  loginApi,
-  signupApi
-} from "@/lib/api-calls/auth-server";
-import { decryptKey, encryptKey } from "@/lib/utils";
 import Link from "next/link";
 import RiseLoader from "react-spinners/RiseLoader";
+import PassCodeAdminModal from "../modals/PassCodeAdminModal";
+import { loginApi, signupApi } from "@/lib/api-calls/auth-server";
+import { decryptKey, encryptKey } from "@/lib/utils";
 
 const emailOrPhoneValidation = z
   .string()
@@ -53,25 +49,8 @@ const AdminLogin = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [passkey, setPasskey] = useState("");
-  const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
-
-  const encryptedKey =
-    typeof window !== "undefined"
-      ? window.localStorage.getItem("accessKey")
-      : null;
-
-  useEffect(() => {
-    const accessKey = encryptedKey && decryptKey(encryptedKey);
-
-    if (accessKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY?.toString()) {
-      setOpen(false);
-      router.push("/admin");
-    } else {
-      setOpen(true);
-    }
-  }, [encryptedKey, router]);
+  const [email, setEmail] = useState<string | null>(null);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -81,13 +60,11 @@ const AdminLogin = () => {
   const onSubmit = async (data: FormData) => {
     setIsLoading(true);
     const { emailOrPhone, password, name } = data;
+    setEmail(emailOrPhone);
     try {
-      // Try logging in first
       await loginApi({ email: emailOrPhone, password });
-      // Open the modal for passkey confirmation if login succeeds
       setOpen(true);
     } catch (loginError) {
-      // If login fails, attempt to sign up
       try {
         await signupApi({
           name,
@@ -95,9 +72,7 @@ const AdminLogin = () => {
           password,
           role: "admin",
         });
-        // Log in after signing up
         await loginApi({ email: emailOrPhone, password });
-        // Open the modal for passkey confirmation
         setOpen(true);
       } catch (signupError) {
         toast.error("Signup failed. Please try again.");
@@ -108,21 +83,9 @@ const AdminLogin = () => {
   };
 
   const closeModal = () => {
+    console.log("Closing modal...");
     setOpen(false);
-    router.push("/");
-  };
-
-  const validatePasskey = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-
-    if (passkey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
-      const encryptedKey = encryptKey(passkey);
-      localStorage.setItem("accessKey", encryptedKey);
-      setOpen(false);
-      router.push("/admin");
-    } else {
-      setError("Invalid passkey. Please try again.");
-    }
+    console.log("Redirecting to /admin...");
   };
 
   return (
@@ -142,7 +105,12 @@ const AdminLogin = () => {
           className="w-full mb-20 block md:hidden"
         />
         <Link href="/" className="mt-6 hidden md:block z-30">
-          <Image src={logo} alt="zibaPay" className="2xl:ml-[400px]" width={120} />
+          <Image
+            src={logo}
+            alt="zibaPay"
+            className="2xl:ml-[400px]"
+            width={120}
+          />
         </Link>
         <Form {...form}>
           <form
@@ -165,7 +133,9 @@ const AdminLogin = () => {
                       />
                     </FormControl>
                     {form.formState.errors.name && (
-                      <p className="text-red-500 text-sm">{form.formState.errors.name?.message}</p>
+                      <p className="text-red-500 text-sm">
+                        {form.formState.errors.name?.message}
+                      </p>
                     )}
                   </FormItem>
                 )}
@@ -189,12 +159,18 @@ const AdminLogin = () => {
                             className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
                             onClick={() => setShowPassword((prev) => !prev)}
                           >
-                            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            {showPassword ? (
+                              <EyeOff size={20} />
+                            ) : (
+                              <Eye size={20} />
+                            )}
                           </div>
                         </div>
                       </FormControl>
                       {form.formState.errors.password && (
-                        <p className="text-red-500 text-sm">{form.formState.errors.password?.message}</p>
+                        <p className="text-red-500 text-sm">
+                          {form.formState.errors.password?.message}
+                        </p>
                       )}
                     </FormItem>
                   )}
@@ -244,34 +220,11 @@ const AdminLogin = () => {
             </div>
           </form>
         </Form>
+
         {/* Passkey Modal */}
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogContent className="p-6 max-w-md mx-auto">
-            <DialogHeader>
-              <h2 className="text-center">Enter Admin Passkey</h2>
-            </DialogHeader>
-            <div className="flex flex-col gap-4">
-              <Input
-                type="text"
-                value={passkey}
-                onChange={(e) => setPasskey(e.target.value)}
-                placeholder="Enter passkey"
-                className="border rounded p-3"
-              />
-              {error && <p className="text-red-500">{error}</p>}
-              <Button
-                type="button"
-                onClick={validatePasskey}
-                className="bg-main w-full"
-              >
-                Submit Passkey
-              </Button>
-              <Button type="button" variant="outline" onClick={closeModal}>
-                Cancel
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+        {email && (
+          <PassCodeAdminModal open={open} onClose={closeModal} email={email} />
+        )}
       </div>
     </div>
   );

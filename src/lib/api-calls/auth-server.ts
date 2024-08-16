@@ -77,7 +77,7 @@ export const getUserProfile = async () => {
         const response = await apiClient.get(`${BASE_URL}/profile`, { withCredentials: true });
         return response.data.data.user;
     } catch (error) {
-        toast.error('Error fetching user profile');
+        // toast.error('Error fetching user profile');
         console.error('Error fetching user profile:', error);
         throw error;
     }
@@ -119,6 +119,18 @@ export const verifyPhoneNumber = async (phone: string, code: string) => {
         throw error;
     }
 };
+
+export const verifyOtp = async ( email: string , otpCode: string) => {
+    try{
+        const response = await apiClient.post(`${BASE_URL}/verify-otp` , { email , otpCode }, {
+            withCredentials: true
+        })
+        return response.data
+    }catch(error){
+        console.error('Error during otp verification', error);
+        toast.error("invalid otp or had expired")
+    }
+}
 
 
 export const getVerifiedPhoneNumbers = async() => {

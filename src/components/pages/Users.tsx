@@ -232,7 +232,7 @@ export default function UsersPage() {
                   </div>
                   <div className="flex items-start flex-col gap-1 font-semibold">
                      <p>Total Users</p>
-                     <p className=" p-1 flex items-center">250</p>
+                     <p className=" p-1 flex items-center">{data.length}</p>
                   </div>
                </div>
                <div className="border p-4 rounded-md flex  gap-4">
@@ -241,7 +241,7 @@ export default function UsersPage() {
                   </div>
                   <div className="flex items-start flex-col gap-1 font-semibold">
                      <p>New Users</p>
-                     <p className=" p-1 flex items-center">15</p>
+                     <p className=" p-1 flex items-center">0</p>
                   </div>
                </div>
                <div className="border p-4 rounded-md flex  gap-4">
@@ -250,7 +250,7 @@ export default function UsersPage() {
                   </div>
                   <div className="flex items-start flex-col gap-1 font-semibold">
                      <p>Top Users</p>
-                     <p className=" p-1 flex items-center">200</p>
+                     <p className=" p-1 flex items-center">0</p>
                   </div>
                </div>
                <div className="border p-4 rounded-md flex  gap-4">
@@ -259,7 +259,7 @@ export default function UsersPage() {
                   </div>
                   <div className="flex items-start flex-col gap-1 font-semibold">
                      <p>Others Users</p>
-                     <p className=" p-1 flex items-center">35</p>
+                     <p className=" p-1 flex items-center">0</p>
                   </div>
                </div>
             </div>

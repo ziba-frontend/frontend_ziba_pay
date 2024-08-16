@@ -42,7 +42,7 @@ export default function SideNavbar({ isCollapsed, toggleSidebar }: Props) {
                setIsAdmin(true);
             }
          } catch (error) {
-            toast.error("Error fetching user profile");
+            // toast.error("Error fetching user profile");
             console.error("Error fetching user profile:", error);
          }
       };
