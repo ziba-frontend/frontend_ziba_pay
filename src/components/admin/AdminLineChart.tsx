@@ -1,43 +1,41 @@
 "use client";
 
-import { Bar, BarChart, XAxis } from "recharts";
+import { Bar, BarChart, XAxis, YAxis, Legend, CartesianGrid } from "recharts";
 
-import {
-   Card,
-   CardContent,
-   CardDescription,
-   CardHeader,
-   CardTitle,
-} from "@/components/ui/card";
 import {
    ChartConfig,
    ChartContainer,
    ChartTooltip,
    ChartTooltipContent,
 } from "@/components/ui/chart";
+
 const chartData = [
-   { date: "2024-07-15", running: 450, swimming: 300 },
-   { date: "2024-07-16", running: 380, swimming: 420 },
-   { date: "2024-07-17", running: 520, swimming: 120 },
-   { date: "2024-07-18", running: 140, swimming: 550 },
-   { date: "2024-07-19", running: 600, swimming: 350 },
-   { date: "2024-07-20", running: 480, swimming: 400 },
-   { date: "2024-07-15", running: 450, swimming: 300 },
-   { date: "2024-07-16", running: 380, swimming: 420 },
-   { date: "2024-07-17", running: 520, swimming: 120 },
-   { date: "2024-07-18", running: 140, swimming: 550 },
-   { date: "2024-07-19", running: 600, swimming: 350 },
-   { date: "2024-07-20", running: 480, swimming: 400 },
+   { month: "JAN", users: 4500, subscribers: 3000, newCustomers: 2000 },
+   { month: "FEB", users: 3800, subscribers: 4200, newCustomers: 1500 },
+   { month: "MAR", users: 5200, subscribers: 1200, newCustomers: 1800 },
+   { month: "APR", users: 1400, subscribers: 5500, newCustomers: 3000 },
+   { month: "MAY", users: 6000, subscribers: 3500, newCustomers: 4000 },
+   { month: "JUN", users: 4800, subscribers: 4000, newCustomers: 2200 },
+   { month: "JUL", users: 5000, subscribers: 3700, newCustomers: 2500 },
+   { month: "AUG", users: 5100, subscribers: 3600, newCustomers: 2700 },
+   { month: "SEP", users: 5300, subscribers: 3400, newCustomers: 2900 },
+   { month: "OCT", users: 5400, subscribers: 3300, newCustomers: 3100 },
+   { month: "NOV", users: 5500, subscribers: 3200, newCustomers: 3300 },
+   { month: "DEC", users: 5600, subscribers: 3100, newCustomers: 3500 },
 ];
 
 const chartConfig = {
-   running: {
-      label: "Running",
+   users: {
+      label: "Users",
       color: "var(--chart-1)",
    },
-   swimming: {
-      label: "Swimming",
+   subscribers: {
+      label: "Subscribers",
       color: "var(--chart-2)",
+   },
+   newCustomers: {
+      label: "New Customers",
+      color: "var(--chart-3)",
    },
 } satisfies ChartConfig;
 
@@ -47,34 +45,45 @@ export function AdminLineChart() {
          <BarChart
             accessibilityLayer
             data={chartData}
+            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
          >
+            <CartesianGrid strokeDasharray="3 3" /> 
             <XAxis
-               dataKey="date"
+               dataKey="month"
                tickLine={false}
                tickMargin={10}
                axisLine={false}
-               tickFormatter={(value) => {
-                  return new Date(value).toLocaleDateString("en-US", {
-                     weekday: "short",
-                  });
-               }}
             />
-            <Bar
-               dataKey="running"
-               stackId="a"
-               fill="var(--color-running)"
-               radius={[0, 0, 4, 4]}
+            <YAxis
+               tickLine={false}
+               axisLine={false}
+               tickFormatter={(value) => `${value / 1000}K`} 
             />
+            <Legend verticalAlign="top" height={36} /> 
             <Bar
-               dataKey="swimming"
-               stackId="a"
-               fill="var(--color-swimming)"
+               dataKey="users"
+               fill="var(--color-users)"
                radius={[4, 4, 0, 0]}
+               barSize={12} 
+               stackId="a" 
+            />
+            <Bar
+               dataKey="subscribers"
+               fill="var(--color-subscribers)"
+               radius={[4, 4, 0, 0]}
+               barSize={12} 
+               stackId="a" 
+            />
+            <Bar
+               dataKey="newCustomers"
+               fill="var(--color-newCustomers)"
+               radius={[4, 4, 0, 0]}
+               barSize={12} 
+               stackId="a"
             />
             <ChartTooltip
                content={<ChartTooltipContent indicator="line" />}
-               cursor={false}
-               defaultIndex={1}
+               cursor={{ fill: "rgba(0, 0, 0, 0.1)" }}
             />
          </BarChart>
       </ChartContainer>

@@ -16,8 +16,13 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-const chartData = [{ month: "january", desktop: 1260, mobile: 570 }]
 
+// Updated chartData with laptop users
+const chartData = [
+  { month: "january", desktop: 1260, mobile: 570, laptop: 340 },
+]
+
+// Updated chartConfig to include laptop users
 const chartConfig = {
   desktop: {
     label: "Desktop",
@@ -27,11 +32,16 @@ const chartConfig = {
     label: "Mobile",
     color: "var(--chart-2)",
   },
+  laptop: {
+    label: "Laptop",
+    color: "var(--chart-3)",
+  },
 } satisfies ChartConfig
 
 export function AdminToolsChart() {
-  const totalVisitors = chartData[0].desktop + chartData[0].mobile
-
+  // Calculating total visitors including laptop users
+  const totalVisitors =
+    chartData[0].desktop + chartData[0].mobile + chartData[0].laptop
 
   return (
     <Card className="flex flex-col border-none">
@@ -90,6 +100,13 @@ export function AdminToolsChart() {
             <RadialBar
               dataKey="mobile"
               fill="var(--color-mobile)"
+              stackId="a"
+              cornerRadius={5}
+              className="stroke-transparent stroke-2"
+            />
+            <RadialBar
+              dataKey="laptop"
+              fill="var(--color-laptop)"
               stackId="a"
               cornerRadius={5}
               className="stroke-transparent stroke-2"

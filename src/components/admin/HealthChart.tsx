@@ -7,7 +7,6 @@ import { Label, Pie, PieChart } from "recharts"
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -18,47 +17,32 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
+
+// Updated chartData with only two variables
 const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 287, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 190, fill: "var(--color-other)" },
+  { name: "Your Site", value: 84, fill: "var(--chart-1)" },
+  { name: "Top 10% Websites", value: 16, fill: "var(--chart-2)" },
 ]
 
 const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  chrome: {
-    label: "Chrome",
+  "your-site": {
+    label: "Your Site",
     color: "var(--chart-1)",
   },
-  safari: {
-    label: "Safari",
-    color: "var(--chart-2)",
-  },
-  firefox: {
-    label: "Firefox",
+  "top-websites": {
+    label: "Top 10% Websites",
     color: "var(--chart-3)",
-  },
-  edge: {
-    label: "Edge",
-    color: "hsl(var(--chart-4))",
-  },
-  other: {
-    label: "Other",
-    color: "hsl(var(--chart-5))",
   },
 } satisfies ChartConfig
 
 export function HealthChart() {
   const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.visitors, 0)
+    return chartData.reduce((acc, curr) => acc + curr.value, 0)
   }, [])
 
   return (
     <Card className="flex flex-col border-none">
+      
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
@@ -71,9 +55,12 @@ export function HealthChart() {
             />
             <Pie
               data={chartData}
-              dataKey="visitors"
-              nameKey="browser"
+              dataKey="value"
+              nameKey="name"
               innerRadius={60}
+              outerRadius={80}
+              startAngle={180}
+              endAngle={0}
               strokeWidth={5}
             >
               <Label
@@ -82,20 +69,20 @@ export function HealthChart() {
                     return (
                       <text
                         x={viewBox.cx}
-                        y={viewBox.cy}
+                        y={viewBox.cy + 20} // Adjusted for upside-down bow-shape
                         textAnchor="middle"
                         dominantBaseline="middle"
                       >
                         <tspan
                           x={viewBox.cx}
-                          y={viewBox.cy}
+                          y={viewBox.cy + 20}
                           className="fill-foreground text-3xl font-bold"
                         >
-                          {totalVisitors.toLocaleString()}
+                          {totalVisitors.toLocaleString()}%
                         </tspan>
                         <tspan
                           x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 24}
+                          y={(viewBox.cy || 0) + 44}
                           className="fill-muted-foreground"
                         >
                           Visitors
