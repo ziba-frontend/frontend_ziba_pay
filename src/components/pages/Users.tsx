@@ -132,7 +132,7 @@ const ActionButtons: React.FC<{ user: User }> = ({ user }) => {
             open={isConfirmDialogOpen}
             onClose={closeConfirmDialog}
             onConfirm={handleDelete}
-            message={`Are you sure you want to delete user ${user.name}? This action cannot be undone.`}
+            message={`Are you sure you want to delete  ${user.name}? This action cannot be undone.`}
          />
       </div>
    );

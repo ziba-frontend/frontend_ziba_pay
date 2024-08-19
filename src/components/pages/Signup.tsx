@@ -284,7 +284,7 @@ const SignUp = () => {
                      )}
                   </Button>
                   <p className="text-center">
-                     Already have an account? <Link href="/login">Login</Link>
+                     Already have an account? <Link href="/login" className="text-main">Login</Link>
                   </p>
                </form>
             </Form>
