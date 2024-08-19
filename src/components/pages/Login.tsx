@@ -201,8 +201,14 @@ const Login = () => {
                         )}
                      </Button>
                      <p className="text-center">
-                     Don't have an account? <Link href="/sign-up" className="text-main">Sign Up</Link>
-                  </p>
+                        Don't have an account?{" "}
+                        <Link
+                           href="/sign-up"
+                           className="text-main"
+                        >
+                           Sign Up
+                        </Link>
+                     </p>
                   </div>
                </form>
             </Form>

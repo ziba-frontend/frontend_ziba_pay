@@ -39,7 +39,7 @@ const chartConfig = {
    },
 } satisfies ChartConfig;
 
-export function AdminLineChart() {
+export function AdminBarChart() {
    return (
       <ChartContainer config={chartConfig}>
          <BarChart
@@ -52,7 +52,7 @@ export function AdminLineChart() {
                dataKey="month"
                tickLine={false}
                tickMargin={10}
-               axisLine={false}
+               axisLine={true}
             />
             <YAxis
                tickLine={false}
@@ -63,22 +63,19 @@ export function AdminLineChart() {
             <Bar
                dataKey="users"
                fill="var(--color-users)"
-               radius={[4, 4, 0, 0]}
-               barSize={12} 
+               barSize={7} 
                stackId="a" 
             />
             <Bar
                dataKey="subscribers"
                fill="var(--color-subscribers)"
-               radius={[4, 4, 0, 0]}
-               barSize={12} 
+               barSize={7} 
                stackId="a" 
             />
             <Bar
                dataKey="newCustomers"
                fill="var(--color-newCustomers)"
-               radius={[4, 4, 0, 0]}
-               barSize={12} 
+               barSize={7} 
                stackId="a"
             />
             <ChartTooltip

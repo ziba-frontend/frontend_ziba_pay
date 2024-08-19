@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect, useState, useContext, createContext } from "react";
 import { DataTable } from "@/components/DataTable";
 import { ColumnDef } from "@tanstack/react-table";
@@ -93,10 +93,11 @@ const ActionButtons: React.FC<{ blog: Blog }> = ({ blog }) => {
       <div className="flex gap-2">
          <button
             onClick={handleUpdate}
-            className="text-blue-500"
+            className="text-main"
          >
             Update
          </button>
+         /
          <button
             onClick={handleDelete}
             className="text-red-500"
@@ -180,6 +181,7 @@ export default function BlogsPage() {
             <DataTable
                columns={columns}
                data={data}
+               title="All Blogs"
             />
             {isModalOpen && (
                <BlogModal

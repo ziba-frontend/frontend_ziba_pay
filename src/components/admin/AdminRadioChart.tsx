@@ -61,11 +61,8 @@ export function AdminRadioChart() {
     <Card data-chart={id} className="flex flex-col border-none">
       <ChartStyle id={id} config={chartConfig} />
       <CardHeader className="flex-row items-start space-y-0 pb-0">
-        <div className="grid gap-1">
-          <CardTitle>Pie Chart - Interactive</CardTitle>
-          <CardDescription>Traffic Sources</CardDescription>
-        </div>
-        <Select value={activeSource} onValueChange={setActiveSource}>
+       
+        {/* <Select value={activeSource} onValueChange={setActiveSource}>
           <SelectTrigger
             className="ml-auto h-7 w-[130px] rounded-lg pl-2.5"
             aria-label="Select a value"
@@ -99,7 +96,7 @@ export function AdminRadioChart() {
               );
             })}
           </SelectContent>
-        </Select>
+        </Select> */}
       </CardHeader>
       <CardContent className="flex flex-1 justify-center pb-0">
         <ChartContainer

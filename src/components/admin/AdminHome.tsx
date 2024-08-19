@@ -12,7 +12,7 @@ import {
    ViewIcon,
 } from "lucide-react";
 import { AdminRadioChart } from "./AdminRadioChart";
-import { AdminLineChart } from "./AdminLineChart";
+import { AdminBarChart} from "./AdminBarChart";
 import { AdminToolsChart } from "./AdminToolsChart";
 import { HealthChart } from "./HealthChart";
 import { getAllUsers } from "@/lib/api-calls/admin";
@@ -78,7 +78,7 @@ const AdminHome = () => {
                </div>
                <p className="flex items-center gap-1 text-2xl font-semibold">
                   23.6K
-                  <small className="text-main px-1 flex items-center text-sm bg-green-200 rounded-lg">
+                  <small className="text-destructive px-1 flex items-center text-sm bg-red-200 rounded-lg">
                      12.6% <ArrowDown />
                   </small>
                </p>
@@ -128,7 +128,7 @@ const AdminHome = () => {
             </div>
             <div className="p-6 border rounded-lg flex flex-col gap-4 lg:w-1/2">
                <small>Users overview</small>
-               <AdminLineChart />
+               <AdminBarChart />
             </div>
          </div>
 

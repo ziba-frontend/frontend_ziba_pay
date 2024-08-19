@@ -8,6 +8,7 @@ import {
    WalletCards,
    Signal,
    LogOut,
+   PenBoxIcon,
 } from "lucide-react";
 import { useWindowWidth } from "@react-hook/window-size";
 import logo from "../../public/svg/logo.svg";
@@ -66,6 +67,12 @@ export default function AdminSidebar({ isCollapsed, toggleSidebar }: Props) {
                         title: "Users Management",
                         href: "/admin/users-management",
                         icon: Users,
+                        variant: "ghost",
+                     },
+                     {
+                        title: "Blogs Management",
+                        href: "/admin/blogs",
+                        icon: PenBoxIcon,
                         variant: "ghost",
                      },
                      {

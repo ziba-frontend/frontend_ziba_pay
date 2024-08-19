@@ -86,7 +86,7 @@ const PassCodeAdminModal = ({ open , onClose , email}: PassCodeModalProps) => {
             onClick={validateOtp}
             className="shad-primary-btn w-full"
           >
-            Verify OTP
+            Verify 
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
