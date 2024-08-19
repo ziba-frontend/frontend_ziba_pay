@@ -221,7 +221,7 @@ export default function AdminTransactionManagement() {
                   onBlur={() => setIsInputFocused(false)}
                />
             </form>
-            <Button className=" w-full md:w-auto">
+            <Button className=" w-fit md:w-auto">
                Export
                <ArrowDown />
             </Button>
@@ -232,6 +232,7 @@ export default function AdminTransactionManagement() {
             <DataTable
                columns={columns}
                data={data}
+               title="All Transactions"
             />
             {isModalOpen && (
                <UserModal

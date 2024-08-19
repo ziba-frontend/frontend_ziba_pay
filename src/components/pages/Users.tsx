@@ -221,7 +221,7 @@ export default function UsersPage() {
                   onBlur={() => setIsInputFocused(false)}
                />
             </form>
-            <Button className="bg-main w-full md:w-auto">Add User</Button>
+            <Button className="bg-main w-fit md:w-auto">Add User</Button>
          </div>
          <div className="flex flex-col gap-5 w-full">
             <PageTitle title="Users" />
@@ -266,6 +266,7 @@ export default function UsersPage() {
             <DataTable
                columns={columns}
                data={data}
+               title="All Users"
             />
             {isModalOpen && (
                <UserModal
