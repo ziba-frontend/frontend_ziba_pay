@@ -11,7 +11,7 @@ import {
    User,
    ViewIcon,
 } from "lucide-react";
-import { AdminRadioChart } from "./AdminRadioChart";
+import {  AdminVisitorsChart } from "./AdminVisitorsChart";
 import { AdminBarChart} from "./AdminBarChart";
 import { AdminToolsChart } from "./AdminToolsChart";
 import { HealthChart } from "./HealthChart";
@@ -124,9 +124,9 @@ const AdminHome = () => {
                      <ArrowDown />
                   </Button>
                </div>
-               <AdminRadioChart />
+               <AdminVisitorsChart/>
             </div>
-            <div className="p-6 border rounded-lg flex flex-col gap-4 lg:w-1/2">
+            <div className="p-6 border rounded-lg flex flex-col gap-4 lg:w-[80%]">
                <small>Users overview</small>
                <AdminBarChart />
             </div>

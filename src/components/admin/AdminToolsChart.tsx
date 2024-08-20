@@ -19,12 +19,10 @@ import {
 import Image from "next/image"
 import desktop from "../../../public/images/desktop.png"
 
-// Updated chartData with laptop users
 const chartData = [
   { month: "january", desktop: 1260, mobile: 570, laptop: 340 },
 ]
 
-// Updated chartConfig to include laptop users
 const chartConfig = {
   desktop: {
     label: "Desktop",
@@ -114,13 +112,13 @@ export function AdminToolsChart() {
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex justify-between border-b pb-2 w-full">
-          <div><Image src={desktop} alt="users"/>Desktop users</div><h4>15,624</h4>
+          <div className="flex items-center gap-2 text-gray-500"><div className="bg-orange-500 w-2 h-2 rounded-full "></div> Desktop users</div><h4>15,624</h4>
         </div>
         <div className="flex justify-between border-b pb-2 w-full">
-          <div>Phone users</div><h4>5,546</h4>
+        <div className="flex items-center gap-2 text-gray-500"><div className="bg-main w-2 h-2 rounded-full "></div>Phone users</div><h4>5,546</h4>
         </div>
         <div className="flex justify-between border-b pb-2 w-full">
-          <div>Laptop users</div><h4>2,478</h4>
+        <div className="flex items-center gap-2 text-gray-500"><div className="bg-black w-2 h-2 rounded-full "></div>Laptop users</div><h4>2,478</h4>
         </div>
       </CardFooter>
     </Card>

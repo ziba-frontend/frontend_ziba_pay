@@ -3,13 +3,6 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { getUserProfile } from './auth-server';
 
-type Blog = {
-    id: string;
-    title: string;
-    image: string;
-    description: string;
-    content: string;
-  };
   
 
 const BASE_URL = 'http://localhost:8080/api/v1/admin';

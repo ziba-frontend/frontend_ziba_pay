@@ -7,6 +7,7 @@ import { Label, Pie, PieChart } from "recharts"
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -18,31 +19,30 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-// Updated chartData with only two variables
-const chartData = [
-  { name: "Your Site", value: 84, fill: "var(--chart-1)" },
-  { name: "Top 10% Websites", value: 16, fill: "var(--chart-2)" },
+const trafficData = [
+  { source: "Organic", visitors: 450, fill: "var(--color-organic)" },
+  { source: "Social", visitors: 300, fill: "var(--color-social)" },
+  { source: "Direct", visitors: 250, fill: "var(--color-direct)" },
 ]
 
 const chartConfig = {
-  "your-site": {
-    label: "Your Site",
+  organic: {
+    label: "Organic",
     color: "var(--chart-1)",
   },
-  "top-websites": {
-    label: "Top 10% Websites",
+  social: {
+    label: "Social",
+    color: "var(--chart-2)",
+  },
+  direct: {
+    label: "Direct",
     color: "var(--chart-3)",
   },
 } satisfies ChartConfig
 
-export function HealthChart() {
-  const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.value, 0)
-  }, [])
-
+export function AdminVisitorsChart() {
   return (
-    <Card className="flex flex-col border-none shadow-none">
-      
+    <Card data-chart="pie-chart" className="flex flex-col border-none shadow-none">
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
@@ -54,13 +54,11 @@ export function HealthChart() {
               content={<ChartTooltipContent hideLabel />}
             />
             <Pie
-              data={chartData}
-              dataKey="value"
-              nameKey="name"
+              data={trafficData}
+              dataKey="visitors"
+              nameKey="source"
               innerRadius={60}
-              outerRadius={80}
-              startAngle={180}
-              endAngle={0}
+              outerRadius={70}
               strokeWidth={5}
             >
               <Label
@@ -69,23 +67,25 @@ export function HealthChart() {
                     return (
                       <text
                         x={viewBox.cx}
-                        y={viewBox.cy + 20} 
+                        y={viewBox.cy}
                         textAnchor="middle"
                         dominantBaseline="middle"
                       >
                         <tspan
                           x={viewBox.cx}
-                          y={viewBox.cy + 20}
+                          y={viewBox.cy}
                           className="fill-foreground text-3xl font-bold"
                         >
-                          {totalVisitors.toLocaleString()}%
+                          {trafficData
+                            .reduce((acc, item) => acc + item.visitors, 0)
+                            .toLocaleString()}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 44}
+                          y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                         
+                          Visitors
                         </tspan>
                       </text>
                     )
@@ -96,8 +96,16 @@ export function HealthChart() {
           </PieChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className=" gap-2 text-sm">
-      <div className="flex items-center gap-2 text-gray-500"><div className="bg-main w-2 h-2 rounded "></div>Your site<span className="font-bold ml-4">100%</span></div>
+      <CardFooter className="flex-col gap-2 text-sm">
+        <div className="flex justify-between border-b pb-2 w-full">
+          <div className="flex items-center gap-2 "><div className="bg-orange-500 w-2 h-2 rounded-full "></div> Social</div><h4>60%</h4>
+        </div>
+        <div className="flex justify-between border-b pb-2 w-full">
+        <div className="flex items-center gap-2 "><div className="bg-main w-2 h-2 rounded-full "></div>Organic</div><h4>15%</h4>
+        </div>
+        <div className="flex justify-between border-b pb-2 w-full">
+        <div className="flex items-center gap-2 "><div className="bg-black w-2 h-2 rounded-full "></div>Direct</div><h4>25%</h4>
+        </div>
       </CardFooter>
     </Card>
   )

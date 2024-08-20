@@ -25,6 +25,7 @@ import netsuite from "../../../../../public/images/netsuite.png";
 import mailchimp from "../../../../../public/images/mailchimp.png";
 import excel from "../../../../../public/images/excel.png";
 import salesforce from "../../../../../public/images/salesforce.png";
+import { FaPlus } from "react-icons/fa";
 
 const Page = () => {
   return (
@@ -32,27 +33,27 @@ const Page = () => {
       <h2 className="mb-6">System Configuration</h2>
 
       <Tabs defaultValue="payment" className="w-full">
-        <TabsList className="grid grid-cols-1 sm:grid-cols-3 w-full bg-transparent">
+        <TabsList className="grid grid-cols-1 sm:grid-cols-3 w-full bg-transparent sm:pb-10 border-b pb-[120px]">
           <TabsTrigger 
             value="payment" 
-            className="w-full text-center data-[state=active]:border-b-2 data-[state=active]:border-main ">
+            className="flex-1 p-2 text-center relative data-[state=active]:after:w-1/2 data-[state=active]:after:left-1/4 data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:border-b-2 data-[state=active]:after:border-main">
             1. Payment Gateway Settings
           </TabsTrigger>
           <TabsTrigger 
             value="transaction" 
-            className="w-full text-center data-[state=active]:border-b-2 data-[state=active]:border-main ">
+            className="flex-1 p-2 text-center relative data-[state=active]:after:w-1/2 data-[state=active]:after:left-1/4 data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:border-b-2 data-[state=active]:after:border-main">
             2. Transaction Limit
           </TabsTrigger>
           <TabsTrigger 
             value="integration" 
-            className="w-full text-center data-[state=active]:border-b-2 data-[state=active]:border-main ">
+            className="flex-1 p-2 text-center relative data-[state=active]:after:w-1/2 data-[state=active]:after:left-1/4 data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:border-b-2 data-[state=active]:after:border-main">
             3. Third Party Integration
           </TabsTrigger>
         </TabsList>
         
-        <TabsContent value="payment" className="w-full mt-4">
+        <TabsContent value="payment" className="w-full mt-4 pt-10">
           <h4>Manage your system settings</h4>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mt-4">
             <div className="flex flex-col gap-2">
               <p>Payment Gateway Settings Panel</p>
               <div className="border p-4 flex flex-col gap-4 shadow-md rounded-lg">
@@ -104,53 +105,57 @@ const Page = () => {
             <div className="flex flex-col gap-2">
               <p>Third Party Integration</p>
               <div className="border p-4 flex flex-col gap-4 shadow-md rounded-lg">
-                <div className="flex flex-col">
-                  <small>API Key</small>
-                  <input className="border w-full p-2 rounded-lg" />
-                </div>
-                <div className="flex flex-col">
-                  <small>Callback URL</small>
-                  <input className="border w-full p-2 rounded-lg" />
-                </div>
-                <div className="flex flex-col">
-                  <small>Environment</small>
-                  <input className="border w-full p-2 rounded-lg" />
-                </div>
-                <div className="flex flex-col">
-                  <small>Enable Gateway</small>
-                  <Switch />
-                </div>
-                <Button className="bg-main w-fit px-6">Save</Button>
+             <div className="flex justify-between items-end p-4 border rounded-lg">
+              <div className="flex gap-2 items-center">
+                <div className="w-8 h-8 rounded-full bg-gray-500"></div>
+                Service Name
+              </div>
+              <div className="flex items-end gap-2">
+                <small className="text-main">Configure</small>
+                <small className="text-destructive">Disconnect</small>
+              </div>
+             </div>
+             <div className="flex justify-between items-end p-4 border rounded-lg">
+              <div className="flex gap-2 items-center">
+                <div className="w-8 h-8 rounded-full bg-gray-500"></div>
+                Service Name
+              </div>
+              <div className="flex items-end gap-2">
+                <small className="text-main">Configure</small>
+                <small className="text-destructive">Disconnect</small>
+              </div>
+             </div>
+             <div className="flex justify-between items-end p-4 border rounded-lg">
+              <div className="flex gap-2 items-center">
+                <div className="w-8 h-8 rounded-full bg-gray-500"></div>
+                Service Name
+              </div>
+              <div className="flex items-end gap-2">
+                <small className="text-main">Configure</small>
+                <small className="text-destructive">Disconnect</small>
+              </div>
+             </div>
+             <div className="flex justify-between items-end p-4 border rounded-lg">
+              <div className="flex gap-2 items-center">
+                <div className="w-8 h-8 rounded-full bg-gray-500"></div>
+                Service Name
+              </div>
+              <div className="flex items-end gap-2">
+                <small className="text-main">Configure</small>
+                <small className="text-destructive">Disconnect</small>
+              </div>
+             </div>
+                <Button className="bg-main w-fit px-6 text-white"><FaPlus className="mr-2"/>Add Integration</Button>
               </div>
             </div>
           </div>
         </TabsContent>
         
-        <TabsContent value="transaction" className="w-full mt-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Password</CardTitle>
-              <CardDescription>
-                Change your password here. After saving, you'll be logged out.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="current">Current password</Label>
-                <Input id="current" type="password" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="new">New password</Label>
-                <Input id="new" type="password" />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Save password</Button>
-            </CardFooter>
-          </Card>
+        <TabsContent value="transaction" className="w-full mt-4 pt-10">
+       <h4>Transaction limit</h4>
         </TabsContent>
         
-        <TabsContent value="integration" className="w-full mt-4">
+        <TabsContent value="integration" className="w-full mt-4 pt-10">
           <h2>Integrations</h2>
           <p className="my-2">
             Select and connect tools you use to integrate with your workflow

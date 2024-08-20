@@ -47,7 +47,7 @@ export function AdminBarChart() {
             data={chartData}
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
          >
-            <CartesianGrid strokeDasharray="3 3" /> 
+            <CartesianGrid strokeDasharray="3 3" />
             <XAxis
                dataKey="month"
                tickLine={false}
@@ -57,30 +57,30 @@ export function AdminBarChart() {
             <YAxis
                tickLine={false}
                axisLine={false}
-               tickFormatter={(value) => `${value / 1000}K`} 
+               tickFormatter={(value) => `${value / 1000}K`}
             />
-            <Legend verticalAlign="top" height={36} /> 
+            <Legend verticalAlign="top" height={36} />
             <Bar
                dataKey="users"
-               fill="var(--color-users)"
-               barSize={7} 
-               stackId="a" 
+               fill="var(--chart-1)" 
+               barSize={7}
+               stackId="a"
             />
             <Bar
                dataKey="subscribers"
-               fill="var(--color-subscribers)"
-               barSize={7} 
-               stackId="a" 
+               fill="var(--chart-2)"
+               barSize={7}
+               stackId="a"
             />
             <Bar
                dataKey="newCustomers"
-               fill="var(--color-newCustomers)"
-               barSize={7} 
+               fill="var(--chart-3)"
+               barSize={7}
                stackId="a"
             />
             <ChartTooltip
                content={<ChartTooltipContent indicator="line" />}
-               cursor={{ fill: "rgba(0, 0, 0, 0.1)" }}
+               cursor={{ fill: "rgba(0, 0, 0, 0.05)", fillOpacity: 0.1 }} 
             />
          </BarChart>
       </ChartContainer>
