@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import { useEffect, useState } from "react";
 import { DataTable } from "@/components/DataTable";
 import { ColumnDef } from "@tanstack/react-table";
@@ -154,24 +154,50 @@ const UsersPageContext = React.createContext<{
 
 export default function UsersPage() {
    const [data, setData] = useState<User[]>([]);
+   const [filteredData, setFilteredData] = useState<User[]>([]);
    const [isModalOpen, setModalOpen] = useState(false);
    const [isDetailsModalOpen, setDetailsModalOpen] = useState(false);
    const [currentUser, setCurrentUser] = useState<User | null>(null);
    const [detailsUser, setDetailsUser] = useState<User | null>(null);
    const [isAdmin, setIsAdmin] = useState(false);
    const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
+   const [searchTerm, setSearchTerm] = useState<string>('');
+   const [newUserCount, setNewUserCount] = useState<number>(0);
 
    useEffect(() => {
       const fetchData = async () => {
          try {
             const users = await getAllUsers();
             setData(users);
+            setFilteredData(users);
+            calculateNewUsers(users);
          } catch (error) {
             toast.error("Failed to fetch users");
          }
       };
       fetchData();
    }, []);
+
+   useEffect(() => {
+      const filtered = data.filter((user) =>
+         user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+         user.email.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredData(filtered);
+   }, [searchTerm, data]);
+
+   const calculateNewUsers = (users: User[]) => {
+      const now = new Date();  
+      const oneWeekAgo = new Date(now);
+      oneWeekAgo.setDate(now.getDate() - 7);  
+  
+      const newUsers = users.filter(user => {
+          const userCreatedAt = new Date(user.createdAt); 
+          return userCreatedAt >= oneWeekAgo && userCreatedAt <= now; 
+      });
+  
+      setNewUserCount(newUsers.length); 
+  };
 
    const handleCloseModal = () => {
       setModalOpen(false);
@@ -186,9 +212,11 @@ export default function UsersPage() {
          try {
             const users = await getAllUsers();
             setData(users);
+            setFilteredData(users);
             const currentUser = await getUserProfile();
             setCurrentUser(currentUser);
             setIsAdmin(currentUser.role === "admin");
+            calculateNewUsers(users);
          } catch (error) {
             toast.error("Failed to fetch users");
          }
@@ -219,6 +247,8 @@ export default function UsersPage() {
                   placeholder="Search for..."
                   onFocus={() => setIsInputFocused(true)}
                   onBlur={() => setIsInputFocused(false)}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                />
             </form>
             <Button className="bg-main w-fit md:w-auto">Add User</Button>
@@ -241,7 +271,7 @@ export default function UsersPage() {
                   </div>
                   <div className="flex items-start flex-col gap-1 font-semibold">
                      <p>New Users</p>
-                     <p className=" p-1 flex items-center">0</p>
+                     <p className=" p-1 flex items-center">{newUserCount}</p>
                   </div>
                </div>
                <div className="border p-4 rounded-md flex  gap-4">
@@ -265,7 +295,7 @@ export default function UsersPage() {
             </div>
             <DataTable
                columns={columns}
-               data={data}
+               data={filteredData}
                title="All Users"
             />
             {isModalOpen && (

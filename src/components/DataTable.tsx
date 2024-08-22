@@ -33,16 +33,18 @@ export function DataTable<TData, TValue>({
    title,
 }: DataTableProps<TData, TValue>) {
    const table = useReactTable({
-      data,
-      columns,
+      data: data || [],
+      columns: columns || [],
       getCoreRowModel: getCoreRowModel(),
       getPaginationRowModel: getPaginationRowModel(),
    });
 
+   const rows = table.getRowModel()?.rows || [];
+
    return (
-      <div className="overflow-hidden border-[0.6px]  rounded-md shadow-lg">
+      <div className="overflow-hidden border-[0.6px] rounded-md shadow-lg">
          {title && (
-            <h2 className="text-lg font-semibold p-4 bg-white border-b-[0.6px]   text-gray-700">
+            <h2 className="text-lg font-semibold p-4 bg-white border-b-[0.6px] text-gray-700">
                {title}
             </h2>
          )}
@@ -50,7 +52,7 @@ export function DataTable<TData, TValue>({
             <TableHeader className="bg-white">
                {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
-                     {headerGroup.headers.map((header) => (
+                     {headerGroup?.headers.map((header) => (
                         <TableHead
                            key={header.id}
                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -67,8 +69,8 @@ export function DataTable<TData, TValue>({
                ))}
             </TableHeader>
             <TableBody className="bg-white divide-y divide-gray-200">
-               {table.getRowModel().rows?.length ? (
-                  table.getRowModel().rows.map((row, index) => (
+               {rows.length ? (
+                  rows.map((row, index) => (
                      <TableRow
                         key={row.id}
                         className={

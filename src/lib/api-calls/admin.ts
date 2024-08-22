@@ -63,3 +63,26 @@ export const deleteUser = async (userId: string) => {
     }
 };
 
+// =======TRANSACTIONS========
+
+export const getAllTransactions = async () => {
+    try {
+        const response = await axios.get(`${BASE_URL}/transactions`, { withCredentials: true });
+        return response.data.data.transactions;
+    } catch (error: any) {
+        toast.error('Failed to fetch transactions');
+        console.error('Error fetching transactions:', error);
+        throw error;
+    }
+};
+
+export const getTransactionById = async (transactionId: string) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/transactions/${transactionId}`, { withCredentials: true });
+        return response.data.data.transaction;
+    } catch (error: any) {
+        toast.error('Failed to fetch transaction details');
+        console.error('Error fetching transaction details:', error);
+        throw error;
+    }
+};
