@@ -10,6 +10,7 @@ import BlogModal from "@/components/modals/BlogModal";
 import { getUserProfile } from "@/lib/api-calls/auth-server";
 import { Button } from "@/components/ui/button";
 import { deleteBlog, getAllBlogs } from "@/lib/api-calls/blog";
+import { FaSearch } from "react-icons/fa";
 
 type Blog = {
    id: string;
@@ -120,16 +121,19 @@ const BlogsPageContext = createContext<{
 
 export default function BlogsPage() {
    const [data, setData] = useState<Blog[]>([]);
+   const [filteredData, setFilteredData] = useState<Blog[]>([]);
    const [isModalOpen, setModalOpen] = useState(false);
    const [currentBlog, setCurrentBlog] = useState<Blog | null>(null);
    const [isAdmin, setIsAdmin] = useState(false);
+   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
+   const [searchTerm, setSearchTerm] = useState<string>('');
 
    useEffect(() => {
       const fetchData = async () => {
          try {
             const blogs = await getAllBlogs();
-            console.log("Here are all the blogs: ", blogs);
             setData(blogs);
+            setFilteredData(blogs);
 
             const currentUser = await getUserProfile();
             setIsAdmin(currentUser.role === "admin");
@@ -140,6 +144,14 @@ export default function BlogsPage() {
 
       fetchData();
    }, []);
+
+   useEffect(() => {
+      const filtered = data.filter((blog) =>
+         blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+         blog.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredData(filtered);
+   }, [searchTerm, data]);
 
    const handleAddBlog = () => {
       // Open modal for adding new blog
@@ -158,6 +170,7 @@ export default function BlogsPage() {
          try {
             const blogs = await getAllBlogs();
             setData(blogs);
+            setFilteredData(blogs);
          } catch (error) {
             toast.error("Failed to fetch blogs");
          }
@@ -170,17 +183,34 @@ export default function BlogsPage() {
       <BlogsPageContext.Provider
          value={{ setModalOpen, setCurrentBlog, isAdmin }}
       >
-         <div className="flex flex-col gap-5 w-full">
-            <PageTitle title="Blogs" />
+         <div className="mb-6 flex flex-col md:flex-row md:justify-between gap-4 w-full">
+            <form
+               className={`flex gap-4 items-center bg-white p-[15px] rounded-lg transition-all ${
+                  isInputFocused ? "border-2 border-main" : "border"
+               }`}
+            >
+               <FaSearch color="gray" />
+               <input
+                  className="outline-none flex-1"
+                  placeholder="Search for..."
+                  onFocus={() => setIsInputFocused(true)}
+                  onBlur={() => setIsInputFocused(false)}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+               />
+            </form>
             <Button
                onClick={handleAddBlog}
                className="self-end "
             >
                Create Blog
             </Button>
+         </div>
+         <div className="flex flex-col gap-5 w-full">
+            <PageTitle title="Blogs" />
             <DataTable
                columns={columns}
-               data={data}
+               data={filteredData}
                title="All Blogs"
             />
             {isModalOpen && (
