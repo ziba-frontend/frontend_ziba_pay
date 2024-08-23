@@ -15,10 +15,13 @@ import { AdminLineChart } from "./AdminLineChart";
 import { AdminToolsChart } from "./AdminToolsChart";
 import { HealthChart } from "./HealthChart";
 import { getAllUsers } from "@/lib/api-calls/admin";
+import { getNewUsers, getPageVisits } from "@/lib/api-calls/analytics";
 
 const AdminHome = () => {
 
    const [ users , setUsers]=  useState([]);
+   const [ pageviews , setPageViews ] = useState(0);
+   const [ newUsers , setNewUsers] = useState(0);
 
    useEffect(() => {
 
@@ -32,6 +35,21 @@ const AdminHome = () => {
          }
       }
 
+      const fetchAnalyticsData = async() => {
+         try{
+            const pageVisitsData = await getPageVisits();
+            console.log("Here are the page visits tracked", pageVisitsData)
+            setPageViews(pageVisitsData.length ? pageVisitsData[0].metricValues[0].value : 0)
+
+            const newUsersData = await getNewUsers();
+            console.log("Here are all users that signed up: ", newUsers);
+            setNewUsers(newUsersData.length ? newUsersData[0].metricValues[0].value : 0);
+         }catch(error: any){
+            console.log("Error while fetching analytics data: ", error);
+         }
+      }
+
+      fetchAnalyticsData();
       getAll();
    }, [])
 
@@ -61,7 +79,7 @@ const AdminHome = () => {
                   <span>...</span>
                </div>
                <p className="flex items-center gap-1 text-2xl font-semibold">
-                  50.8K
+                  {pageviews}
                   <small className="text-main p-1 flex items-center">
                      28.4% <ArrowUp />
                   </small>
@@ -91,7 +109,7 @@ const AdminHome = () => {
                   <span>...</span>
                </div>
                <p className="flex items-center gap-1 text-2xl font-semibold">
-                  756
+                  {newUsers}
                   <small className="text-main p-1 flex items-center">
                      3.1% <ArrowUp />
                   </small>
