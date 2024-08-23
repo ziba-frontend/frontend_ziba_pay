@@ -3,37 +3,27 @@ title: Transaction Search
 description: transaction search
 ---
 
+
 ## Transaction Search
 
-
-Use the Transaction Search API to get the history of transactions for a PayPal account. To use the API on behalf of third parties, you must be part of the PayPal partner network. Reach out to your partner manager for the next steps. To enroll in the partner program, see Partner with PayPal. For more information about the API, see the Transaction Search API Integration Guide.                        
-
+Use the Transaction Search API to get the history of transactions for a ZibaPay account. This API allows you to retrieve details about transactions, including deposits, withdrawals, and transfers.
 
 <DocCards>
 <div>
-<DocCard bgColor='#EEEDF4'>
-<p><span style={{color:"black"}} className="text-border text-black">Note:</span>To use the API on behalf of third parties, you must be part of the PayPal partner network. Reach out to your partner manager for the next steps. To enroll in the partner program, see </p>
-</DocCard>
-
 <DocCard>
-### List transactions
+### List Transactions
 <Endpoint/>
-Lists transactions. Specify one or more query parameters to filter the transaction that appear in the response.
+Lists transactions. Specify one or more query parameters to filter the transactions that appear in the response.
 </DocCard>
-
-
 <DocCard bgColor='#EEEDF4'>
 ### Note:
-
-- If you specify one or more optional query parameters, the ending_balance response field is empty.
-- It takes a maximum of three hours for executed transactions to appear in the list transactions call.
-- This call lists transaction for the previous three years.
+If you specify one or more optional query parameters, the ending_balance response field is empty.
+It takes a maximum of three hours for executed transactions to appear in the list transactions call.
+This call lists transactions for the previous three years.
 </DocCard>
-
-
 </div>
-
 {/* ======mdx content====== */}
+
 <div className="md:w-1/2">
 ```js
 const query = new URLSearchParams({ 
@@ -51,18 +41,19 @@ const query = new URLSearchParams({
   balance_affecting_records_only: 'Y', 
   page_size: '100', 
   page: '1'
-  } ).toString();
+}).toString();
+const resp = await fetch(
+https://api.zibapay.com/v1/reporting/transactions?${query},
+{
+method: 'GET',
+headers: {
+Authorization: 'Bearer <YOUR_TOKEN_HERE>'
+}
+}
+);
 
-  const resp = await fetch(
-      `https://api-m.paypal.com/v1/reporting/transactions?
-      ${query}`, 
-        {    method: 'GET',    
-          headers: {  
-                Authorization: 'Bearer <YOUR_TOKEN_HERE>' 
-                   } });
-
-
-const data = await resp.text();console.log(data);
+const data = await resp.text();
+console.log(data);
 ```
 
 </div>

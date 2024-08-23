@@ -221,7 +221,6 @@ const AdminLogin = () => {
           </form>
         </Form>
 
-        {/* Passkey Modal */}
         {email && (
           <PassCodeAdminModal open={open} onClose={closeModal} email={email} />
         )}

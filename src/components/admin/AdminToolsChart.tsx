@@ -1,5 +1,5 @@
 "use client"
-import { TrendingUp } from "lucide-react"
+
 import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts"
 
 import {
@@ -16,7 +16,12 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-const chartData = [{ month: "january", desktop: 1260, mobile: 570 }]
+import Image from "next/image"
+import desktop from "../../../public/images/desktop.png"
+
+const chartData = [
+  { month: "january", desktop: 1260, mobile: 570, laptop: 340 },
+]
 
 const chartConfig = {
   desktop: {
@@ -27,18 +32,19 @@ const chartConfig = {
     label: "Mobile",
     color: "var(--chart-2)",
   },
+  laptop: {
+    label: "Laptop",
+    color: "var(--chart-3)",
+  },
 } satisfies ChartConfig
 
 export function AdminToolsChart() {
-  const totalVisitors = chartData[0].desktop + chartData[0].mobile
-
+  const totalVisitors =
+    chartData[0].desktop + chartData[0].mobile + chartData[0].laptop
 
   return (
     <Card className="flex flex-col border-none">
-      <CardHeader className="items-center pb-0">
-        <CardTitle>Radial Chart - Stacked</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
-      </CardHeader>
+
       <CardContent className="flex flex-1 items-center pb-0">
         <ChartContainer
           config={chartConfig}
@@ -72,7 +78,7 @@ export function AdminToolsChart() {
                           y={(viewBox.cy || 0) + 4}
                           className="fill-muted-foreground"
                         >
-                          Visitors
+                          Users by device
                         </tspan>
                       </text>
                     )
@@ -83,7 +89,7 @@ export function AdminToolsChart() {
             <RadialBar
               dataKey="desktop"
               stackId="a"
-              cornerRadius={5}
+            
               fill="var(--color-desktop)"
               className="stroke-transparent stroke-2"
             />
@@ -91,18 +97,28 @@ export function AdminToolsChart() {
               dataKey="mobile"
               fill="var(--color-mobile)"
               stackId="a"
-              cornerRadius={5}
+            
+              className="stroke-transparent stroke-2"
+            />
+            <RadialBar
+              dataKey="laptop"
+              fill="var(--color-laptop)"
+              stackId="a"
+            
               className="stroke-transparent stroke-2"
             />
           </RadialBarChart>
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+        <div className="flex justify-between border-b pb-2 w-full">
+          <div className="flex items-center gap-2 text-gray-500"><div className="bg-orange-500 w-2 h-2 rounded-full "></div> Desktop users</div><h4>15,624</h4>
         </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+        <div className="flex justify-between border-b pb-2 w-full">
+        <div className="flex items-center gap-2 text-gray-500"><div className="bg-main w-2 h-2 rounded-full "></div>Phone users</div><h4>5,546</h4>
+        </div>
+        <div className="flex justify-between border-b pb-2 w-full">
+        <div className="flex items-center gap-2 text-gray-500"><div className="bg-black w-2 h-2 rounded-full "></div>Laptop users</div><h4>2,478</h4>
         </div>
       </CardFooter>
     </Card>

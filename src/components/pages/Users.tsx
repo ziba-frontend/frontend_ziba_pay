@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import { useEffect, useState } from "react";
 import { DataTable } from "@/components/DataTable";
 import { ColumnDef } from "@tanstack/react-table";
@@ -138,26 +138,32 @@ const ActionButtons: React.FC<{ user: User }> = ({ user }) => {
     setConfirmDialogOpen(false);
   };
 
-  return (
-    <div className="flex gap-2">
-      {user.role !== "admin" && (
-        <>
-          <button onClick={handleUpdate} className="text-blue-500">
-            <Pen />
-          </button>
-          <button onClick={openConfirmDialog} className="text-red-500">
-            <Trash />
-          </button>
-        </>
-      )}
-      <ConfirmDialog
-        open={isConfirmDialogOpen}
-        onClose={closeConfirmDialog}
-        onConfirm={handleDelete}
-        message={`Are you sure you want to delete user ${user.name}? This action cannot be undone.`}
-      />
-    </div>
-  );
+   return (
+      <div className="flex gap-2">
+         {user.role !== "admin" && (
+            <>
+               <button
+                  onClick={handleUpdate}
+                  className="text-blue-500"
+               >
+                  <Pen />
+               </button>
+               <button
+                  onClick={openConfirmDialog}
+                  className="text-red-500"
+               >
+                  <Trash />
+               </button>
+            </>
+         )}
+         <ConfirmDialog
+            open={isConfirmDialogOpen}
+            onClose={closeConfirmDialog}
+            onConfirm={handleDelete}
+            message={`Are you sure you want to delete  ${user.name}? This action cannot be undone.`}
+         />
+      </div>
+   );
 };
 
 const UsersPageContext = React.createContext<{
@@ -175,25 +181,51 @@ const UsersPageContext = React.createContext<{
 });
 
 export default function UsersPage() {
-  const [data, setData] = useState<User[]>([]);
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [isDetailsModalOpen, setDetailsModalOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [detailsUser, setDetailsUser] = useState<User | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
+   const [data, setData] = useState<User[]>([]);
+   const [filteredData, setFilteredData] = useState<User[]>([]);
+   const [isModalOpen, setModalOpen] = useState(false);
+   const [isDetailsModalOpen, setDetailsModalOpen] = useState(false);
+   const [currentUser, setCurrentUser] = useState<User | null>(null);
+   const [detailsUser, setDetailsUser] = useState<User | null>(null);
+   const [isAdmin, setIsAdmin] = useState(false);
+   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
+   const [searchTerm, setSearchTerm] = useState<string>('');
+   const [newUserCount, setNewUserCount] = useState<number>(0);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const users = await getAllUsers();
-        setData(users);
-      } catch (error) {
-        toast.error("Failed to fetch users");
-      }
-    };
-    fetchData();
-  }, []);
+   useEffect(() => {
+      const fetchData = async () => {
+         try {
+            const users = await getAllUsers();
+            setData(users);
+            setFilteredData(users);
+            calculateNewUsers(users);
+         } catch (error) {
+            toast.error("Failed to fetch users");
+         }
+      };
+      fetchData();
+   }, []);
+
+   useEffect(() => {
+      const filtered = data.filter((user) =>
+         user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+         user.email.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredData(filtered);
+   }, [searchTerm, data]);
+
+   const calculateNewUsers = (users: User[]) => {
+      const now = new Date();  
+      const oneWeekAgo = new Date(now);
+      oneWeekAgo.setDate(now.getDate() - 7);  
+  
+      const newUsers = users.filter(user => {
+          const userCreatedAt = new Date(user.createdAt); 
+          return userCreatedAt >= oneWeekAgo && userCreatedAt <= now; 
+      });
+  
+      setNewUserCount(newUsers.length); 
+  };
 
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -203,103 +235,111 @@ export default function UsersPage() {
     setDetailsModalOpen(false);
   };
 
-  const handleSuccess = () => {
-    const fetchData = async () => {
-      try {
-        const users = await getAllUsers();
-        setData(users);
-        const currentUser = await getUserProfile();
-        setCurrentUser(currentUser);
-        setIsAdmin(currentUser.role === "admin");
-      } catch (error) {
-        toast.error("Failed to fetch users");
-      }
-    };
+   const handleSuccess = () => {
+      const fetchData = async () => {
+         try {
+            const users = await getAllUsers();
+            setData(users);
+            setFilteredData(users);
+            const currentUser = await getUserProfile();
+            setCurrentUser(currentUser);
+            setIsAdmin(currentUser.role === "admin");
+            calculateNewUsers(users);
+         } catch (error) {
+            toast.error("Failed to fetch users");
+         }
+      };
 
     fetchData();
   };
 
-  return (
-    <UsersPageContext.Provider
-      value={{
-        setModalOpen,
-        setCurrentUser,
-        setDetailsModalOpen,
-        setDetailsUser,
-        isAdmin,
-      }}
-    >
-      <div className="mb-6 flex flex-col md:flex-row md:justify-between gap-4 w-full">
-        <form
-          className={`flex gap-4 items-center bg-white p-[15px] rounded-lg transition-all ${
-            isInputFocused ? "border-2 border-main" : "border"
-          }`}
-        >
-          <FaSearch color="gray" />
-          <input
-            className="outline-none flex-1"
-            placeholder="Search for..."
-            onFocus={() => setIsInputFocused(true)}
-            onBlur={() => setIsInputFocused(false)}
-          />
-        </form>
-        <Button className="bg-main w-full md:w-auto">Add User</Button>
-      </div>
-      <div className="flex flex-col gap-5 w-full">
-        <PageTitle title="Users" />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="border p-4 rounded-md flex  gap-4">
-            <div className="flex items-center justify-center rounded-full bg-gray-500 p-4 h-[50px] w-[50px] ">
-              <UsersIcon />
+   return (
+      <UsersPageContext.Provider
+         value={{
+            setModalOpen,
+            setCurrentUser,
+            setDetailsModalOpen,
+            setDetailsUser,
+            isAdmin,
+         }}
+      >
+        <div className="mb-6 flex flex-col md:flex-row md:justify-between gap-4 w-full">
+            <form
+               className={`flex gap-4 items-center bg-white p-[15px] rounded-lg transition-all ${
+                  isInputFocused ? "border-2 border-main" : "border"
+               }`}
+            >
+               <FaSearch color="gray" />
+               <input
+                  className="outline-none flex-1"
+                  placeholder="Search for..."
+                  onFocus={() => setIsInputFocused(true)}
+                  onBlur={() => setIsInputFocused(false)}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+               />
+            </form>
+            <Button className="bg-main w-fit md:w-auto">Add User</Button>
+         </div>
+         <div className="flex flex-col gap-5 w-full">
+            <PageTitle title="Users" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+               <div className="border p-4 rounded-md flex  gap-4">
+                  <div className="flex items-center justify-center rounded-full bg-gray-500 p-4 h-[50px] w-[50px] ">
+                     <Users />
+                  </div>
+                  <div className="flex items-start flex-col gap-1 font-semibold">
+                     <p>Total Users</p>
+                     <p className=" p-1 flex items-center">{data.length}</p>
+                  </div>
+               </div>
+               <div className="border p-4 rounded-md flex  gap-4">
+                  <div className="flex items-center justify-center rounded-full bg-orange-300 p-4 h-[50px] w-[50px] ">
+                     <User className="text-orange-500"/>
+                  </div>
+                  <div className="flex items-start flex-col gap-1 font-semibold">
+                     <p>New Users</p>
+                     <p className=" p-1 flex items-center">{newUserCount}</p>
+                  </div>
+               </div>
+               <div className="border p-4 rounded-md flex  gap-4">
+                  <div className="flex items-center justify-center rounded-full bg-green-300 p-4 h-[50px] w-[50px] ">
+                     <Heart className="text-green-500" />
+                  </div>
+                  <div className="flex items-start flex-col gap-1 font-semibold">
+                     <p>Top Users</p>
+                     <p className=" p-1 flex items-center">0</p>
+                  </div>
+               </div>
+               <div className="border p-4 rounded-md flex  gap-4">
+                  <div className="flex items-center justify-center rounded-full bg-blue-300 p-4 h-[50px] w-[50px] ">
+                     <span className="bg-blue-500  rounded-full flex items-center justify-center h-4 w-4">...</span>
+                  </div>
+                  <div className="flex items-start flex-col gap-1 font-semibold">
+                     <p>Others Users</p>
+                     <p className=" p-1 flex items-center">0</p>
+                  </div>
+               </div>
             </div>
-            <div className="flex items-start flex-col gap-1 font-semibold">
-              <p>Total Users</p>
-              <p className=" p-1 flex items-center">{data.length}</p>
-            </div>
-          </div>
-          <div className="border p-4 rounded-md flex  gap-4">
-            <div className="flex items-center justify-center rounded-full bg-orange-300 p-4 h-[50px] w-[50px] ">
-              <User className="text-orange-500" />
-            </div>
-            <div className="flex items-start flex-col gap-1 font-semibold">
-              <p>New Users</p>
-              <p className=" p-1 flex items-center">0</p>
-            </div>
-          </div>
-          <div className="border p-4 rounded-md flex  gap-4">
-            <div className="flex items-center justify-center rounded-full bg-green-300 p-4 h-[50px] w-[50px] ">
-              <Heart className="text-green-500" />
-            </div>
-            <div className="flex items-start flex-col gap-1 font-semibold">
-              <p>Top Users</p>
-              <p className=" p-1 flex items-center">0</p>
-            </div>
-          </div>
-          <div className="border p-4 rounded-md flex  gap-4">
-            <div className="flex items-center justify-center rounded-full bg-red-300 p-4 h-[50px] w-[50px] ">
-              <Trash className="text-red-500" />
-            </div>
-            <div className="flex items-start flex-col gap-1 font-semibold">
-              <p>Deleted Users</p>
-              <p className=" p-1 flex items-center">0</p>
-            </div>
-          </div>
-        </div>
-        <DataTable columns={columns} data={data} />
-      </div>
-      {isModalOpen && (
-        <UserModal
-          user={currentUser}
-          onClose={handleCloseModal}
-          onSuccess={handleSuccess}
-        />
-      )}
-      {isDetailsModalOpen && (
-        <UserDetailsModal
-          user={detailsUser}
-          onClose={handleCloseDetailsModal}
-        />
-      )}
-    </UsersPageContext.Provider>
-  );
+            <DataTable
+               columns={columns}
+               data={filteredData}
+               title="All Users"
+            />
+            {isModalOpen && (
+               <UserModal
+                  user={currentUser}
+                  onClose={handleCloseModal}
+                  onSuccess={handleSuccess}
+               />
+            )}
+            {isDetailsModalOpen && (
+               <UserDetailsModal
+                  user={detailsUser}
+                  onClose={handleCloseDetailsModal}
+               />
+            )}
+         </div>
+      </UsersPageContext.Provider>
+   );
 }

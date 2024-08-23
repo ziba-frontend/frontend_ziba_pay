@@ -14,7 +14,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({ open, onClose, onConfirm,
         <Dialog open={open} onOpenChange={onClose}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Confirm Action</DialogTitle>
+                    <DialogTitle>Confirm Delete</DialogTitle>
                 </DialogHeader>
                 <div className="py-4">
                     <p>{message}</p>

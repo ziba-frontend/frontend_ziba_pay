@@ -26,6 +26,7 @@ import {
 import { useRouter } from "next/navigation";
 import SubmitButton from "@/components/SubmitButton";
 import toast from "react-hot-toast";
+import { FaTimes } from "react-icons/fa";
 
 interface PaymentData {
    amount: number | null;
@@ -104,8 +105,19 @@ const Checkout = () => {
       }
    };
 
+   
+   const handleClose = () => {
+ 
+      router.back();
+   };
    return (
       <div>
+          <div
+            className="absolute top-6 right-6 font cursor-pointer"
+            onClick={handleClose}
+         >
+            <FaTimes />
+         </div>
          <div className="flex justify-center items-center">
             <Image
                src={im1}
