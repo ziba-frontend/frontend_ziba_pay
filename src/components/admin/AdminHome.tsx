@@ -80,7 +80,7 @@ const AdminHome = () => {
                   <span>...</span>
                </div>
                <p className="flex items-center gap-1 text-2xl font-semibold">
-                  50.8K
+                  {pageviews}
                   <small className="text-main p-1 flex items-center">
                      28.4% <ArrowUp />
                   </small>

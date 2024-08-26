@@ -102,6 +102,7 @@ export default function AdminTransactionManagement() {
       const fetchData = async () => {
           try {
               const transactions = await getAllTransactions();
+              console.log("Transactions: ", transactions)
               setData(transactions);
           } catch (error) {
               toast.error("Failed to fetch transactions");

@@ -20,6 +20,7 @@ import {
   Users as UsersIcon,
   Mail,
   UserCog,
+  Users
 } from "lucide-react";
 import { FaSearch } from "react-icons/fa";
 
