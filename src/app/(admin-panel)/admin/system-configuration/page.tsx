@@ -112,12 +112,12 @@ const Page = () => {
                value="payment"
                className="w-full mt-4 pt-10"
             >
-               <h4>Payment Gateway</h4>
+               <h4 >Payment Gateway</h4>
 
                <Form {...paymentForm}>
                   <form
                      onSubmit={paymentForm.handleSubmit(handlePaymentSubmit)}
-                     className="flex flex-col gap-2 lg:w-3/4"
+                     className="flex flex-col gap-2 lg:w-3/4 mt-6"
                   >
                      <FormField
                         control={paymentForm.control}
@@ -224,7 +224,7 @@ const Page = () => {
                      onSubmit={transactionForm.handleSubmit(
                         handleTransactionSubmit
                      )}
-                     className="flex flex-col gap-2 lg:w-3/4"
+                     className="flex flex-col gap-2 lg:w-3/4 mt-6"
                   >
                      <FormField
                         control={transactionForm.control}

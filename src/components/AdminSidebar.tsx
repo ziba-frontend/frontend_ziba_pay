@@ -87,12 +87,12 @@ export default function AdminSidebar({ isCollapsed, toggleSidebar }: Props) {
                         icon: Settings,
                         variant: "ghost",
                      },
-                     {
-                        title: "Reporting & Analytics",
-                        href: "/admin/reporting-and-analytics",
-                        icon: Signal,
-                        variant: "ghost",
-                     },
+                     // {
+                     //    title: "Reporting & Analytics",
+                     //    href: "/admin/reporting-and-analytics",
+                     //    icon: Signal,
+                     //    variant: "ghost",
+                     // },
                   ]}
                />
             </div>
@@ -100,7 +100,7 @@ export default function AdminSidebar({ isCollapsed, toggleSidebar }: Props) {
                onClick={handleLogout}
                className="flex gap-2 items-center"
             >
-               <LogOut />
+               <LogOut  size={20}/>
                {!(isCollapsed || mobileWidth) && (
                   <p className="hidden sm:block">Logout</p>
                )}
