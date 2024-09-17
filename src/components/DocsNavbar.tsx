@@ -143,8 +143,8 @@ const DocsNavbar = () => {
                </form>
                <div className="docnav">
                   <Link href="/api-docs/start/introduction">API</Link>
-                  <Link href="/help-center">Support</Link>
-                  <Link href="/login">
+                  <Link href="/help-center" target="_blank">Support</Link>
+                  <Link href="/login" target="_blank">
                      <Button className="bg-main">Sign in</Button>
                   </Link>
                </div>
