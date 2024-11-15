@@ -31,7 +31,7 @@ const deleteApiKey = (id: string): Promise<any> => {
    );
 };
 
-// React Query Hooks
+
 export const useCreateApiGateway = () => {
    return useMutation<any, Error, { name: string; description: string }>({
       mutationFn: createApiGateway,

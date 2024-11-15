@@ -11,7 +11,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-   title: "Payment Processing Solutions - Ziba Pay",
+   title: "Payment Processing Solutions",
    description: "Efficient and secure payment processing solutions with Zibapay.",
 };
 

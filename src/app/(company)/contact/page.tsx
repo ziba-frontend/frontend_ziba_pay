@@ -10,7 +10,7 @@ import ContactSlider from "@/components/ContactSlider";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-   title: "Contact - Zibapay",
+   title: "Contact",
    description: "Contact zibapay",
 };
 const Contact = () => {

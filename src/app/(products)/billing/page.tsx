@@ -7,7 +7,7 @@ import billing3 from "../../../../public/images/billing3.png";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-   title: "Invoicing And Billing - Ziba Pay",
+   title: "Invoicing And Billing",
    description: "Streamline invoicing and billing with Zibapay's automated solutions.",
 };
 

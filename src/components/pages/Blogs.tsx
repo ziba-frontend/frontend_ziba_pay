@@ -2,15 +2,13 @@
 import { useEffect, useState, useContext, createContext } from "react";
 import { DataTable } from "@/components/DataTable";
 import { ColumnDef } from "@tanstack/react-table";
-import React from "react";
 import PageTitle from "@/components/PageTitle";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import BlogModal from "@/components/modals/BlogModal";
-import { getUserProfile } from "@/lib/api-calls/auth-server";
 import { Button } from "@/components/ui/button";
-import { deleteBlog, getAllBlogs } from "@/lib/api-calls/blog";
 import { FaSearch } from "react-icons/fa";
+import { useGetAllBlogs, useDeleteBlog } from "@/hooks/useBlog";
 
 type Blog = {
    id: string;
@@ -68,12 +66,10 @@ const columns: ColumnDef<Blog>[] = [
 
 const ActionButtons: React.FC<{ blog: Blog }> = ({ blog }) => {
    const router = useRouter();
-   const { setModalOpen, setCurrentBlog, isAdmin } =
-      useContext(BlogsPageContext);
+   const { setModalOpen, setCurrentBlog, isAdmin } = useContext(BlogsPageContext);
+   const deleteBlogMutation = useDeleteBlog();
 
-   if (!isAdmin) {
-      return null;
-   }
+   if (!isAdmin) return null;
 
    const handleUpdate = () => {
       setCurrentBlog(blog);
@@ -81,28 +77,24 @@ const ActionButtons: React.FC<{ blog: Blog }> = ({ blog }) => {
    };
 
    const handleDelete = async () => {
-      try {
-         await deleteBlog(blog.id);
-         toast.success("Blog deleted successfully");
-         router.refresh();
-      } catch (error) {
-         toast.error("Failed to delete blog");
-      }
+      deleteBlogMutation.mutate(blog.id, {
+         onSuccess: () => {
+            toast.success("Blog deleted successfully");
+            router.refresh();
+         },
+         onError: () => {
+            toast.error("Failed to delete blog");
+         },
+      });
    };
 
    return (
       <div className="flex gap-2">
-         <button
-            onClick={handleUpdate}
-            className="text-main"
-         >
+         <button onClick={handleUpdate} className="text-main">
             Update
          </button>
          /
-         <button
-            onClick={handleDelete}
-            className="text-red-500"
-         >
+         <button onClick={handleDelete} className="text-red-500">
             Delete
          </button>
       </div>
@@ -120,41 +112,24 @@ const BlogsPageContext = createContext<{
 });
 
 export default function BlogsPage() {
-   const [data, setData] = useState<Blog[]>([]);
+   const { data: blogs, isLoading, isError } = useGetAllBlogs();
    const [filteredData, setFilteredData] = useState<Blog[]>([]);
    const [isModalOpen, setModalOpen] = useState(false);
    const [currentBlog, setCurrentBlog] = useState<Blog | null>(null);
-   const [isAdmin, setIsAdmin] = useState(false);
    const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
    const [searchTerm, setSearchTerm] = useState<string>('');
 
    useEffect(() => {
-      const fetchData = async () => {
-         try {
-            const blogs = await getAllBlogs();
-            setData(blogs);
-            setFilteredData(blogs);
-
-            const currentUser = await getUserProfile();
-            setIsAdmin(currentUser.role === "admin");
-         } catch (error) {
-            toast.error("Failed to fetch blogs or user profile");
-         }
-      };
-
-      fetchData();
-   }, []);
-
-   useEffect(() => {
-      const filtered = data.filter((blog) =>
-         blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-         blog.description.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredData(filtered);
-   }, [searchTerm, data]);
+      if (blogs) {
+         const filtered = blogs.filter((blog: { title: string; description: string; }) =>
+            blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            blog.description.toLowerCase().includes(searchTerm.toLowerCase())
+         );
+         setFilteredData(filtered);
+      }
+   }, [searchTerm, blogs]);
 
    const handleAddBlog = () => {
-      // Open modal for adding new blog
       setCurrentBlog(null);
       setModalOpen(true);
    };
@@ -163,25 +138,12 @@ export default function BlogsPage() {
       setModalOpen(false);
    };
 
-   const handleSuccess = () => {
-      handleCloseModal();
-      // Refresh data after successful update or create
-      const fetchData = async () => {
-         try {
-            const blogs = await getAllBlogs();
-            setData(blogs);
-            setFilteredData(blogs);
-         } catch (error) {
-            toast.error("Failed to fetch blogs");
-         }
-      };
-
-      fetchData();
-   };
+   if (isLoading) return <p>Loading blogs...</p>;
+   if (isError) return <p>Error loading blogs.</p>;
 
    return (
       <BlogsPageContext.Provider
-         value={{ setModalOpen, setCurrentBlog, isAdmin }}
+         value={{ setModalOpen, setCurrentBlog }}
       >
          <div className="mb-6 flex flex-col md:flex-row md:justify-between gap-4 w-full">
             <form
@@ -199,25 +161,18 @@ export default function BlogsPage() {
                   onChange={(e) => setSearchTerm(e.target.value)}
                />
             </form>
-            <Button
-               onClick={handleAddBlog}
-               className="self-end "
-            >
+            <Button onClick={handleAddBlog} className="self-end">
                Create Blog
             </Button>
          </div>
          <div className="flex flex-col gap-5 w-full">
             <PageTitle title="Blogs" />
-            <DataTable
-               columns={columns}
-               data={filteredData}
-               title="All Blogs"
-            />
+            <DataTable columns={columns} data={filteredData || []} title="All Blogs" />
             {isModalOpen && (
                <BlogModal
                   blog={currentBlog}
                   onClose={handleCloseModal}
-                  onSuccess={handleSuccess}
+                  onSuccess={handleCloseModal}
                />
             )}
          </div>

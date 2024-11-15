@@ -14,7 +14,7 @@ import { Metadata } from "next";
 
 
 export const metadata: Metadata = {
-   title: "About - Ziba Pay",
+   title: "About",
    description: "Learn more about Ziba Pay and our mission.",
 };
 const AboutUs = () => {

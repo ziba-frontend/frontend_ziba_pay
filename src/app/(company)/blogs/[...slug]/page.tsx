@@ -3,10 +3,14 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { FaArrowRight } from "react-icons/fa";
 import { getAllBlogs, getBlogBySlug } from "@/lib/api-calls/blog";
+import { MetaData } from "fumadocs-core/source";
+import { Metadata } from "next";
 
 interface BlogPostProps {
   params: { slug: string[] };
 }
+
+
 
 export default async function BlogPost({ params }: BlogPostProps) {
   const slug = params.slug.join("/");
@@ -25,6 +29,7 @@ export default async function BlogPost({ params }: BlogPostProps) {
     notFound();
     return;
   }
+
 
   return (
     <div className="container mx-auto md:pt-10">
@@ -70,7 +75,7 @@ export async function generateStaticParams() {
     blogs = await getAllBlogs();
   } catch (error: any) {
     console.error(`Error fetching blogs:`, error.message);
-    // Return an empty array if there's an error fetching blogs
+ 
     return [];
   }
   return blogs.map((blog: { slug: any }) => ({

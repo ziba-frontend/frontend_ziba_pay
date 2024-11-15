@@ -10,8 +10,9 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-   title: "Custom Solution For Businesses - Ziba Pay",
-   description: "Tailored payment solutions designed specifically for your business needs.",
+   title: "Custom Solution For Businesses",
+   description:
+      "Tailored payment solutions designed specifically for your business needs.",
 };
 
 const Solution = () => {

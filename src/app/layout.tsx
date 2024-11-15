@@ -12,8 +12,14 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-   title: "Ziba Pay",
+   title: {
+      default:"Zibapay",
+      template:"%s - Zibapay"
+   },
    description: "A payment gateway",
+   twitter: {
+      card: "summary_large_image",
+    },
 };
 
 export default function RootLayout({

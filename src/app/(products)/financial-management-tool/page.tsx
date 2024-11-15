@@ -12,7 +12,7 @@ import { Metadata } from "next";
 
 
 export const metadata: Metadata = {
-   title: "Financial Management Tool - Ziba Pay",
+   title: "Financial Management Tool",
    description: "Optimize finances with Zibapay's comprehensive financial management tool.",
 };
 
