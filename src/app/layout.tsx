@@ -16,7 +16,7 @@ export const metadata: Metadata = {
       default:"Zibapay",
       template:"%s - Zibapay"
    },
-   description: "A payment gateway",
+   description: "Zibapay: Your reliable, secure, and seamless payment gateway for businesses and individuals. Empowering transactions with speed and trust.",
    twitter: {
       card: "summary_large_image",
     },
