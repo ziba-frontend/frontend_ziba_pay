@@ -19,6 +19,9 @@ import { getUserProfile } from "@/lib/api-calls/auth-server";
 import { StatusBadge } from "@/components/StatusBadge";
 import { formatDate } from "@/constants/constants";
 import CompleteTransaction from "@/components/modals/CompleteTransaction";
+import { useFetchUserProfile } from "@/hooks/useAuth";
+import { useCancelTransaction, useCompleteTransaction, useGetSentTransactions } from "@/hooks/useTransaction";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
    username: z.string().min(2, {
@@ -143,11 +146,8 @@ const Transactions = () => {
    const [drawerTitle, setDrawerTitle] = useState<string>("");
    const [data, setData] = useState<Payment[]>([]);
    const [loading, setLoading] = useState<boolean>(true);
-   const [profile, setProfile] = useState<{
-      balance: number;
-      balanceMTN: number;
-      balanceAirtel: number;
-   } | null>(null);
+   const { data: profile, isLoading: profileLoading } = useFetchUserProfile();
+
    const [filters, setFilters] = useState<{
       kind?: string;
       status?: string;
@@ -161,39 +161,34 @@ const Transactions = () => {
       setIsDrawerOpen(true);
    };
 
-   const fetchTransactions = async () => {
-      setLoading(true);
+   const {
+      data: transactionsData,
+      isLoading: transactionsLoading,
+      refetch: refetchTransactions,
+   } = useGetSentTransactions({ ...filters, sort, page });
+
+
+
+ const completeTransactionMutation = useCompleteTransaction();
+   const cancelTransactionMutation = useCancelTransaction();
+
+   const handleTransactionAction = async (transactionId: string, actionType: "complete" | "cancel") => {
       try {
-         const response = await getSentTransaction({
-            ...filters,
-            sort,
-            page,
-         });
-         const transactions = response.data.transactions;
-         console.log("Transactions retrieved are:", transactions);
-         setData(transactions);
+         if (actionType === "complete") {
+            await completeTransactionMutation.mutateAsync(transactionId);
+            toast.success("Transaction completed successfully");
+         } else {
+            await cancelTransactionMutation.mutateAsync(transactionId);
+            toast.success("Transaction cancelled successfully");
+         }
+         refetchTransactions();
       } catch (error) {
-         console.error("Error while getting transactions:", error);
-      } finally {
-         setLoading(false);
+         toast.error("Failed to update transaction");
+         console.error("Transaction action error:", error);
       }
    };
 
-   useEffect(() => {
-      fetchTransactions();
-      const fetchUserProfile = async () => {
-         try {
-            const userProfile = await getUserProfile();
-            setProfile(userProfile);
-            console.log("The user profile: ", userProfile);
-         } catch (error) {
-            console.error("Error fetching user profile:", error);
-         }
-      };
-      fetchUserProfile();
-   }, [filters, sort, page]);
-
-   if (loading) {
+   if (profileLoading || transactionsLoading) {
       return (
          <div className="w-full h-screen flex items-center justify-center">
             <RiseLoader color="#3BD64A" />
@@ -308,7 +303,11 @@ const Transactions = () => {
          </div>
          <DataTable
             columns={columns}
-            data={data}
+            data={transactionsData || []}
+            actions={{
+               onComplete: (id: string) => handleTransactionAction(id, "complete"),
+               onCancel: (id: string) => handleTransactionAction(id, "cancel"),
+            }}
          />
          <DrawerForm
             isOpen={isDrawerOpen}

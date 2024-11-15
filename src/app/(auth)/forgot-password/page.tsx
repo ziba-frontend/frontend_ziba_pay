@@ -13,10 +13,10 @@ import {
    FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { forgotPassword } from "@/lib/api-calls/auth-server";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import emailSent from "../../../../public/images/email-sent.png";
+import { useForgotPassword } from "@/hooks/useAuth";
 
 const formSchema = z.object({
    email: z.string().email({ message: "Invalid email address." }),
@@ -29,11 +29,16 @@ const ForgotPassword = () => {
       resolver: zodResolver(formSchema),
    });
 
+   const forgotPasswordMutation = useForgotPassword();
    const onSubmit = async (data: any) => {
       setEmail(data.email);
       try {
-         await forgotPassword(data.email);
-         setStatus("success");
+         const response = await forgotPasswordMutation.mutateAsync(data);
+         if (response.status == "success") {
+            setStatus("success");
+         } else {
+            setStatus("error");
+         }
       } catch (error) {
          console.error("Error sending password reset link:", error);
          setStatus("error");
@@ -42,11 +47,13 @@ const ForgotPassword = () => {
 
    const handleResend = async () => {
       try {
-         await forgotPassword(email);
+         await forgotPasswordMutation.mutateAsync(email);
          toast.success("Password reset link has been resent to your email.");
       } catch (error) {
          console.error("Error resending password reset link:", error);
-         toast.error("An error occurred while resending the password reset link. Please try again.");
+         toast.error(
+            "An error occurred while resending the password reset link. Please try again."
+         );
       }
    };
 
@@ -59,16 +66,25 @@ const ForgotPassword = () => {
          <div className="flex justify-center items-center h-screen bg-gray-100">
             <div className="bg-white p-10 shadow-md w-full max-w-xl ">
                <div className="flex items-center">
-                  <Image src={emailSent} alt="email-sent" />
-                  <h1 className="text-2xl font-semibold mb-4 ml-4">Email Sent</h1>
+                  <Image
+                     src={emailSent}
+                     alt="email-sent"
+                  />
+                  <h1 className="text-2xl font-semibold mb-4 ml-4">
+                     Email Sent
+                  </h1>
                </div>
                <p className="my-2">
-                  We have sent an email to {email}. Please check your inbox and follow the instructions to reset your account password.
+                  We have sent an email to {email}. Please check your inbox and
+                  follow the instructions to reset your account password.
                </p>
                <div className="my-6">
                   <p>
                      Did not receive the Email?{" "}
-                     <span className="cursor-pointer text-main ml-4 underline pb-2" onClick={handleResend}>
+                     <span
+                        className="cursor-pointer text-main ml-4 underline pb-2"
+                        onClick={handleResend}
+                     >
                         Resend Email
                      </span>
                   </p>
@@ -76,7 +92,10 @@ const ForgotPassword = () => {
                <div className="my-6">
                   <p>
                      Wrong Email Address?
-                     <span className="cursor-pointer text-main ml-4 underline pb-2" onClick={handleChangeEmail}>
+                     <span
+                        className="cursor-pointer text-main ml-4 underline pb-2"
+                        onClick={handleChangeEmail}
+                     >
                         Change Email Address
                      </span>
                   </p>
@@ -92,7 +111,8 @@ const ForgotPassword = () => {
             <h1 className="text-2xl font-semibold mb-4">Forgot Password</h1>
             {status === "error" && (
                <p className="text-red-500 mb-4">
-                  An error occurred while sending the password reset link. Please try again.
+                  An error occurred while sending the password reset link.
+                  Please try again.
                </p>
             )}
             <Form {...form}>
@@ -101,7 +121,8 @@ const ForgotPassword = () => {
                   className="space-y-4 flex flex-col gap-6"
                >
                   <p className="my-2">
-                     Enter the email address you used to create the account, and we will email you instructions to reset your password.
+                     Enter the email address you used to create the account, and
+                     we will email you instructions to reset your password.
                   </p>
                   <FormField
                      control={form.control}

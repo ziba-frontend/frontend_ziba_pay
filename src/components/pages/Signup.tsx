@@ -24,6 +24,9 @@ import { useRouter } from "next/navigation";
 import RiseLoader from "react-spinners/RiseLoader";
 import { Eye, EyeOff } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { Cookies } from "react-cookie";
+import { useSearchParams } from "next/navigation";
+import { useSignup } from "@/hooks/useAuth";
 
 const formSchema = z.object({
    email: z.string().email({ message: "Invalid email address." }),
@@ -51,8 +54,11 @@ const formSchema = z.object({
 
 const SignUp = () => {
    const router = useRouter();
-   const [isLoading, setIsLoading] = useState(false);
+   const [isSubmitting, setIsSubmitting] = useState(false);
    const [showPassword, setShowPassword] = useState(false);
+
+   const searchParams = useSearchParams();
+   const redirectUrl = searchParams.get("redirectUrl");
 
    const form = useForm({
       resolver: zodResolver(formSchema),
@@ -74,16 +80,27 @@ const SignUp = () => {
    } = form;
    const watchedFields = watch();
 
+   const cookies = new Cookies();
+   const registerUserMutation = useSignup();
    const onSubmit = async (data: any) => {
-      setIsLoading(true);
+      setIsSubmitting(true);
       const { agreeTerms, ...userData } = data;
       try {
-         await signupApi(userData);
-         router.push("/dashboard");
+         const response = await registerUserMutation.mutateAsync(data);
+         if (response.status == "success") {
+            cookies.set("auth-token", response.token, { path: "/" });
+            if (redirectUrl) {
+               location.replace(redirectUrl);
+            } else {
+               location.replace("/dashboard");
+            }
+         } else {
+            toast.error(response?.error?.msg || "Login failed");
+         }
       } catch (error) {
          toast.error("Signup failed. Please try again.");
       } finally {
-         setIsLoading(false);
+         setIsSubmitting(false);
       }
    };
 
@@ -269,9 +286,9 @@ const SignUp = () => {
                   <Button
                      type="submit"
                      className="w-full my-6 p-7"
-                     disabled={!isValid || isLoading}
+                     disabled={!isValid || isSubmitting}
                   >
-                     {isLoading ? (
+                     {isSubmitting ? (
                         <div className="flex items-center justify-center gap-2">
                            <RiseLoader
                               color="#3BD64A"
@@ -284,7 +301,13 @@ const SignUp = () => {
                      )}
                   </Button>
                   <p className="text-center">
-                     Already have an account? <Link href="/login" className="text-main">Login</Link>
+                     Already have an account?{" "}
+                     <Link
+                        href="/login"
+                        className="text-main"
+                     >
+                        Login
+                     </Link>
                   </p>
                </form>
             </Form>

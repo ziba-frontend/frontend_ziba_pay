@@ -1,7 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import RiseLoader from "react-spinners/RiseLoader";
-import { updateUser, deleteUser } from "@/lib/api-calls/admin";
 import { Button } from "@/components/ui/button";
 import {
    Dialog,
@@ -11,7 +10,9 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "react-hot-toast";
 import ProfileForm from "../form/ProfileForm";
-import { getUserProfile, logoutApi } from "@/lib/api-calls/auth-server";
+import { useFetchUserProfile, useLogout } from "@/hooks/useAuth";
+import { useDeleteUser, useUpdateUser } from "@/hooks/useAdmin";
+
 
 interface UserProfile {
    id: string;
@@ -21,57 +22,38 @@ interface UserProfile {
 }
 
 const Account = () => {
-   const [user, setUser] = useState<UserProfile>({
-      id: "",
-      name: "",
-      email: "",
-      businessType: "",
-   });
-   const [loading, setLoading] = useState<boolean>(true);
+   const { data: user, isLoading } = useFetchUserProfile();
+   const updateUserMutation = useUpdateUser();
+   const deleteUserMutation = useDeleteUser();
+   const logoutMutation = useLogout();
+   
    const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] =
-      useState(false);
+   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false);
 
-   useEffect(() => {
-      const fetchUserProfile = async () => {
-         try {
-            const userData = await getUserProfile();
-            setUser(userData);
-         } catch (error) {
-            console.error("Error fetching user profile:", error);
-         } finally {
-            setLoading(false);
-         }
-      };
-
-      fetchUserProfile();
-   }, []);
-
-   const handleUpdateProfile = async (updatedData: any) => {
+   const handleUpdateProfile = async (updatedData: UserProfile) => {
       try {
-         await updateUser(user.id, updatedData);
+         await updateUserMutation.mutateAsync({ userId: user?.id, userData: updatedData });
          toast.success("Profile updated successfully");
-         setUser(updatedData);
          setIsUpdateModalOpen(false);
-      } catch (error) {
+      } catch {
          toast.error("Failed to update profile");
       }
    };
 
    const handleDeleteProfile = async () => {
       try {
-         await deleteUser(user.id);
-         await logoutApi();
+         await deleteUserMutation.mutateAsync(user?.id);
+         await logoutMutation.mutateAsync();
          toast.success("Profile deleted successfully");
          window.location.href = "/login";
-      } catch (error) {
+      } catch {
          toast.error("Failed to delete profile");
       } finally {
          setIsDeleteConfirmationOpen(false);
       }
    };
 
-   if (loading) {
+   if (isLoading) {
       return (
          <div className="w-full h-screen flex items-center justify-center">
             <RiseLoader color="#3BD64A" />
@@ -101,15 +83,15 @@ const Account = () => {
          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6">
             <div className="flex flex-col gap-2">
                <h3 className="font-semibold">Name</h3>
-               <p>{user.name}</p>
+               <p>{user?.name}</p>
             </div>
             <div className="flex flex-col gap-2">
                <h3 className="font-semibold">Email</h3>
-               <p>{user.email}</p>
+               <p>{user?.email}</p>
             </div>
             <div className="flex flex-col gap-2">
                <h3 className="font-semibold">Business Type</h3>
-               <p>{user.businessType}</p>
+               <p>{user?.businessType}</p>
             </div>
          </div>
 

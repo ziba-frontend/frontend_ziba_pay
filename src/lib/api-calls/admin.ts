@@ -5,7 +5,7 @@ import { getUserProfile } from './auth-server';
 
   
 
-const BASE_URL = 'http://localhost:8080/api/v1/admin';
+const BASE_URL = 'https://backend.zibapay.com/api/v1/admin';
 
 
 export const checkIfAdmin = async () => {

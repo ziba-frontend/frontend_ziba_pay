@@ -4,8 +4,8 @@ import { CardContent } from "@/components/Card";
 import PieChart from "@/components/PieChart";
 import LineChartComponent from "@/components/LineChart";
 import AreaChartComponent from "@/components/AreaChartComponent";
-import { getAllTransactions } from "@/lib/api-calls/transaction";
 import BarChartComponent from "../BarChart";
+import { useGetAllTransactions } from "@/hooks/useAdmin";
 
 const months = [
     "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
@@ -43,25 +43,15 @@ export default function DashboardHome() {
     const [transactionData, setTransactionData] = useState<
         { name: string; cashIn: number; cashOut: number; total: number }[]
     >([]);
+    
+    const { data, isLoading, isError } = useGetAllTransactions();
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Fetch all transactions
-                const transactions = await getAllTransactions();
-
-                // Aggregate the transactions by month
-                const aggregatedData = aggregateTransactionsByMonth(transactions);
-
-                // Update the state with the aggregated data
-                setTransactionData(aggregatedData);
-            } catch (error) {
-                console.error("Error while fetching transactions:", error);
-            }
-        };
-
-        fetchData();
-    }, []);
+        if (data && !isLoading && !isError) {
+            const aggregatedData = aggregateTransactionsByMonth(data);
+            setTransactionData(aggregatedData);
+        }
+    }, [data, isLoading, isError]);
 
     return (
         <div className="flex flex-col gap-5 w-full pr-2 md:pr-10">

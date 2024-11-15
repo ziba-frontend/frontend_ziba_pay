@@ -19,12 +19,15 @@ import {
 import { Input } from "@/components/ui/input";
 import login from "../../../public/images/login.png";
 import { Checkbox } from "@/components/ui/checkbox";
-import { loginApi } from "@/lib/api-calls/auth-server";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import RiseLoader from "react-spinners/RiseLoader";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
+import { useLogin } from "@/hooks/useAuth";
+import { Cookies } from "react-cookie";
+
+const cookies = new Cookies();
 
 const formSchema = z.object({
    email: z.string().email({ message: "Invalid email address." }),
@@ -36,14 +39,24 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const Login = () => {
-   const router = useRouter();
+   const [isSubmitting, setIsSubmitting] = useState(false);
+
    const searchParams = useSearchParams();
-   const [isLoading, setIsLoading] = useState(false);
+   const redirectUrl = searchParams.get("redirectUrl");
+
+   const router = useRouter();
+
    const [showPassword, setShowPassword] = useState(false);
+
+   const loginMutation = useLogin();
 
    const form = useForm<FormData>({
       resolver: zodResolver(formSchema),
       mode: "onChange",
+      defaultValues: {
+         email: "",
+         password: "",
+      },
    });
 
    const { watch, formState } = form;
@@ -51,15 +64,25 @@ const Login = () => {
    const password = watch("password");
 
    const onSubmit = async (data: FormData) => {
-      setIsLoading(true);
+      setIsSubmitting(true);
       try {
-         await loginApi(data);
-         const redirectTo = searchParams.get("redirect") || "/dashboard";
-         window.location.href = redirectTo;
+         const response = await loginMutation.mutateAsync(data);
+
+         if (response.status == "success") {
+            cookies.set("auth-token", response.token, { path: "/" });
+
+            if (redirectUrl) {
+               location.replace(redirectUrl);
+            } else {
+               location.replace("/dashboard");
+            }
+         } else {
+            toast.error(response?.error?.msg || "Login failed");
+         }
       } catch (error) {
-         toast.error("Invalid Credentials");
+         toast.error("Login failed. Please try again.");
       } finally {
-         setIsLoading(false);
+         setIsSubmitting(false);
       }
    };
 
@@ -186,9 +209,9 @@ const Login = () => {
                      <Button
                         type="submit"
                         className="w-full p-[26px]"
-                        disabled={!form.formState.isValid || isLoading}
+                        disabled={!form.formState.isValid || isSubmitting}
                      >
-                        {isLoading ? (
+                        {isSubmitting ? (
                            <div className="flex items-center justify-center gap-2">
                               <RiseLoader
                                  color="#3BD64A"

@@ -22,7 +22,7 @@ import drop1 from "../../public/images/drop1.png";
 import drop2 from "../../public/images/drop2.png";
 import { createPortal } from "react-dom";
 import close from "../../public/images/close.png";
-import { getUserProfile } from "@/lib/api-calls/auth-server";
+import { useAuthStore } from "@/store/useAuthStore";
 
 type MenuItems = {
    [key: string]: {
@@ -175,21 +175,12 @@ interface User {
 const Navbar: React.FC = () => {
    const [isOpen, setIsOpen] = useState(false);
    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-   const [user, setUser] = useState<User | null>(null);
    const [loading, setLoading] = useState(true);
 
+   const { user } = useAuthStore();
    useEffect(() => {
-      const fetchUserProfile = async () => {
-         try {
-            const userProfile = await getUserProfile();
-            setUser(userProfile);
-         } catch (error) {
-            setUser(null);
-         } finally {
-            setLoading(false);
-         }
-      };
-      fetchUserProfile();
+      console.log("Amen",user);
+      
    }, []);
 
    const toggleMenu = () => {
@@ -228,7 +219,7 @@ const Navbar: React.FC = () => {
                </div>
             </div>
             <div className="hidden md:flex gap-6">
-               {loading ? null : user ? (
+               {user ? (
                   <Link href="/dashboard">
                      <Button className="w-[107px] sm:w-[130px] p-6 ">
                         Dashboard
