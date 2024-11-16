@@ -14,6 +14,7 @@ export async function middleware(req: NextRequest) {
       }
    }
 
+   // Redirect authenticated users away from login pages
    if (pathname.startsWith("/login") || pathname.startsWith("/admin-login")) {
       if (verifiedToken) {
          return NextResponse.redirect(`${origin}/dashboard`);
@@ -21,6 +22,7 @@ export async function middleware(req: NextRequest) {
       return NextResponse.next();
    }
 
+   // Redirect unauthenticated users to login pages
    if (!verifiedToken) {
       const loginUrl = pathname.startsWith("/admin")
          ? new URL("/admin-login", origin)
@@ -32,12 +34,14 @@ export async function middleware(req: NextRequest) {
       return response;
    }
 
-   if (verifiedToken && pathname.startsWith("/login")) {
-      return NextResponse.redirect(`${origin}/dashboard`);
+   // Redirect admin users to the admin dashboard if accessing non-admin pages
+   if (verifiedToken.role === "admin" && !pathname.startsWith("/admin")) {
+      return NextResponse.redirect(`${origin}/admin`);
    }
 
+   // Restrict access to admin pages to admin users only
    if (pathname.startsWith("/admin")) {
-      if (!verifiedToken || verifiedToken.role !== "admin") {
+      if (verifiedToken.role !== "admin") {
          return NextResponse.redirect(`${origin}/admin-login`);
       }
    }

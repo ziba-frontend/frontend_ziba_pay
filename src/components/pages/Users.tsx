@@ -6,9 +6,7 @@ import React from "react";
 import PageTitle from "@/components/PageTitle";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { deleteUser, getAllUsers } from "@/lib/api-calls/admin";
 import UserModal from "@/components/modals/UserModal";
-import { getUserProfile } from "@/lib/api-calls/auth-server";
 import { Button } from "@/components/ui/button";
 import UserDetailsModal from "../modals/UserDetailsModal";
 import ConfirmDialog from "../modals/ConfirmDeleteUser";
@@ -23,6 +21,8 @@ import {
   Users
 } from "lucide-react";
 import { FaSearch } from "react-icons/fa";
+import { useFetchUserProfile } from "@/hooks/useAuth";
+import { useCheckIfAdmin, useGetAllUsers } from "@/hooks/useAdmin";
 
 type User = {
   isEmailVerified: any;
@@ -182,22 +182,21 @@ const UsersPageContext = React.createContext<{
 });
 
 export default function UsersPage() {
-   const [data, setData] = useState<User[]>([]);
    const [filteredData, setFilteredData] = useState<User[]>([]);
    const [isModalOpen, setModalOpen] = useState(false);
    const [isDetailsModalOpen, setDetailsModalOpen] = useState(false);
    const [currentUser, setCurrentUser] = useState<User | null>(null);
    const [detailsUser, setDetailsUser] = useState<User | null>(null);
-   const [isAdmin, setIsAdmin] = useState(false);
    const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
    const [searchTerm, setSearchTerm] = useState<string>('');
    const [newUserCount, setNewUserCount] = useState<number>(0);
+   const { user, isLoading, isError } = useFetchUserProfile();
+  const { isAdmin } = useCheckIfAdmin(); 
 
    useEffect(() => {
       const fetchData = async () => {
          try {
-            const users = await getAllUsers();
-            setData(users);
+            const {data:users,isLoading}= useGetAllUsers()
             setFilteredData(users);
             calculateNewUsers(users);
          } catch (error) {
@@ -208,12 +207,12 @@ export default function UsersPage() {
    }, []);
 
    useEffect(() => {
-      const filtered = data.filter((user) =>
+      const filtered = users.filter((user) =>
          user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
          user.email.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredData(filtered);
-   }, [searchTerm, data]);
+   }, [searchTerm, users]);
 
    const calculateNewUsers = (users: User[]) => {
       const now = new Date();  
@@ -239,8 +238,7 @@ export default function UsersPage() {
    const handleSuccess = () => {
       const fetchData = async () => {
          try {
-            const users = await getAllUsers();
-            setData(users);
+            const {data:users,isLoading}= useGetAllUsers()
             setFilteredData(users);
             const currentUser = await getUserProfile();
             setCurrentUser(currentUser);

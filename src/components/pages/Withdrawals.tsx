@@ -11,6 +11,9 @@ import { StatusBadge } from "@/components/StatusBadge";
 import { formatDate } from "@/constants/constants";
 import { getUserProfile } from "@/lib/api-calls/auth-server";
 import { Status } from "./Transactions";
+import { useFetchUserProfile } from "@/hooks/useAuth";
+import { useGetSentTransactions, useGetWithdrawalHistory } from "@/hooks/useTransaction";
+import { useQuery } from "@tanstack/react-query";
 
 type Payment = {
    id: string;
@@ -106,11 +109,7 @@ const columns: ColumnDef<Payment>[] = [
 const Withdrawal = () => {
    const [data, setData] = useState<Payment[]>([]);
    const [loading, setLoading] = useState<boolean>(true);
-   const [profile, setProfile] = useState<{
-      balance: number;
-      balanceMTN: number;
-      balanceAirtel: number;
-   } | null>(null);
+   
    const [filters, setFilters] = useState<{
       kind?: string;
       status?: string;
@@ -119,39 +118,15 @@ const Withdrawal = () => {
    const [sort, setSort] = useState<string | null>(null);
    const [page, setPage] = useState<number>(1);
 
-   const fetchTransactions = async () => {
-      setLoading(true);
-      try {
-         const response = await getWithdrawalHistory({
-            ...filters,
-            sort,
-            page,
-         });
-         const transactions = response.data.transactions;
-         console.log("Transactions retrieved are:", transactions);
-         setData(transactions);
-      } catch (error) {
-         console.error("Error while getting transactions:", error);
-      } finally {
-         setLoading(false);
-      }
-   };
 
-   useEffect(() => {
-      fetchTransactions();
-      const fetchUserProfile = async () => {
-         try {
-            const userProfile = await getUserProfile();
-            setProfile(userProfile);
-            console.log("The user profile: ", userProfile);
-         } catch (error) {
-            console.error("Error fetching user profile:", error);
-         }
-      };
-      fetchUserProfile();
-   }, [filters, sort, page]);
+   const { data: profile, isLoading: profileLoading } = useFetchUserProfile();
+   
+   const { data: transactions, isLoading: transactionsLoading } = useQuery({
+      queryKey: ["withdrawals", filters, page],
+      queryFn: () => useGetWithdrawalHistory({ ...filters, page }),
+   });
 
-   if (loading) {
+   if (profileLoading || transactionsLoading) {
       return (
          <div className="w-full h-screen flex items-center justify-center">
             <RiseLoader color="#3BD64A" />

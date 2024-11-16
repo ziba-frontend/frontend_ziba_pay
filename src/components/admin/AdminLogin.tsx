@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
@@ -21,8 +21,8 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import RiseLoader from "react-spinners/RiseLoader";
 import PassCodeAdminModal from "../modals/PassCodeAdminModal";
-import { loginApi, signupApi } from "@/lib/api-calls/auth-server";
-import { decryptKey, encryptKey } from "@/lib/utils";
+import { useLogin, useSignup } from "@/hooks/useAuth";
+
 
 const emailOrPhoneValidation = z
   .string()
@@ -57,35 +57,44 @@ const AdminLogin = () => {
     mode: "onChange",
   });
 
-  const onSubmit = async (data: FormData) => {
+  const { mutate: loginUser } = useLogin();
+  const { mutate: signupUser } = useSignup();
+
+  const onSubmit = (data: FormData) => {
     setIsLoading(true);
     const { emailOrPhone, password, name } = data;
     setEmail(emailOrPhone);
-    try {
-      await loginApi({ email: emailOrPhone, password });
-      setOpen(true);
-    } catch (loginError) {
-      try {
-        await signupApi({
-          name,
-          email: emailOrPhone,
-          password,
-          role: "admin",
-        });
-        await loginApi({ email: emailOrPhone, password });
-        setOpen(true);
-      } catch (signupError) {
-        toast.error("Signup failed. Please try again.");
+
+    loginUser(
+      { email: emailOrPhone, password },
+      {
+        onSuccess: () => {
+          setOpen(true);
+        },
+        onError: () => {
+          signupUser(
+            { name, email: emailOrPhone, password, role: "admin" },
+            {
+              onSuccess: () => {
+                loginUser(
+                  { email: emailOrPhone, password },
+                  { onSuccess: () => setOpen(true) }
+                );
+              },
+              onError: () => {
+                toast.error("Signup failed. Please try again.");
+              },
+            }
+          );
+        },
+        onSettled: () => setIsLoading(false),
       }
-    } finally {
-      setIsLoading(false);
-    }
+    );
   };
 
   const closeModal = () => {
-    console.log("Closing modal...");
     setOpen(false);
-    console.log("Redirecting to /admin...");
+    router.push("/admin");
   };
 
   return (
@@ -119,6 +128,7 @@ const AdminLogin = () => {
           >
             <h2 className="text-center my-6">Welcome Admin!</h2>
             <div className="space-y-8">
+              {/* Name Field */}
               <FormField
                 control={form.control}
                 name="name"
@@ -132,57 +142,36 @@ const AdminLogin = () => {
                         {...field}
                       />
                     </FormControl>
-                    {form.formState.errors.name && (
-                      <p className="text-red-500 text-sm">
-                        {form.formState.errors.name?.message}
-                      </p>
-                    )}
                   </FormItem>
                 )}
               />
-              <div className="relative">
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Password *</FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <Input
-                            className="bg-white p-6 border pr-10"
-                            placeholder="******"
-                            type={showPassword ? "text" : "password"}
-                            {...field}
-                          />
-                          <div
-                            className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
-                            onClick={() => setShowPassword((prev) => !prev)}
-                          >
-                            {showPassword ? (
-                              <EyeOff size={20} />
-                            ) : (
-                              <Eye size={20} />
-                            )}
-                          </div>
+              {/* Password Field */}
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password *</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          className="bg-white p-6 border pr-10"
+                          placeholder="******"
+                          type={showPassword ? "text" : "password"}
+                          {...field}
+                        />
+                        <div
+                          className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                          onClick={() => setShowPassword((prev) => !prev)}
+                        >
+                          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                         </div>
-                      </FormControl>
-                      {form.formState.errors.password && (
-                        <p className="text-red-500 text-sm">
-                          {form.formState.errors.password?.message}
-                        </p>
-                      )}
-                    </FormItem>
-                  )}
-                />
-                <Link
-                  href="/forgot-password"
-                  target="_blank"
-                  className="text-main absolute right-0 -bottom-10 underline"
-                >
-                  Forgot password?
-                </Link>
-              </div>
+                      </div>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              {/* Email/Phone Field */}
               <FormField
                 control={form.control}
                 name="emailOrPhone"
@@ -196,11 +185,6 @@ const AdminLogin = () => {
                         {...field}
                       />
                     </FormControl>
-                    {form.formState.errors.emailOrPhone && (
-                      <p className="text-red-500 text-sm">
-                        {form.formState.errors.emailOrPhone?.message}
-                      </p>
-                    )}
                   </FormItem>
                 )}
               />

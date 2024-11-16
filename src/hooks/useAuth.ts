@@ -1,4 +1,3 @@
-
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import handleApiRequest from "@/utils/handleApiRequest";
 import { useAuthStore } from "@/store/useAuthStore";
@@ -25,9 +24,10 @@ const signupUser = async (userData: any) => {
 };
 
 const fetchUserProfile = async () => {
-   return handleApiRequest(() =>
+   const response = await handleApiRequest(() =>
       authorizedAPI.get(`${BASE_URL}/profile`, { withCredentials: true })
    );
+   return response.data?.user;
 };
 
 const forgotPassword = async (email: string) => {
@@ -71,13 +71,9 @@ const logoutUser = async () => {
 
 // React Query hooks
 export const useLogin = () => {
-   const { setUser, setRole } = useAuthStore();
-
    return useMutation({
       mutationFn: loginUser,
       onSuccess: (data) => {
-         setUser(data.data.user);
-         setRole(data.data.user.role);
          document.cookie = `auth-token=${data.token}; path=/;`;
          console.log("Login test", data);
 
@@ -91,17 +87,10 @@ export const useLogin = () => {
 };
 
 export const useSignup = () => {
-   const { setUser, setRole } = useAuthStore();
-
    return useMutation({
       mutationFn: signupUser,
       onSuccess: (data) => {
-         console.log("Azampoza amarira", data);
-
-         setUser(data.data.user);
-         setRole(data.data.user.role);
          document.cookie = `auth-token=${data.token}; path=/;`;
-         console.log("signup test", data);
 
          toast.success("Signup successful");
       },
@@ -112,15 +101,24 @@ export const useSignup = () => {
    });
 };
 
-export const useFetchUserProfile = () =>
-   useQuery({
+export const useFetchUserProfile = () => {
+   const { setUser, setRole } = useAuthStore();
+
+   return useQuery({
       queryKey: ["userProfile"],
       queryFn: fetchUserProfile,
+      onSuccess: (user: any) => {
+         if (user) {
+            setUser(user);
+            setRole(user.role);
+         }
+      },
       onError: (error: any) => {
-         toast.error("Error fetching user profile");
-         console.error("Fetch profile error:", error);
+         console.error(error);
+         toast.error("Failed to fetch user profile.");
       },
    });
+};
 
 export const useForgotPassword = () =>
    useMutation({
@@ -170,22 +168,31 @@ export const useLogout = () => {
    });
 };
 
-
 const sendVerificationCode = async (phoneNumber: string) => {
    return handleApiRequest(() =>
-      authorizedAPI.post(`${BASE_URL}/send-verification-code`, { phoneNumber }, { withCredentials: true })
+      authorizedAPI.post(
+         `${BASE_URL}/send-verification-code`,
+         { phoneNumber },
+         { withCredentials: true }
+      )
    );
 };
 
 const verifyPhoneNumber = async (phone: string, code: string) => {
    return handleApiRequest(() =>
-      authorizedAPI.post(`${BASE_URL}/verify-phone-number`, { phone, code }, { withCredentials: true })
+      authorizedAPI.post(
+         `${BASE_URL}/verify-phone-number`,
+         { phone, code },
+         { withCredentials: true }
+      )
    );
 };
 
 const getVerifiedPhoneNumbers = async () => {
    return handleApiRequest(() =>
-      authorizedAPI.get(`${BASE_URL}/verified-phone-numbers`, { withCredentials: true })
+      authorizedAPI.get(`${BASE_URL}/verified-phone-numbers`, {
+         withCredentials: true,
+      })
    );
 };
 
@@ -218,7 +225,7 @@ export const useFetchVerifiedPhoneNumbers = () =>
    useQuery({
       queryKey: ["verifiedPhoneNumbers"],
       queryFn: getVerifiedPhoneNumbers,
-      onError: (error) => {
+      onError: (error:any) => {
          toast.error("Error while retrieving verified phone numbers");
          console.error("Error fetching verified phone numbers:", error);
       },

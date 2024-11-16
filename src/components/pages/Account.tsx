@@ -41,17 +41,20 @@ const Account = () => {
    };
 
    const handleDeleteProfile = async () => {
-      try {
-         await deleteUserMutation.mutateAsync(user?.id);
-         await logoutMutation.mutateAsync();
-         toast.success("Profile deleted successfully");
-         window.location.href = "/login";
-      } catch {
-         toast.error("Failed to delete profile");
-      } finally {
-         setIsDeleteConfirmationOpen(false);
+      if (!user?.id) {
+        toast.error("User ID is missing");
+        return;
       }
-   };
+      try {
+        await deleteUserMutation.mutateAsync(user.id);
+        await logoutMutation.mutateAsync();
+        toast.success("Profile deleted successfully");
+        window.location.href = "/login";
+      } catch (error) {
+        toast.error("Failed to delete profile");
+        console.error("Error deleting profile:", error);
+      }
+    };
 
    if (isLoading) {
       return (

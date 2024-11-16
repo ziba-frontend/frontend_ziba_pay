@@ -1,7 +1,7 @@
-/* eslint-disable*/
+/* eslint-disable */
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -17,9 +17,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { CreateApplicationSchema } from "@/lib/validation";
-import SubmitButton from '../SubmitButton';
-import { createApiGateway } from '@/lib/api-calls/developer';
+import SubmitButton from "../SubmitButton";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useCreateApiGateway } from "@/hooks/useDeveloper";
 
 interface ApplicationFormProps {
     onSuccess: () => void;
@@ -27,7 +27,6 @@ interface ApplicationFormProps {
 }
 
 const ApplicationForm: React.FC<ApplicationFormProps> = ({ onSuccess, onClose }) => {
-    const [isLoading, setIsLoading] = useState(false);
     const [applicationId, setApplicationId] = useState<string | null>(null);
     const [applicationSecret, setApplicationSecret] = useState<string | null>(null);
 
@@ -39,31 +38,33 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({ onSuccess, onClose })
         },
     });
 
-    async function onSubmit(values: z.infer<typeof CreateApplicationSchema>) {
-        setIsLoading(true);
-        try {
-            const result = await createApiGateway({ name: values.name, description: values.description });
-            console.log("API Response:", result); 
-            if (result.apiKey && result.apiSecret) {
-                setApplicationId(result.apiKey);
-                setApplicationSecret(result.apiSecret);
-                onSuccess();
-            } else {
-                console.error("Invalid response format:", result);
-            }
-        } catch (error) {
-            console.error("Error while creating keys: ", error);
-        } finally {
-            setIsLoading(false);
-        }
-    }
+    const { mutate: createApiGateway, isLoading } = useCreateApiGateway();
+
+    const onSubmit = (values: z.infer<typeof CreateApplicationSchema>) => {
+        createApiGateway(values, {
+            onSuccess: (result) => {
+                if (result.apiKey && result.apiSecret) {
+                    setApplicationId(result.apiKey);
+                    setApplicationSecret(result.apiSecret);
+                    onSuccess();
+                } else {
+                    console.error("Invalid response format:", result);
+                }
+            },
+            onError: (error) => {
+                console.error("Error while creating keys:", error);
+            },
+        });
+    };
 
     return (
         <Form {...form}>
             {applicationId && applicationSecret ? (
                 <div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">APPLICATION ID</label>
+                        <label className="block text-sm font-medium text-gray-700">
+                            APPLICATION ID
+                        </label>
                         <div className="relative flex flex-row gap-2">
                             <input
                                 type="text"
@@ -71,21 +72,21 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({ onSuccess, onClose })
                                 value={applicationId}
                                 className="block w-full px-3 py-2 mt-1 bg-gray-300 border border-gray-300 rounded-md"
                             />
-
-                        
                             <CopyToClipboard text={applicationId}>
                                 <Button className="bg-white">📋</Button>
                             </CopyToClipboard>
                         </div>
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">APPLICATION SECRET</label>
+                        <label className="block text-sm font-medium text-gray-700">
+                            APPLICATION SECRET
+                        </label>
                         <div className="flex flex-row gap-4">
                             <input
                                 type="text"
                                 readOnly
                                 value={applicationSecret}
-                                className="block w-full px-3 py-2 mt-1 bg-gray3100 border border-gray-300 rounded-md"
+                                className="block w-full px-3 py-2 mt-1 bg-gray-300 border border-gray-300 rounded-md"
                             />
                             <CopyToClipboard text={applicationSecret}>
                                 <Button className="bg-white">📋</Button>
@@ -103,10 +104,10 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({ onSuccess, onClose })
                             <FormItem>
                                 <FormLabel>Name</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="" {...field} />
+                                    <Input placeholder="Enter application name" {...field} />
                                 </FormControl>
                                 <FormDescription>
-                                    This is your public display name.
+                                    This is your application's display name.
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>
@@ -119,10 +120,10 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({ onSuccess, onClose })
                             <FormItem>
                                 <FormLabel>Description</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="" {...field} />
+                                    <Input placeholder="Enter application description" {...field} />
                                 </FormControl>
                                 <FormDescription>
-                                    This is your public display name.
+                                    A brief description of your application.
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>

@@ -11,7 +11,7 @@ type Numbers = {
 };
 
 const ApproavedNums: React.FC = () => {
-   // Use the custom hook to fetch verified phone numbers
+
    const { data, isLoading, error } = useFetchVerifiedPhoneNumbers();
 
    const columns: ColumnDef<Numbers>[] = [
