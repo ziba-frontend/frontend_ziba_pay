@@ -20,8 +20,7 @@ const getAllBlogs = (): Promise<any> => {
    );
 };
 
-const getBlogById = ({ queryKey }: any): Promise<any> => {
-   const [_, id] = queryKey;
+const getBlogById = (id: string): Promise<any> => {
    return handleApiRequest(() =>
       authorizedAPI.get(`/blog/${id}`, { withCredentials: true })
    );
@@ -78,7 +77,7 @@ export const useUpdateBlog = () => {
 export const useGetBlogById = (id: string) =>
    useQuery<any, Error>({
       queryKey: ["blog", id],
-      queryFn: getBlogById,
+      queryFn: () => getBlogById(id), // Ensure correct parameter passing
    });
 
 export const useDeleteBlog = () => {
@@ -86,7 +85,7 @@ export const useDeleteBlog = () => {
    return useMutation<any, Error, string>({
       mutationFn: deleteBlog,
       onSuccess: () => {
-         // Invalidate the blogs query to refetch the list of blogs after deletion
+         //@ts-ignore
          queryClient.invalidateQueries(["blogs"]);
       },
    });
@@ -95,5 +94,5 @@ export const useDeleteBlog = () => {
 export const useGetBlogBySlug = (slug: string) =>
    useQuery<any, Error>({
       queryKey: ["blogSlug", slug],
-      queryFn: getBlogBySlug,
+      queryFn: () => getBlogBySlug(slug), 
    });

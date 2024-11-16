@@ -15,8 +15,8 @@ import {
    FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { createFeedback } from "@/lib/api-calls/feedback";
 import SubmitButton from "@/components/SubmitButton";
+import { useCreateFeedback } from "@/hooks/useFeedback";
 
 const formSchema = z.object({
    issue: z.string().min(1, { message: "Issue is required." }),
@@ -35,14 +35,16 @@ const Request = () => {
       },
    });
 
+   const createFeedbackMutation=useCreateFeedback()
 
-   const onSubmit = async (data: any) => {
+   const onSubmit = async (data: { issue: string; email: string; subject: string }) => {
       setIsLoading(true);
       try {
-         const feedback = await createFeedback(data.issue, data.email, data.subject);
-         console.log("Here is the feedback: ", feedback);
-         form.reset(); 
-         return feedback;
+         const response = await createFeedbackMutation.mutateAsync(data);
+         if (response.status === "success") {
+            console.log("Feedback submitted successfully:", response.data);
+         }
+         form.reset();
       } catch (error) {
          console.error("Error while creating the feedback: ", error);
       } finally {

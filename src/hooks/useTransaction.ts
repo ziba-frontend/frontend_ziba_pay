@@ -76,8 +76,13 @@ const cancelTransaction = async (transactionId: string) => {
    return response.data;
 };
 
-// Deposit Cash
-const deposit = async (paymentMethod: string, amount: number) => {
+const deposit = async ({
+   paymentMethod,
+   amount,
+}: {
+   paymentMethod: string;
+   amount: number;
+}): Promise<any> => {
    const response = await authorizedAPI.post(
       `${BASE_URL}/cash-in`,
       { paymentMethod, amount },
@@ -87,7 +92,13 @@ const deposit = async (paymentMethod: string, amount: number) => {
 };
 
 // Withdraw Cash
-const withdraw = async (paymentMethod: string, amount: number) => {
+const withdraw = async ({
+   paymentMethod,
+   amount,
+}: {
+   paymentMethod: string;
+   amount: number;
+}): Promise<any> => {
    const response = await authorizedAPI.post(
       `${BASE_URL}/cash-out`,
       { paymentMethod, amount },

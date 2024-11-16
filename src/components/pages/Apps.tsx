@@ -49,10 +49,10 @@ const columns: ColumnDef<GatewayConfig>[] = [
                />
                <button
                   onClick={() => deleteMutation.mutate(gateway.id)}
-                  disabled={deleteMutation.isLoading}
+                  disabled={deleteMutation.isPending}
                   className="text-red-500"
                >
-                  {deleteMutation.isLoading ? "Deleting..." : "Delete"}
+                  {deleteMutation.isPending ? "Deleting..." : "Delete"}
                </button>
             </div>
          );

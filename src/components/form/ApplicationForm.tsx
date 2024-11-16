@@ -38,7 +38,7 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({ onSuccess, onClose })
         },
     });
 
-    const { mutate: createApiGateway, isLoading } = useCreateApiGateway();
+    const { mutate: createApiGateway, isPending } = useCreateApiGateway();
 
     const onSubmit = (values: z.infer<typeof CreateApplicationSchema>) => {
         createApiGateway(values, {
@@ -130,7 +130,7 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({ onSuccess, onClose })
                         )}
                     />
                     <SubmitButton
-                        isLoading={isLoading}
+                        isLoading={isPending}
                         className="bg-green-500 text-white"
                     >
                         Generate API Credentials

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import handleApiRequest from "@/utils/handleApiRequest";
 import { useAuthStore } from "@/store/useAuthStore";

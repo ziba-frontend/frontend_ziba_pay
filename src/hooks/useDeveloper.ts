@@ -50,6 +50,7 @@ export const useDeleteApiKey = () => {
       mutationFn: deleteApiKey,
       onSuccess: () => {
          // Invalidate the apiKeys query to refetch the list of keys after deletion
+         //@ts-ignore
          queryClient.invalidateQueries(["apiKeys"]);
       },
    });

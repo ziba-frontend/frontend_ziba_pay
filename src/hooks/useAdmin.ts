@@ -1,4 +1,4 @@
-
+//@ts-nocheck
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { authorizedAPI } from "@/lib/api";

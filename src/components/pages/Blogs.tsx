@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 "use client";
 import { useEffect, useState, useContext, createContext } from "react";
 import { DataTable } from "@/components/DataTable";

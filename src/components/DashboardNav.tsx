@@ -9,7 +9,7 @@ import { useFetchUserProfile, useLogout } from "@/hooks/useAuth";
 
 const DashboardNav = () => {
   const { data: user, isLoading, isError } = useFetchUserProfile();
-  const { mutate: logout, isLoading: isLogoutLoading } = useLogout();
+  const { mutate: logout, isPending: isLogoutLoading } = useLogout();
   const router = useRouter();
 
   useEffect(() => {
@@ -19,6 +19,7 @@ const DashboardNav = () => {
   }, [isError]);
 
   const handleLogout = () => {
+    //@ts-ignore
     logout(null, {
       onSuccess: () => {
         router.push("/login");

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { getFeedbackCounts, submitFeedback } from "@/lib/api-calls/feedback";
+
 
 const VAccounts = () => {
    const articleId = "virtual-accounts";
@@ -13,33 +13,8 @@ const VAccounts = () => {
       "helpful" | "notHelpful" | null
    >(null);
 
-   useEffect(() => {
-      fetchFeedbackCounts();
-   }, []);
 
-   const fetchFeedbackCounts = async () => {
-      try {
-         const { helpfulCount, notHelpfulCount } = await getFeedbackCounts(
-            articleId
-         );
-         setHelpfulCount(helpfulCount);
-         setNotHelpfulCount(notHelpfulCount);
-      } catch (error) {
-         console.error("Failed to fetch feedback counts", error);
-      }
-   };
 
-   const handleFeedback = async (isHelpful: boolean) => {
-      if (userFeedback) return; // Prevent multiple submissions
-
-      try {
-         await submitFeedback(articleId, isHelpful);
-         setUserFeedback(isHelpful ? "helpful" : "notHelpful");
-         fetchFeedbackCounts(); // Update feedback counts
-      } catch (error) {
-         console.error("Failed to submit feedback", error);
-      }
-   };
 
    return (
       <div className="container ">
@@ -205,7 +180,7 @@ const VAccounts = () => {
                         <Button
                            variant="outline"
                            className="mx-2"
-                           onClick={() => handleFeedback(true)}
+                           
                            disabled={userFeedback === "helpful"}
                         >
                            Yes
@@ -213,7 +188,7 @@ const VAccounts = () => {
                         <Button
                            variant="outline"
                            className="mx-2"
-                           onClick={() => handleFeedback(false)}
+                          
                            disabled={userFeedback === "notHelpful"}
                         >
                            No

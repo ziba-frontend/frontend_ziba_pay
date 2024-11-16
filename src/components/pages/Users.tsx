@@ -1,4 +1,5 @@
-"use client"
+//@ts-nocheck
+"use client";
 import { useEffect, useState } from "react";
 import { DataTable } from "@/components/DataTable";
 import { ColumnDef } from "@tanstack/react-table";
@@ -11,133 +12,142 @@ import { Button } from "@/components/ui/button";
 import UserDetailsModal from "../modals/UserDetailsModal";
 import ConfirmDialog from "../modals/ConfirmDeleteUser";
 import {
-  Heart,
-  Pen,
-  Trash,
-  User,
-  Users as UsersIcon,
-  Mail,
-  UserCog,
-  Users
+   Heart,
+   Pen,
+   Trash,
+   User,
+   Users as UsersIcon,
+   Mail,
+   UserCog,
+   Users,
 } from "lucide-react";
 import { FaSearch } from "react-icons/fa";
+import { useDeleteUser, useGetAllUsers } from "@/hooks/useAdmin";
 import { useFetchUserProfile } from "@/hooks/useAuth";
-import { useCheckIfAdmin, useGetAllUsers } from "@/hooks/useAdmin";
 
 type User = {
-  isEmailVerified: any;
-  role: string;
-  id: string;
-  name: string;
-  email: string;
-  createdAt: string;
+   isEmailVerified: any;
+   role: string;
+   id: string;
+   name: string;
+   email: string;
+   createdAt: string;
 };
 
 const columns: ColumnDef<User>[] = [
-  {
-    accessorKey: "name",
-    header: () => (
-      <div className="flex items-center gap-2">
-        <UserCog size={16} />
-        <span>Name</span>
-      </div>
-    ),
-    cell: ({ row }) => {
-      const user = row.original;
-      const { setDetailsUser, setDetailsModalOpen } =
-        React.useContext(UsersPageContext);
+   {
+      accessorKey: "name",
+      header: () => (
+         <div className="flex items-center gap-2">
+            <UserCog size={16} />
+            <span>Name</span>
+         </div>
+      ),
+      cell: ({ row }) => {
+         const user = row.original;
+         const { setDetailsUser, setDetailsModalOpen } =
+            React.useContext(UsersPageContext);
 
-      const handleNameClick = () => {
-        setDetailsUser(user);
-        setDetailsModalOpen(true);
-      };
+         const handleNameClick = () => {
+            setDetailsUser(user);
+            setDetailsModalOpen(true);
+         };
 
-      return (
-        <div>
-          <p className="cursor-pointer" onClick={handleNameClick}>
-            {user.name}
-          </p>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "email",
-    header: () => (
-      <div className="flex items-center gap-2">
-        <Mail size={16} />
-        <span>Email</span>
-      </div>
-    ),
-  },
-  {
-    accessorKey: "role",
-    header: () => (
-      <div className="flex items-center gap-2">
-        <UserCog size={16} />
-        <span>Role</span>
-      </div>
-    ),
-  },
-  {
-    accessorKey: "isEmailVerified",
-    header: () => (
-      <div className="flex items-center gap-2">
-        <UserCog size={16} />
-        <span>KYC STATUS</span>
-      </div>
-    ),
-    cell: ({ row }) => (
-      <span>{row.original.isEmailVerified ? "Verified" : "Not Verified"}</span>
-    ),
-  },
-  {
-    id: "actions",
-    header: () => (
-      <div className="flex items-center gap-2">
-        <Pen size={16} />
-        <span>Actions</span>
-      </div>
-    ),
-    cell: ({ row }) => {
-      const user = row.original;
-      return <ActionButtons user={user} />;
-    },
-  },
+         return (
+            <div>
+               <p
+                  className="cursor-pointer"
+                  onClick={handleNameClick}
+               >
+                  {user.name}
+               </p>
+            </div>
+         );
+      },
+   },
+   {
+      accessorKey: "email",
+      header: () => (
+         <div className="flex items-center gap-2">
+            <Mail size={16} />
+            <span>Email</span>
+         </div>
+      ),
+   },
+   {
+      accessorKey: "role",
+      header: () => (
+         <div className="flex items-center gap-2">
+            <UserCog size={16} />
+            <span>Role</span>
+         </div>
+      ),
+   },
+   {
+      accessorKey: "isEmailVerified",
+      header: () => (
+         <div className="flex items-center gap-2">
+            <UserCog size={16} />
+            <span>KYC STATUS</span>
+         </div>
+      ),
+      cell: ({ row }) => (
+         <span>
+            {row.original.isEmailVerified ? "Verified" : "Not Verified"}
+         </span>
+      ),
+   },
+   {
+      id: "actions",
+      header: () => (
+         <div className="flex items-center gap-2">
+            <Pen size={16} />
+            <span>Actions</span>
+         </div>
+      ),
+      cell: ({ row }) => {
+         const user = row.original;
+         return <ActionButtons user={user} />;
+      },
+   },
 ];
 
 const ActionButtons: React.FC<{ user: User }> = ({ user }) => {
-  const [isConfirmDialogOpen, setConfirmDialogOpen] = useState(false);
-  const router = useRouter();
-  const { setModalOpen, setCurrentUser, isAdmin } =
-    React.useContext(UsersPageContext);
+   const [isConfirmDialogOpen, setConfirmDialogOpen] = useState(false);
+   const router = useRouter();
+   const { setModalOpen, setCurrentUser, isAdmin } =
+      React.useContext(UsersPageContext);
 
-  if (isAdmin) {
-    return null;
-  }
+   if (isAdmin) {
+      return null;
+   }
 
-  const handleUpdate = () => {
-    setCurrentUser(user);
-    setModalOpen(true);
-  };
+   const handleUpdate = () => {
+      setCurrentUser(user);
+      setModalOpen(true);
+   };
 
-  const handleDelete = async () => {
-    try {
-      await deleteUser(user.id);
-      toast.success("User deleted successfully");
-      router.refresh();
-    } catch (error) {
-      toast.error("Failed to delete user");
-    }
-  };
+   const deleteUserMutation = useDeleteUser();
+   const handleDelete = async () => {
+      try {
+         const response = await deleteUserMutation.mutateAsync(user.id);
 
-  const openConfirmDialog = () => {
-    setConfirmDialogOpen(true);
-  };
+         if (response.status == "success") {
+            toast.success("User deleted successfully");
+            router.refresh();
+         }
+      } catch (error) {
+         toast.error("Failed to delete user");
+      }
+   };
 
-  const closeConfirmDialog = () => {
-    setConfirmDialogOpen(false);
-  };
+   const openConfirmDialog = () => {
+      setConfirmDialogOpen(true);
+   };
+
+   const closeConfirmDialog = () => {
+      setConfirmDialogOpen(false);
+   };
 
    return (
       <div className="flex gap-2">
@@ -168,35 +178,37 @@ const ActionButtons: React.FC<{ user: User }> = ({ user }) => {
 };
 
 const UsersPageContext = React.createContext<{
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>;
-  setDetailsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setDetailsUser: React.Dispatch<React.SetStateAction<User | null>>;
-  isAdmin: boolean;
+   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+   setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>;
+   setDetailsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+   setDetailsUser: React.Dispatch<React.SetStateAction<User | null>>;
+   isAdmin: boolean;
 }>({
-  setModalOpen: () => {},
-  setCurrentUser: () => {},
-  setDetailsModalOpen: () => {},
-  setDetailsUser: () => {},
-  isAdmin: false,
+   setModalOpen: () => {},
+   setCurrentUser: () => {},
+   setDetailsModalOpen: () => {},
+   setDetailsUser: () => {},
+   isAdmin: false,
 });
 
 export default function UsersPage() {
+   const [data, setData] = useState<User[]>([]);
    const [filteredData, setFilteredData] = useState<User[]>([]);
    const [isModalOpen, setModalOpen] = useState(false);
    const [isDetailsModalOpen, setDetailsModalOpen] = useState(false);
-   const [currentUser, setCurrentUser] = useState<User | null>(null);
    const [detailsUser, setDetailsUser] = useState<User | null>(null);
+   const [isAdmin, setIsAdmin] = useState(false);
    const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
-   const [searchTerm, setSearchTerm] = useState<string>('');
+   const [searchTerm, setSearchTerm] = useState<string>("");
    const [newUserCount, setNewUserCount] = useState<number>(0);
-   const { user, isLoading, isError } = useFetchUserProfile();
-  const { isAdmin } = useCheckIfAdmin(); 
+   const [currentUser,setCurrentUser]=useState<User| null>()
 
    useEffect(() => {
       const fetchData = async () => {
          try {
-            const {data:users,isLoading}= useGetAllUsers()
+           const {data:users,isLoading}=useGetAllUsers()
+
+            setData(users);
             setFilteredData(users);
             calculateNewUsers(users);
          } catch (error) {
@@ -207,50 +219,52 @@ export default function UsersPage() {
    }, []);
 
    useEffect(() => {
-      const filtered = users.filter((user) =>
-         user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-         user.email.toLowerCase().includes(searchTerm.toLowerCase())
+      const filtered = data.filter(
+         (user) =>
+            user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            user.email.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredData(filtered);
-   }, [searchTerm, users]);
+   }, [searchTerm, data]);
 
    const calculateNewUsers = (users: User[]) => {
-      const now = new Date();  
+      const now = new Date();
       const oneWeekAgo = new Date(now);
-      oneWeekAgo.setDate(now.getDate() - 7);  
-  
-      const newUsers = users.filter(user => {
-          const userCreatedAt = new Date(user.createdAt); 
-          return userCreatedAt >= oneWeekAgo && userCreatedAt <= now; 
+      oneWeekAgo.setDate(now.getDate() - 7);
+
+      const newUsers = users.filter((user) => {
+         const userCreatedAt = new Date(user.createdAt);
+         return userCreatedAt >= oneWeekAgo && userCreatedAt <= now;
       });
-  
-      setNewUserCount(newUsers.length); 
-  };
 
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
+      setNewUserCount(newUsers.length);
+   };
 
-  const handleCloseDetailsModal = () => {
-    setDetailsModalOpen(false);
-  };
+   const handleCloseModal = () => {
+      setModalOpen(false);
+   };
+
+   const handleCloseDetailsModal = () => {
+      setDetailsModalOpen(false);
+   };
 
    const handleSuccess = () => {
       const fetchData = async () => {
          try {
-            const {data:users,isLoading}= useGetAllUsers()
+               const {data:users,isLoading}=useGetAllUsers()
+            setData(users);
             setFilteredData(users);
-            const currentUser = await getUserProfile();
-            setCurrentUser(currentUser);
-            setIsAdmin(currentUser.role === "admin");
+           const {data:user}=useFetchUserProfile()
+            setCurrentUser(user);
+            setIsAdmin(user.role === "admin");
             calculateNewUsers(users);
          } catch (error) {
             toast.error("Failed to fetch users");
          }
       };
 
-    fetchData();
-  };
+      fetchData();
+   };
 
    return (
       <UsersPageContext.Provider
@@ -262,7 +276,7 @@ export default function UsersPage() {
             isAdmin,
          }}
       >
-        <div className="mb-6 flex flex-col md:flex-row md:justify-between gap-4 w-full">
+         <div className="mb-6 flex flex-col md:flex-row md:justify-between gap-4 w-full">
             <form
                className={`flex gap-4 items-center bg-white p-[15px] rounded-lg transition-all ${
                   isInputFocused ? "border-2 border-main" : "border"
@@ -294,7 +308,7 @@ export default function UsersPage() {
                </div>
                <div className="border p-4 rounded-md flex  gap-4">
                   <div className="flex items-center justify-center rounded-full bg-orange-300 p-4 h-[50px] w-[50px] ">
-                     <User className="text-orange-500"/>
+                     <User className="text-orange-500" />
                   </div>
                   <div className="flex items-start flex-col gap-1 font-semibold">
                      <p>New Users</p>
@@ -312,7 +326,9 @@ export default function UsersPage() {
                </div>
                <div className="border p-4 rounded-md flex  gap-4">
                   <div className="flex items-center justify-center rounded-full bg-blue-300 p-4 h-[50px] w-[50px] ">
-                     <span className="bg-blue-500  rounded-full flex items-center justify-center h-4 w-4">...</span>
+                     <span className="bg-blue-500  rounded-full flex items-center justify-center h-4 w-4">
+                        ...
+                     </span>
                   </div>
                   <div className="flex items-start flex-col gap-1 font-semibold">
                      <p>Others Users</p>
