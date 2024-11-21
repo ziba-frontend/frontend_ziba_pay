@@ -224,8 +224,32 @@ export const useFetchVerifiedPhoneNumbers = () =>
    useQuery({
       queryKey: ["verifiedPhoneNumbers"],
       queryFn: getVerifiedPhoneNumbers,
-      onError: (error:any) => {
+      onError: (error: any) => {
          toast.error("Error while retrieving verified phone numbers");
          console.error("Error fetching verified phone numbers:", error);
+      },
+   });
+
+//otp
+
+const verifyOtp = async (email: string, otpCode: string) => {
+   return handleApiRequest(() =>
+      authorizedAPI.post(
+         `${BASE_URL}/verify-otp`,
+         { email, otpCode },
+         { withCredentials: true }
+      )
+   );
+};
+
+export const useVerifyOtp = () =>
+   useMutation({
+      mutationFn: verifyOtp,
+      onSuccess: () => {
+         toast.success("OTP verified successfully!");
+      },
+      onError: (error) => {
+         toast.error("Invalid OTP or it has expired");
+         console.error("Error during OTP verification:", error);
       },
    });

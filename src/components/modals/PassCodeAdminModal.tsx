@@ -15,48 +15,60 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { verifyOtp } from "@/lib/api-calls/auth-server";
 import { useRouter } from "next/navigation";
+import { useVerifyOtp } from "@/hooks/useAuth";
 
 interface PassCodeModalProps {
   open: boolean;
-  email: string
+  email: string;
   onClose: () => void;
 }
-const PassCodeAdminModal = ({ open , onClose , email}: PassCodeModalProps) => {
+
+const PassCodeAdminModal = ({ open, email, onClose }: PassCodeModalProps) => {
   const router = useRouter();
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
 
-  const validateOtp = async ()  => {
-    try {
-        await verifyOtp(email , otp);
-        onClose()
-        router.push("/admin");
-    }catch(error){
-        setError("Invalid or expired code");
-        console.error("Error during verification: ", error)
-    }
-  }
+  const { mutate: verifyOtpMutation, isPending } = useVerifyOtp();
+
+  const validateOtp = () => {
+    verifyOtpMutation(
+      { email, otpCode: otp },
+      {
+        onSuccess: () => {
+          onClose();
+          router.push("/admin");
+        },
+        onError: (error:any) => {
+          setError("Invalid or expired code");
+          console.error("Error during verification:", error);
+        },
+      }
+    );
+  };
+
+  const handleClose = () => {
+    setError("");
+    onClose();
+  };
 
   return (
-    <AlertDialog open={open} onOpenChange={onClose}>
+    <AlertDialog open={open} onOpenChange={handleClose}>
       <AlertDialogContent className="shad-alert-dialog">
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-start justify-between">
-            Verify Your Phone number
+            Verify Your Email
             <img
               src="/assets/icons/close.svg"
               alt="close"
               width={20}
               height={20}
-              onClick={onClose}
+              onClick={handleClose}
               className="cursor-pointer"
             />
           </AlertDialogTitle>
           <AlertDialogDescription>
-            To start making mobile money transactions with this number, please
-            enter the verification code.
+            Enter the 6-digit verification code sent to your email to continue.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <div>
@@ -84,9 +96,12 @@ const PassCodeAdminModal = ({ open , onClose , email}: PassCodeModalProps) => {
         <AlertDialogFooter>
           <AlertDialogAction
             onClick={validateOtp}
-            className="shad-primary-btn w-full"
+            className={`shad-primary-btn w-full ${
+              isPending ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            disabled={isPending}
           >
-            Verify 
+            {isPending ? "Verifying..." : "Verify"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
