@@ -21,23 +21,10 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import RiseLoader from "react-spinners/RiseLoader";
 import PassCodeAdminModal from "../modals/PassCodeAdminModal";
-import { useLogin, useSignup } from "@/hooks/useAuth";
-
-
-const emailOrPhoneValidation = z
-  .string()
-  .min(1, { message: "Email or Phone number is required" })
-  .refine(
-    (value) =>
-      /^\d{10,15}$/.test(value) || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
-    {
-      message: "Invalid email or phone number",
-    }
-  );
+import { useLogin } from "@/hooks/useAuth";
 
 const formSchema = z.object({
-  name: z.string().min(1, { message: "Name is required" }),
-  emailOrPhone: emailOrPhoneValidation,
+  email: z.string().email({ message: "Please enter a valid email" }),
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long" }),
@@ -49,52 +36,40 @@ const AdminLogin = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [email, setEmail] = useState<string | null>(null);
+  const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const { mutate: loginUser } = useLogin();
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     mode: "onChange",
   });
 
-  const { mutate: loginUser } = useLogin();
-  const { mutate: signupUser } = useSignup();
-
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     setIsLoading(true);
-    const { emailOrPhone, password, name } = data;
-    setEmail(emailOrPhone);
-
-    loginUser(
-      { email: emailOrPhone, password },
-      {
-        onSuccess: () => {
-          setOpen(true);
-        },
-        onError: () => {
-          signupUser(
-            { name, email: emailOrPhone, password, role: "admin" },
-            {
-              onSuccess: () => {
-                loginUser(
-                  { email: emailOrPhone, password },
-                  { onSuccess: () => setOpen(true) }
-                );
-              },
-              onError: () => {
-                toast.error("Signup failed. Please try again.");
-              },
-            }
-          );
-        },
-        onSettled: () => setIsLoading(false),
-      }
-    );
+    setEmail(data.email); // Save email for OTP modal
+    setIsOtpModalOpen(true); // Open OTP modal
+    setIsLoading(false);
   };
 
-  const closeModal = () => {
-    setOpen(false);
-    router.push("/admin");
+  const handleOtpVerification = (isVerified: boolean) => {
+    if (isVerified) {
+      loginUser(
+        { email, password: form.getValues("password") },
+        {
+          onSuccess: () => {
+            toast.success("Login successful!");
+            router.push("/admin");
+          },
+          onError: () => {
+            toast.error("Invalid credentials. Please try again.");
+          },
+        }
+      );
+    } else {
+      toast.error("OTP verification failed. Please try again.");
+    }
+    setIsOtpModalOpen(false);
   };
 
   return (
@@ -128,24 +103,6 @@ const AdminLogin = () => {
           >
             <h2 className="text-center my-6">Welcome Admin!</h2>
             <div className="space-y-8">
-              {/* Name Field */}
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name *</FormLabel>
-                    <FormControl>
-                      <Input
-                        className="bg-white p-6 outline-none border"
-                        placeholder="name"
-                        {...field}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              {/* Password Field */}
               <FormField
                 control={form.control}
                 name="password"
@@ -171,17 +128,16 @@ const AdminLogin = () => {
                   </FormItem>
                 )}
               />
-              {/* Email/Phone Field */}
               <FormField
                 control={form.control}
-                name="emailOrPhone"
+                name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email or Phone number *</FormLabel>
+                    <FormLabel>Email  *</FormLabel>
                     <FormControl>
                       <Input
                         className="bg-white p-6 outline-none border"
-                        placeholder="email or phone number"
+                        placeholder="email "
                         {...field}
                       />
                     </FormControl>
@@ -204,9 +160,13 @@ const AdminLogin = () => {
             </div>
           </form>
         </Form>
-
-        {email && (
-          <PassCodeAdminModal open={open} onClose={closeModal} email={email} />
+        {isOtpModalOpen && (
+          <PassCodeAdminModal
+            open={isOtpModalOpen}
+            onClose={() => setIsOtpModalOpen(false)}
+            onVerify={handleOtpVerification}
+            email={email}
+          />
         )}
       </div>
     </div>

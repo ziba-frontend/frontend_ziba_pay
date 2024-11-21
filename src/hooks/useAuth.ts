@@ -77,8 +77,6 @@ export const useLogin = () => {
       onSuccess: (data) => {
          document.cookie = `auth-token=${data.token}; path=/;`;
          console.log("Login test", data);
-
-         toast.success("Login successful");
       },
       onError: (error) => {
          toast.error("Login failed");
