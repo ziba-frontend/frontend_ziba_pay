@@ -18,7 +18,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       try {
          const token = document.cookie
             .split("; ")
-            .find((row) => row.startsWith("auth-token="))
+            .find((row) => row.startsWith("jwt_auth_token="))
             ?.split("=")[1];
 
          if (token) {
