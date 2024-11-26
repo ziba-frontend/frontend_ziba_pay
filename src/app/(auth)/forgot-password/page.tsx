@@ -34,7 +34,7 @@ const ForgotPassword = () => {
       setEmail(data.email);
       try {
          const response = await forgotPasswordMutation.mutateAsync(data);
-         if (response.status == "success") {
+         if (response.success) {
             setStatus("success");
          } else {
             setStatus("error");

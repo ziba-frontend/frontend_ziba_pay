@@ -76,9 +76,8 @@ export const useLogin = () => {
       mutationFn: loginUser,
       onSuccess: (data) => {
          console.log("data: ", data.token)
-         // document.cookie = `auth-token=${data.token}; path=/;`;
-         // console.log("Login test", data);
          setCookie("auth-token",data.token, 7);
+         toast.success("Login successful")
       },
       onError: (error: any) => {
          toast.error("Login failed");

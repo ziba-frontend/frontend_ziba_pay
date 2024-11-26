@@ -42,7 +42,7 @@ const Login = () => {
    const [isSubmitting, setIsSubmitting] = useState(false);
 
    const searchParams = useSearchParams();
-   const redirectUrl = searchParams.get("redirectUrl");
+   const redirectUrl = searchParams.get("redirect");
 
    const router = useRouter();
 
@@ -63,20 +63,25 @@ const Login = () => {
    const email = watch("email");
    const password = watch("password");
 
+   console.log("Here're the params: ", redirectUrl)
+
    const onSubmit = async (data: FormData) => {
       setIsSubmitting(true);
       try {
          const response = await loginMutation.mutateAsync(data);
          console.log("The status: ", response)
 
+
          if (response.success) {
             cookies.set("auth-token", response.token, { path: "/" });
+            // location.replace("/dashboard")
 
             if (redirectUrl) {
-               location.replace(redirectUrl);
+               router.push(redirectUrl);
             } else {
-               location.replace("/dashboard");
+               router.push("/dashboard");
             }
+            
          } else {
             toast.error(response?.error?.msg || "Login failed");
          }
