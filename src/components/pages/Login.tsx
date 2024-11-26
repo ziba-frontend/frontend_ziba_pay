@@ -67,8 +67,9 @@ const Login = () => {
       setIsSubmitting(true);
       try {
          const response = await loginMutation.mutateAsync(data);
+         console.log("The status: ", response)
 
-         if (response.status == "success") {
+         if (response.success) {
             cookies.set("auth-token", response.token, { path: "/" });
 
             if (redirectUrl) {

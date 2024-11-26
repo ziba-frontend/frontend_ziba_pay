@@ -4,6 +4,7 @@ import handleApiRequest from "@/utils/handleApiRequest";
 import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "react-hot-toast";
 import { authorizedAPI } from "@/lib/api";
+import { setCookie } from "@/utils";
 
 const BASE_URL = "/auth";
 
@@ -26,7 +27,7 @@ const signupUser = async (userData: any) => {
 
 const fetchUserProfile = async () => {
    const response = await handleApiRequest(() =>
-      authorizedAPI.get(`${BASE_URL}/profile`, { withCredentials: true })
+      authorizedAPI.get(`${BASE_URL}/me`, { withCredentials: true })
    );
    return response.data?.user;
 };
@@ -70,17 +71,18 @@ const logoutUser = async () => {
    );
 };
 
-// React Query hooks
 export const useLogin = () => {
    return useMutation({
       mutationFn: loginUser,
       onSuccess: (data) => {
-         document.cookie = `auth-token=${data.token}; path=/;`;
-         console.log("Login test", data);
+         console.log("data: ", data.token)
+         // document.cookie = `auth-token=${data.token}; path=/;`;
+         // console.log("Login test", data);
+         setCookie("auth-token",data.token, 7);
       },
-      onError: (error) => {
+      onError: (error: any) => {
          toast.error("Login failed");
-         console.error("Login error:", error);
+         console.error("Login error:", error?.message);
       },
    });
 };
@@ -89,8 +91,7 @@ export const useSignup = () => {
    return useMutation({
       mutationFn: signupUser,
       onSuccess: (data) => {
-         document.cookie = `auth-token=${data.token}; path=/;`;
-
+         setCookie("auth-token",data.token, 7);
          toast.success("Signup successful");
       },
       onError: (error) => {

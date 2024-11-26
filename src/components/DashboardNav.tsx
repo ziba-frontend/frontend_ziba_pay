@@ -12,6 +12,8 @@ const DashboardNav = () => {
   const { mutate: logout, isPending: isLogoutLoading } = useLogout();
   const router = useRouter();
 
+  console.log("User: ", user);
+
   useEffect(() => {
     if (isError) {
       console.error("Failed to fetch user profile.");
