@@ -3,7 +3,7 @@ import { verifyAuth } from "./lib/auth";
 
 export async function middleware(req: NextRequest) {
    const { pathname, origin } = req.nextUrl;
-   const token = req.cookies.get("jwt_auth_token")?.value;
+   const token = req.cookies.get("auth-token")?.value;
 
    let verifiedToken = null;
    if (token) {

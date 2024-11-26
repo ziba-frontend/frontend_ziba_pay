@@ -132,7 +132,7 @@ const ActionButtons: React.FC<{ user: User }> = ({ user }) => {
       try {
          const response = await deleteUserMutation.mutateAsync(user.id);
 
-         if (response.status == "success") {
+         if (response.success) {
             toast.success("User deleted successfully");
             router.refresh();
          }
