@@ -1,10 +1,9 @@
-
 import { NextRequest, NextResponse } from "next/server";
 import { verifyAuth } from "./lib/auth";
 
 export async function middleware(req: NextRequest) {
    const { pathname, origin } = req.nextUrl;
-   const token = req.cookies.get("auth-token")?.value;
+   const token = req.cookies.get("jwt_auth_token")?.value;
 
    let verifiedToken = null;
    if (token) {
@@ -29,7 +28,7 @@ export async function middleware(req: NextRequest) {
 
       loginUrl.searchParams.set("redirect", pathname);
       const response = NextResponse.redirect(loginUrl);
-      response.cookies.delete("auth-token");
+      response.cookies.delete("jwt_auth_token");
       return response;
    }
 

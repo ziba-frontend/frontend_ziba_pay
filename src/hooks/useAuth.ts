@@ -158,7 +158,7 @@ export const useLogout = () => {
       onSuccess: () => {
          clearUser();
          document.cookie =
-            "auth-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            "jwt_auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
          toast.success("Logged out successfully");
       },
       onError: (error) => {
@@ -233,7 +233,7 @@ export const useFetchVerifiedPhoneNumbers = () =>
 
 //otp
 
-const verifyOtp = async (email: string, otpCode: string) => {
+const verifyOtp = async (VerifyOtpPayload) => {
    return handleApiRequest(() =>
       authorizedAPI.post(
          `${BASE_URL}/verify-otp`,
