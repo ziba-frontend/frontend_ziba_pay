@@ -28,7 +28,7 @@ export async function middleware(req: NextRequest) {
 
       loginUrl.searchParams.set("redirect", pathname);
       const response = NextResponse.redirect(loginUrl);
-      response.cookies.delete("jwt_auth_token");
+      response.cookies.delete("auth-token");
       return response;
    }
 

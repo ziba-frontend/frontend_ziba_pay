@@ -157,7 +157,7 @@ export const useLogout = () => {
       onSuccess: () => {
          clearUser();
          document.cookie =
-            "jwt_auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            "auth-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
          toast.success("Logged out successfully");
       },
       onError: (error) => {
