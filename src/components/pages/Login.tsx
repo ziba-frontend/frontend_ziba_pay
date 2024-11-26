@@ -69,7 +69,7 @@ const Login = () => {
          const response = await loginMutation.mutateAsync(data);
 
          if (response.status == "success") {
-            cookies.set("auth-token", response.token, { path: "/" });
+            cookies.set("jwt_auth_token", response.token, { path: "/" });
 
             if (redirectUrl) {
                location.replace(redirectUrl);

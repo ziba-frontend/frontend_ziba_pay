@@ -80,7 +80,7 @@ export const useLogin = () => {
    return useMutation({
       mutationFn: loginUser,
       onSuccess: (data) => {
-         document.cookie = `auth-token=${data.token}; path=/;`;
+         document.cookie = `jwt_auth_token=${data.token}; path=/;`;
          console.log("Login test", data);
       },
       onError: (error) => {
@@ -94,7 +94,7 @@ export const useSignup = () => {
    return useMutation({
       mutationFn: signupUser,
       onSuccess: (data) => {
-         document.cookie = `auth-token=${data.token}; path=/;`;
+         document.cookie = `jwt_auth_token=${data.token}; path=/;`;
 
          toast.success("Signup successful");
       },
@@ -162,7 +162,7 @@ export const useLogout = () => {
       onSuccess: () => {
          clearUser();
          document.cookie =
-            "auth-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            "jwt_auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
          toast.success("Logged out successfully");
       },
       onError: (error) => {
