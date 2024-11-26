@@ -26,6 +26,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useLogin } from "@/hooks/useAuth";
 import { Cookies } from "react-cookie";
+import { setCookie } from "@/utils";
 
 const cookies = new Cookies();
 
@@ -73,7 +74,8 @@ const Login = () => {
 
 
          if (response.success) {
-            cookies.set("auth-token", response.token, { path: "/" });
+            setCookie("auth-token", response.token, 7);
+            // cookies.set("auth-token", response.token, { path: "/" });
             // location.replace("/dashboard")
 
             if (redirectUrl) {
