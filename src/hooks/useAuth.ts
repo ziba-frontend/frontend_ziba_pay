@@ -5,6 +5,11 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "react-hot-toast";
 import { authorizedAPI } from "@/lib/api";
 
+interface VerifyOtpPayload {
+   email: string;
+   otpCode: string;
+}
+
 const BASE_URL = "/auth";
 
 // API functions
@@ -232,7 +237,7 @@ export const useFetchVerifiedPhoneNumbers = () =>
 
 //otp
 
-const verifyOtp = async (email: string, otpCode: string) => {
+const verifyOtp = async (VerifyOtpPayload) => {
    return handleApiRequest(() =>
       authorizedAPI.post(
          `${BASE_URL}/verify-otp`,

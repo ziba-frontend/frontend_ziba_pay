@@ -22,22 +22,34 @@ interface PassCodeModalProps {
    open: boolean;
    email: string;
    onClose: () => void;
+   onVerify: (verify: boolean) => any;
 }
 
-const PassCodeAdminModal = ({ open, email, onClose }: PassCodeModalProps) => {
-   const router = useRouter();
+const PassCodeAdminModal = ({
+   open,
+   email,
+   onClose,
+   onVerify,
+}: PassCodeModalProps) => {
    const [otp, setOtp] = useState("");
+   const [isSubmitting, setIsSubmitting] = useState(false);
    const [error, setError] = useState("");
 
    const otpMutation = useVerifyOtp();
 
-   const validateOtp = () => {
+   const validateOtp = async () => {
+      setIsSubmitting(true);
+      setError("");
+
       try {
-         const res = otpMutation.mutateAsync(email);
-         router.push("/admin");
+         await otpMutation.mutateAsync({ email, otpCode: otp });
+         onVerify(true);
       } catch (error) {
          setError("Invalid or expired code");
          console.error("Error during verification:", error);
+         onVerify(false);
+      } finally {
+         setIsSubmitting(false);
       }
    };
 
@@ -45,7 +57,6 @@ const PassCodeAdminModal = ({ open, email, onClose }: PassCodeModalProps) => {
       setError("");
       onClose();
    };
-
    return (
       <AlertDialog
          open={open}

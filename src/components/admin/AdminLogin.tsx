@@ -47,30 +47,34 @@ const AdminLogin = () => {
 
    const onSubmit = async (data: FormData) => {
       setIsLoading(true);
-      setEmail(data.email); // Save email for OTP modal
-      setIsOtpModalOpen(true); // Open OTP modal
-      setIsLoading(false);
+      setEmail(data.email); 
+
+      loginUser(
+         { email: data.email, password: data.password },
+         {
+            onSuccess: () => {
+               setIsOtpModalOpen(true);
+            },
+            onError: () => {
+               toast.error("Invalid credentials. Please try again.");
+            },
+            onSettled: () => {
+               setIsLoading(false);
+            },
+         }
+      );
    };
 
    const handleOtpVerification = (isVerified: boolean) => {
       if (isVerified) {
-         loginUser(
-            { email, password: form.getValues("password") },
-            {
-               onSuccess: () => {
-                  toast.success("Login successful!");
-                  router.push("/admin");
-               },
-               onError: () => {
-                  toast.error("Invalid credentials. Please try again.");
-               },
-            }
-         );
+         toast.success("Login successful!");
+         router.push("/admin");
       } else {
          toast.error("OTP verification failed. Please try again.");
       }
       setIsOtpModalOpen(false);
    };
+
 
    return (
       <div className="bg-white">
