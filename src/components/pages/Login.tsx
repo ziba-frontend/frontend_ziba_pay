@@ -26,7 +26,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useLogin } from "@/hooks/useAuth";
 import { Cookies } from "react-cookie";
-import { setCookie } from "@/utils";
+
 
 const cookies = new Cookies();
 
@@ -64,35 +64,26 @@ const Login = () => {
    const email = watch("email");
    const password = watch("password");
 
-   console.log("Here're the params: ", redirectUrl)
 
    const onSubmit = async (data: FormData) => {
       setIsSubmitting(true);
       try {
-         const response = await loginMutation.mutateAsync(data);
-         console.log("The status: ", response)
-
-
-         if (response.success) {
-            setCookie("auth-token", response.token, 7);
-            // cookies.set("auth-token", response.token, { path: "/" });
-            // location.replace("/dashboard")
-
-            if (redirectUrl) {
-               router.push(redirectUrl);
-            } else {
-               router.push("/dashboard");
-            }
-            
-         } else {
-            toast.error(response?.error?.msg || "Login failed");
-         }
+        const response = await loginMutation.mutateAsync(data);
+        console.log(response,"Ebeneza")
+        if (response.success) {
+          cookies.set("auth-token", response.token, { path: "/" });
+          toast.success("Login successful");
+          location.replace(redirectUrl || "/dashboard");
+        } else {
+          toast.error(response?.error?.msg || "Invalid credentials");
+        }
       } catch (error) {
-         toast.error("Login failed. Please try again.");
+        console.error("Unexpected error:", error);
+        toast.error("An unexpected error occurred.");
       } finally {
-         setIsSubmitting(false);
+        setIsSubmitting(false); 
       }
-   };
+    };
 
    return (
       <div className="bg-white">

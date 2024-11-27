@@ -6,12 +6,12 @@ const handleApiRequest = async (apiCall: () => Promise<any>): Promise<any> => {
     try {
         const response = await apiCall();
         return response.data;
-    } catch (error) {
+    } catch (error: any) {
         if (axios.isAxiosError(error) && error.response) {
             console.error('Error response:', error.response);
             return error.response.data;
         } else {
-            console.error('Unexpected error:', error);
+            console.error('Unexpected error:', error?.message);
             throw error;        
         }
     }

@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import handleApiRequest from "@/utils/handleApiRequest";
 import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "react-hot-toast";
-import { authorizedAPI } from "@/lib/api";
+import { authorizedAPI, unauthorizedAPI } from "@/lib/api";
 import { deleteCookie, setCookie } from "@/utils";
 
 const BASE_URL = "/auth";
@@ -11,7 +11,7 @@ const BASE_URL = "/auth";
 // API functions
 const loginUser = async (credentials: any) => {
    return handleApiRequest(() =>
-      authorizedAPI.post(`${BASE_URL}/login`, credentials, {
+      unauthorizedAPI.post(`${BASE_URL}/login`, credentials, {
          withCredentials: true,
       })
    );
@@ -19,7 +19,7 @@ const loginUser = async (credentials: any) => {
 
 const signupUser = async (userData: any) => {
    return handleApiRequest(() =>
-      authorizedAPI.post(`${BASE_URL}/signup`, userData, {
+      unauthorizedAPI.post(`${BASE_URL}/signup`, userData, {
          withCredentials: true,
       })
    );
@@ -75,13 +75,16 @@ export const useLogin = () => {
    return useMutation({
       mutationFn: loginUser,
       onSuccess: (data) => {
-         console.log("data: ", data.token)
-         // setCookie("auth-token",data.token, 7);
-         toast.success("Login successful")
+         if (data && data.success) {
+            document.cookie = `auth-token=${data.token}; path=/;`;
+            toast.success("Login successful");
+         }
       },
       onError: (error: any) => {
-         toast.error("Login failed");
-         console.error("Login error:", error?.message);
+         const errorMsg =
+            error?.response?.data?.msg || "Login failed. Please try again.";
+         toast.error(errorMsg);
+         console.error("Login error:", error);
       },
    });
 };
@@ -90,8 +93,10 @@ export const useSignup = () => {
    return useMutation({
       mutationFn: signupUser,
       onSuccess: (data) => {
-         setCookie("auth-token",data.token, 7);
-         toast.success("Signup successful");
+         if (data && data.success) {
+            document.cookie = `auth-token=${data.token}; path=/;`;
+            toast.success("Login successful");
+         }
       },
       onError: (error) => {
          toast.error("Signup failed");
@@ -156,7 +161,7 @@ export const useLogout = () => {
       mutationFn: logoutUser,
       onSuccess: () => {
          clearUser();
-         deleteCookie("auth-token")
+         deleteCookie("auth-token");
          document.cookie =
             "auth-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
          toast.success("Logged out successfully");

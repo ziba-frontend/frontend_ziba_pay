@@ -1,5 +1,5 @@
 import { jwtVerify } from 'jose';
-import { getUserById } from './api-calls/admin';
+
 
 interface UserJwtPayload {
     jti: string;
