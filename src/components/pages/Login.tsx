@@ -28,7 +28,6 @@ import { useLogin } from "@/hooks/useAuth";
 import { Cookies } from "react-cookie";
 import { setCookie } from "@/utils";
 
-
 const cookies = new Cookies();
 
 const formSchema = z.object({
@@ -65,26 +64,29 @@ const Login = () => {
    const email = watch("email");
    const password = watch("password");
 
-
    const onSubmit = async (data: FormData) => {
       setIsSubmitting(true);
       try {
-        const response = await loginMutation.mutateAsync(data);
-        console.log(response,"Ebeneza")
-        if (response.success) {
-          cookies.set("auth-token", response.token, { path: "/" });
-          toast.success("Login successful");
-          location.replace(redirectUrl || "/dashboard");
-        } else {
-          toast.error(response?.error?.msg || "Invalid credentials");
-        }
+         const response = await loginMutation.mutateAsync(data);
+         console.log(response, "Ebeneza");
+         if (response.success) {
+            cookies.set("auth-token", response.token, {
+               path: "/",
+               secure: true,
+               sameSite: "lax",
+            });
+            toast.success("Login successful");
+            location.replace(redirectUrl || "/dashboard");
+         } else {
+            toast.error(response?.error?.msg || "Invalid credentials");
+         }
       } catch (error) {
-        console.error("Unexpected error:", error);
-        toast.error("An unexpected error occurred.");
+         console.error("Unexpected error:", error);
+         toast.error("An unexpected error occurred.");
       } finally {
-        setIsSubmitting(false); 
+         setIsSubmitting(false);
       }
-    };
+   };
 
    return (
       <div className="bg-white">
