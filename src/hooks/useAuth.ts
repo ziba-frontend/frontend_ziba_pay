@@ -75,7 +75,7 @@ export const useLogin = () => {
    return useMutation({
       mutationFn: loginUser,
       onSuccess: (data) => {
-         if (data && data.success) {
+         if (data && data.status=="success") {
             toast.success("Login successful");
          }
       },
@@ -92,7 +92,7 @@ export const useSignup = () => {
    return useMutation({
       mutationFn: signupUser,
       onSuccess: (data) => {
-         if (data && data.success) {
+         if (data && data.status=="success") {
             toast.success("Login successful");
          }
       },
@@ -159,8 +159,6 @@ export const useLogout = () => {
       mutationFn: logoutUser,
       onSuccess: () => {
          clearUser();
-         document.cookie =
-            "auth-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
          toast.success("Logged out successfully");
       },
       onError: (error) => {

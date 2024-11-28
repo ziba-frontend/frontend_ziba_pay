@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(req: NextRequest) {
    const { pathname, origin } = req.nextUrl;
-   const token = req.cookies.get("auth-token")?.value;
+   const token = req.cookies.get("auth_token")?.value;
 
    if (pathname.startsWith("/login") || pathname.startsWith("/admin-login")) {
       if (token) {

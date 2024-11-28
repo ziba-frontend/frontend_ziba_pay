@@ -2,7 +2,6 @@ import { toast } from "react-hot-toast";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { authorizedAPI } from "@/lib/api";
 
-// API functions
 const createFeedback = async ({
    issue,
    email,
