@@ -4,7 +4,7 @@ import handleApiRequest from "@/utils/handleApiRequest";
 import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "react-hot-toast";
 import { authorizedAPI, unauthorizedAPI } from "@/lib/api";
-import { deleteCookie, setCookie } from "@/utils";
+
 
 const BASE_URL = "/auth";
 
@@ -159,7 +159,6 @@ export const useLogout = () => {
       mutationFn: logoutUser,
       onSuccess: () => {
          clearUser();
-         deleteCookie("auth-token");
          document.cookie =
             "auth-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
          toast.success("Logged out successfully");

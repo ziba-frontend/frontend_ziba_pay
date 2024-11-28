@@ -4,7 +4,7 @@ import { getCookie } from "../utils";
 const token = getCookie("token");
 
 const axiosInstance = axios.create({
-    baseURL: "https://backend.zibapay.com/api/v1/auth",
+    baseURL: "https://backend.zibapay.com/api/v1",
     headers: {
         Authorization: `Bearer ${token}`,
     },
