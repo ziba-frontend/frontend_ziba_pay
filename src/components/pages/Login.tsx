@@ -70,13 +70,9 @@ const Login = () => {
          const response = await loginMutation.mutateAsync(data);
          console.log(response, "Ebeneza");
          if (response.success) {
-            cookies.set("auth-token", response.token, {
-               path: "/",
-               secure: true,
-               sameSite: "lax",
-            });
+            cookies.set("auth-token", response.token, {path: "/"});
             toast.success("Login successful");
-            location.replace(redirectUrl || "/dashboard");
+            window.location.replace(redirectUrl || "/dashboard");
          } else {
             toast.error(response?.error?.msg || "Invalid credentials");
          }
