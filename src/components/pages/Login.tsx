@@ -26,6 +26,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useLogin } from "@/hooks/useAuth";
 import { Cookies } from "react-cookie";
+import { setCookie } from "@/utils";
 
 
 const cookies = new Cookies();

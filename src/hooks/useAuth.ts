@@ -76,7 +76,7 @@ export const useLogin = () => {
       mutationFn: loginUser,
       onSuccess: (data) => {
          if (data && data.success) {
-            document.cookie = `auth-token=${data.token}; path=/;`;
+            // document.cookie = `auth-token=${data.token}; path=/;`;
             toast.success("Login successful");
          }
       },
@@ -94,7 +94,7 @@ export const useSignup = () => {
       mutationFn: signupUser,
       onSuccess: (data) => {
          if (data && data.success) {
-            document.cookie = `auth-token=${data.token}; path=/;`;
+            // document.cookie = `auth-token=${data.token}; path=/;`;
             toast.success("Login successful");
          }
       },
