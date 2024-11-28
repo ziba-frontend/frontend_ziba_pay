@@ -130,7 +130,7 @@ const Login = () => {
                      Log in to your <br />{" "}
                      <span className="text-main">Ziba pay</span> Account
                   </h4>
-                  <h4 className="text-center my-6 hidden md:block">Login</h4>
+                  <h4 className="text-center my-6 hidden md:block">Log In</h4>
                   <div className="space-y-8">
                      <FormField
                         control={form.control}
