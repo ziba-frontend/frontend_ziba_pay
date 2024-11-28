@@ -18,11 +18,9 @@ import {
    WalletCards,
    Signal,
 } from "lucide-react";
-import { FaBars } from "react-icons/fa";
 import { useWindowWidth } from "@react-hook/window-size";
 import { Nav } from "./ui/nav";
-import { getUserProfile } from "@/lib/api-calls/auth-server";
-import toast from "react-hot-toast";
+
 
 type Props = {
    isCollapsed: boolean;
@@ -32,23 +30,9 @@ type Props = {
 export default function SideNavbar({ isCollapsed, toggleSidebar }: Props) {
    const onlyWidth = useWindowWidth();
    const mobileWidth = onlyWidth < 768;
-   const [isAdmin, setIsAdmin] = useState(false);
+  
 
-   useEffect(() => {
-      const fetchUserProfile = async () => {
-         try {
-            const user = await getUserProfile();
-            if (user.role === "admin") {
-               setIsAdmin(true);
-            }
-         } catch (error) {
-            // toast.error("Error fetching user profile");
-            console.error("Error fetching user profile:", error);
-         }
-      };
 
-      fetchUserProfile();
-   }, []);
    return (
       <div
          className={`fixed top-[100px] left-0 bg-white bottom-0 z-20 overflow-y-scroll no-scrollbar ${
