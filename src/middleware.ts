@@ -1,47 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyAuth } from "./lib/auth";
 
 export async function middleware(req: NextRequest) {
    const { pathname, origin } = req.nextUrl;
    const token = req.cookies.get("auth-token")?.value;
 
-   let verifiedToken = null;
-   if (token) {
-      try {
-         verifiedToken = await verifyAuth(token);
-      } catch (err) {
-         console.log("Token verification failed:", err);
-      }
-   }
-
    if (pathname.startsWith("/login") || pathname.startsWith("/admin-login")) {
-      if (verifiedToken) {
+      if (token) {
          return NextResponse.redirect(`${origin}/dashboard`);
       }
       return NextResponse.next();
    }
 
-   if (!verifiedToken) {
+   if (!token) {
       const loginUrl = pathname.startsWith("/admin")
          ? new URL("/admin-login", origin)
          : new URL("/login", origin);
 
       loginUrl.searchParams.set("redirect", pathname);
-      const response = NextResponse.redirect(loginUrl);
-      if (token) {
-         response.cookies.delete("auth-token");
-      }
-      return response;
-   }
-
-   if (verifiedToken && pathname.startsWith("/login")) {
-      return NextResponse.redirect(`${origin}/dashboard`);
-   }
-
-   if (pathname.startsWith("/admin")) {
-      if (!verifiedToken || verifiedToken.role !== "admin") {
-         return NextResponse.redirect(`${origin}/admin-login`);
-      }
+      return NextResponse.redirect(loginUrl);
    }
 
    return NextResponse.next();

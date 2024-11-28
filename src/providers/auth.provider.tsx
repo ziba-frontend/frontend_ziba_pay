@@ -1,10 +1,9 @@
-// auth.provider.ts
 "use client";
 
 import { ReactNode, useEffect, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
-import { jwtDecode } from "jwt-decode";
 import RiseLoader from "react-spinners/RiseLoader";
+import {jwtDecode} from "jwt-decode";
 
 interface AuthProviderProps {
    children: ReactNode;

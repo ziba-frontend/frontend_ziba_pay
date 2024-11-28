@@ -69,8 +69,8 @@ const Login = () => {
       try {
          const response = await loginMutation.mutateAsync(data);
          console.log(response, "Ebeneza");
-         if (response.success) {
-            cookies.set("auth-token", response.token, {path: "/"});
+         if (response.status == "success") {
+            cookies.set("auth-token", response.token, { path: "/" });
             toast.success("Login successful");
             window.location.replace(redirectUrl || "/dashboard");
          } else {

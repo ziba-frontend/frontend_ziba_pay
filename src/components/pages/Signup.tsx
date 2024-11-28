@@ -87,8 +87,7 @@ const SignUp = () => {
       const { agreeTerms, ...userData } = data;
       try {
          const response = await registerUserMutation.mutateAsync(data);
-         if (response.success) {
-            cookies.set("auth-token", response.token, { path: "/" });
+         if (response.status == "success") {
             if (redirectUrl) {
                location.replace(redirectUrl);
             } else {

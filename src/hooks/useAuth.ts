@@ -9,9 +9,9 @@ import { deleteCookie, setCookie } from "@/utils";
 const BASE_URL = "/auth";
 
 // API functions
-const loginUser = async (credentials: any) => {
+const loginUser = async (userData: any) => {
    return handleApiRequest(() =>
-      unauthorizedAPI.post(`${BASE_URL}/login`, credentials, {
+      unauthorizedAPI.post(`${BASE_URL}/login`, userData, {
          withCredentials: true,
       })
    );
@@ -76,7 +76,6 @@ export const useLogin = () => {
       mutationFn: loginUser,
       onSuccess: (data) => {
          if (data && data.success) {
-            // document.cookie = `auth-token=${data.token}; path=/;`;
             toast.success("Login successful");
          }
       },
@@ -94,7 +93,6 @@ export const useSignup = () => {
       mutationFn: signupUser,
       onSuccess: (data) => {
          if (data && data.success) {
-            // document.cookie = `auth-token=${data.token}; path=/;`;
             toast.success("Login successful");
          }
       },
