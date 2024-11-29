@@ -19,7 +19,6 @@ const DashboardNav = () => {
   }, [isError]);
 
   const handleLogout = () => {
-    //@ts-ignore
     logout(null, {
       onSuccess: () => {
         router.push("/login");
