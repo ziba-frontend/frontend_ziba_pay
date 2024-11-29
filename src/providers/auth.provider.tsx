@@ -3,50 +3,38 @@
 import { ReactNode, useEffect, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import RiseLoader from "react-spinners/RiseLoader";
-import { jwtDecode } from "jwt-decode";
+import { useFetchUserProfile } from "@/hooks/useAuth";
 
 interface AuthProviderProps {
-   children: ReactNode;
+  children: ReactNode;
 }
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-   const { setUser, setRole } = useAuthStore();
-   const [loading, setLoading] = useState(true);
+  const { setUser, setRole } = useAuthStore();
+  const [loading, setLoading] = useState(true);
 
-   const fetchUserData = () => {
-      try {
-         const token = document.cookie
-            .split("; ")
-            .find((row) => row.startsWith("auth_token="))
-            ?.split("=")[1];
+  const { data: user, isLoading, error } = useFetchUserProfile();
 
-         if (token) {
-            const decodedToken: any = jwtDecode(token);
-            setUser({ id: decodedToken.id, fullName: decodedToken.fullName });
-            setRole(decodedToken.role);
-         } else {
-            console.error("No token found.");
-         }
-      } catch (error) {
-         console.error("Failed to fetch user data:", error);
-      } finally {
-         setLoading(false);
-      }
-   };
+  useEffect(() => {
+    if (user) {
+      setUser({ id: user.id, fullName: user.name });
+      setRole(user.role);
+      setLoading(false);
+    } else if (error) {
+      console.error("Failed to fetch user data:", error);
+      setLoading(false);
+    }
+  }, [user, error, setUser, setRole]);
 
-   useEffect(() => {
-      fetchUserData();
-   }, []);
+  if (isLoading || loading) {
+    return (
+      <div className="items-center justify-center flex min-h-screen">
+        <RiseLoader color="#3BD64A" />
+      </div>
+    );
+  }
 
-   if (loading) {
-      return (
-         <div className="items-center justify-center flex min-h-screen">
-            <RiseLoader color="#3BD64A" />
-         </div>
-      );
-   }
-
-   return <>{children}</>;
+  return <>{children}</>;
 };
 
 export default AuthProvider;
