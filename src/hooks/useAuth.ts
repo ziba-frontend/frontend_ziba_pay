@@ -66,20 +66,15 @@ const logoutUser = async () => {
 };
 
 export const useLogin = () => {
+   const { setUser, setRole } = useAuthStore();
    return useMutation({
       mutationFn: loginUser,
       onSuccess: (data) => {
          if (data && data.status == "success") {
             toast.success("Login successful");
-
-            const userProfile = await queryClient.fetchQuery({
-               queryKey: ["userProfile"],
-               queryFn: fetchUserProfile,
-            });
-
-            if (userProfile) {
-               setUser(userProfile);
-               setRole(userProfile.role);
+            if (data.user) {
+               setUser(data.user);
+               setRole(data.user.role);
             }
          }
       },
@@ -98,14 +93,9 @@ export const useSignup = () => {
       onSuccess: (data) => {
          if (data && data.status == "success") {
             toast.success("Login successful");
-            const userProfile = await queryClient.fetchQuery({
-               queryKey: ["userProfile"],
-               queryFn: fetchUserProfile,
-            });
-
-            if (userProfile) {
-               setUser(userProfile);
-               setRole(userProfile.role);
+            if (data.user) {
+               setUser(data.user);
+               setRole(data.user.role);
             }
          }
       },
