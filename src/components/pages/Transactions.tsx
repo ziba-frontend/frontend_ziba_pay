@@ -22,7 +22,11 @@ import { StatusBadge } from "@/components/StatusBadge";
 import { formatDate } from "@/constants/constants";
 import CompleteTransaction from "@/components/modals/CompleteTransaction";
 import { useFetchUserProfile } from "@/hooks/useAuth";
-import { useCancelTransaction, useCompleteTransaction, useGetSentTransactions } from "@/hooks/useTransaction";
+import {
+   useCancelTransaction,
+   useCompleteTransaction,
+   useGetSentTransactions,
+} from "@/hooks/useTransaction";
 import toast from "react-hot-toast";
 
 const formSchema = z.object({
@@ -54,7 +58,6 @@ type Payment = {
    paymentMethod: string;
    createdAt: string;
 };
-
 
 const columns: ColumnDef<Payment>[] = [
    {
@@ -170,11 +173,15 @@ const Transactions = () => {
    } = useGetSentTransactions({ ...filters, sort, page });
 
 
+   console.log("Here are sent transactions: ", transactionsData);
 
- const completeTransactionMutation = useCompleteTransaction();
+   const completeTransactionMutation = useCompleteTransaction();
    const cancelTransactionMutation = useCancelTransaction();
 
-   const handleTransactionAction = async (transactionId: string, actionType: "complete" | "cancel") => {
+   const handleTransactionAction = async (
+      transactionId: string,
+      actionType: "complete" | "cancel"
+   ) => {
       try {
          if (actionType === "complete") {
             await completeTransactionMutation.mutateAsync(transactionId);
@@ -278,36 +285,13 @@ const Transactions = () => {
             <div className="border-2 flex w-fit flex-col gap-2 items-end rounded p-2 ">
                <Link href="/checkout">Checkout</Link>
             </div>
-            <div
-               className="flex items-center justify-center border px-4 cursor-pointer"
-               onClick={() => handleOpenDrawer("Cash-in")}
-            >
-               CashIn
-            </div>
-            <div
-               className="flex items-center justify-center border px-4 cursor-pointer"
-               onClick={() => handleOpenDrawer("Cash-out")}
-            >
-               CashOut
-            </div>
-            <div
-               className="flex items-center justify-center border px-4 cursor-pointer"
-               onClick={() => handleOpenDrawer("Transfer")}
-            >
-               Transfer
-            </div>
-            <div
-               className="flex items-center justify-center border px-4 cursor-pointer"
-               onClick={() => handleOpenDrawer("Donation")}
-            >
-               Donate
-            </div>
          </div>
          <DataTable
             columns={columns}
             data={transactionsData || []}
             actions={{
-               onComplete: (id: string) => handleTransactionAction(id, "complete"),
+               onComplete: (id: string) =>
+                  handleTransactionAction(id, "complete"),
                onCancel: (id: string) => handleTransactionAction(id, "cancel"),
             }}
          />
