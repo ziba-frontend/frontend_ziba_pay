@@ -97,7 +97,6 @@ const columns: ColumnDef<User>[] = [
          </span>
       ),
    },
- 
 ];
 
 const UsersPageContext = React.createContext<{
@@ -117,28 +116,18 @@ const UsersPageContext = React.createContext<{
 export default function UsersPage() {
    const [data, setData] = useState<User[]>([]);
    const [filteredData, setFilteredData] = useState<User[]>([]);
-   const [isModalOpen, setModalOpen] = useState(false);
-   const [isDetailsModalOpen, setDetailsModalOpen] = useState(false);
-   const [detailsUser, setDetailsUser] = useState<User | null>(null);
-   const [isAdmin, setIsAdmin] = useState(false);
-   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
    const [searchTerm, setSearchTerm] = useState<string>("");
    const [newUserCount, setNewUserCount] = useState<number>(0);
-   const [currentUser,setCurrentUser]=useState<User| null>()
+
+   const { data: usersData, isLoading, error } = useGetAllUsers();
 
    useEffect(() => {
-      const fetchData = async () => {
-         try {
-           const {data:usersData,isLoading}=useGetAllUsers()
-            setData(usersData.users);
-            setFilteredData(usersData.users);
-            calculateNewUsers(usersData.users);
-         } catch (error) {
-            toast.error("Failed to fetch users");
-         }
-      };
-      fetchData();
-   }, []);
+      if (usersData) {
+         setData(usersData.users);
+         setFilteredData(usersData.users);
+         calculateNewUsers(usersData.users);
+      }
+   }, [usersData]);
 
    useEffect(() => {
       const filtered = data.filter(
@@ -150,42 +139,12 @@ export default function UsersPage() {
    }, [searchTerm, data]);
 
    const calculateNewUsers = (users: User[]) => {
-      const now = new Date();
-      const oneWeekAgo = new Date(now);
-      oneWeekAgo.setDate(now.getDate() - 7);
-
-      const newUsers = users.filter((user) => {
-         const userCreatedAt = new Date(user.createdAt);
-         return userCreatedAt >= oneWeekAgo && userCreatedAt <= now;
-      });
-
+      const oneWeekAgo = new Date();
+      oneWeekAgo.setDate(new Date().getDate() - 7);
+      const newUsers = users.filter(
+         (user) => new Date(user.createdAt) >= oneWeekAgo
+      );
       setNewUserCount(newUsers.length);
-   };
-
-   const handleCloseModal = () => {
-      setModalOpen(false);
-   };
-
-   const handleCloseDetailsModal = () => {
-      setDetailsModalOpen(false);
-   };
-
-   const handleSuccess = () => {
-      const fetchData = async () => {
-         try {
-               const {data:users,isLoading}=useGetAllUsers()
-            setData(users);
-            setFilteredData(users);
-           const {data:user}=useFetchUserProfile()
-            setCurrentUser(user);
-            setIsAdmin(user.role === "admin");
-            calculateNewUsers(users);
-         } catch (error) {
-            toast.error("Failed to fetch users");
-         }
-      };
-
-      fetchData();
    };
 
    return (
