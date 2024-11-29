@@ -39,7 +39,7 @@ export const useGetAllUsers = () => {
          const response = await authorizedAPI.get(`${BASE_URL}/`, {
             withCredentials: true,
          });
-         return response.data.users;
+         return response.data;
       },
       onSuccess: (data) => {
          setUsers(data);
@@ -118,7 +118,6 @@ export const useDeleteUser = () => {
 // Fetch all transactions
 export const useGetAllTransactions = () => {
    const { setTransactions } = useAdminStore();
-
    return useQuery({
       queryKey: ["transactions"],
       queryFn: async () => {

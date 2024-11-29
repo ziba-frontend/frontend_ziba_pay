@@ -129,13 +129,10 @@ export default function UsersPage() {
    useEffect(() => {
       const fetchData = async () => {
          try {
-           const {data:users,isLoading}=useGetAllUsers()
-
-           console.log("Here are all the users: ", users)
-
-            setData(users);
-            setFilteredData(users);
-            calculateNewUsers(users);
+           const {data:usersData,isLoading}=useGetAllUsers()
+            setData(usersData.users);
+            setFilteredData(usersData.users);
+            calculateNewUsers(usersData.users);
          } catch (error) {
             toast.error("Failed to fetch users");
          }
