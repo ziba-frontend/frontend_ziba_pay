@@ -18,8 +18,8 @@ import { HealthChart } from "./HealthChart";
 import { useGetAllTransactions, useGetAllUsers } from "@/hooks/useAdmin";
 
 const AdminHome = () => {
-   const { data: users = [], isLoading: usersLoading } = useGetAllUsers();
-   const { data: transactions = [], isLoading: transactionsLoading } =
+   const { data: users = [], isPending: usersLoading } = useGetAllUsers();
+   const { data: transactions = [], isPending: transactionsLoading } =
       useGetAllTransactions();
 
    return (

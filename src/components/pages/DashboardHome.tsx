@@ -44,14 +44,14 @@ export default function DashboardHome() {
         { name: string; cashIn: number; cashOut: number; total: number }[]
     >([]);
     
-    const { data, isLoading, isError } = useGetAllTransactions();
+    const { data, isPending, isError } = useGetAllTransactions();
 
     useEffect(() => {
-        if (data && !isLoading && !isError) {
+        if (data && !isPending && !isError) {
             const aggregatedData = aggregateTransactionsByMonth(data);
             setTransactionData(aggregatedData);
         }
-    }, [data, isLoading, isError]);
+    }, [data, isPending, isError]);
 
     return (
         <div className="flex flex-col gap-5 w-full pr-2 md:pr-10">

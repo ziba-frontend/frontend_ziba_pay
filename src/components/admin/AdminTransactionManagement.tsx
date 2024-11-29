@@ -72,9 +72,9 @@ export default function AdminTransactionManagement() {
   const [detailsTransaction, setDetailsTransaction] = useState<Transaction | null>(null);
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
 
-  const { data: transactions = [], isLoading, isError } = useGetAllTransactions();
+  const { data: transactions = [], isPending, isError } = useGetAllTransactions();
 
-  if (isLoading) {
+  if (isPending) {
     return <p>Loading transactions...</p>;
   }
 

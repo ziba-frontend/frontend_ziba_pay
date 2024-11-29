@@ -1,155 +1,94 @@
-//@ts-nocheck
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-hot-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { authorizedAPI } from "@/lib/api";
-import { useAdminStore } from "@/store/useAdminStore";
 import { useFetchUserProfile } from "./useAuth";
 
 const BASE_URL = "/admin";
 
-// Fetch if the user is an admin
-export const useCheckIfAdmin = () => {
-   const { setAdminStatus } = useAdminStore();
-
-   return useQuery({
-      queryKey: ["isAdmin"],
-      queryFn: async () => {
-         try {
-            const user = await useFetchUserProfile();
-            const isAdmin = user?.role === "admin";
-            setAdminStatus(isAdmin);
-            return isAdmin;
-         } catch (error) {
-            console.error("Error checking if user is admin:", error);
-            return false;
-         }
-      },
-      onError: () => {
-         toast.error("Error checking admin status");
-      },
-   });
+const fetchIsAdmin = async (): Promise<boolean> => {
+  const { data: user } = await useFetchUserProfile();
+  if (!user) throw new Error("User data not available");
+  return user.role === "admin";
 };
 
-export const useGetAllUsers = () => {
-   const { setUsers } = useAdminStore();
-
-   return useQuery({
-      queryKey: ["users"],
-      queryFn: async () => {
-         const response = await authorizedAPI.get(`${BASE_URL}/`, {
-            withCredentials: true,
-         });
-         return response.data;
-      },
-      onSuccess: (data) => {
-         setUsers(data);
-      },
-      onError: (error) => {
-         toast.error("Failed to fetch users");
-         console.error("Error fetching users:", error);
-      },
-   });
+const fetchAllUsers = async (): Promise<any[]> => {
+  const response = await authorizedAPI.get(`${BASE_URL}/`, {
+    withCredentials: true,
+  });
+  return response.data;
 };
 
-// Fetch user by ID
-export const useGetUserById = (userId: string) => {
-   return useQuery({
-      queryKey: ["user", userId],
-      queryFn: async () => {
-         const response = await authorizedAPI.get(`${BASE_URL}/${userId}`, {
-            withCredentials: true,
-         });
-         return response.data.user;
-      },
-      onError: (error) => {
-         toast.error("Failed to fetch user");
-         console.error("Error while fetching user: ", error);
-      },
-   });
+const fetchUserById = async (userId: string): Promise<any> => {
+  const response = await authorizedAPI.get(`${BASE_URL}/${userId}`, {
+    withCredentials: true,
+  });
+  return response.data;
 };
 
-// Update user
-export const useUpdateUser = () => {
-   const queryClient = useQueryClient();
-
-   return useMutation({
-      mutationFn: async (args: { userId: string; userData: any }) => {
-         const { userId, userData } = args;
-         const response = await authorizedAPI.patch(
-            `${BASE_URL}/${userId}`,
-            userData,
-            { withCredentials: true }
-         );
-         return response.data;
-      },
-      onSuccess: () => {
-         queryClient.invalidateQueries(["users"]);
-         toast.success("User updated successfully");
-      },
-      onError: (error) => {
-         toast.error("Failed to update user");
-         console.error("Error updating user:", error);
-      },
-   });
+const fetchAllTransactions = async (): Promise<any[]> => {
+  const response = await authorizedAPI.get(`${BASE_URL}/transactions`, {
+    withCredentials: true,
+  });
+  return response.data.transactions;
 };
 
-// Delete user
-export const useDeleteUser = () => {
-   const queryClient = useQueryClient();
-
-   return useMutation({
-      mutationFn: async (userId: string) => {
-         const response = await authorizedAPI.delete(`${BASE_URL}/${userId}`, {
-            withCredentials: true,
-         });
-         return response.data;
-      },
-      onSuccess: () => {
-         queryClient.invalidateQueries(["users"]);
-         toast.success("User deleted successfully");
-      },
-      onError: (error) => {
-         toast.error("Failed to delete user");
-         console.error("Error deleting user:", error);
-      },
-   });
+const fetchTransactionById = async (transactionId: string): Promise<any> => {
+  const response = await authorizedAPI.get(
+    `${BASE_URL}/transactions/${transactionId}`,
+    { withCredentials: true }
+  );
+  return response.data.transaction;
 };
 
-// Fetch all transactions
-export const useGetAllTransactions = () => {
-   const { setTransactions } = useAdminStore();
-   return useQuery({
-      queryKey: ["transactions"],
-      queryFn: async () => {
-         const response = await authorizedAPI.get(`${BASE_URL}/transactions`, {
-            withCredentials: true,
-         });
-         return response.data.transactions;
-      },
-      onSuccess: (data) => {
-         setTransactions(data);
-      },
-      onError: (error) => {
-         toast.error("Failed to fetch transactions");
-         console.error("Error fetching transactions:", error);
-      },
-   });
-};
+export const useCheckIfAdmin = () =>
+  useMutation({
+    mutationFn: fetchIsAdmin,
+    onSuccess: () => console.log("Admin status verified."),
+    onError: (error) => {
+      console.error("Failed to check if admin:", error);
+    },
+  });
 
-// Fetch transaction by ID
-export const useGetTransactionById = (transactionId: string) => {
-   return useQuery({
-      queryKey: ["transaction", transactionId],
-      queryFn: async () => {
-         const response = await authorizedAPI.get(
-            `${BASE_URL}/transactions/${transactionId}`,
-            { withCredentials: true }
-         );
-         return response.data.transaction;
-      },
-      onError: (error) => {
-         toast.error("Failed to fetch transaction details");
-         console.error("Error fetching transaction details:", error);
-      },
-   });
-};
+export const useGetAllUsers = () =>
+  useMutation({
+    mutationFn: fetchAllUsers,
+    onSuccess: (data) => console.log("Users fetched successfully", data),
+    onError: (error: any) => {
+      console.error("Failed to fetch all users:", error);
+    },
+  });
+
+export const useGetUserById = (userId: string) =>
+  useMutation({
+    mutationFn: () => fetchUserById(userId),
+    onSuccess: (data) =>
+      console.log(`User with ID ${userId} fetched successfully`, data),
+    onError: (error: any) => {
+      console.error(`Failed to fetch user with ID ${userId}:`, error);
+    },
+  });
+
+export const useGetAllTransactions = () =>
+  useMutation({
+    mutationFn: fetchAllTransactions,
+    onSuccess: (data) =>
+      console.log("Transactions fetched successfully", data),
+    onError: (error: any) => {
+      console.error("Failed to fetch transactions:", error);
+    },
+  });
+
+export const useGetTransactionById = (transactionId: string) =>
+  useMutation({
+    mutationFn: () => fetchTransactionById(transactionId),
+    onSuccess: (data) =>
+      console.log(
+        `Transaction with ID ${transactionId} fetched successfully`,
+        data
+      ),
+    onError: (error: any) => {
+      console.error(
+        `Failed to fetch transaction with ID ${transactionId}:`,
+        error
+      );
+    },
+  });

@@ -77,7 +77,7 @@ export const useUpdateBlog = () => {
 export const useGetBlogById = (id: string) =>
    useQuery<any, Error>({
       queryKey: ["blog", id],
-      queryFn: () => getBlogById(id), // Ensure correct parameter passing
+      queryFn: () => getBlogById(id), 
    });
 
 export const useDeleteBlog = () => {
