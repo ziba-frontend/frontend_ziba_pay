@@ -9,7 +9,7 @@ const getSentTransaction = async (queryParams = {}) => {
       params: queryParams,
       withCredentials: true,
    });
-   return response.data.transactions;
+   return response.data;
 };
 
 // Fetch Received Transactions
