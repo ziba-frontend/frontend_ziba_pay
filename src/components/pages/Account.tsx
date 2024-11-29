@@ -15,7 +15,6 @@ import ProfileForm from "../form/ProfileForm";
 import { useFetchUserProfile, useLogout } from "@/hooks/useAuth";
 import { useDeleteUser, useUpdateUser } from "@/hooks/useAdmin";
 
-
 interface UserProfile {
    id: string;
    name: string;
@@ -28,35 +27,21 @@ const Account = () => {
    const updateUserMutation = useUpdateUser();
    const deleteUserMutation = useDeleteUser();
    const logoutMutation = useLogout();
-   
+
    const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false);
 
    const handleUpdateProfile = async (updatedData: UserProfile) => {
       try {
-         await updateUserMutation.mutateAsync({ userId: user?.id, userData: updatedData });
+         await updateUserMutation.mutateAsync({
+            userId: user?.id,
+            userData: updatedData,
+         });
          toast.success("Profile updated successfully");
          setIsUpdateModalOpen(false);
       } catch {
          toast.error("Failed to update profile");
       }
    };
-
-   const handleDeleteProfile = async () => {
-      if (!user?.id) {
-        toast.error("User ID is missing");
-        return;
-      }
-      try {
-        await deleteUserMutation.mutateAsync(user.id);
-        await logoutMutation.mutateAsync();
-        toast.success("Profile deleted successfully");
-        window.location.href = "/login";
-      } catch (error) {
-        toast.error("Failed to delete profile");
-        console.error("Error deleting profile:", error);
-      }
-    };
 
    if (isLoading) {
       return (
@@ -73,12 +58,6 @@ const Account = () => {
             <div className="flex space-x-2">
                <Button onClick={() => setIsUpdateModalOpen(true)}>
                   Update Profile
-               </Button>
-               <Button
-                  onClick={() => setIsDeleteConfirmationOpen(true)}
-                  variant="destructive"
-               >
-                  Delete Profile
                </Button>
             </div>
          </div>
@@ -100,7 +79,6 @@ const Account = () => {
             </div>
          </div>
 
-         {/* Update Profile Modal */}
          <Dialog
             open={isUpdateModalOpen}
             onOpenChange={() => setIsUpdateModalOpen(false)}
@@ -114,36 +92,6 @@ const Account = () => {
                   onSubmit={handleUpdateProfile}
                   onClose={() => setIsUpdateModalOpen(false)}
                />
-            </DialogContent>
-         </Dialog>
-
-         {/* Delete Profile Confirmation Dialog */}
-         <Dialog
-            open={isDeleteConfirmationOpen}
-            onOpenChange={() => setIsDeleteConfirmationOpen(false)}
-         >
-            <DialogContent className="max-w-sm">
-               <DialogHeader>
-                  <DialogTitle>Confirm Deletion</DialogTitle>
-               </DialogHeader>
-               <p>
-                  Are you sure you want to delete your profile? This action
-                  cannot be undone.
-               </p>
-               <div className="flex justify-end space-x-4 mt-4">
-                  <Button
-                     variant="outline"
-                     onClick={() => setIsDeleteConfirmationOpen(false)}
-                  >
-                     Cancel
-                  </Button>
-                  <Button
-                     variant="destructive"
-                     onClick={handleDeleteProfile}
-                  >
-                     Delete
-                  </Button>
-               </div>
             </DialogContent>
          </Dialog>
       </div>
