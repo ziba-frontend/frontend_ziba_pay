@@ -33,19 +33,17 @@ const PassCodeAdminModal = ({
 }: PassCodeModalProps) => {
    const [otp, setOtp] = useState("");
    const [isSubmitting, setIsSubmitting] = useState(false);
-   const [error, setError] = useState("");
+
 
    const otpMutation = useVerifyOtp();
 
    const validateOtp = async () => {
       setIsSubmitting(true);
-      setError("");
-
       try {
+         console.log("Here is the email: ", email)
          await otpMutation.mutateAsync({ email, otpCode: otp });
          onVerify(true);
       } catch (error) {
-         setError("Invalid or expired code");
          console.error("Error during verification:", error);
          onVerify(false);
       } finally {
@@ -54,7 +52,6 @@ const PassCodeAdminModal = ({
    };
 
    const handleClose = () => {
-      setError("");
       onClose();
    };
    return (
@@ -114,11 +111,7 @@ const PassCodeAdminModal = ({
                   </InputOTPGroup>
                </InputOTP>
 
-               {error && (
-                  <p className="shad-error text-14-regular mt-4 flex justify-center">
-                     {error}
-                  </p>
-               )}
+              
             </div>
             <AlertDialogFooter>
                <AlertDialogAction

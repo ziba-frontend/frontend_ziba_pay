@@ -236,15 +236,19 @@ export const useFetchVerifiedPhoneNumbers = () =>
 
 //otp
 
-const verifyOtp = async (VerifyOtpPayload) => {
+const verifyOtp = async (VerifyOtpPayload: { email: string; otpCode: string }) => {
+   const { email, otpCode } = VerifyOtpPayload;
+
+   console.log("Payload: ", VerifyOtpPayload); 
    return handleApiRequest(() =>
-      authorizedAPI.post(
+      unauthorizedAPI.post(
          `${BASE_URL}/verify-otp`,
-         { email, otpCode },
+         { email, otpCode }, 
          { withCredentials: true }
       )
    );
 };
+
 
 export const useVerifyOtp = () =>
    useMutation({
@@ -254,6 +258,6 @@ export const useVerifyOtp = () =>
       },
       onError: (error) => {
          toast.error("Invalid OTP or it has expired");
-         console.error("Error during OTP verification:", error);
+         console.error("Error during OTP verification:", error?.message);
       },
    });
