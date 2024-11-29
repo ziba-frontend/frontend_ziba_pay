@@ -15,10 +15,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
-import { useParams } from "next/navigation"; // useParams for extracting token from URL
-import { resetPassword } from "@/lib/api-calls/auth-server";
+import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
 import Link from "next/link";
+import { useResetPassword } from "@/hooks/useAuth";
 
 const formSchema = z
    .object({
@@ -46,14 +46,14 @@ const ResetPasswordPage: React.FC = () => {
    const form = useForm<FormData>({
       resolver: zodResolver(formSchema),
    });
-
+   const resetPasswordMutation = useResetPassword();
    const onSubmit = async (data: FormData) => {
       if (!token) {
          alert("Token is missing");
          return;
       }
       try {
-         await resetPassword(token as string, data.password);
+         const response = await resetPasswordMutation.mutateAsync(data);
          toast.success("Password has been reset.");
          router.push("/login");
       } catch (error) {

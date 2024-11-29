@@ -68,7 +68,6 @@ const Login = () => {
       setIsSubmitting(true);
       try {
          const response = await loginMutation.mutateAsync(data);
-         console.log(response, "Ebeneza");
          if (response.status == "success") {
             toast.success("Login successful");
             window.location.replace(redirectUrl || "/dashboard");

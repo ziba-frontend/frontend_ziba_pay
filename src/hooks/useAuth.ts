@@ -5,7 +5,6 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "react-hot-toast";
 import { authorizedAPI, unauthorizedAPI } from "@/lib/api";
 
-
 const BASE_URL = "/auth";
 
 // API functions
@@ -54,14 +53,9 @@ const resetPassword = async (token: string, newPassword: string) => {
 
 const updatePassword = async (newPassword: string, token: string) => {
    return handleApiRequest(() =>
-      authorizedAPI.patch(
-         `${BASE_URL}/updateMyPassword`,
-         { password: newPassword },
-         {
-            headers: { Authorization: `Bearer ${token}` },
-            withCredentials: true,
-         }
-      )
+      authorizedAPI.patch(`${BASE_URL}/updateMyPassword`, {
+         password: newPassword,
+      })
    );
 };
 
@@ -75,8 +69,18 @@ export const useLogin = () => {
    return useMutation({
       mutationFn: loginUser,
       onSuccess: (data) => {
-         if (data && data.status=="success") {
+         if (data && data.status == "success") {
             toast.success("Login successful");
+
+            const userProfile = await queryClient.fetchQuery({
+               queryKey: ["userProfile"],
+               queryFn: fetchUserProfile,
+            });
+
+            if (userProfile) {
+               setUser(userProfile);
+               setRole(userProfile.role);
+            }
          }
       },
       onError: (error: any) => {
@@ -92,8 +96,17 @@ export const useSignup = () => {
    return useMutation({
       mutationFn: signupUser,
       onSuccess: (data) => {
-         if (data && data.status=="success") {
+         if (data && data.status == "success") {
             toast.success("Login successful");
+            const userProfile = await queryClient.fetchQuery({
+               queryKey: ["userProfile"],
+               queryFn: fetchUserProfile,
+            });
+
+            if (userProfile) {
+               setUser(userProfile);
+               setRole(userProfile.role);
+            }
          }
       },
       onError: (error) => {

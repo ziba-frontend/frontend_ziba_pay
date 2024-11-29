@@ -166,22 +166,12 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onOpenChange }) => {
    );
 };
 
-interface User {
-   name: string | null;
-   email: string | null;
-   businessType: string | null;
-   password: string | null;
-}
 const Navbar: React.FC = () => {
    const [isOpen, setIsOpen] = useState(false);
    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
    const [loading, setLoading] = useState(true);
 
    const { user } = useAuthStore();
-   useEffect(() => {
-      console.log("Amen",user);
-      
-   }, []);
 
    const toggleMenu = () => {
       setIsOpen(!isOpen);
