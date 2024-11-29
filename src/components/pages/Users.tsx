@@ -131,6 +131,8 @@ export default function UsersPage() {
          try {
            const {data:users,isLoading}=useGetAllUsers()
 
+           console.log("Here are all the users: ", users)
+
             setData(users);
             setFilteredData(users);
             calculateNewUsers(users);
