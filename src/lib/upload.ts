@@ -1,5 +1,5 @@
 import axios from "axios";
-import apiClient from "../interceptor";
+import apiClient from "./interceptor";
 
 const BASE_URL = "/api/v1/file";
 

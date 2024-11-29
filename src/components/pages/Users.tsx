@@ -97,85 +97,8 @@ const columns: ColumnDef<User>[] = [
          </span>
       ),
    },
-   {
-      id: "actions",
-      header: () => (
-         <div className="flex items-center gap-2">
-            <Pen size={16} />
-            <span>Actions</span>
-         </div>
-      ),
-      cell: ({ row }) => {
-         const user = row.original;
-         return <ActionButtons user={user} />;
-      },
-   },
+ 
 ];
-
-const ActionButtons: React.FC<{ user: User }> = ({ user }) => {
-   const [isConfirmDialogOpen, setConfirmDialogOpen] = useState(false);
-   const router = useRouter();
-   const { setModalOpen, setCurrentUser, isAdmin } =
-      React.useContext(UsersPageContext);
-
-   if (isAdmin) {
-      return null;
-   }
-
-   const handleUpdate = () => {
-      setCurrentUser(user);
-      setModalOpen(true);
-   };
-
-   const deleteUserMutation = useDeleteUser();
-   const handleDelete = async () => {
-      try {
-         const response = await deleteUserMutation.mutateAsync(user.id);
-
-         if (response.success) {
-            toast.success("User deleted successfully");
-            router.refresh();
-         }
-      } catch (error) {
-         toast.error("Failed to delete user");
-      }
-   };
-
-   const openConfirmDialog = () => {
-      setConfirmDialogOpen(true);
-   };
-
-   const closeConfirmDialog = () => {
-      setConfirmDialogOpen(false);
-   };
-
-   return (
-      <div className="flex gap-2">
-         {user.role !== "admin" && (
-            <>
-               <button
-                  onClick={handleUpdate}
-                  className="text-blue-500"
-               >
-                  <Pen />
-               </button>
-               <button
-                  onClick={openConfirmDialog}
-                  className="text-red-500"
-               >
-                  <Trash />
-               </button>
-            </>
-         )}
-         <ConfirmDialog
-            open={isConfirmDialogOpen}
-            onClose={closeConfirmDialog}
-            onConfirm={handleDelete}
-            message={`Are you sure you want to delete  ${user.name}? This action cannot be undone.`}
-         />
-      </div>
-   );
-};
 
 const UsersPageContext = React.createContext<{
    setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -341,13 +264,6 @@ export default function UsersPage() {
                data={filteredData}
                title="All Users"
             />
-            {isModalOpen && (
-               <UserModal
-                  user={currentUser}
-                  onClose={handleCloseModal}
-                  onSuccess={handleSuccess}
-               />
-            )}
             {isDetailsModalOpen && (
                <UserDetailsModal
                   user={detailsUser}

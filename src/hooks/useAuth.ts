@@ -177,15 +177,15 @@ const sendVerificationCode = async (phoneNumber: string) => {
    );
 };
 
-const verifyPhoneNumber = async (phone: string, code: string) => {
+const verifyPhoneNumber = async (data: { phone: string; code: string }) => {
    return handleApiRequest(() =>
-      authorizedAPI.post(
-         `${BASE_URL}/verify-phone-number`,
-         { phone, code },
-         { withCredentials: true }
-      )
+     authorizedAPI.post(
+       `${BASE_URL}/verify-phone-number`,
+       data,
+       { withCredentials: true }
+     )
    );
-};
+ };
 
 const getVerifiedPhoneNumbers = async () => {
    return handleApiRequest(() =>

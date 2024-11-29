@@ -72,11 +72,11 @@ const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onClose }) => {
    };
 
    const handleFileSelect = (file: File | null) => {
-      form.setValue("image", file as any);  // Set the selected file to the form
+      form.setValue("image", file as any);  
    };
 
    if (!isClient) {
-      return null; // or some placeholder content
+      return null; 
    }
 
    return (

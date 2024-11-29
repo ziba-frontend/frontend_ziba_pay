@@ -7,9 +7,9 @@ import {
    DialogHeader,
    DialogTitle,
 } from "@/components/ui/dialog";
-import { createBlog, updateBlog } from "@/lib/api-calls/blog";
 import { toast } from "react-hot-toast";
 import BlogForm, { BlogFormValues } from "../form/BlogForm";
+import { useCreateBlog, useUpdateBlog } from "@/hooks/useBlog";
 
 type Blog = {
    id: string;
@@ -32,19 +32,21 @@ const BlogModal: React.FC<BlogModalProps> = ({ blog, onClose, onSuccess }) => {
       setOpen(true);
    }, [blog]);
 
-   const handleSubmit = async (data: BlogFormValues) => {
+   const { mutate: createBlog } = useCreateBlog();
+   const { mutate: updateBlog } = useUpdateBlog();
 
+   const handleSubmit = async (data: BlogFormValues) => {
       const formData = new FormData();
-      formData.append('title', data.title);
-      formData.append('description', data.description);
-      formData.append('content', data.content);
+      formData.append("title", data.title);
+      formData.append("description", data.description);
+      formData.append("content", data.content);
 
       if (data.image instanceof File) {
-         formData.append('image', data.image);
-     }
+         formData.append("image", data.image);
+      }
       try {
          if (blog) {
-            await updateBlog(blog.id, formData);
+            await updateBlog({ id: blog.id, data: formData });
             toast.success("Blog updated successfully");
          } else {
             await createBlog(formData);
@@ -54,7 +56,7 @@ const BlogModal: React.FC<BlogModalProps> = ({ blog, onClose, onSuccess }) => {
       } catch (error) {
          toast.error("Failed to save blog");
       } finally {
-         setOpen(false); 
+         setOpen(false);
          onClose();
       }
    };

@@ -22,15 +22,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { deposit, withdraw } from "@/lib/api-calls/transaction";
 import { useRouter } from "next/navigation";
-
+import { useDeposit, useWithdraw } from "@/hooks/useTransaction";
 
 // Define the schema
 const formSchema = z.object({
    amount: z.string().min(1, { message: "Amount is required." }),
    phone: z.string().min(1, { message: "Phone number is required." }),
-   paymentMethod: z.enum(["mtn", "airtel"], { required_error: "Payment method is required." }),
+   paymentMethod: z.enum(["mtn", "airtel"], {
+      required_error: "Payment method is required.",
+   }),
 });
 
 interface DrawerFormProps {
@@ -41,14 +42,20 @@ interface DrawerFormProps {
 
 const DrawerForm: React.FC<DrawerFormProps> = ({ isOpen, onClose, title }) => {
    const [isLoading, setIsLoading] = useState(false);
-   const router = useRouter()
+   const router = useRouter();
    const drawerRef = useRef<HTMLDivElement>(null);
    const form = useForm({
       resolver: zodResolver(formSchema),
    });
 
+   const { mutateAsync: deposit, isPending: isDepositing } = useDeposit();
+   const { mutateAsync: withdraw, isPending: isWithdrawing } = useWithdraw();
+
    const handleOutsideClick = (event: MouseEvent) => {
-      if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
+      if (
+         drawerRef.current &&
+         !drawerRef.current.contains(event.target as Node)
+      ) {
          onClose();
       }
    };
@@ -70,19 +77,16 @@ const DrawerForm: React.FC<DrawerFormProps> = ({ isOpen, onClose, title }) => {
       const paymentMethod = data.paymentMethod;
 
       try {
-         let result
-         if (title === 'Cash-in') {
-            result = await deposit(paymentMethod, amount);
-            console.log(result);
-            router.refresh()
-         } else if (title === 'Cash-out') {
-            result = await withdraw(paymentMethod, amount);
-            router.refresh()
+         if (title === "Cash-in") {
+            await deposit({ paymentMethod, amount });
+         } else {
+            await withdraw({ paymentMethod, amount });
          }
-         alert('Transaction successful');
+         alert("Transaction successful");
+         router.refresh();
          onClose();
       } catch (error) {
-         alert('Transaction failed');
+         alert("Transaction failed");
       }
    };
 
@@ -96,13 +100,19 @@ const DrawerForm: React.FC<DrawerFormProps> = ({ isOpen, onClose, title }) => {
             >
                <DrawerHeader className="bg-background flex justify-between items-center">
                   <DrawerTitle>{title}</DrawerTitle>
-                  <button onClick={onClose} className="text-main">
+                  <button
+                     onClick={onClose}
+                     className="text-main"
+                  >
                      <FaTimes />
                   </button>
                </DrawerHeader>
 
                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-5/6 md:w-full p-6 bg-white">
+                  <form
+                     onSubmit={form.handleSubmit(onSubmit)}
+                     className="space-y-8 w-5/6 md:w-full p-6 bg-white"
+                  >
                      <FormField
                         control={form.control}
                         name="amount"
@@ -144,7 +154,10 @@ const DrawerForm: React.FC<DrawerFormProps> = ({ isOpen, onClose, title }) => {
                            <FormItem className="flex items-center gap-2">
                               <FormLabel>Payment Method</FormLabel>
                               <FormControl>
-                                 <select {...field} className="bg-white p-2 outline-none border">
+                                 <select
+                                    {...field}
+                                    className="bg-white p-2 outline-none border"
+                                 >
                                     <option value="">Payment Method</option>
                                     <option value="mtn">MTN</option>
                                     <option value="airtel">Airtel</option>
@@ -156,7 +169,10 @@ const DrawerForm: React.FC<DrawerFormProps> = ({ isOpen, onClose, title }) => {
                      />
 
                      <div className="flex gap-4 flex-row items-center ">
-                        <p className="text-red-600 cursor-pointer" onClick={onClose}>
+                        <p
+                           className="text-red-600 cursor-pointer"
+                           onClick={onClose}
+                        >
                            Cancel
                         </p>
                         <Button type="submit">{title}</Button>

@@ -22,7 +22,7 @@ export const useInitiateMtnPayment = () => {
    return useMutation<any, Error, PaymentData>({
       mutationFn: initiateMtnPayment,
       onError: (error) => {
-         console.error("Error during Mtn momo payment", error);
+         console.error("Error during Mtn momo payment", error?.message);
       },
    });
 };

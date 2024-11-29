@@ -13,9 +13,9 @@ import {
 import { useWindowWidth } from "@react-hook/window-size";
 import logo from "../../public/svg/logo.svg";
 import { Nav } from "./ui/nav";
-import { logoutApi } from "@/lib/api-calls/auth-server";
 import Link from "next/link";
 import Image from "next/image";
+import { useLogout } from "@/hooks/useAuth";
 
 type Props = {
    isCollapsed: boolean;
@@ -25,14 +25,18 @@ type Props = {
 export default function AdminSidebar({ isCollapsed, toggleSidebar }: Props) {
    const onlyWidth = useWindowWidth();
    const mobileWidth = onlyWidth < 768;
-
-   const handleLogout = async () => {
-      try {
-         await logoutApi();
-         window.location.href = "/login";
-      } catch (error) {
-         console.error("Failed to logout:", error);
-      }
+   const { mutate: logout, isPending: isLogoutLoading } = useLogout();
+   const handleLogout = () => {
+      //@ts-ignore
+      logout(null, {
+         onSuccess: () => {
+            window.location.href = "/login";
+            window.location.reload();
+         },
+         onError: (error: any) => {
+            console.error("Failed to logout:", error);
+         },
+      });
    };
 
    return (
@@ -100,7 +104,7 @@ export default function AdminSidebar({ isCollapsed, toggleSidebar }: Props) {
                onClick={handleLogout}
                className="flex gap-2 items-center"
             >
-               <LogOut  size={20}/>
+               <LogOut size={20} />
                {!(isCollapsed || mobileWidth) && (
                   <p className="hidden sm:block">Logout</p>
                )}

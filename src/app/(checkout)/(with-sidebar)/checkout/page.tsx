@@ -27,6 +27,7 @@ import { useRouter } from "next/navigation";
 import SubmitButton from "@/components/SubmitButton";
 import toast from "react-hot-toast";
 import { FaTimes } from "react-icons/fa";
+import { useInitiateMtnPayment } from "@/hooks/usePayment";
 
 interface PaymentData {
    amount: number | null;
@@ -35,22 +36,6 @@ interface PaymentData {
    phoneNumber: string | null;
    description: string | null;
 }
-
-const BASE_URL = "http://localhost:8080/api/v1/payment";
-
-const initiateMtnPayment = async (paymentData: PaymentData) => {
-   try {
-      const response = await axios.post(
-         `${BASE_URL}/mtn-momo-pay`,
-         paymentData,
-         { withCredentials: true }
-      );
-      return response.data;
-   } catch (error) {
-      console.error("Error during Mtn momo payment");
-      throw error;
-   }
-};
 
 // Define the schema
 const formSchema = z.object({
@@ -67,7 +52,7 @@ const formSchema = z.object({
 });
 
 const Checkout = () => {
-   const [isLoading , setIsLoading] = useState(false)
+   const [isLoading, setIsLoading] = useState(false);
    const form = useForm({
       resolver: zodResolver(formSchema),
       defaultValues: {
@@ -80,39 +65,26 @@ const Checkout = () => {
    });
 
    const router = useRouter();
-   // Define the onSubmit handler
-   const onSubmit = async (data: any) => {
-      
-      try {
-         setIsLoading(true);
-         const paymentData: PaymentData = {
-            amount: data.amount,
-            currency: data.currency,
-            provider: data.provider,
-            phoneNumber: data.phoneNumber,
-            description: data.description || null,
-         };
-         const result = await initiateMtnPayment(paymentData);
-         toast.success('Payment successful')
-         console.log("Payment successful:", result);
-         router.push("/dashboard/transactions");
-      } catch (error) {
+   const { mutate: initiatePayment, isPending } = useInitiateMtnPayment();
 
-         
-         console.error("Payment failed:", error);
-      } finally{
-         setIsLoading(false)
-      }
+   const onSubmit = (data: any) => {
+      initiatePayment(data, {
+         onSuccess: () => {
+            toast.success("Payment successful");
+            router.push("/dashboard/transactions");
+         },
+         onError: () => {
+            toast.error("Payment failed. Please try again.");
+         },
+      });
    };
 
-   
    const handleClose = () => {
- 
       router.back();
    };
    return (
       <div>
-          <div
+         <div
             className="absolute top-6 right-6 font cursor-pointer"
             onClick={handleClose}
          >
@@ -229,13 +201,7 @@ const Checkout = () => {
                         </FormItem>
                      )}
                   />
-                  <SubmitButton
-                    isLoading={isLoading}
-                  >
-                     Confirm
-                  </SubmitButton>
-
-
+                  <SubmitButton isLoading={isPending}>Confirm</SubmitButton>
                </form>
             </Form>
          </div>
