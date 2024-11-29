@@ -33,7 +33,7 @@ const ForgotPassword = () => {
    const onSubmit = async (data: any) => {
       setEmail(data.email);
       try {
-         const response = await forgotPasswordMutation.mutateAsync(data);
+         const response = await forgotPasswordMutation.mutateAsync(data.email);
          if (response.success) {
             setStatus("success");
          } else {
@@ -109,12 +109,7 @@ const ForgotPassword = () => {
       <div className="flex justify-center items-center h-screen bg-gray-100">
          <div className="bg-white p-8 shadow-md w-full max-w-lg">
             <h1 className="text-2xl font-semibold mb-4">Forgot Password</h1>
-            {status === "error" && (
-               <p className="text-red-500 mb-4">
-                  An error occurred while sending the password reset link.
-                  Please try again.
-               </p>
-            )}
+         
             <Form {...form}>
                <form
                   onSubmit={form.handleSubmit(onSubmit)}

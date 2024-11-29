@@ -46,7 +46,7 @@ const ResetPasswordPage: React.FC = () => {
    const form = useForm<FormData>({
       resolver: zodResolver(formSchema),
    });
-   const resetPasswordMutation = useResetPassword(token);
+   const resetPasswordMutation = useResetPassword();
 
    const onSubmit = async (data: FormData) => {
       if (!token) {
@@ -56,7 +56,7 @@ const ResetPasswordPage: React.FC = () => {
       try {
          await resetPasswordMutation.mutateAsync(data.password);
          toast.success("Password has been reset.");
-         router.push("/login");
+         window.location.replace("/login");
       } catch (error) {
          toast.error("Failed to reset password. Please try again.");
       }

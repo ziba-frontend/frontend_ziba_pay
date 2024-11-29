@@ -71,7 +71,6 @@ export const useLogin = () => {
       mutationFn: loginUser,
       onSuccess: (data) => {
          if (data && data.status == "success") {
-            toast.success("Login successful");
             if (data.user) {
                setUser(data.user);
                setRole(data.user.role);
@@ -92,7 +91,6 @@ export const useSignup = () => {
       mutationFn: signupUser,
       onSuccess: (data) => {
          if (data && data.status == "success") {
-            toast.success("Login successful");
             if (data.user) {
                setUser(data.user);
                setRole(data.user.role);
@@ -100,7 +98,6 @@ export const useSignup = () => {
          }
       },
       onError: (error) => {
-         toast.error("Signup failed");
          console.error("Signup error:", error);
       },
    });
@@ -120,7 +117,6 @@ export const useFetchUserProfile = () => {
       },
       onError: (error: any) => {
          console.error(error);
-         toast.error("Failed to fetch user profile.");
       },
    });
 };
@@ -130,14 +126,13 @@ export const useForgotPassword = () =>
       mutationFn: forgotPassword,
       onSuccess: () => toast.success("Password reset email sent"),
       onError: (error) => {
-         toast.error("Error during forgot password");
          console.error("Forgot password error:", error);
       },
    });
 
-export const useResetPassword = (token: string | string[]) =>
+export const useResetPassword = () =>
    useMutation({
-      mutationFn: (newPassword: string) => resetPassword(token, newPassword),
+      mutationFn: resetPassword,
       onSuccess: () => toast.success("Password reset successful"),
       onError: (error) => {
          toast.error("Error during password reset");
@@ -236,19 +231,21 @@ export const useFetchVerifiedPhoneNumbers = () =>
 
 //otp
 
-const verifyOtp = async (VerifyOtpPayload: { email: string; otpCode: string }) => {
+const verifyOtp = async (VerifyOtpPayload: {
+   email: string;
+   otpCode: string;
+}) => {
    const { email, otpCode } = VerifyOtpPayload;
 
-   console.log("Payload: ", VerifyOtpPayload); 
+   console.log("Payload: ", VerifyOtpPayload);
    return handleApiRequest(() =>
       unauthorizedAPI.post(
          `${BASE_URL}/verify-otp`,
-         { email, otpCode }, 
+         { email, otpCode },
          { withCredentials: true }
       )
    );
 };
-
 
 export const useVerifyOtp = () =>
    useMutation({
