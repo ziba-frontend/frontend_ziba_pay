@@ -135,7 +135,7 @@ export const useForgotPassword = () =>
       },
    });
 
-export const useResetPassword = (token: string) =>
+export const useResetPassword = (token: string | string[]) =>
    useMutation({
       mutationFn: (newPassword: string) => resetPassword(token, newPassword),
       onSuccess: () => toast.success("Password reset successful"),
