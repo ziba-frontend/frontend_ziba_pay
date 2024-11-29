@@ -132,7 +132,8 @@ export const useForgotPassword = () =>
 
 export const useResetPassword = () =>
    useMutation({
-      mutationFn: resetPassword,
+      mutationFn: (payload: { newPassword: string; token: string }) =>
+         resetPassword(payload.token, payload.newPassword),
       onSuccess: () => toast.success("Password reset successful"),
       onError: (error) => {
          toast.error("Error during password reset");

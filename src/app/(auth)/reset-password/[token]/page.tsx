@@ -49,12 +49,15 @@ const ResetPasswordPage: React.FC = () => {
    const resetPasswordMutation = useResetPassword();
 
    const onSubmit = async (data: FormData) => {
-      if (!token) {
-         alert("Token is missing");
+      if (!token || Array.isArray(token)) {
+         alert("Token is missing or invalid");
          return;
       }
       try {
-         await resetPasswordMutation.mutateAsync(data.password);
+         await resetPasswordMutation.mutateAsync({
+            token,
+            newPassword: data.password,
+         });
          toast.success("Password has been reset.");
          window.location.replace("/login");
       } catch (error) {
