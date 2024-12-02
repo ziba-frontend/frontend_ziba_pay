@@ -1,41 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(req: NextRequest) {
-   const { pathname, origin } = req.nextUrl;
-   const token = req.cookies.get("auth_token")?.value;
+  const { pathname, origin } = req.nextUrl;
+  const token = req.cookies.get("auth_token")?.value;
 
-   if (pathname.startsWith("/login") || pathname.startsWith("/admin-login")) {
-      if (token) {
-         return NextResponse.redirect(`${origin}/dashboard`);
-      }
-      return NextResponse.next();
-   }
+  if (pathname.startsWith("/login")) {
+    if (token) {
+      return NextResponse.redirect(`${origin}/dashboard`);
+    }
+    return NextResponse.next();
+  }
 
-   if (!token) {
-      const loginUrl = pathname.startsWith("/admin")
-         ? new URL("/admin-login", origin)
-         : new URL("/login", origin);
+  if (pathname.startsWith("/dashboard") && !token) {
+    const loginUrl = new URL("/login", origin);
+    loginUrl.searchParams.set("redirect", pathname);
+    return NextResponse.redirect(loginUrl);
+  }
 
-      loginUrl.searchParams.set("redirect", pathname);
-      return NextResponse.redirect(loginUrl);
-   }
-
-   if (pathname.startsWith("/dashboard") && !token) {
-      return NextResponse.redirect(new URL("/login", origin));
-   }
-
-  
-
-   return NextResponse.next();
+  return NextResponse.next();
 }
 
 export const config = {
-   matcher: [
-      "/dashboard/:path*",
-      "/profile",
-      "/settings",
-      "/checkout",
-      "/login",
-      "/admin/:path*",
-   ],
+  matcher: [
+    "/dashboard/:path*", 
+    "/dashboard",       
+    "/profile",        
+    "/settings",
+    "/checkout",
+    "/login",            
+  ],
 };
