@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { authorizedAPI } from "@/lib/api";
 import handleApiRequest from "@/utils/handleApiRequest";
 
-// API Functions
 const createApiGateway = ({
    name,
    description,
@@ -31,7 +30,6 @@ const deleteApiKey = (id: string): Promise<any> => {
    );
 };
 
-
 export const useCreateApiGateway = () => {
    return useMutation<any, Error, { name: string; description: string }>({
       mutationFn: createApiGateway,
@@ -49,8 +47,6 @@ export const useDeleteApiKey = () => {
    return useMutation<any, Error, string>({
       mutationFn: deleteApiKey,
       onSuccess: () => {
-         // Invalidate the apiKeys query to refetch the list of keys after deletion
-         //@ts-ignore
          queryClient.invalidateQueries(["apiKeys"]);
       },
    });

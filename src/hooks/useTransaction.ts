@@ -9,7 +9,7 @@ const getSentTransaction = async (queryParams = {}) => {
       params: queryParams,
       withCredentials: true,
    });
-   return response.data;
+   return response.data.data.transactions;
 };
 
 // Fetch Received Transactions
@@ -18,7 +18,7 @@ const getReceivedTransactions = async (queryParams = {}) => {
       params: queryParams,
       withCredentials: true,
    });
-   return response.data;
+   return response.data.data.transactions;
 };
 
 // Fetch All Transactions
@@ -26,7 +26,7 @@ const getAllTransactions = async () => {
    const response = await authorizedAPI.get(`${BASE_URL}/all`, {
       withCredentials: true,
    });
-   return response.data;
+   return response.data.data.transactions;
 };
 
 // Fetch All Transaction Status
@@ -34,7 +34,7 @@ const getAllTransactionStatus = async () => {
    const response = await authorizedAPI.get(`${BASE_URL}/status`, {
       withCredentials: true,
    });
-   return response.data;
+   return response.data.data;
 };
 
 // Generate PDF Report for Received Transactions
@@ -45,7 +45,7 @@ const generatePDFTransactions = async () => {
          withCredentials: true,
       }
    );
-   return response.data;
+   return response.data.data;
 };
 
 // Generate CSV Report for Sent Transactions
@@ -53,7 +53,7 @@ const generateCSVTransactions = async () => {
    const response = await authorizedAPI.get(`${BASE_URL}/csv-reports/sent`, {
       withCredentials: true,
    });
-   return response.data;
+   return response.data.data;
 };
 
 // Complete Transaction
@@ -63,7 +63,7 @@ const completeTransaction = async (transactionId: string) => {
       {},
       { withCredentials: true }
    );
-   return response.data;
+   return response.data.data;
 };
 
 // Cancel Transaction
@@ -73,7 +73,7 @@ const cancelTransaction = async (transactionId: string) => {
       {},
       { withCredentials: true }
    );
-   return response.data;
+   return response.data.data;
 };
 
 const deposit = async ({
@@ -88,7 +88,7 @@ const deposit = async ({
       { paymentMethod, amount },
       { withCredentials: true }
    );
-   return response.data;
+   return response.data.data;
 };
 
 // Withdraw Cash
@@ -104,7 +104,7 @@ const withdraw = async ({
       { paymentMethod, amount },
       { withCredentials: true }
    );
-   return response.data;
+   return response.data.data;
 };
 
 // Fetch Withdrawal History

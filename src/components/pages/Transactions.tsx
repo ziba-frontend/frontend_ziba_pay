@@ -288,7 +288,7 @@ const Transactions = () => {
          </div>
          <DataTable
             columns={columns}
-            data={transactionsData?.data?.transactions || []}
+            data={transactionsData || []}
             actions={{
                onComplete: (id: string) =>
                   handleTransactionAction(id, "complete"),

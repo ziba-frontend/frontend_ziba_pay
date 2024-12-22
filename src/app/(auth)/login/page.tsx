@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-   title: "Login - Ziba Pay",
+   title: "Login",
    description: "Login into your zibapay account",
 };
 
