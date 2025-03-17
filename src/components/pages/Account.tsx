@@ -13,7 +13,6 @@ import {
 import { toast } from "react-hot-toast";
 import ProfileForm from "../form/ProfileForm";
 import { useFetchUserProfile, useLogout } from "@/hooks/useAuth";
-import { useDeleteUser, useUpdateUser } from "@/hooks/useAdmin";
 
 interface UserProfile {
    id: string;

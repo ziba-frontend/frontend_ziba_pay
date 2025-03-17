@@ -5,7 +5,7 @@ import PieChart from "@/components/PieChart";
 import LineChartComponent from "@/components/LineChart";
 import AreaChartComponent from "@/components/AreaChartComponent";
 import BarChartComponent from "../BarChart";
-import { useGetAllTransactions } from "@/hooks/useAdmin";
+import { useGetAllTransactions } from "@/hooks/useTransaction";
 
 const months = [
     "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"

@@ -169,8 +169,6 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onOpenChange }) => {
 const Navbar: React.FC = () => {
    const [isOpen, setIsOpen] = useState(false);
    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-   const [loading, setLoading] = useState(true);
-
    const { user } = useAuthStore();
 
    const toggleMenu = () => {
