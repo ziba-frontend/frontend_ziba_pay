@@ -47,7 +47,7 @@ export const useDeleteApiKey = () => {
    return useMutation<any, Error, string>({
       mutationFn: deleteApiKey,
       onSuccess: () => {
-         queryClient.invalidateQueries(["apiKeys"]);
+         queryClient.invalidateQueries({ queryKey: ["apiKeys"] });
       },
    });
 };
