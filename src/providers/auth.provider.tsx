@@ -14,7 +14,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
    const { setUser, setRole } = useAuthStore();
    const [loading, setLoading] = useState(true);
    const cookies = new Cookies();
-   const token = cookies.get("token");
+   const token = cookies.get("auth_token");
 
    // Skip authentication check if no token exists
    useEffect(() => {

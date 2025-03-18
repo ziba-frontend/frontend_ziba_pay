@@ -69,6 +69,13 @@ const Login = () => {
       try {
          const response = await loginMutation.mutateAsync(data);
          if (response.status == "success") {
+            // Set token in cookies
+            cookies.set("auth_token", response.token, {
+               path: "/",
+               secure: true,
+               sameSite: "strict",
+               maxAge: 7 * 24 * 60 * 60, // 7 days
+            });
             toast.success("Login successful");
             window.location.replace(redirectUrl || "/dashboard");
          } else {

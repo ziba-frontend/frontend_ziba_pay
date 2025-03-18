@@ -26,6 +26,13 @@ import { toast } from "react-hot-toast";
 import { Cookies } from "react-cookie";
 import { useSearchParams } from "next/navigation";
 import { useSignup } from "@/hooks/useAuth";
+import {
+   Select,
+   SelectContent,
+   SelectItem,
+   SelectTrigger,
+   SelectValue,
+} from "@/components/ui/select";
 
 const formSchema = z.object({
    email: z.string().email({ message: "Invalid email address." }),
@@ -50,6 +57,18 @@ const formSchema = z.object({
       }),
    }),
 });
+
+const businessTypes = [
+   { value: "retail", label: "Retail" },
+   { value: "ecommerce", label: "E-Commerce" },
+   { value: "technology", label: "Technology" },
+   { value: "consulting", label: "Consulting" },
+   { value: "manufacturing", label: "Manufacturing" },
+   { value: "healthcare", label: "Healthcare" },
+   { value: "education", label: "Education" },
+   { value: "finance", label: "Finance" },
+   { value: "other", label: "Other" },
+];
 
 const SignUp = () => {
    const router = useRouter();
@@ -87,16 +106,33 @@ const SignUp = () => {
       try {
          const response = await registerUserMutation.mutateAsync(data);
          if (response.status == "success") {
-            if (redirectUrl) {
-               location.replace(redirectUrl);
-            } else {
-               location.replace("/dashboard");
-            }
+            toast.success("Registration successful! Please login to continue.");
+            location.replace("/login");
          } else {
-            toast.error(response?.error?.msg || "Login failed");
+            const errorMessage =
+               response?.error?.message ||
+               response?.message ||
+               "Registration failed. Please try again.";
+            toast.error(errorMessage);
+
+            // Check if error message indicates email exists
+            if (errorMessage.toLowerCase().includes("email already exists")) {
+               toast.success("Please login with your existing account");
+               location.replace("/login");
+            }
          }
-      } catch (error) {
-         toast.error("Signup failed. Please try again.");
+      } catch (error: any) {
+         const errorMessage =
+            error?.response?.data?.message ||
+            error?.message ||
+            "Registration failed. Please try again.";
+         toast.error(errorMessage);
+
+         // Check if error message indicates email exists
+         if (errorMessage.toLowerCase().includes("email already exists")) {
+            toast.success("Please login with your existing account");
+            location.replace("/login");
+         }
       } finally {
          setIsSubmitting(false);
       }
@@ -226,13 +262,26 @@ const SignUp = () => {
                         render={({ field }) => (
                            <FormItem>
                               <FormLabel>Business Type *</FormLabel>
-                              <FormControl>
-                                 <Input
-                                    className="bg-white p-6 border"
-                                    placeholder="Business Type"
-                                    {...field}
-                                 />
-                              </FormControl>
+                              <Select
+                                 onValueChange={field.onChange}
+                                 defaultValue={field.value}
+                              >
+                                 <FormControl>
+                                    <SelectTrigger className="bg-white p-6 border">
+                                       <SelectValue placeholder="Select your business type" />
+                                    </SelectTrigger>
+                                 </FormControl>
+                                 <SelectContent>
+                                    {businessTypes.map((type) => (
+                                       <SelectItem
+                                          key={type.value}
+                                          value={type.value}
+                                       >
+                                          {type.label}
+                                       </SelectItem>
+                                    ))}
+                                 </SelectContent>
+                              </Select>
                               <FormMessage>
                                  {errors.businessType?.message}
                               </FormMessage>

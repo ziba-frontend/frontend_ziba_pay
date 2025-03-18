@@ -74,6 +74,10 @@ export const useLogin = () => {
             if (data.user) {
                setUser(data.user);
                setRole(data.user.role);
+               // Add token to the response if not already present
+               if (!data.token && data.user.token) {
+                  data.token = data.user.token;
+               }
             }
          }
       },
@@ -179,13 +183,11 @@ const sendVerificationCode = async (phoneNumber: string) => {
 
 const verifyPhoneNumber = async (data: { phone: string; code: string }) => {
    return handleApiRequest(() =>
-     authorizedAPI.post(
-       `${BASE_URL}/verify-phone-number`,
-       data,
-       { withCredentials: true }
-     )
+      authorizedAPI.post(`${BASE_URL}/verify-phone-number`, data, {
+         withCredentials: true,
+      })
    );
- };
+};
 
 const getVerifiedPhoneNumbers = async () => {
    return handleApiRequest(() =>

@@ -3,7 +3,7 @@ import { Cookies } from "react-cookie";
 
 const cookies = new Cookies();
 
-const API_URL = "https://backend.zibapay.com/api/v1";
+const API_URL = "https://payment-service-mk71.onrender.com/api/v1/";
 
 const commonHeaders = {
    "Content-Type": "application/json",
