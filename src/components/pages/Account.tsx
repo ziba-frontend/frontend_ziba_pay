@@ -1,5 +1,4 @@
 //@ts-nocheck
-
 "use client";
 import React, { useState } from "react";
 import RiseLoader from "react-spinners/RiseLoader";
@@ -23,24 +22,24 @@ interface UserProfile {
 
 const Account = () => {
    const { data: user, isLoading } = useFetchUserProfile();
-   const updateUserMutation = useUpdateUser();
-   const deleteUserMutation = useDeleteUser();
+   // const updateUserMutation = useUpdateUser();
+   // const deleteUserMutation = useDeleteUser();
    const logoutMutation = useLogout();
 
    const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
-   const handleUpdateProfile = async (updatedData: UserProfile) => {
-      try {
-         await updateUserMutation.mutateAsync({
-            userId: user?.id,
-            userData: updatedData,
-         });
-         toast.success("Profile updated successfully");
-         setIsUpdateModalOpen(false);
-      } catch {
-         toast.error("Failed to update profile");
-      }
-   };
+   // const handleUpdateProfile = async (updatedData: UserProfile) => {
+   //    try {
+   //       await updateUserMutation.mutateAsync({
+   //          userId: user?.id,
+   //          userData: updatedData,
+   //       });
+   //       toast.success("Profile updated successfully");
+   //       setIsUpdateModalOpen(false);
+   //    } catch {
+   //       toast.error("Failed to update profile");
+   //    }
+   // };
 
    if (isLoading) {
       return (
@@ -88,7 +87,7 @@ const Account = () => {
                </DialogHeader>
                <ProfileForm
                   user={user}
-                  onSubmit={handleUpdateProfile}
+                  // onSubmit={handleUpdateProfile}
                   onClose={() => setIsUpdateModalOpen(false)}
                />
             </DialogContent>
