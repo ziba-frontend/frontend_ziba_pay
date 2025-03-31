@@ -34,29 +34,54 @@ import {
    SelectValue,
 } from "@/components/ui/select";
 
-const formSchema = z.object({
-   email: z.string().email({ message: "Invalid email address." }),
-   password: z
-      .string()
-      .min(8, { message: "Password must be at least 8 characters long." })
-      .regex(/[A-Z]/, {
-         message: "Password must contain at least one uppercase letter.",
-      })
-      .regex(/[a-z]/, {
-         message: "Password must contain at least one lowercase letter.",
-      })
-      .regex(/\d/, { message: "Password must contain at least one number." })
-      .regex(/[@$!%*?&#]/, {
-         message: "Password must contain at least one special character.",
+const formSchema = z
+   .object({
+      firstName: z.string().min(1, { message: "First name is required." }),
+      lastName: z.string().min(1, { message: "Last name is required." }),
+      email: z.string().email({ message: "Invalid email address." }),
+      password: z
+         .string()
+         .min(8, { message: "Password must be at least 8 characters long." })
+         .regex(/[A-Z]/, {
+            message: "Password must contain an uppercase letter.",
+         })
+         .regex(/[a-z]/, {
+            message: "Password must contain a lowercase letter.",
+         })
+         .regex(/\d/, { message: "Password must contain a number." })
+         .regex(/[@$!%*?&#]/, {
+            message: "Password must contain a special character.",
+         }),
+      confirmPassword: z.string().min(8, {
+         message: "Confirm password is required.",
       }),
-   name: z.string().min(1, { message: "Name is required." }),
-   businessType: z.string().min(1, { message: "Business type is required." }),
-   agreeTerms: z.literal(true, {
-      errorMap: () => ({
-         message: "You must agree to the terms and conditions",
+      businessName: z
+         .string()
+         .min(1, { message: "Business name is required." }),
+      businessType: z
+         .string()
+         .min(1, { message: "Business type is required." }),
+      country: z.string().min(1, { message: "Country is required." }),
+      phoneNumber: z
+         .string()
+         .min(1, { message: "Phone number is required." })
+         .max(15, {
+            message: "Phone number must be at most 15 characters long.",
+         })
+         .regex(/^\+?[0-9]{10,15}$/, {
+            message: "Invalid phone number format.",
+         }),
+      howHear: z.string().optional(),
+      agreeTerms: z.literal(true, {
+         errorMap: () => ({
+            message: "You must agree to the terms and conditions",
+         }),
       }),
-   }),
-});
+   })
+   .refine((data) => data.password === data.confirmPassword, {
+      message: "Passwords do not match.",
+      path: ["confirmPassword"],
+   });
 
 const businessTypes = [
    { value: "retail", label: "Retail" },
@@ -70,22 +95,33 @@ const businessTypes = [
    { value: "other", label: "Other" },
 ];
 
+const references = [
+   { value: "social_media", label: "Social Media" },
+   { value: "friend", label: "Friend" },
+   { value: "advertisement", label: "Advertisement" },
+   { value: "search_engine", label: "Search Engine" },
+   { value: "event", label: "Event" },
+   { value: "other", label: "Other" },
+];
+
 const SignUp = () => {
-   const router = useRouter();
    const [isSubmitting, setIsSubmitting] = useState(false);
    const [showPassword, setShowPassword] = useState(false);
-
-   const searchParams = useSearchParams();
-   const redirectUrl = searchParams.get("redirectUrl");
 
    const form = useForm({
       resolver: zodResolver(formSchema),
       mode: "onChange",
       defaultValues: {
-         name: "",
          email: "",
          password: "",
+         firstName: "",
+         lastName: "",
+         businessName: "",
+         confirmPassword: "",
          businessType: "",
+         country: "",
+         howHear: "",
+         phoneNumber: "",
          agreeTerms: false,
       },
    });
@@ -96,13 +132,11 @@ const SignUp = () => {
       control,
       formState: { errors, isValid },
    } = form;
-   const watchedFields = watch();
 
-   const cookies = new Cookies();
    const registerUserMutation = useSignup();
    const onSubmit = async (data: any) => {
       setIsSubmitting(true);
-      const { agreeTerms, ...userData } = data;
+      const { agreeTerms, confirmPassword } = data;
       try {
          const response = await registerUserMutation.mutateAsync(data);
          if (response.status == "success") {
@@ -187,13 +221,13 @@ const SignUp = () => {
                   <h4 className="text-center my-6">
                      Create your Ziba pay Account
                   </h4>
-                  <div className="grid grid-cols-1 gap-8 items-center justify-center">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center justify-center">
                      <FormField
                         control={control}
-                        name="name"
+                        name="firstName"
                         render={({ field }) => (
                            <FormItem>
-                              <FormLabel>Name *</FormLabel>
+                              <FormLabel>First Name *</FormLabel>
                               <FormControl>
                                  <Input
                                     className="bg-white p-6 outline-none border"
@@ -201,7 +235,28 @@ const SignUp = () => {
                                     {...field}
                                  />
                               </FormControl>
-                              <FormMessage>{errors.name?.message}</FormMessage>
+                              <FormMessage>
+                                 {errors.firstName?.message}
+                              </FormMessage>
+                           </FormItem>
+                        )}
+                     />
+                     <FormField
+                        control={control}
+                        name="lastName"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormLabel>Last Name *</FormLabel>
+                              <FormControl>
+                                 <Input
+                                    className="bg-white p-6 outline-none border"
+                                    placeholder="Enter your name"
+                                    {...field}
+                                 />
+                              </FormControl>
+                              <FormMessage>
+                                 {errors.lastName?.message}
+                              </FormMessage>
                            </FormItem>
                         )}
                      />
@@ -258,6 +313,97 @@ const SignUp = () => {
                      />
                      <FormField
                         control={control}
+                        name="confirmPassword"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormLabel>Confirm Password *</FormLabel>
+                              <FormControl>
+                                 <div className="relative">
+                                    <Input
+                                       className="bg-white p-6 border pr-10"
+                                       placeholder="Confirm your password"
+                                       type={showPassword ? "text" : "password"}
+                                       {...field}
+                                    />
+                                    <div
+                                       className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                                       onClick={() =>
+                                          setShowPassword((prev) => !prev)
+                                       }
+                                    >
+                                       {showPassword ? (
+                                          <EyeOff size={20} />
+                                       ) : (
+                                          <Eye size={20} />
+                                       )}
+                                    </div>
+                                 </div>
+                              </FormControl>
+                              <FormMessage>
+                                 {errors.confirmPassword?.message}
+                              </FormMessage>
+                           </FormItem>
+                        )}
+                     />
+                     <FormField
+                        control={control}
+                        name="phoneNumber"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormLabel>Phone Number *</FormLabel>
+                              <FormControl>
+                                 <Input
+                                    className="bg-white p-6 border pr-10"
+                                    placeholder="Enter your Phone Number"
+                                    type={"text"}
+                                    {...field}
+                                 />
+                              </FormControl>
+                              <FormMessage>
+                                 {errors.phoneNumber?.message}
+                              </FormMessage>
+                           </FormItem>
+                        )}
+                     />
+                     <FormField
+                        control={control}
+                        name="country"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormLabel>Country *</FormLabel>
+                              <FormControl>
+                                 <Input
+                                    className="bg-white p-6 border pr-10"
+                                    placeholder="Enter your country"
+                                    type={"text"}
+                                    {...field}
+                                 />
+                              </FormControl>
+                              <FormMessage>
+                                 {errors.country?.message}
+                              </FormMessage>
+                           </FormItem>
+                        )}
+                     />
+                     <FormField
+                        control={control}
+                        name="businessName"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormLabel>Business Name *</FormLabel>
+                              <Input
+                                 className="bg-white p-6 border"
+                                 placeholder="Enter your business name"
+                                 {...field}
+                              />
+                              <FormMessage>
+                                 {errors.businessName?.message}
+                              </FormMessage>
+                           </FormItem>
+                        )}
+                     />
+                     <FormField
+                        control={control}
                         name="businessType"
                         render={({ field }) => (
                            <FormItem>
@@ -284,6 +430,40 @@ const SignUp = () => {
                               </Select>
                               <FormMessage>
                                  {errors.businessType?.message}
+                              </FormMessage>
+                           </FormItem>
+                        )}
+                     />
+                     <FormField
+                        control={control}
+                        name="howHear"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormLabel>
+                                 How did you hear about us ?{" "}
+                              </FormLabel>
+                              <Select
+                                 onValueChange={field.onChange}
+                                 defaultValue={field.value}
+                              >
+                                 <FormControl>
+                                    <SelectTrigger className="bg-white p-6 border">
+                                       <SelectValue placeholder="Select your answer" />
+                                    </SelectTrigger>
+                                 </FormControl>
+                                 <SelectContent>
+                                    {references.map((type) => (
+                                       <SelectItem
+                                          key={type.value}
+                                          value={type.value}
+                                       >
+                                          {type.label}
+                                       </SelectItem>
+                                    ))}
+                                 </SelectContent>
+                              </Select>
+                              <FormMessage>
+                                 {errors.howHear?.message}
                               </FormMessage>
                            </FormItem>
                         )}

@@ -7,49 +7,65 @@ import { useFetchUserProfile } from "@/hooks/useAuth";
 import { Cookies } from "react-cookie";
 
 interface AuthProviderProps {
-   children: ReactNode;
+  children: ReactNode;
 }
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-   const { setUser, setRole } = useAuthStore();
-   const [loading, setLoading] = useState(true);
-   const cookies = new Cookies();
-   const token = cookies.get("auth_token");
+  const { setUser, setRole } = useAuthStore();
+  const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
+  const cookies = new Cookies();
+  
+  // Set mounted to true when component mounts
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-   // Skip authentication check if no token exists
-   useEffect(() => {
-      if (!token) {
-         setLoading(false);
-         return;
-      }
-   }, [token]);
+  // Get the authentication token and fetch user profile
+  const { data: userData, isLoading, error } = useFetchUserProfile();
 
-   const { data: user, isLoading, error } = useFetchUserProfile();
+  // Handle user data when it's available
+  useEffect(() => {
+    if (!mounted) return;
+    
+    const token = cookies.get("auth_token");
+    
+    if (!token) {
+      setLoading(false);
+      return;
+    }
 
-   useEffect(() => {
-      if (!token) return;
+    if (userData) {
+      // Store the complete user object
+      setUser(userData);
+      setRole(userData.role);
+      setLoading(false);
+    } else if (error) {
+      console.error("Failed to fetch user data:", error);
+      setLoading(false);
+    } else if (!isLoading) {
+      setLoading(false);
+    }
+  }, [userData, error, isLoading, setUser, setRole, mounted]);
 
-      if (user) {
-         setUser({ id: user.id, fullName: user.name });
-         setRole(user.role);
-         setLoading(false);
-      } else if (error) {
-         console.error("Failed to fetch user data:", error);
-         setLoading(false);
-      }
-   }, [user, error, setUser, setRole, token]);
+  // Always render children on server
+  if (!mounted) {
+    return <>{children}</>;
+  }
 
-   if (!token) return <>{children}</>;
+  // Client-side only logic
+  const token = cookies.get("auth_token");
+  if (!token) return <>{children}</>;
 
-   if (isLoading || loading) {
-      return (
-         <div className="items-center justify-center flex min-h-screen">
-            <RiseLoader color="#3BD64A" />
-         </div>
-      );
-   }
+  if (isLoading || loading) {
+    return (
+      <div className="items-center justify-center flex min-h-screen">
+        <RiseLoader color="#3BD64A" />
+      </div>
+    );
+  }
 
-   return <>{children}</>;
+  return <>{children}</>;
 };
 
 export default AuthProvider;

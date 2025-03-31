@@ -16,7 +16,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
    
 
    return (
-      <div className="flex flex-col items-center justify-center min-h-screen py-12">
+      <div className="flex flex-col items-center justify-center min-h-screen py-12 bg-white">
          <div className="mx-auto w-full md:w-5/6 xl:w-[50%]">
             <div className="flex shadow-lg border">
                <CheckoutSidebar />

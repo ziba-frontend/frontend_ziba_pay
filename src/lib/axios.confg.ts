@@ -4,7 +4,7 @@ import { getCookie } from "../utils";
 const token = getCookie("auth_token");
 
 const axiosInstance = axios.create({
-   baseURL: "https://payment-service-mk71.onrender.com/api/v1",
+   baseURL: "http://localhost:8000/api/v1",
    headers: {
       Authorization: `Bearer ${token}`,
    },

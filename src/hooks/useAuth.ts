@@ -1,4 +1,5 @@
 //@ts-nocheck
+
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import handleApiRequest from "@/utils/handleApiRequest";
 import { useAuthStore } from "@/store/useAuthStore";
@@ -51,7 +52,7 @@ const resetPassword = async (token: string, newPassword: string) => {
    );
 };
 
-const updatePassword = async (newPassword: string, token: string) => {
+const updatePassword = async (newPassword: string) => {
    return handleApiRequest(() =>
       authorizedAPI.patch(`${BASE_URL}/updateMyPassword`, {
          password: newPassword,
@@ -65,19 +66,62 @@ const logoutUser = async () => {
    );
 };
 
+const updateProfile = async (userData: any) => {
+   return handleApiRequest(() =>
+      authorizedAPI.patch(`${BASE_URL}/update-profile`, userData, {
+         withCredentials: true,
+      })
+   );
+};
+
+export const useUpdateProfile = () => {
+   const { setUser } = useAuthStore();
+   const queryClient = useQueryClient();
+
+   return useMutation({
+      mutationFn: updateProfile,
+      onSuccess: (data) => {
+         if (data && data.status === "success" && data.user) {
+            setUser(data.user);
+
+            // Invalidate the userProfile query to fetch the updated profile
+            queryClient.invalidateQueries({ queryKey: ["userProfile"] });
+
+            toast.success("Profile updated successfully!");
+         }
+      },
+      onError: (error) => {
+         const errorMsg =
+            error?.response?.data?.msg ||
+            "Failed to update profile. Please try again.";
+         toast.error(errorMsg);
+         console.error("Update profile error:", error);
+      },
+   });
+};
+
 export const useLogin = () => {
    const { setUser, setRole } = useAuthStore();
+   const queryClient = useQueryClient();
+
    return useMutation({
       mutationFn: loginUser,
       onSuccess: (data) => {
-         if (data && data.status == "success") {
+         if (data && data.status === "success") {
             if (data.user) {
+               // Store the complete user object
                setUser(data.user);
                setRole(data.user.role);
+
                // Add token to the response if not already present
                if (!data.token && data.user.token) {
                   data.token = data.user.token;
                }
+
+               // Invalidate the userProfile query to trigger a refetch
+               queryClient.invalidateQueries({ queryKey: ["userProfile"] });
+
+               toast.success("Login successful!");
             }
          }
       },
@@ -91,17 +135,19 @@ export const useLogin = () => {
 };
 
 export const useSignup = () => {
+   useAuthStore();
+
    return useMutation({
       mutationFn: signupUser,
       onSuccess: (data) => {
-         if (data && data.status == "success") {
-            if (data.user) {
-               setUser(data.user);
-               setRole(data.user.role);
-            }
+         if (data && data.status === "success") {
+            toast.success("Signup successful!");
          }
       },
       onError: (error) => {
+         const errorMsg =
+            error?.response?.data?.msg || "Signup failed. Please try again.";
+         toast.error(errorMsg);
          console.error("Signup error:", error);
       },
    });
@@ -115,13 +161,16 @@ export const useFetchUserProfile = () => {
       queryFn: fetchUserProfile,
       onSuccess: (user: any) => {
          if (user) {
+            // Store the complete user object
             setUser(user);
             setRole(user.role);
          }
       },
       onError: (error: any) => {
-         console.error(error);
+         console.error("Failed to fetch user profile:", error);
       },
+      retry: 1,
+      staleTime: 5 * 60 * 1000, // 5 minutes
    });
 };
 
@@ -130,6 +179,10 @@ export const useForgotPassword = () =>
       mutationFn: forgotPassword,
       onSuccess: () => toast.success("Password reset email sent"),
       onError: (error) => {
+         const errorMsg =
+            error?.response?.data?.msg ||
+            "Failed to send reset email. Please try again.";
+         toast.error(errorMsg);
          console.error("Forgot password error:", error);
       },
    });
@@ -140,7 +193,9 @@ export const useResetPassword = () =>
          resetPassword(payload.token, payload.newPassword),
       onSuccess: () => toast.success("Password reset successful"),
       onError: (error) => {
-         toast.error("Error during password reset");
+         const errorMsg =
+            error?.response?.data?.msg || "Error during password reset";
+         toast.error(errorMsg);
          console.error("Reset password error:", error);
       },
    });
@@ -150,22 +205,31 @@ export const useUpdatePassword = (token: string) =>
       mutationFn: (newPassword: string) => updatePassword(newPassword, token),
       onSuccess: () => toast.success("Password updated successfully"),
       onError: (error) => {
-         toast.error("Error during password update");
+         const errorMsg =
+            error?.response?.data?.msg || "Error during password update";
+         toast.error(errorMsg);
          console.error("Update password error:", error);
       },
    });
 
 export const useLogout = () => {
    const { clearUser } = useAuthStore();
+   const queryClient = useQueryClient();
 
    return useMutation({
       mutationFn: logoutUser,
       onSuccess: () => {
+         // Clear user data
          clearUser();
+
+         // Clear query cache
+         queryClient.clear();
+
          toast.success("Logged out successfully");
       },
       onError: (error) => {
-         toast.error("Error during logout");
+         const errorMsg = error?.response?.data?.msg || "Error during logout";
+         toast.error(errorMsg);
          console.error("Logout error:", error);
       },
    });

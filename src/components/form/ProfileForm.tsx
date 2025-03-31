@@ -17,6 +17,8 @@ const UserSchema = z.object({
    name: z.string().min(1, "Name is required"),
    email: z.string().email("Invalid email").min(1, "Email is required"),
    businessType: z.string().min(1, "Business Type is required"),
+   country: z.string().min(1, "Country is required"),
+   howHear: z.string().min(1, "How did you hear is required"),
 });
 export type UserFormValues = z.infer<typeof UserSchema>;
 
@@ -46,7 +48,10 @@ const ProfileForm: React.FC<UserFormProps> = ({ user, onSubmit, onClose }) => {
 
    return (
       <Form {...form}>
-         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+         <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-6"
+         >
             <FormItem>
                <FormLabel>Name</FormLabel>
                <FormControl>
@@ -54,7 +59,10 @@ const ProfileForm: React.FC<UserFormProps> = ({ user, onSubmit, onClose }) => {
                      name="name"
                      control={form.control}
                      render={({ field }) => (
-                        <Input placeholder="Name" {...field} />
+                        <Input
+                           placeholder="Name"
+                           {...field}
+                        />
                      )}
                   />
                </FormControl>
@@ -67,7 +75,10 @@ const ProfileForm: React.FC<UserFormProps> = ({ user, onSubmit, onClose }) => {
                      name="email"
                      control={form.control}
                      render={({ field }) => (
-                        <Input placeholder="Email" {...field} />
+                        <Input
+                           placeholder="Email"
+                           {...field}
+                        />
                      )}
                   />
                </FormControl>
@@ -80,14 +91,24 @@ const ProfileForm: React.FC<UserFormProps> = ({ user, onSubmit, onClose }) => {
                      name="businessType"
                      control={form.control}
                      render={({ field }) => (
-                        <Input placeholder="Business Type" {...field} />
+                        <Input
+                           placeholder="Business Type"
+                           {...field}
+                        />
                      )}
                   />
                </FormControl>
-               <FormMessage>{form.formState.errors.businessType?.message}</FormMessage>
+               <FormMessage>
+                  {form.formState.errors.businessType?.message}
+               </FormMessage>
             </FormItem>
             <div className="flex justify-end space-x-4">
-               <Button variant="outline" onClick={onClose}>Cancel</Button>
+               <Button
+                  variant="outline"
+                  onClick={onClose}
+               >
+                  Cancel
+               </Button>
                <Button type="submit">Update</Button>
             </div>
          </form>
