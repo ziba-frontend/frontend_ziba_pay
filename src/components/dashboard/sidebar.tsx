@@ -22,6 +22,7 @@ import {
   ClipboardList,
   ShieldCheck,
   LogOut,
+  ListOrderedIcon,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import LogoutAlert from "@/components/LogoutAlert";
@@ -122,6 +123,11 @@ const getMerchantNavItems = (): NavItem[] => [
     icon: <WalletCards />,
   },
   {
+    name: "Orders",
+    href: "/dashboard/orders",
+    icon: <ListOrderedIcon />,
+  },
+  {
    name: "Summary",
    href: "/dashboard/summary",
    icon: <LayoutDashboard />,
@@ -131,26 +137,11 @@ const getMerchantNavItems = (): NavItem[] => [
    href: "/dashboard/events",
    icon: <Clock />,
  },
- {
-   name: "Withdrawals",
-   href: "/dashboard/withdrawals",
-   icon: <WalletCards />,
- },
- {
-   name: "Approved Numbers",
-   href: "/dashboard/approved-numbers",
-   icon: <WalletCards />,
- },
   {
     name: "Reports",
     href: "/dashboard/reports",
     icon: <ClipboardList />,
-  },
-  {
-    name: "Merchant Dashboard",
-    href: "/dashboard/merchant",
-    icon: <StoreIcon />,
-  },
+  }
 ];
 
 const getCustomerNavItems = (): NavItem[] => [

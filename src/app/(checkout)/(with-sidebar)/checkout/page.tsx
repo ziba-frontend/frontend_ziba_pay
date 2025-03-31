@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import SubmitButton from "@/components/SubmitButton";
 import toast from "react-hot-toast";
 import { useCreateOrder, useGetAllBanks } from "@/hooks/usePayment";
-import { CreditCard, Building, ChevronsUpDown } from "lucide-react";
+import { CreditCard, Building } from "lucide-react";
 import {
    Select,
    SelectContent,
@@ -26,7 +26,6 @@ import {
    SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { motion } from "framer-motion";
 
 interface PaymentData {
    amount: number;
@@ -294,7 +293,7 @@ export default function Checkout() {
                            <div className="relative">
                               <Input
                                  type="number"
-                                 className="bg-white p-6 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                                 className="bg-white p-6 rounded-md border border-gray-300  transition-all"
                                  placeholder="Enter amount"
                                  {...field}
                                  onChange={(e) => {
@@ -325,7 +324,7 @@ export default function Checkout() {
                               onValueChange={field.onChange}
                               defaultValue={field.value}
                            >
-                              <SelectTrigger className="bg-white p-6 border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                              <SelectTrigger className="bg-white p-6 border border-gray-300 rounded-md focus:ring-1  transition-all">
                                  <SelectValue placeholder="Select currency" />
                               </SelectTrigger>
                               <SelectContent>
@@ -395,7 +394,7 @@ export default function Checkout() {
                                           <FormControl>
                                              <div className="relative">
                                                 <Input
-                                                   className="bg-white p-6 border border-gray-300 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all pl-12"
+                                                   className="bg-white p-6 border border-gray-300 rounded-md  transition-all pl-12"
                                                    placeholder="Card Number"
                                                    maxLength={19}
                                                    {...field}
@@ -454,7 +453,7 @@ export default function Checkout() {
                                                       }
                                                       value={field.value || ""}
                                                    >
-                                                      <SelectTrigger className="bg-white py-6 border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                                                      <SelectTrigger className="bg-white py-6 border border-gray-300 rounded-md focus:ring-1   transition-all">
                                                          <SelectValue placeholder="MM" />
                                                       </SelectTrigger>
                                                       <SelectContent>
@@ -501,7 +500,7 @@ export default function Checkout() {
                                                       }
                                                       value={field.value || ""}
                                                    >
-                                                      <SelectTrigger className="bg-white py-6 border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                                                      <SelectTrigger className="bg-white py-6 border border-gray-300 rounded-md transition-all">
                                                          <SelectValue placeholder="YY" />
                                                       </SelectTrigger>
                                                       <SelectContent>
@@ -542,7 +541,7 @@ export default function Checkout() {
                                           <FormItem>
                                              <FormControl>
                                                 <Input
-                                                   className="bg-white p-6 border border-gray-300 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                                                   className="bg-white p-6 border border-gray-300 rounded-md transition-all"
                                                    placeholder="CVV"
                                                    maxLength={4}
                                                    type="password"
@@ -572,7 +571,7 @@ export default function Checkout() {
                                                 value={field.value || ""}
                                                 disabled={isLoadingBanks}
                                              >
-                                                <SelectTrigger className="bg-white p-6 border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                                                <SelectTrigger className="bg-white p-6 border border-gray-300 rounded-md  transition-all">
                                                    <SelectValue
                                                       placeholder={
                                                          isLoadingBanks
@@ -619,7 +618,7 @@ export default function Checkout() {
                {/* Submit Button */}
                <SubmitButton
                   disabled={isSubmitting || isCreatingOrder}
-                  className="w-full py-6 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors font-medium text-lg"
+                  className="w-full py-6  text-white rounded-md transition-colors font-medium text-lg"
                >
                   {isSubmitting || isCreatingOrder ? (
                      <div className="flex items-center justify-center gap-2">
