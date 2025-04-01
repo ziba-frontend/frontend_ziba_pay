@@ -9,6 +9,8 @@ import {
 } from "@/hooks/usePayment";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
+import CheckoutNavbar from "@/components/CheckoutNavbar";
+
 
 export default function ConfirmPage() {
    const router = useRouter();
@@ -23,6 +25,9 @@ export default function ConfirmPage() {
    const paymentMethod = searchParams.get("paymentMethod");
    const amount = searchParams.get("amount");
    const currency = searchParams.get("currency");
+
+   // Parse amount to number for the navbar
+   const amountValue = amount ? parseFloat(amount) : 0;
 
    // Payment hooks
    const { mutate: payWithCard } = usePayOrderWithCard();
@@ -114,98 +119,103 @@ export default function ConfirmPage() {
       router.push("/checkout");
    };
 
-  
-   
    return (
-      <div className="flex flex-col justify-center items-center p-8 max-w-md mx-auto mt-10 border rounded-lg shadow-md">
-         {isConfirming ? (
-            <>
-               <h2 className="text-2xl font-semibold mb-6 text-center">
-                  Confirm Payment
-               </h2>
-               <div className="space-y-4 w-full">
-                  <div className="flex justify-between border-b pb-2">
-                     <span className="font-medium">Amount:</span>
-                     <span className="font-bold">
-                        {amount} {currency}
-                     </span>
+      <>
+         {/* Add the CheckoutNavbar at the top */}
+         <CheckoutNavbar 
+            amount={amountValue} 
+            currency={currency || "USD"} 
+         />
+         
+         <div className="flex flex-col justify-center items-center p-8 max-w-md mx-auto mt-6 border rounded-lg shadow-md">
+            {isConfirming ? (
+               <>
+                  <h2 className="text-2xl font-semibold mb-6 text-center">
+                     Confirm Payment
+                  </h2>
+                  <div className="space-y-4 w-full">
+                     <div className="flex justify-between border-b pb-2">
+                        <span className="font-medium">Amount:</span>
+                        <span className="font-bold">
+                           {amount} {currency}
+                        </span>
+                     </div>
+                     <div className="flex justify-between border-b pb-2">
+                        <span className="font-medium">Payment Method:</span>
+                        <span>
+                           {paymentMethod === "card"
+                              ? "Credit/Debit Card"
+                              : "Bank Transfer"}
+                        </span>
+                     </div>
+                     {paymentMethod === "card" && cardDetails && (
+                        <div className="space-y-2">
+                           <div className="flex justify-between border-b pb-2">
+                              <span className="font-medium">Card Number:</span>
+                              <span>
+                                 •••• •••• •••• {cardDetails.cardNumber.slice(-4)}
+                              </span>
+                           </div>
+                           <div className="flex justify-between border-b pb-2">
+                              <span className="font-medium">Expiry Date:</span>
+                              <span>
+                                 {cardDetails.expiryMonth}/{cardDetails.expiryYear}
+                              </span>
+                           </div>
+                        </div>
+                     )}
+                     {paymentMethod === "bank" && bankDetails && (
+                        <div className="flex justify-between border-b pb-2">
+                           <span className="font-medium">Bank Code:</span>
+                           <span>{bankDetails.bankCode}</span>
+                        </div>
+                     )}
+                     <div className="flex justify-between border-b pb-2">
+                        <span className="font-medium">Reference:</span>
+                        <span className="text-sm">{orderReference}</span>
+                     </div>
                   </div>
-                  <div className="flex justify-between border-b pb-2">
-                     <span className="font-medium">Payment Method:</span>
-                     <span>
+                  <div className="flex gap-4 mt-8 w-full">
+                     <Button
+                        variant="outline"
+                        className="w-1/2"
+                        onClick={cancelPayment}
+                     >
+                        Cancel
+                     </Button>
+                     <Button
+                        className="w-1/2 bg-green-600 hover:bg-green-700"
+                        onClick={confirmPayment}
+                        disabled={
+                           (paymentMethod === "card" && !cardDetails) ||
+                           (paymentMethod === "bank" && !bankDetails)
+                        }
+                     >
+                        Confirm Payment
+                     </Button>
+                  </div>
+               </>
+            ) : (
+               <>
+                  <div className="p-6">
+                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
+                  </div>
+                  <p className="text-center text-[#535353]">
+                     {processing
+                        ? "Processing your payment. Please wait..."
+                        : "Preparing your payment..."}
+                  </p>
+                  {paymentMethod && (
+                     <p className="text-center text-[#535353] mt-2">
+                        Payment method:{" "}
                         {paymentMethod === "card"
                            ? "Credit/Debit Card"
                            : "Bank Transfer"}
-                     </span>
-                  </div>
-                  {paymentMethod === "card" && cardDetails && (
-                     <div className="space-y-2">
-                        <div className="flex justify-between border-b pb-2">
-                           <span className="font-medium">Card Number:</span>
-                           <span>
-                              •••• •••• •••• {cardDetails.cardNumber.slice(-4)}
-                           </span>
-                        </div>
-                        <div className="flex justify-between border-b pb-2">
-                           <span className="font-medium">Expiry Date:</span>
-                           <span>
-                              {cardDetails.expiryMonth}/{cardDetails.expiryYear}
-                           </span>
-                        </div>
-                     </div>
+                     </p>
                   )}
-                  {paymentMethod === "bank" && bankDetails && (
-                     <div className="flex justify-between border-b pb-2">
-                        <span className="font-medium">Bank Code:</span>
-                        <span>{bankDetails.bankCode}</span>
-                     </div>
-                  )}
-                  <div className="flex justify-between border-b pb-2">
-                     <span className="font-medium">Reference:</span>
-                     <span className="text-sm">{orderReference}</span>
-                  </div>
-               </div>
-               <div className="flex gap-4 mt-8 w-full">
-                  <Button
-                     variant="outline"
-                     className="w-1/2"
-                     onClick={cancelPayment}
-                  >
-                     Cancel
-                  </Button>
-                  <Button
-                     className="w-1/2 bg-green-600 hover:bg-green-700"
-                     onClick={confirmPayment}
-                     disabled={
-                        (paymentMethod === "card" && !cardDetails) ||
-                        (paymentMethod === "bank" && !bankDetails)
-                     }
-                  >
-                     Confirm Payment
-                  </Button>
-               </div>
-            </>
-         ) : (
-            <>
-               <div className="p-6">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
-               </div>
-               <p className="text-center text-[#535353]">
-                  {processing
-                     ? "Processing your payment. Please wait..."
-                     : "Preparing your payment..."}
-               </p>
-               {paymentMethod && (
-                  <p className="text-center text-[#535353] mt-2">
-                     Payment method:{" "}
-                     {paymentMethod === "card"
-                        ? "Credit/Debit Card"
-                        : "Bank Transfer"}
-                  </p>
-               )}
-              
-            </>
-         )}
-      </div>
+               </>
+            )}
+         </div>
+      </>
    );
 }

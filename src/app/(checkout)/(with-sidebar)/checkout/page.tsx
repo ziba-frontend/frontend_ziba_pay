@@ -27,6 +27,7 @@ import {
    SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import CheckoutNavbar from "@/components/CheckoutNavbar";
 
 interface PaymentData {
    amount: number;
@@ -93,6 +94,10 @@ export default function Checkout() {
          bankCode: "",
       },
    });
+
+   // Watch amount and currency for navbar
+   const amount = form.watch("amount");
+   const currency = form.watch("currency");
 
    const router = useRouter();
    const { mutate: createOrder, isLoading: isCreatingOrder } = useCreateOrder();
@@ -262,402 +267,410 @@ export default function Checkout() {
    }, [cardNumber, form]);
 
    return (
-      <div className="bg-white rounded-lg p-6 max-w-md mx-auto">
-         <div className="flex justify-center items-center mb-6">
-            <Image
-               src={im1}
-               alt="ZibaPay checkout"
-               width={80}
-               height={80}
-               className="mb-2"
-            />
-         </div>
-         <h3 className="text-center text-xl font-semibold mb-2 text-gray-800">
-            Complete Your Payment
-         </h3>
-         <p className="text-center text-gray-500 mb-6">
-            Enter your payment details to start the order
-         </p>
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+         {/* Add the Checkout Navbar with real-time amount and currency */}
+         <CheckoutNavbar amount={amount} currency={currency} />
+         
+         <div className="flex-1 flex items-center justify-center py-8 px-4">
+            <div className="bg-white rounded-lg shadow-md p-6 w-full max-w-md mx-auto">
+               <div className="flex justify-center items-center mb-6">
+                  <Image
+                     src={im1}
+                     alt="ZibaPay checkout"
+                     width={80}
+                     height={80}
+                     className="mb-2"
+                  />
+               </div>
+               <h3 className="text-center text-xl font-semibold mb-2 text-gray-800">
+                  Complete Your Payment
+               </h3>
+               <p className="text-center text-gray-500 mb-6">
+                  Enter your payment details to start the order
+               </p>
 
-         <Form {...form}>
-            <form
-               onSubmit={form.handleSubmit(onSubmit)}
-               className="space-y-6"
-            >
-               {/* Amount Field */}
-               <FormField
-                  control={form.control}
-                  name="amount"
-                  render={({ field }) => (
-                     <FormItem>
-                        <FormControl>
-                           <div className="relative">
-                              <Input
-                                 type="number"
-                                 className="bg-white p-6 rounded-md border border-gray-300  transition-all"
-                                 placeholder="Enter amount"
-                                 {...field}
-                                 onChange={(e) => {
-                                    const value = e.target.value;
-                                    field.onChange(
-                                       value === ""
-                                          ? undefined
-                                          : parseFloat(value)
-                                    );
-                                 }}
-                                 value={field.value || ""}
-                              />
-                           </div>
-                        </FormControl>
-                        <FormMessage className="text-red-500" />
-                     </FormItem>
-                  )}
-               />
-
-               {/* Currency Field */}
-               <FormField
-                  control={form.control}
-                  name="currency"
-                  render={({ field }) => (
-                     <FormItem>
-                        <FormControl>
-                           <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                           >
-                              <SelectTrigger className="bg-white p-6 border border-gray-300 rounded-md focus:ring-1  transition-all">
-                                 <SelectValue placeholder="Select currency" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                 <SelectItem value="NGN">
-                                    NGN (Nigerian Naira)
-                                 </SelectItem>
-                                 <SelectItem value="USD">
-                                    USD (US Dollar)
-                                 </SelectItem>
-                                 <SelectItem value="GHS">
-                                    GHS (Ghanaian Cedi)
-                                 </SelectItem>
-                                 <SelectItem value="KES">
-                                    KES (Kenyan Shilling)
-                                 </SelectItem>
-                                 <SelectItem value="RWF">
-                                    RWF (Rwandan Franc)
-                                 </SelectItem>
-                              </SelectContent>
-                           </Select>
-                        </FormControl>
-                        <FormMessage className="text-red-500" />
-                     </FormItem>
-                  )}
-               />
-
-               {/* Payment Method Tabs */}
-               <FormField
-                  control={form.control}
-                  name="paymentMethod"
-                  render={({ field }) => (
-                     <FormItem>
-                        <FormControl>
-                           <Tabs
-                              defaultValue="card"
-                              value={activeTab}
-                              onValueChange={handleTabChange}
-                              className="w-full"
-                           >
-                              <TabsList className="grid grid-cols-2 mb-6">
-                                 <TabsTrigger
-                                    value="card"
-                                    className="flex items-center justify-center gap-2"
-                                 >
-                                    <CreditCard size={16} />
-                                    Card
-                                 </TabsTrigger>
-                                 <TabsTrigger
-                                    value="bank"
-                                    className="flex items-center justify-center gap-2"
-                                 >
-                                    <Building size={16} />
-                                    Bank
-                                 </TabsTrigger>
-                              </TabsList>
-
-                              <TabsContent
-                                 value="card"
-                                 className="mt-4 space-y-4"
-                              >
-                                 {/* Card Number */}
-                                 <FormField
-                                    control={form.control}
-                                    name="cardNumber"
-                                    render={({ field }) => (
-                                       <FormItem>
-                                          <FormControl>
-                                             <div className="relative">
-                                                <Input
-                                                   className="bg-white p-6 border border-gray-300 rounded-md  transition-all pl-12"
-                                                   placeholder="Card Number"
-                                                   maxLength={19}
-                                                   {...field}
-                                                   value={field.value || ""}
-                                                />
-                                                <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                                                   {cardBrand === "visa" && (
-                                                      <span className="text-blue-600 text-xl font-bold">
-                                                         Visa
-                                                      </span>
-                                                   )}
-                                                   {cardBrand ===
-                                                      "mastercard" && (
-                                                      <span className="text-red-600 text-xl font-bold">
-                                                         MC
-                                                      </span>
-                                                   )}
-                                                   {cardBrand === "amex" && (
-                                                      <span className="text-green-600 text-xl font-bold">
-                                                         Amex
-                                                      </span>
-                                                   )}
-                                                   {cardBrand ===
-                                                      "discover" && (
-                                                      <span className="text-orange-600 text-xl font-bold">
-                                                         Disc
-                                                      </span>
-                                                   )}
-                                                   {!cardBrand && (
-                                                      <CreditCard
-                                                         className="text-gray-400"
-                                                         size={20}
-                                                      />
-                                                   )}
-                                                </div>
-                                             </div>
-                                          </FormControl>
-                                          <FormMessage className="text-red-500" />
-                                       </FormItem>
-                                    )}
-                                 />
-
-                                 {/* Expiry Date and CVV */}
-                                 <div className="grid grid-cols-2 gap-4">
-                                    <div className="grid grid-cols-2 gap-2">
-                                       {/* Expiry Month */}
-                                       <FormField
-                                          control={form.control}
-                                          name="expiryMonth"
-                                          render={({ field }) => (
-                                             <FormItem>
-                                                <FormControl>
-                                                   <Select
-                                                      onValueChange={
-                                                         field.onChange
-                                                      }
-                                                      value={field.value || ""}
-                                                   >
-                                                      <SelectTrigger className="bg-white py-6 border border-gray-300 rounded-md focus:ring-1   transition-all">
-                                                         <SelectValue placeholder="MM" />
-                                                      </SelectTrigger>
-                                                      <SelectContent>
-                                                         {Array.from(
-                                                            { length: 12 },
-                                                            (_, i) => {
-                                                               const month =
-                                                                  String(
-                                                                     i + 1
-                                                                  ).padStart(
-                                                                     2,
-                                                                     "0"
-                                                                  );
-                                                               return (
-                                                                  <SelectItem
-                                                                     key={month}
-                                                                     value={
-                                                                        month
-                                                                     }
-                                                                  >
-                                                                     {month}
-                                                                  </SelectItem>
-                                                               );
-                                                            }
-                                                         )}
-                                                      </SelectContent>
-                                                   </Select>
-                                                </FormControl>
-                                                <FormMessage className="text-red-500" />
-                                             </FormItem>
-                                          )}
-                                       />
-
-                                       {/* Expiry Year */}
-                                       <FormField
-                                          control={form.control}
-                                          name="expiryYear"
-                                          render={({ field }) => (
-                                             <FormItem>
-                                                <FormControl>
-                                                   <Select
-                                                      onValueChange={
-                                                         field.onChange
-                                                      }
-                                                      value={field.value || ""}
-                                                   >
-                                                      <SelectTrigger className="bg-white py-6 border border-gray-300 rounded-md transition-all">
-                                                         <SelectValue placeholder="YY" />
-                                                      </SelectTrigger>
-                                                      <SelectContent>
-                                                         {Array.from(
-                                                            { length: 10 },
-                                                            (_, i) => {
-                                                               const year =
-                                                                  String(
-                                                                     new Date().getFullYear() +
-                                                                        i
-                                                                  );
-                                                               return (
-                                                                  <SelectItem
-                                                                     key={year}
-                                                                     value={
-                                                                        year
-                                                                     }
-                                                                  >
-                                                                     {year}
-                                                                  </SelectItem>
-                                                               );
-                                                            }
-                                                         )}
-                                                      </SelectContent>
-                                                   </Select>
-                                                </FormControl>
-                                                <FormMessage className="text-red-500" />
-                                             </FormItem>
-                                          )}
-                                       />
-                                    </div>
-
-                                    {/* CVV */}
-                                    <FormField
-                                       control={form.control}
-                                       name="cvv"
-                                       render={({ field }) => (
-                                          <FormItem>
-                                             <FormControl>
-                                                <Input
-                                                   className="bg-white p-6 border border-gray-300 rounded-md transition-all"
-                                                   placeholder="CVV"
-                                                   maxLength={4}
-                                                   type="password"
-                                                   {...field}
-                                                   value={field.value || ""}
-                                                />
-                                             </FormControl>
-                                             <FormMessage className="text-red-500" />
-                                          </FormItem>
-                                       )}
+               <Form {...form}>
+                  <form
+                     onSubmit={form.handleSubmit(onSubmit)}
+                     className="space-y-6"
+                  >
+                     {/* Amount Field */}
+                     <FormField
+                        control={form.control}
+                        name="amount"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormControl>
+                                 <div className="relative">
+                                    <Input
+                                       type="number"
+                                       className="bg-white p-6 rounded-md border border-gray-300 transition-all"
+                                       placeholder="Enter amount"
+                                       {...field}
+                                       onChange={(e) => {
+                                          const value = e.target.value;
+                                          field.onChange(
+                                             value === ""
+                                                ? undefined
+                                                : parseFloat(value)
+                                          );
+                                       }}
+                                       value={field.value || ""}
                                     />
                                  </div>
-                              </TabsContent>
+                              </FormControl>
+                              <FormMessage className="text-red-500" />
+                           </FormItem>
+                        )}
+                     />
 
-                              <TabsContent
-                                 value="bank"
-                                 className="mt-4"
-                              >
-                                 <FormField
-                                    control={form.control}
-                                    name="bankCode"
-                                    render={({ field }) => (
-                                       <FormItem>
-                                          <FormControl>
-                                             <Select
-                                                onValueChange={field.onChange}
-                                                value={field.value || ""}
-                                                disabled={isLoadingBanks}
-                                             >
-                                                <SelectTrigger className="bg-white p-6 border border-gray-300 rounded-md  transition-all">
-                                                   <SelectValue
-                                                      placeholder={
-                                                         isLoadingBanks
-                                                            ? "Loading banks..."
-                                                            : "Select Bank"
-                                                      }
-                                                   />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                   {isLoadingBanks ? (
-                                                      <SelectItem
-                                                         value="loading"
-                                                         disabled
-                                                      >
-                                                         Loading banks...
-                                                      </SelectItem>
-                                                   ) : (
-                                                      banks.map((bank: any) => (
-                                                         <SelectItem
-                                                            key={bank.bankCode}
-                                                            value={
-                                                               bank.bankCode
+                     {/* Currency Field */}
+                     <FormField
+                        control={form.control}
+                        name="currency"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormControl>
+                                 <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                 >
+                                    <SelectTrigger className="bg-white p-6 border border-gray-300 rounded-md focus:ring-1 transition-all">
+                                       <SelectValue placeholder="Select currency" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                       <SelectItem value="NGN">
+                                          NGN (Nigerian Naira)
+                                       </SelectItem>
+                                       <SelectItem value="USD">
+                                          USD (US Dollar)
+                                       </SelectItem>
+                                       <SelectItem value="GHS">
+                                          GHS (Ghanaian Cedi)
+                                       </SelectItem>
+                                       <SelectItem value="KES">
+                                          KES (Kenyan Shilling)
+                                       </SelectItem>
+                                       <SelectItem value="RWF">
+                                          RWF (Rwandan Franc)
+                                       </SelectItem>
+                                    </SelectContent>
+                                 </Select>
+                              </FormControl>
+                              <FormMessage className="text-red-500" />
+                           </FormItem>
+                        )}
+                     />
+
+                     {/* Rest of the form remains the same... */}
+                     {/* Payment Method Tabs */}
+                     <FormField
+                        control={form.control}
+                        name="paymentMethod"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormControl>
+                                 <Tabs
+                                    defaultValue="card"
+                                    value={activeTab}
+                                    onValueChange={handleTabChange}
+                                    className="w-full"
+                                 >
+                                    <TabsList className="grid grid-cols-2 mb-6">
+                                       <TabsTrigger
+                                          value="card"
+                                          className="flex items-center justify-center gap-2"
+                                       >
+                                          <CreditCard size={16} />
+                                          Card
+                                       </TabsTrigger>
+                                       <TabsTrigger
+                                          value="bank"
+                                          className="flex items-center justify-center gap-2"
+                                       >
+                                          <Building size={16} />
+                                          Bank
+                                       </TabsTrigger>
+                                    </TabsList>
+
+                                    <TabsContent
+                                       value="card"
+                                       className="mt-4 space-y-4"
+                                    >
+                                       {/* Card Number */}
+                                       <FormField
+                                          control={form.control}
+                                          name="cardNumber"
+                                          render={({ field }) => (
+                                             <FormItem>
+                                                <FormControl>
+                                                   <div className="relative">
+                                                      <Input
+                                                         className="bg-white p-6 border border-gray-300 rounded-md transition-all pl-12"
+                                                         placeholder="Card Number"
+                                                         maxLength={19}
+                                                         {...field}
+                                                         value={field.value || ""}
+                                                      />
+                                                      <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                                                         {cardBrand === "visa" && (
+                                                            <span className="text-blue-600 text-xl font-bold">
+                                                               Visa
+                                                            </span>
+                                                         )}
+                                                         {cardBrand ===
+                                                            "mastercard" && (
+                                                            <span className="text-red-600 text-xl font-bold">
+                                                               MC
+                                                            </span>
+                                                         )}
+                                                         {cardBrand === "amex" && (
+                                                            <span className="text-green-600 text-xl font-bold">
+                                                               Amex
+                                                            </span>
+                                                         )}
+                                                         {cardBrand ===
+                                                            "discover" && (
+                                                            <span className="text-orange-600 text-xl font-bold">
+                                                               Disc
+                                                            </span>
+                                                         )}
+                                                         {!cardBrand && (
+                                                            <CreditCard
+                                                               className="text-gray-400"
+                                                               size={20}
+                                                            />
+                                                         )}
+                                                      </div>
+                                                   </div>
+                                                </FormControl>
+                                                <FormMessage className="text-red-500" />
+                                             </FormItem>
+                                          )}
+                                       />
+
+                                       {/* Expiry Date and CVV */}
+                                       <div className="grid grid-cols-2 gap-4">
+                                          <div className="grid grid-cols-2 gap-2">
+                                             {/* Expiry Month */}
+                                             <FormField
+                                                control={form.control}
+                                                name="expiryMonth"
+                                                render={({ field }) => (
+                                                   <FormItem>
+                                                      <FormControl>
+                                                         <Select
+                                                            onValueChange={
+                                                               field.onChange
                                                             }
+                                                            value={field.value || ""}
                                                          >
-                                                            {bank.name}
-                                                         </SelectItem>
-                                                      ))
-                                                   )}
-                                                </SelectContent>
-                                             </Select>
-                                          </FormControl>
-                                          <FormMessage className="text-red-500" />
-                                       </FormItem>
-                                    )}
-                                 />
-                              </TabsContent>
-                           </Tabs>
-                        </FormControl>
-                        <FormMessage className="text-red-500" />
-                     </FormItem>
-                  )}
-               />
+                                                            <SelectTrigger className="bg-white py-6 border border-gray-300 rounded-md focus:ring-1 transition-all">
+                                                               <SelectValue placeholder="MM" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                               {Array.from(
+                                                                  { length: 12 },
+                                                                  (_, i) => {
+                                                                     const month =
+                                                                        String(
+                                                                           i + 1
+                                                                        ).padStart(
+                                                                           2,
+                                                                           "0"
+                                                                        );
+                                                                     return (
+                                                                        <SelectItem
+                                                                           key={month}
+                                                                           value={
+                                                                              month
+                                                                           }
+                                                                        >
+                                                                           {month}
+                                                                        </SelectItem>
+                                                                     );
+                                                                  }
+                                                               )}
+                                                            </SelectContent>
+                                                         </Select>
+                                                      </FormControl>
+                                                      <FormMessage className="text-red-500" />
+                                                   </FormItem>
+                                                )}
+                                             />
 
-               {/* Submit Button */}
-               <SubmitButton
-                  disabled={isSubmitting || isCreatingOrder}
-                  className="w-full py-6  text-white rounded-md transition-colors font-medium text-lg"
-               >
-                  {isSubmitting || isCreatingOrder ? (
-                     <div className="flex items-center justify-center gap-2">
-                        <div className="animate-spin h-5 w-5 border-2 border-white border-opacity-50 border-t-white rounded-full"></div>
-                        Processing...
+                                             {/* Expiry Year */}
+                                             <FormField
+                                                control={form.control}
+                                                name="expiryYear"
+                                                render={({ field }) => (
+                                                   <FormItem>
+                                                      <FormControl>
+                                                         <Select
+                                                            onValueChange={
+                                                               field.onChange
+                                                            }
+                                                            value={field.value || ""}
+                                                         >
+                                                            <SelectTrigger className="bg-white py-6 border border-gray-300 rounded-md transition-all">
+                                                               <SelectValue placeholder="YY" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                               {Array.from(
+                                                                  { length: 10 },
+                                                                  (_, i) => {
+                                                                     const year =
+                                                                        String(
+                                                                           new Date().getFullYear() +
+                                                                              i
+                                                                        );
+                                                                     return (
+                                                                        <SelectItem
+                                                                           key={year}
+                                                                           value={
+                                                                              year
+                                                                           }
+                                                                        >
+                                                                           {year}
+                                                                        </SelectItem>
+                                                                     );
+                                                                  }
+                                                               )}
+                                                            </SelectContent>
+                                                         </Select>
+                                                      </FormControl>
+                                                      <FormMessage className="text-red-500" />
+                                                   </FormItem>
+                                                )}
+                                             />
+                                          </div>
+
+                                          {/* CVV */}
+                                          <FormField
+                                             control={form.control}
+                                             name="cvv"
+                                             render={({ field }) => (
+                                                <FormItem>
+                                                   <FormControl>
+                                                      <Input
+                                                         className="bg-white p-6 border border-gray-300 rounded-md transition-all"
+                                                         placeholder="CVV"
+                                                         maxLength={4}
+                                                         type="password"
+                                                         {...field}
+                                                         value={field.value || ""}
+                                                      />
+                                                   </FormControl>
+                                                   <FormMessage className="text-red-500" />
+                                                </FormItem>
+                                             )}
+                                          />
+                                       </div>
+                                    </TabsContent>
+
+                                    <TabsContent
+                                       value="bank"
+                                       className="mt-4"
+                                    >
+                                       <FormField
+                                          control={form.control}
+                                          name="bankCode"
+                                          render={({ field }) => (
+                                             <FormItem>
+                                                <FormControl>
+                                                   <Select
+                                                      onValueChange={field.onChange}
+                                                      value={field.value || ""}
+                                                      disabled={isLoadingBanks}
+                                                   >
+                                                      <SelectTrigger className="bg-white p-6 border border-gray-300 rounded-md transition-all">
+                                                         <SelectValue
+                                                            placeholder={
+                                                               isLoadingBanks
+                                                                  ? "Loading banks..."
+                                                                  : "Select Bank"
+                                                            }
+                                                         />
+                                                      </SelectTrigger>
+                                                      <SelectContent>
+                                                         {isLoadingBanks ? (
+                                                            <SelectItem
+                                                               value="loading"
+                                                               disabled
+                                                            >
+                                                               Loading banks...
+                                                            </SelectItem>
+                                                         ) : (
+                                                            banks.map((bank: any) => (
+                                                               <SelectItem
+                                                                  key={bank.bankCode}
+                                                                  value={
+                                                                     bank.bankCode
+                                                                  }
+                                                               >
+                                                                  {bank.name}
+                                                               </SelectItem>
+                                                            ))
+                                                         )}
+                                                      </SelectContent>
+                                                   </Select>
+                                                </FormControl>
+                                                <FormMessage className="text-red-500" />
+                                             </FormItem>
+                                          )}
+                                       />
+                                    </TabsContent>
+                                 </Tabs>
+                              </FormControl>
+                              <FormMessage className="text-red-500" />
+                           </FormItem>
+                        )}
+                     />
+
+                     {/* Submit Button */}
+                     <SubmitButton
+                        disabled={isSubmitting || isCreatingOrder}
+                        className="w-full py-6 text-white rounded-md transition-colors font-medium text-lg"
+                     >
+                        {isSubmitting || isCreatingOrder ? (
+                           <div className="flex items-center justify-center gap-2">
+                              <div className="animate-spin h-5 w-5 border-2 border-white border-opacity-50 border-t-white rounded-full"></div>
+                              Processing...
+                           </div>
+                        ) : (
+                           "Confirm Payment"
+                        )}
+                     </SubmitButton>
+
+                     {/* Secure Payment Note */}
+                     <div className="flex items-center justify-center gap-2 text-gray-500 text-sm">
+                        <svg
+                           xmlns="http://www.w3.org/2000/svg"
+                           width="16"
+                           height="16"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           strokeWidth="2"
+                           strokeLinecap="round"
+                           strokeLinejoin="round"
+                        >
+                           <rect
+                              x="3"
+                              y="11"
+                              width="18"
+                              height="11"
+                              rx="2"
+                              ry="2"
+                           ></rect>
+                           <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        Secure payments powered by ZibaPay
                      </div>
-                  ) : (
-                     "Confirm Payment"
-                  )}
-               </SubmitButton>
-
-               {/* Secure Payment Note */}
-               <div className="flex items-center justify-center gap-2 text-gray-500 text-sm">
-                  <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     width="16"
-                     height="16"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     strokeWidth="2"
-                     strokeLinecap="round"
-                     strokeLinejoin="round"
-                  >
-                     <rect
-                        x="3"
-                        y="11"
-                        width="18"
-                        height="11"
-                        rx="2"
-                        ry="2"
-                     ></rect>
-                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                  </svg>
-                  Secure payments powered by ZibaPay
-               </div>
-            </form>
-         </Form>
+                  </form>
+               </Form>
+            </div>
+         </div>
       </div>
    );
 }

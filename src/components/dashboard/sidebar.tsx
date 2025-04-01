@@ -23,6 +23,7 @@ import {
   ShieldCheck,
   LogOut,
   ListOrderedIcon,
+  Wallet2,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import LogoutAlert from "@/components/LogoutAlert";
@@ -133,6 +134,11 @@ const getMerchantNavItems = (): NavItem[] => [
    href: "/dashboard/summary",
    icon: <LayoutDashboard />,
  },
+//   {
+//    name: "Wallets",
+//    href: "/dashboard/wallets",
+//    icon: <Wallet2 />,
+//  },
  {
    name: "Events",
    href: "/dashboard/events",
