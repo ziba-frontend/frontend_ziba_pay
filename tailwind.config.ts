@@ -36,7 +36,7 @@ const config = {
         br:"#E0E0E0",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "#efefef",
+        background: "#ffffff",
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
