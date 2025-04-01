@@ -113,7 +113,7 @@ const Slider = () => {
                      key={index}
                      className="py-10"
                   >
-                     <div className="flex flex-col sm:flex-row gap-4 mb-[82px] items-center sm:items-start">
+                     <div className="flex flex-col sm:flex-row gap-4  items-center sm:items-start">
                         <Image
                            src={review.image}
                            alt={review.alt}
