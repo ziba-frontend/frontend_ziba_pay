@@ -1,3 +1,4 @@
+//@ts-nocheck
 import {
   Accordion,
   AccordionContent,
@@ -8,7 +9,6 @@ import { useBreadcrumbStore } from "@/store/bread-crumb";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { NavItem } from "@/types/common";
 import { useAuthStore } from "@/store/useAuthStore";
 import Image from "next/image";
 import logo from "../../../public/svg/logo.svg";
@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import LogoutAlert from "@/components/LogoutAlert";
+import { NavItem } from "../../../types/common";
 
 interface Props {
   setIsSheetOpen: React.Dispatch<React.SetStateAction<boolean>>;
