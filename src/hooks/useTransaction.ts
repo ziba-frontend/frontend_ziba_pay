@@ -9,7 +9,7 @@ const fetchUserTransactions = async () => {
         const response = await authorizedAPI.get(`${BASE_URL}/all`, {
             withCredentials: true,
         });
-        return response.data.data.payments;
+        return response.data.payments;
     } catch (error) {
         toast.error('Error fetching transactions');
         throw new Error('Failed to fetch transactions');

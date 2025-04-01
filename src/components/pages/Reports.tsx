@@ -62,25 +62,25 @@ import {
 } from "@/hooks/usePayment";
 import { formatCurrency, formatDate, formatRelativeTime } from "@/utils/transaction";
 
-// Type definitions
 type Transaction = {
   id: string;
-  reference: string;
+  userId: string;
+  transactionId: string;
+  paymentMethodId: string | null;
   amount: number;
   currency: string;
   status: string;
-  paymentMethod: string;
-  createdAt: string;
-  updatedAt: string;
   description: string;
-  customer: {
-    firstname: string;
-    lastname: string;
-    email: string;
-    mobile: string;
-    country: string;
-  };
-  fee?: number;
+  createdAt: string;
+  payment: {
+    id: number;
+    userId: string;
+    amount: number;
+    method: string;
+    status: string;
+    orderId: string;
+    createdAt: string;
+  } | null;
 };
 
 type TransactionDetailsProps = {
@@ -103,8 +103,9 @@ const TransactionStatusBadge = ({ status }: { status: string }) => {
     refunded: "bg-orange-100 text-orange-800 border-orange-200",
   };
 
+  const normalizedStatus = status.toLowerCase();
   const style =
-    statusStyles[status.toLowerCase() as keyof typeof statusStyles] ||
+    statusStyles[normalizedStatus as keyof typeof statusStyles] ||
     "bg-gray-100 text-gray-800 border-gray-200";
 
   return (
@@ -123,8 +124,9 @@ const PaymentMethodBadge = ({ method }: { method: string }) => {
     crypto: "bg-teal-100 text-teal-800 border-teal-200",
   };
 
+  const normalizedMethod = method.toLowerCase().replace(/\s+/g, '');
   const style =
-    methodStyles[method.toLowerCase().replace(/\s+/g, '') as keyof typeof methodStyles] ||
+    methodStyles[normalizedMethod as keyof typeof methodStyles] ||
     "bg-gray-100 text-gray-800 border-gray-200";
 
   return (
@@ -155,7 +157,7 @@ const TransactionDetails = ({
     }
 
     refundTransaction({
-      reference: transaction.reference,
+      reference: transaction.transactionId,
       Reason: refundReason,
       Amount: refundAmount
     }, {
@@ -173,7 +175,7 @@ const TransactionDetails = ({
         <AlertDialogHeader>
           <AlertDialogTitle>Transaction Details</AlertDialogTitle>
           <AlertDialogDescription>
-            Reference: {transaction.reference}
+            Reference: {transaction.transactionId}
           </AlertDialogDescription>
         </AlertDialogHeader>
 
@@ -188,7 +190,7 @@ const TransactionDetails = ({
           </div>
           <div className="space-y-1">
             <p className="text-sm font-medium text-gray-500">Payment Method</p>
-            <PaymentMethodBadge method={transaction.paymentMethod} />
+            <PaymentMethodBadge method={transaction.payment?.method || "Unknown"} />
           </div>
           <div className="space-y-1">
             <p className="text-sm font-medium text-gray-500">Date</p>
@@ -196,26 +198,13 @@ const TransactionDetails = ({
             <p className="text-xs text-gray-500">{formatRelativeTime(transaction.createdAt)}</p>
           </div>
           <div className="space-y-1">
-            <p className="text-sm font-medium text-gray-500">Customer</p>
-            <p>{transaction.customer.firstname} {transaction.customer.lastname}</p>
-            <p className="text-xs text-gray-500">{transaction.customer.email}</p>
-          </div>
-          <div className="space-y-1">
-            <p className="text-sm font-medium text-gray-500">Location</p>
-            <p>{transaction.customer.country}</p>
-            <p className="text-xs text-gray-500">{transaction.customer.mobile}</p>
+            <p className="text-sm font-medium text-gray-500">User ID</p>
+            <p className="text-xs font-mono">{transaction.userId}</p>
           </div>
           <div className="space-y-1 col-span-2">
             <p className="text-sm font-medium text-gray-500">Description</p>
             <p>{transaction.description || "No description provided"}</p>
           </div>
-          
-          {transaction.fee !== undefined && (
-            <div className="space-y-1">
-              <p className="text-sm font-medium text-gray-500">Transaction Fee</p>
-              <p>{formatCurrency(transaction.fee, transaction.currency)}</p>
-            </div>
-          )}
         </div>
 
         <AlertDialogFooter className="flex-col sm:flex-row gap-2">
@@ -338,7 +327,7 @@ const Reports = () => {
     refetch,
   } = useGetOrdersByUserId();
 
-  const transactions: Transaction[] = ordersResponse?.data || [];
+  const transactions: Transaction[] = ordersResponse || [];
   
   // Filter transactions based on date range
   const filterTransactionsByDate = () => {
@@ -360,22 +349,22 @@ const Reports = () => {
       // Apply search query filter
       const matchesSearch =
         searchQuery === "" ||
-        transaction.reference.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        transaction.transactionId.toLowerCase().includes(searchQuery.toLowerCase()) ||
         transaction.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        `${transaction.customer.firstname} ${transaction.customer.lastname}`.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        transaction.customer.email.toLowerCase().includes(searchQuery.toLowerCase());
+        transaction.userId.toLowerCase().includes(searchQuery.toLowerCase());
 
       // Apply tab filter
       const matchesTab =
         activeTab === "all" ||
-        (activeTab === "revenue" && transaction.status.toLowerCase() === "successful") ||
+        (activeTab === "revenue" && transaction.status.toLowerCase() === "completed") ||
         (activeTab === "refunds" && transaction.status.toLowerCase() === "refunded") ||
         (activeTab === "payment-methods" && true) ||
         (activeTab === "currency" && true);
 
       // Apply payment method filter
       const matchesMethod =
-        selectedMethod === "all" || transaction.paymentMethod.toLowerCase() === selectedMethod.toLowerCase();
+        selectedMethod === "all" || 
+        (transaction.payment?.method?.toLowerCase() === selectedMethod.toLowerCase());
 
       // Apply status filter
       const matchesStatus =
@@ -403,7 +392,7 @@ const Reports = () => {
     const dateRangeFiltered = filterTransactionsByDate();
     
     // Total revenue (successful transactions)
-    const successfulTransactions = dateRangeFiltered.filter(t => t.status.toLowerCase() === "successful");
+    const successfulTransactions = dateRangeFiltered.filter(t => t.status.toLowerCase() === "completed");
     const totalRevenue = successfulTransactions.reduce((sum, t) => sum + t.amount, 0);
     
     // Total refunds
@@ -413,7 +402,7 @@ const Reports = () => {
     // Transaction count by payment method
     const paymentMethodCounts: Record<string, number> = {};
     dateRangeFiltered.forEach(t => {
-      const method = t.paymentMethod.toLowerCase();
+      const method = t.payment?.method?.toLowerCase() || "unknown";
       paymentMethodCounts[method] = (paymentMethodCounts[method] || 0) + 1;
     });
     
@@ -470,7 +459,9 @@ const Reports = () => {
 
   // Helper functions
   const getUniquePaymentMethods = () => {
-    const methods = transactions.map((t) => t.paymentMethod);
+    const methods = transactions
+      .map((t) => t?.payment?.method)
+      .filter(Boolean); // Remove undefined/null values
     return Array.from(new Set(methods));
   };
 
@@ -782,7 +773,7 @@ const Reports = () => {
                 <TableHeader>
                   <TableRow>
                     <TableHead>Reference</TableHead>
-                    <TableHead>Customer</TableHead>
+                    <TableHead>User ID</TableHead>
                     <TableHead>Amount</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Payment Method</TableHead>
@@ -795,13 +786,10 @@ const Reports = () => {
                     sortedTransactions.map((transaction) => (
                       <TableRow key={transaction.id}>
                         <TableCell className="font-mono text-xs">
-                          {transaction.reference}
+                          {transaction.transactionId}
                         </TableCell>
-                        <TableCell>
-                          <div>
-                            <p className="font-medium">{transaction.customer.firstname} {transaction.customer.lastname}</p>
-                            <p className="text-xs text-gray-500">{transaction.customer.email}</p>
-                          </div>
+                        <TableCell className="font-mono text-xs">
+                          {transaction.userId.substring(0, 12)}...
                         </TableCell>
                         <TableCell>
                           {formatCurrency(transaction.amount, transaction.currency)}
@@ -810,7 +798,7 @@ const Reports = () => {
                           <TransactionStatusBadge status={transaction.status} />
                         </TableCell>
                         <TableCell>
-                          <PaymentMethodBadge method={transaction.paymentMethod} />
+                          <PaymentMethodBadge method={transaction.payment?.method || "Unknown"} />
                         </TableCell>
                         <TableCell>
                           <div className="flex flex-col">
@@ -840,25 +828,26 @@ const Reports = () => {
                       <TableCell
                         colSpan={7}
                         className="text-center py-8 text-gray-500"
-                      >No transactions found for the selected period
-                                            </TableCell>
-                                          </TableRow>
-                                        )}
-                                      </TableBody>
-                                    </Table>
-                                  </div>
-                                )}
-                              </CardContent>
-                            </Card>
-                      
-                            {/* Event Details Dialog */}
-                            <TransactionDetails
-                              transaction={selectedTransaction}
-                              isOpen={isDetailsOpen}
-                              onClose={() => setIsDetailsOpen(false)}
-                            />
-                          </div>
-                        );
-                      };
-                      
-                      export default Reports;
+                      >
+                        No transactions found for the selected period
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+      
+      {/* Transaction Details Dialog */}
+      <TransactionDetails
+        transaction={selectedTransaction}
+        isOpen={isDetailsOpen}
+        onClose={() => setIsDetailsOpen(false)}
+      />
+    </div>
+  );
+};
+
+export default Reports;

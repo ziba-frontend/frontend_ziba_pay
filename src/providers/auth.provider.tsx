@@ -4,60 +4,54 @@ import { ReactNode, useEffect, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import RiseLoader from "react-spinners/RiseLoader";
 import { useFetchUserProfile } from "@/hooks/useAuth";
-import { Cookies } from "react-cookie";
+import Cookies from "js-cookie";
 
 interface AuthProviderProps {
   children: ReactNode;
 }
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const { setUser, setRole } = useAuthStore();
+  const { user, isAuthenticated, setUser, setRole } = useAuthStore();
   const [loading, setLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
-  const cookies = new Cookies();
-  
-  // Set mounted to true when component mounts
+
+  // Set mounted to true when component mounts (client-side only)
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Get the authentication token and fetch user profile
-  const { data: userData, isLoading, error } = useFetchUserProfile();
+  // Check if token exists
+  const token = mounted ? Cookies.get("auth_token") : null;
+  const shouldFetchProfile = mounted && token && !user;
 
-  // Handle user data when it's available
+  // Get the authentication token and fetch user profile only when needed
+  const { isLoading: isFetchingProfile } = useFetchUserProfile({
+    enabled: shouldFetchProfile,
+    onSettled: () => setLoading(false)
+  });
+
+  // Set loading state based on conditions
   useEffect(() => {
     if (!mounted) return;
     
-    const token = cookies.get("auth_token");
-    
-    if (!token) {
-      setLoading(false);
-      return;
-    }
-
-    if (userData) {
-      // Store the complete user object
-      setUser(userData);
-      setRole(userData.role);
-      setLoading(false);
-    } else if (error) {
-      console.error("Failed to fetch user data:", error);
-      setLoading(false);
-    } else if (!isLoading) {
+    // If we have no token, or we already have user data, we're done loading
+    if (!token || (isAuthenticated && user)) {
       setLoading(false);
     }
-  }, [userData, error, isLoading, setUser, setRole, mounted]);
+  }, [token, user, isAuthenticated, mounted]);
 
   // Always render children on server
   if (!mounted) {
     return <>{children}</>;
   }
 
-  // Client-side only logic
-  const token = cookies.get("auth_token");
-  if (!token) return <>{children}</>;
+  // If no token, render children immediately (no auth needed)
+  if (!token) {
+    return <>{children}</>;
+  }
 
-  if (isLoading || loading) {
+  // Show loading spinner only if we're actually loading something
+  if (loading || isFetchingProfile) {
     return (
       <div className="items-center justify-center flex min-h-screen">
         <RiseLoader color="#3BD64A" />
@@ -65,6 +59,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     );
   }
 
+  // Render children when authentication is complete
   return <>{children}</>;
 };
 

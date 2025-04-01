@@ -643,11 +643,11 @@ const Account = () => {
             </CardContent>
           </Card>
           
-          <Card>
+          {/* <Card>
             <CardHeader>
               <h2 className="text-lg font-semibold text-destructive">Danger Zone</h2>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 flex gap-6 items-center">
               <Button variant="outline" className="border-destructive text-destructive">
                 Reset API Keys
               </Button>
@@ -655,7 +655,7 @@ const Account = () => {
                 Delete Account
               </Button>
             </CardContent>
-          </Card>
+          </Card> */}
         </TabsContent>
       </Tabs>
     </div>

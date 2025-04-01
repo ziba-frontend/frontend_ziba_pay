@@ -10,12 +10,15 @@ import {
   Wallet,
   DollarSign,
   Users,
-  ArrowUpRight
+  ArrowUpRight,
+  Banknote
 } from "lucide-react";
 import BarChart from "../BarChart";
 import PieChart from "../PieChart";
 import LineChartComponent from "../LineChart";
 import AreaChartComponent from "../AreaChartComponent";
+import { useGetTransactionStats } from "@/hooks/usePayment";
+import { TbCurrencyNaira } from "react-icons/tb";
 
 const months = [
     "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
@@ -49,9 +52,12 @@ const aggregateTransactionsByMonth = (transactions: Transaction[]) => {
 };
 
 export default function DashboardHome() {
+    const { data: stats, isLoading, isError, error } = useGetTransactionStats();
     const [transactionData, setTransactionData] = useState<
         { name: string; cashIn: number; cashOut: number; total: number }[]
     >([]);
+
+    console.log("Here are the stats: ", stats)
     
     // Simulated data fetch (replace with actual hook)
     useEffect(() => {
@@ -90,29 +96,30 @@ export default function DashboardHome() {
                 <div className="grid grid-cols-4 gap-4 mb-6">
                     {[
                         {
-                            title: "Total Volume",
-                            value: "$124,567",
-                            icon: <DollarSign className="text-green-600" />,
+                            title: "Total Revenue",
+                            value: stats?.totalRevenue || 0,
+                            icon: <TbCurrencyNaira className="text-green-600" />,
                             change: "+12.5%"
                         },
                         {
-                            title: "Transactions",
-                            value: "3,245",
-                            icon: <CreditCard className="text-blue-600" />,
+                            title: "Total Transactions",
+                            value: stats?.totalTransactions || 0,
+                            icon: <Wallet className="text-orange-600" />,
+                            change: "+9.7%"
+                        },
+                        {
+                            title: "Bank",
+                            value: stats?.transactionsByBank || 0,
+                            icon: <Banknote className="text-blue-600" />,
                             change: "+8.2%"
                         },
                         {
-                            title: "Active Merchants",
-                            value: "124",
-                            icon: <Users className="text-purple-600" />,
+                            title: "Card",
+                            value: stats?.transactionsByCard || 0,
+                            icon: <CreditCard className="text-purple-600" />,
                             change: "+5.1%"
                         },
-                        {
-                            title: "Payout Volume",
-                            value: "$89,234",
-                            icon: <Wallet className="text-orange-600" />,
-                            change: "+9.7%"
-                        }
+                      
                     ].map((stat) => (
                         <div key={stat.title} className="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow">
                             <div className="flex justify-between items-center">

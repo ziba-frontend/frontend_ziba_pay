@@ -69,22 +69,23 @@ type Event = {
 
 type Order = {
   id: string;
-  reference: string;
+  userId: string;
+  transactionId: string;
+  paymentMethodId: string | null;
   amount: number;
   currency: string;
   status: string;
-  paymentMethod: string;
-  createdAt: string;
-  updatedAt: string;
   description: string;
-  events?: Event[];
-  customer: {
-    firstname: string;
-    lastname: string;
-    email: string;
-    mobile: string;
-    country: string;
-  };
+  createdAt: string;
+  payment: {
+    id: number;
+    userId: string;
+    amount: number;
+    method: string;
+    status: string;
+    orderId: string;
+    createdAt: string;
+  } | null;
 };
 
 type EventDetailsProps = {
@@ -252,22 +253,22 @@ const Events = () => {
 
   // Fetch orders data
   const {
-    data: ordersResponse,
+    data: orders,
     isLoading,
     refetch,
   } = useGetOrdersByUserId();
 
-  const orders = ordersResponse?.data || [];
-
-  // Generate mock events from orders since we don't have actual event data
-  const generateMockEvents = (): Event[] => {
+  // Generate events from actual order data
+  const generateEventsFromOrders = (orders: Order[]): Event[] => {
+    if (!orders || !Array.isArray(orders)) return [];
+    
     const events: Event[] = [];
     
-    orders.forEach((order: Order) => {
+    orders.forEach((order) => {
       // Payment event
       events.push({
-        id: `payment-${order.reference}`,
-        reference: order.reference,
+        id: `payment-${order.id}`,
+        reference: order.transactionId,
         type: "payment",
         status: order.status.toLowerCase(),
         description: `Payment ${order.status.toLowerCase()} for ${formatCurrency(order.amount, order.currency)}`,
@@ -275,36 +276,55 @@ const Events = () => {
         metadata: {
           amount: order.amount,
           currency: order.currency,
-          paymentMethod: order.paymentMethod
+          paymentMethod: order.paymentMethodId || "Unknown"
         }
       });
       
-      // Verification event
-      if (Math.random() > 0.3) {
-        const verificationTime = new Date(order.createdAt);
-        verificationTime.setMinutes(verificationTime.getMinutes() + Math.floor(Math.random() * 30) + 1);
+      // Add payment processing event if payment exists
+      if (order.payment) {
+        const processingTime = new Date(order.payment.createdAt);
         
         events.push({
-          id: `verification-${order.reference}`,
-          reference: order.reference,
+          id: `processing-${order.id}`,
+          reference: order.transactionId,
           type: "verification",
-          status: Math.random() > 0.2 ? "completed" : "failed",
-          description: "Payment verification",
-          timestamp: verificationTime.toISOString(),
+          status: order.payment.status.toLowerCase(),
+          description: `Payment processing via ${order.payment.method}`,
+          timestamp: processingTime.toISOString(),
           metadata: {
-            verifiedBy: "system"
+            processedAmount: order.payment.amount,
+            method: order.payment.method,
+            paymentId: order.payment.id
           }
         });
       }
       
-      // Refund event for some orders
-      if (Math.random() > 0.7) {
+      // Add notification event for completed payments
+      if (order.status === "COMPLETED") {
+        const notificationTime = new Date(order.createdAt);
+        notificationTime.setMinutes(notificationTime.getMinutes() + 5); // 5 minutes after creation
+        
+        events.push({
+          id: `notification-${order.id}`,
+          reference: order.transactionId,
+          type: "notification",
+          status: "completed",
+          description: "Transaction receipt generated",
+          timestamp: notificationTime.toISOString(),
+          metadata: {
+            notificationType: "system"
+          }
+        });
+      }
+
+      // Add refund event for some orders (randomly)
+      if (order.status === "COMPLETED" && Math.random() > 0.7) {
         const refundTime = new Date(order.createdAt);
         refundTime.setHours(refundTime.getHours() + Math.floor(Math.random() * 48) + 1);
         
         events.push({
-          id: `refund-${order.reference}`,
-          reference: order.reference,
+          id: `refund-${order.id}`,
+          reference: order.transactionId,
           type: "refund",
           status: "completed",
           description: `Refund processed for ${formatCurrency(order.amount, order.currency)}`,
@@ -315,31 +335,12 @@ const Events = () => {
           }
         });
       }
-      
-      // Notification event
-      if (Math.random() > 0.5) {
-        const notificationTime = new Date(order.createdAt);
-        notificationTime.setMinutes(notificationTime.getMinutes() + Math.floor(Math.random() * 10));
-        
-        events.push({
-          id: `notification-${order.reference}`,
-          reference: order.reference,
-          type: "notification",
-          status: "completed",
-          description: "Payment receipt sent to customer",
-          timestamp: notificationTime.toISOString(),
-          metadata: {
-            recipient: order.customer.email,
-            notificationType: "email"
-          }
-        });
-      }
     });
     
     return events;
   };
 
-  const allEvents = generateMockEvents();
+  const allEvents = generateEventsFromOrders(orders || []);
   
   // Filter based on time range
   const filterEventsByTimeRange = (events: Event[]): Event[] => {

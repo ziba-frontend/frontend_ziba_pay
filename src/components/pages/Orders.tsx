@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Select,
   SelectContent,
@@ -48,7 +48,6 @@ import {
   RefreshCcw,
   AlertTriangle,
 } from "lucide-react";
-import { formatCurrency, formatDate, formatRelativeTime } from "@/utils/transaction";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
@@ -130,7 +129,8 @@ const OrderDetails = ({
 
   if (!orderReference) return null;
   
-  const order = orderData?.data;
+  // Extract order from response data
+  const order = orderData || null;
 
   const handleVerify = () => {
     verifyOrder(orderReference, {
@@ -207,8 +207,8 @@ const OrderDetails = ({
                   Payment Method
                 </p>
                 <div className="flex items-center gap-2">
-                  <PaymentMethodIcon method={order.paymentMethod || "Unknown"} />
-                  <span>{order.paymentMethod || "Unknown"}</span>
+                  <PaymentMethodIcon method={order?.payment?.method || "Unknown"} />
+                  <span>{order?.payment?.method || "Unknown"}</span>
                 </div>
               </div>
               <div className="space-y-1 col-span-2">
@@ -321,25 +321,82 @@ const OrdersTableSkeleton = () => {
   );
 };
 
+// Helper functions - assumed these are imported from @/utils/transaction but added here for completeness
+const formatCurrency = (amount, currency = 'USD') => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: currency || 'USD',
+  }).format(amount);
+};
+
+const formatDate = (dateString, format = 'full') => {
+  if (!dateString) return 'N/A';
+  const date = new Date(dateString);
+  if (format === 'short') {
+    return date.toLocaleDateString();
+  }
+  return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+};
+
+const formatRelativeTime = (dateString) => {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffSecs = Math.round(diffMs / 1000);
+  const diffMins = Math.round(diffSecs / 60);
+  const diffHours = Math.round(diffMins / 60);
+  const diffDays = Math.round(diffHours / 24);
+
+  if (diffSecs < 60) return `${diffSecs} sec${diffSecs !== 1 ? 's' : ''} ago`;
+  if (diffMins < 60) return `${diffMins} min${diffMins !== 1 ? 's' : ''} ago`;
+  if (diffHours < 24) return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
+  if (diffDays < 30) return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
+  
+  return formatDate(dateString, 'short');
+};
+
 // Main orders component
 const Orders = () => {
   // State management
   const [activeTab, setActiveTab] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [selectedStatus, setSelectedStatus] = useState<string>("all"); // Changed from empty string to "all"
-  const [selectedMethod, setSelectedMethod] = useState<string>("all"); // Changed from empty string to "all"
+  const [selectedStatus, setSelectedStatus] = useState<string>("all");
+  const [selectedMethod, setSelectedMethod] = useState<string>("all");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [selectedOrderReference, setSelectedOrderReference] = useState<string | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
+  const [orders, setOrders] = useState<Order[]>([]);
 
   // Fetch orders data
   const {
     data: ordersResponse,
     isLoading,
-    refetch,
+    error,
+    refetch
   } = useGetOrdersByUserId();
 
-  const orders = ordersResponse?.data || [];
+  // Effect to update orders when API responds
+  useEffect(() => {
+    if (ordersResponse) {
+      // Check the structure of the response and extract orders accordingly
+      console.log("API Response:", ordersResponse);
+      
+      // If orders are in an array directly
+      if (Array.isArray(ordersResponse)) {
+        setOrders(ordersResponse);
+      } 
+      // If orders are nested in a data property
+      else if (ordersResponse.data && Array.isArray(ordersResponse.data)) {
+        setOrders(ordersResponse.data);
+      } 
+      // If the API is returning a non-standard format
+      else {
+        console.error("Unexpected data format from API:", ordersResponse);
+        setOrders([]);
+      }
+    }
+  }, [ordersResponse]);
 
   // Filter orders
   const filteredOrders = orders.filter((order: Order) => {
@@ -358,17 +415,17 @@ const Orders = () => {
     // Then apply tab filter
     const matchesTab =
       activeTab === "all" ||
-      (activeTab === "successful" && order.status.toLowerCase() === "successful") ||
+      (activeTab === "successful" && order.status.toLowerCase() === "completed") ||
       (activeTab === "pending" && order.status.toLowerCase() === "pending");
 
-    // Then apply status filter (modified to check for "all" instead of empty string)
+    // Then apply status filter
     const matchesStatus =
       selectedStatus === "all" || order.status.toLowerCase() === selectedStatus.toLowerCase();
 
-    // Then apply method filter (modified to check for "all" instead of empty string)
+    // Then apply method filter
     const matchesMethod =
       selectedMethod === "all" || 
-      (order.paymentMethod && order.paymentMethod.toLowerCase() === selectedMethod.toLowerCase());
+      (order?.payment?.method && order?.payment?.method.toLowerCase() === selectedMethod.toLowerCase());
 
     return matchesSearch && matchesTab && matchesStatus && matchesMethod;
   });
@@ -412,8 +469,8 @@ const Orders = () => {
 
   const handleReset = () => {
     setSearchQuery("");
-    setSelectedStatus("all"); // Reset to "all" instead of empty string
-    setSelectedMethod("all"); // Reset to "all" instead of empty string
+    setSelectedStatus("all");
+    setSelectedMethod("all");
     setSortOrder("desc");
   };
 
@@ -429,6 +486,11 @@ const Orders = () => {
       .map((o: Order) => o.paymentMethod);
     return Array.from(new Set(methods));
   };
+
+  // Debug - check if there's an error with the API call
+  if (error) {
+    console.error("API Error:", error);
+  }
 
   return (
     <div className="container mx-auto py-6 space-y-8">
@@ -473,7 +535,7 @@ const Orders = () => {
                 <p className="text-sm text-gray-500">
                   {
                     orders.filter((o: Order) =>
-                      o.status.toLowerCase() === "successful"
+                      o.status.toLowerCase() === "completed"
                     ).length
                   }{" "}
                   orders
@@ -618,6 +680,22 @@ const Orders = () => {
         <CardContent>
           {isLoading ? (
             <OrdersTableSkeleton />
+          ) : error ? (
+            <div className="py-4 flex items-center justify-center">
+              <div className="text-center">
+                <AlertTriangle className="h-8 w-8 text-red-500 mx-auto mb-2" />
+                <p>Failed to load orders. Please try again later.</p>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => refetch()} 
+                  className="mt-2"
+                >
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                  Retry
+                </Button>
+              </div>
+            </div>
           ) : (
             <div className="overflow-x-auto">
               <Table>
@@ -628,7 +706,6 @@ const Orders = () => {
                     <TableHead>Date</TableHead>
                     <TableHead>Method</TableHead>
                     <TableHead>Status</TableHead>
-                    <TableHead>Customer</TableHead>
                     <TableHead className="text-right">
                       Actions
                     </TableHead>
@@ -639,7 +716,7 @@ const Orders = () => {
                     sortedOrders.map((order: Order) => (
                       <TableRow key={order.reference}>
                         <TableCell className="font-mono text-xs">
-                          {order.reference}
+                          {order.id}
                         </TableCell>
                         <TableCell className="font-semibold">
                           {formatCurrency(order.amount, order.currency)}
@@ -662,9 +739,9 @@ const Orders = () => {
                         <TableCell>
                           <div className="flex items-center gap-2">
                             <PaymentMethodIcon
-                              method={order.paymentMethod || "Unknown"}
+                              method={order?.payment?.method || "Unknown"}
                             />
-                            <span>{order.paymentMethod || "Unknown"}</span>
+                            <span>{order?.payment?.method || "Unknown"}</span>
                           </div>
                         </TableCell>
                         <TableCell>
@@ -672,20 +749,7 @@ const Orders = () => {
                             status={order.status}
                           />
                         </TableCell>
-                        <TableCell>
-                          {order.customer ? (
-                            <div>
-                              <div className="font-medium">
-                                {`${order.customer.firstname} ${order.customer.lastname}`}
-                              </div>
-                              <div className="text-xs text-gray-500">
-                                {order.customer.email}
-                              </div>
-                            </div>
-                          ) : (
-                            "Unknown customer"
-                          )}
-                        </TableCell>
+                    
                         <TableCell className="text-right">
                           <Button
                             variant="ghost"
@@ -709,7 +773,7 @@ const Orders = () => {
                         colSpan={7}
                         className="text-center py-8 text-gray-500"
                       >
-                        No orders found
+                        {error ? "Error loading orders" : "No orders found"}
                       </TableCell>
                     </TableRow>
                   )}

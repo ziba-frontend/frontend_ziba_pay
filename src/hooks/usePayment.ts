@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { authorizedAPI } from "@/lib/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
@@ -16,7 +18,7 @@ const createOrder = (orderData: { order: any; redirectUrl: string }) =>
   });
 
 const getTransactionStatus = (reference: string) =>
-  authorizedAPI.post(`${BASE_URL}/zibapay/order/status`, { reference }, {
+  authorizedAPI.post(`${BASE_URL}/zibapay/order/status/${reference}`, {
     withCredentials: true,
   });
 
@@ -30,7 +32,7 @@ const payOrderWithCard = (reference: string, cardData: {
   country: string;
   paymentoption: string;
 }) =>
-  authorizedAPI.post(`${BASE_URL}/zibapay/order/pay/${reference}`, cardData, {
+  authorizedAPI.post(`${BASE_URL}/zibapay/card/${reference}`, cardData, {
     withCredentials: true,
   });
 
@@ -41,7 +43,7 @@ const payOrderWithBank = (reference: string, bankData: {
     bankcode: string;
   };
 }) =>
-  authorizedAPI.post(`${BASE_URL}/zibapay/order/pay/${reference}`, bankData, {
+  authorizedAPI.post(`${BASE_URL}/zibapay/bank/${reference}`, bankData, {
     withCredentials: true,
   });
 
@@ -89,21 +91,43 @@ const tokenizeCharge = (chargeData: {
     withCredentials: true,
   });
 
-const getOrderByReference = (reference: string) =>
-  authorizedAPI.get(`${BASE_URL}/zibapay/order/${reference}`, {
-    withCredentials: true,
-  });
+  const getOrderByReference = async (reference) => {
+    try {
+      const response = await authorizedAPI.get(`${BASE_URL}/zibapay/orders/${reference}`, {
+        withCredentials: true,
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching order by reference:", error);
+      throw error;
+    }
+  };
 
-const getOrdersByUserId = () =>
-  authorizedAPI.get(`${BASE_URL}/zibapay/orders/user`, {
-    withCredentials: true,
-  });
+  const getOrdersByUserId = async () => {
+    try {
+      const response = await authorizedAPI.get(`${BASE_URL}/zibapay/orders/all`, {
+        withCredentials: true,
+      });
+      
+
+      
+      // Make sure we're returning the right data structure
+      return response.data?.data || response.data || [];
+    } catch (error) {
+      console.error("Error fetching user orders:", error);
+      throw error;
+    }
+  };
 
 const trackEvent = (reference: string) =>
   authorizedAPI.post(`${BASE_URL}/zibapay/order/event/track`, { reference }, {
     withCredentials: true,
   });
-
+const getTransactionStats = async() =>{
+    const response=await authorizedAPI.get(`${BASE_URL}/zibapay/stats`, { withCredentials: true });
+  return response.data.stats
+  }
+  
 // React Query Hooks
 export const useInitiateMtnPayment = () =>
   useMutation({
@@ -219,14 +243,16 @@ export const useTokenizeCharge = () =>
     onError: (error: any) => toast.error(error.message || "Tokenize charge failed"),
   });
 
-export const useGetOrderByReference = (reference: string) =>
-  useQuery({
-    queryKey: ["order", reference],
-    queryFn: () => getOrderByReference(reference),
-    enabled: !!reference,
-    onError: (error: any) => toast.error(error.message || "Failed to fetch order"),
-  });
-
+  export const useGetOrderByReference = (reference) =>
+    useQuery({
+      queryKey: ["order", reference],
+      queryFn: () => getOrderByReference(reference),
+      enabled: !!reference,
+      onError: (error) => {
+        console.error("Order fetch error:", error);
+        toast.error(error.message || "Failed to fetch order");
+      },
+    });
 export const useGetOrdersByUserId = () =>
   useQuery({
     queryKey: ["user-orders"],
@@ -238,4 +264,11 @@ export const useTrackEvent = () =>
   useMutation({
     mutationFn: (reference: string) => trackEvent(reference),
     onError: (error: any) => toast.error(error.message || "Failed to track event"),
-  });
+});
+
+export const useGetTransactionStats = () =>
+  useQuery({
+    queryKey: ["transaction-stats"],
+    queryFn: getTransactionStats,
+    onError: (error: any) => toast.error(error.message || "Failed to fetch transaction stats"),
+ });

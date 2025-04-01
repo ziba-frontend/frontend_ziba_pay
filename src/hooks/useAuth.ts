@@ -5,6 +5,7 @@ import handleApiRequest from "@/utils/handleApiRequest";
 import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "react-hot-toast";
 import { authorizedAPI, unauthorizedAPI } from "@/lib/api";
+import Cookies from "js-cookie";
 
 const BASE_URL = "/auth";
 
@@ -61,6 +62,7 @@ const updatePassword = async (newPassword: string) => {
 };
 
 const logoutUser = async () => {
+   Cookies.remove("auth_token");
    return handleApiRequest(() =>
       authorizedAPI.post(`${BASE_URL}/logout`, {}, { withCredentials: true })
    );
@@ -118,6 +120,11 @@ export const useLogin = () => {
                   data.token = data.user.token;
                }
 
+               // Set the auth token in cookies
+               if (data.token) {
+                  Cookies.set("auth_token", data.token, { expires: 7 }); // 7 days expiry
+               }
+
                // Invalidate the userProfile query to trigger a refetch
                queryClient.invalidateQueries({ queryKey: ["userProfile"] });
 
@@ -153,8 +160,9 @@ export const useSignup = () => {
    });
 };
 
-export const useFetchUserProfile = () => {
-   const { setUser, setRole } = useAuthStore();
+export const useFetchUserProfile = (options = {}) => {
+   const { setUser, setRole, user } = useAuthStore();
+   const hasToken = Boolean(Cookies.get("auth_token"));
 
    return useQuery({
       queryKey: ["userProfile"],
@@ -168,9 +176,16 @@ export const useFetchUserProfile = () => {
       },
       onError: (error: any) => {
          console.error("Failed to fetch user profile:", error);
+         // Clear token if unauthorized
+         if (error?.response?.status === 401) {
+            Cookies.remove("auth_token");
+         }
       },
       retry: 1,
       staleTime: 5 * 60 * 1000, // 5 minutes
+      cacheTime: 10 * 60 * 1000, // 10 minutes
+      enabled: hasToken && !user, // Only run if we have a token and no user data
+      ...options
    });
 };
 

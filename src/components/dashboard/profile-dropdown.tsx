@@ -11,18 +11,24 @@ import {
 import { Icon } from "@iconify/react";
 import { useAuthStore } from "@/store/useAuthStore";
 import LogoutAlert from "@/components/LogoutAlert";
+import { useLogout } from "@/hooks/useAuth";
 
 const ProfileDropdown: React.FC = () => {
    const router = useRouter();
    const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
    const { user, clearUser } = useAuthStore();
 
+
+   const { mutate: logout, isLoading: isLogoutLoading } = useLogout();
+
    const handleLogout = () => {
-      clearUser();
-      router.push("/login");
+      // Call the logout function from useLogout hook
+      logout();
+
+      // After logout, redirect to login page
+      window.location.replace("/login")
    };
 
-   console.log("user", user);
    
    return (
       <>

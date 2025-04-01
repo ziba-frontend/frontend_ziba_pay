@@ -171,10 +171,7 @@ const DashboardSidebar: React.FC<Props> = ({
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
   const router = useRouter();
 
-  const handleLogout = () => {
-    clearUser();
-    router.push("/login");
-  };
+  
 
   // Set navigation items based on user role
   useEffect(() => {
@@ -375,25 +372,9 @@ const DashboardSidebar: React.FC<Props> = ({
       >
         {filteredNavItems.map(renderNavItem)}
         
-        {/* Logout Button */}
-        <button
-          onClick={() => setIsLogoutDialogOpen(true)}
-          className="text-base transition duration-300 hover:bg-red-500 hover:text-white h-[48px] px-3 rounded text-red-500 w-full flex items-center gap-2 font-normal mt-8"
-        >
-          <div className={`flex items-center gap-2 ${isSidebarMinimized ? "absolute w-full z-50" : ""}`}>
-            <LogOut />
-            {!isSidebarMinimized && "Logout"}
-          </div>
-        </button>
+      
       </Accordion>
       
-      {/* Logout Confirmation Dialog */}
-      <LogoutAlert
-        open={isLogoutDialogOpen}
-        onOpenChange={setIsLogoutDialogOpen}
-        onConfirm={handleLogout}
-        isLoading={false}
-      />
     </main>
   );
 };

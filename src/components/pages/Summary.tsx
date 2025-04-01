@@ -111,7 +111,7 @@ const PaymentGatewaySummary = () => {
   
   const { mutate: getOrderFee } = useGetOrderFee();
 
-  const orders = ordersResponse?.data || [];
+  const orders = ordersResponse || [];
 
   // Calculate metrics
   const calculateMetrics = () => {
@@ -222,8 +222,8 @@ const PaymentGatewaySummary = () => {
   // Get payment methods for filter dropdown
   const getUniqueMethods = () => {
     const methods = orders
-      .filter(o => o.paymentMethod)
-      .map(o => o.paymentMethod);
+      .filter(o => o?.payment?.method)
+      .map(o => o?.payment?.method);
     return Array.from(new Set(methods));
   };
 
