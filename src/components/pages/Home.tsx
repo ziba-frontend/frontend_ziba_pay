@@ -383,9 +383,9 @@ const Home = () => {
 
         <div className="bg-white py-20">
           <div className="flex flex-col md:flex-row gap-8 mx-auto items-center justify-center container">
-            <div className=" md:h-[756px] justify-center bg-white  rounded-[25px] p-[30px] w-full sm:w-5/6 md:w-[613px] ">
+            <div className=" md:h-[756px] justify-center bg-[#27AE602d]  rounded-[25px] p-[30px] w-full sm:w-5/6 md:w-[613px] ">
               <h3 className="my-4 ">
-                Send and receive without borders with Mobile Money
+                Send and receive without borders with Zibapay
               </h3>
               <Image
                 src={send1}
