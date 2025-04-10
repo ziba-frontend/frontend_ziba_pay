@@ -48,6 +48,7 @@ import {
   ReceiptText,
   RefreshCcw,
   AlertTriangle,
+  Plus,
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -55,7 +56,8 @@ import {
   useGetOrdersByUserId, 
   useVerifyOrder, 
   useRefundOrder,
-  useGetOrderByReference
+  useGetOrderByReference,
+  useCreateOrder
 } from "@/hooks/usePayment";
 import { toast } from "react-hot-toast";
 import { formatCurrency } from "@/utils/transaction";
@@ -114,6 +116,117 @@ const PaymentMethodIcon = ({ method }: { method: string }) => {
     <CreditCard className="h-4 w-4 text-slate-500" />
   ) : (
     <Building className="h-4 w-4 text-slate-500" />
+  );
+};
+
+// Create Order Dialog Component
+const CreateOrderDialog = ({ isOpen, onClose }) => {
+  const [amount, setAmount] = useState("");
+  const [description, setDescription] = useState("");
+  const [currency] = useState("NGN"); 
+  const redirectUrl = "https://www.zibapay.com/success"; 
+  
+  const { mutate: createOrder, isLoading } = useCreateOrder();
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    if (!amount || !description) {
+      toast.error("Please fill all required fields");
+      return;
+    }
+    
+    const orderData = {
+      order: {
+        amount: parseFloat(amount),
+        description,
+        currency
+      },
+      payment: {
+        redirecturl: redirectUrl
+      }
+    };
+    
+    createOrder(orderData, {
+      onSuccess: (response) => {
+        toast.success("Order created successfully");
+        onClose();
+        // Redirect to payment page
+        if (response.data && response.data.redirectUrl) {
+          window.location.href = response.data.redirectUrl;
+        }
+      }
+    });
+  };
+  
+  return (
+    <AlertDialog open={isOpen} onOpenChange={onClose}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Create New Order</AlertDialogTitle>
+          <AlertDialogDescription>
+            Enter the details for your new order.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-1" htmlFor="amount">
+              Amount*
+            </label>
+            <Input
+              id="amount"
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              placeholder="100.00"
+              required
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium mb-1" htmlFor="description">
+              Description*
+            </label>
+            <Input
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Order description"
+              required
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium mb-1" htmlFor="currency">
+              Currency
+            </label>
+            <Select value={currency} disabled>
+              <SelectTrigger>
+                <SelectValue placeholder="Nigerian Naira (NGN)" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="NGN">Nigerian Naira (NGN)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          
+          <AlertDialogFooter>
+            <AlertDialogCancel type="button">Cancel</AlertDialogCancel>
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                  Creating...
+                </>
+              ) : (
+                'Create Order'
+              )}
+            </Button>
+          </AlertDialogFooter>
+        </form>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };
 
@@ -362,6 +475,7 @@ const Orders = () => {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [selectedOrderReference, setSelectedOrderReference] = useState<string | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
+  const [isCreateOrderOpen, setIsCreateOrderOpen] = useState<boolean>(false);
   const [orders, setOrders] = useState<Order[]>([]);
 
   // Fetch orders data
@@ -490,6 +604,17 @@ const Orders = () => {
 
   return (
     <div className="container mx-auto py-6 space-y-8">
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold">Order Management</h2>
+        <Button 
+          onClick={() => setIsCreateOrderOpen(true)}
+          className="flex items-center gap-2"
+        >
+          <Plus className="h-4 w-4" />
+          Create Order
+        </Button>
+      </div>
+      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Total Orders */}
         <Card>
@@ -786,8 +911,14 @@ const Orders = () => {
         isOpen={isDetailsOpen}
         onClose={() => setIsDetailsOpen(false)}
       />
+
+      {/* Create Order Dialog */}
+      <CreateOrderDialog 
+        isOpen={isCreateOrderOpen}
+        onClose={() => setIsCreateOrderOpen(false)}
+      />
     </div>
   );
 };
 
-export default Orders;
+export default Orders;                   
