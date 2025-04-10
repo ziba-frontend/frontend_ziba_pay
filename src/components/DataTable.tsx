@@ -153,7 +153,7 @@ export function DataTable<TData, TValue>({
                      </label>
                      <select
                         id="rows-per-page"
-                        className="border border-gray-300 dark:border-gray-700 rounded-md p-1 text-sm bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+                        className="border border-gray-300 dark:border-gray-700 rounded-md p-1 text-sm bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-submain dark:focus:ring-main"
                         value={rowsPerPage}
                         onChange={(e) => {
                            setRowsPerPage(Number(e.target.value));
@@ -191,7 +191,7 @@ export function DataTable<TData, TValue>({
                                  !table.getCanPreviousPage()
                                     ? "opacity-50 cursor-not-allowed"
                                     : "hover:bg-gray-100 dark:hover:bg-gray-800"
-                              } text-blue-600 dark:text-blue-400`}
+                              } text-submain dark:text-main`}
                               aria-disabled={!table.getCanPreviousPage()}
                            />
                         </PaginationItem>
@@ -230,7 +230,7 @@ export function DataTable<TData, TValue>({
                                  }}
                                  className={`${
                                     pageNum === pageIndex
-                                       ? "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600"
+                                       ? "bg-submain text-white hover:bg-main "
                                        : "hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
                                  } transition-colors font-medium`}
                               >
@@ -277,7 +277,7 @@ export function DataTable<TData, TValue>({
                                  !table.getCanNextPage()
                                     ? "opacity-50 cursor-not-allowed"
                                     : "hover:bg-gray-100 dark:hover:bg-gray-800"
-                              } text-blue-600 dark:text-blue-400`}
+                              } text-submain dark:text-main`}
                               aria-disabled={!table.getCanNextPage()}
                            />
                         </PaginationItem>
