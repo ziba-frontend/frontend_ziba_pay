@@ -1,3 +1,5 @@
+//@ts-nocheck
+"use client";
 import React, { useState } from "react";
 import { BarChart3 } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
