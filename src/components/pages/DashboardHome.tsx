@@ -1,6 +1,6 @@
 //@ts-nocheck
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   LayoutGrid,
   TrendingUp,
@@ -20,19 +20,22 @@ import {
   Shield,
   AlertCircle,
   CheckCircle,
-  Clock
+  Clock,
+  Upload
 } from "lucide-react";
 import { 
   useGetTransactionStats, 
   useGetOrdersByUserId 
 } from "@/hooks/usePayment";
+import { useUploadKycDocument } from "@/hooks/useKyc";
 import { TbCurrencyNaira } from "react-icons/tb";
 import { formatCurrency } from "@/utils/transaction";
 import { cn } from "@/lib/utils";
 import TransactionVolumeChart from "./TransactionVolumeChart";
 import PaymentMethodsChart from "./PaymentMethodsChart";
 import { DataTable } from "../DataTable";
-
+import { toast } from "react-hot-toast";
+import KYCVerificationCard from "../dashboard/KycVerificationCard";
 
 // Status badge component
 const StatusBadge = ({ status }) => {
@@ -71,152 +74,7 @@ const PaymentMethodBadge = ({ method }) => {
   );
 };
 
-// KYC Verification Component
-const KYCVerificationCard = () => {
-  const [kycStatus, setKycStatus] = useState("pending"); // pending, in-progress, verified
-  
-  const getKYCStepStatus = (step, currentStatus) => {
-    if (currentStatus === "verified") return "completed";
-    if (currentStatus === "in-progress" && step === "identity") return "in-progress";
-    if (currentStatus === "in-progress" && step === "address") return "pending";
-    return "pending";
-  };
-  
-  const handleStartVerification = () => {
-    setKycStatus("in-progress");
-  };
 
-  return (
-    <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-      <div className="px-6 py-4 border-b border-gray-200">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <Shield className="w-5 h-5 text-[#3BD64A] mr-2" />
-            <h3 className="text-lg font-semibold text-[#030A11]">KYC Verification</h3>
-          </div>
-          {kycStatus === "verified" && (
-            <span className="flex items-center text-sm font-medium text-green-600">
-              <CheckCircle className="w-4 h-4 mr-1" />
-              Verified
-            </span>
-          )}
-        </div>
-      </div>
-      
-      <div className="p-6">
-        {kycStatus === "pending" ? (
-          <div className="text-center">
-            <div className="bg-yellow-50 p-4 rounded-lg mb-6">
-              <div className="flex">
-                <div className="flex-shrink-0">
-                  <AlertCircle className="h-5 w-5 text-yellow-400" />
-                </div>
-                <div className="ml-3">
-                  <h3 className="text-sm font-medium text-yellow-800">Verification Required</h3>
-                  <div className="mt-2 text-sm text-yellow-700">
-                    <p>To unlock all payment features and increase your transaction limits, please complete the KYC verification process.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <button
-              onClick={handleStartVerification}
-              className="w-full bg-[#3BD64A] text-white py-3 px-4 rounded-lg font-medium hover:bg-green-600 transition duration-200"
-            >
-              Start Verification Process
-            </button>
-            
-            <p className="mt-4 text-xs text-gray-500">
-              Your information is secure and encrypted. Verification usually takes 24-48 hours once submitted.
-            </p>
-            
-            <p className="mt-4 text-sm text-blue-600">
-              Please check your email for verification documents to complete the process.
-            </p>
-          </div>
-        ) : (
-          <div>
-            <div className="mb-6">
-              <p className="text-sm text-gray-600 mb-4">
-                Complete the following steps to verify your account. This will increase your transaction limits and unlock all payment features.
-              </p>
-              
-              {/* Progress Steps */}
-              <div className="space-y-4">
-                {/* Identity Verification Step */}
-                <div className="flex items-start">
-                  <div className={`rounded-full p-2 mr-4 ${
-                    getKYCStepStatus("identity", kycStatus) === "completed" 
-                      ? "bg-green-100" 
-                      : getKYCStepStatus("identity", kycStatus) === "in-progress" 
-                        ? "bg-blue-100"
-                        : "bg-gray-100"
-                  }`}>
-                    {getKYCStepStatus("identity", kycStatus) === "completed" ? (
-                      <CheckCircle className="h-5 w-5 text-green-600" />
-                    ) : getKYCStepStatus("identity", kycStatus) === "in-progress" ? (
-                      <Clock className="h-5 w-5 text-blue-600" />
-                    ) : (
-                      <span className="h-5 w-5 flex items-center justify-center rounded-full bg-gray-300 text-white text-xs font-bold">1</span>
-                    )}
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-medium text-gray-900">Identity Verification</h4>
-                    <p className="text-sm text-gray-500">Upload a valid government-issued ID</p>
-                    {getKYCStepStatus("identity", kycStatus) === "in-progress" && (
-                      <div className="mt-2">
-                        <button className="bg-blue-50 text-blue-700 px-4 py-2 rounded-lg text-sm font-medium">
-                          Upload Document
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                
-                {/* Address Verification Step */}
-                <div className="flex items-start">
-                  <div className={`rounded-full p-2 mr-4 ${
-                    getKYCStepStatus("address", kycStatus) === "completed" 
-                      ? "bg-green-100" 
-                      : getKYCStepStatus("address", kycStatus) === "in-progress" 
-                        ? "bg-blue-100"
-                        : "bg-gray-100"
-                  }`}>
-                    {getKYCStepStatus("address", kycStatus) === "completed" ? (
-                      <CheckCircle className="h-5 w-5 text-green-600" />
-                    ) : getKYCStepStatus("address", kycStatus) === "in-progress" ? (
-                      <Clock className="h-5 w-5 text-blue-600" />
-                    ) : (
-                      <span className="h-5 w-5 flex items-center justify-center rounded-full bg-gray-300 text-white text-xs font-bold">2</span>
-                    )}
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-medium text-gray-900">Address Verification</h4>
-                    <p className="text-sm text-gray-500">Provide proof of address (utility bill, bank statement)</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <div className="flex items-center">
-                <Shield className="h-5 w-5 text-gray-400 mr-2" />
-                <p className="text-xs text-gray-500">
-                  Your information is protected with bank-level security and encryption.
-                </p>
-              </div>
-            </div>
-            
-            <p className="mt-4 text-sm text-blue-600 text-center">
-              Please check your email for verification documents to complete the process.
-            </p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
 
 export default function ModernDashboard() {
   const { 
@@ -373,8 +231,7 @@ export default function ModernDashboard() {
             </p>
             <div className="flex items-center mt-4 sm:mt-0">
               <div className="relative mr-4">
-                
-               
+                {/* Search functionality would go here */}
               </div>
               <button 
                 onClick={() => refetchStats()}
@@ -541,9 +398,9 @@ export default function ModernDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {/* Transaction Volume */}
           <TransactionVolumeChart 
-    timeRange={timeRange} 
-    orders={orders} 
-  />
+            timeRange={timeRange} 
+            orders={orders} 
+          />
 
           {/* Payment Methods */}
           <PaymentMethodsChart 

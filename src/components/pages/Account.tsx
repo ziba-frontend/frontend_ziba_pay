@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { toast } from "react-hot-toast";
 import {
    useFetchUserProfile,
-   useLogout,
    useUpdateProfile,
 } from "@/hooks/useAuth";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -19,7 +18,6 @@ import {
 import {
    User,
    Settings,
-   LogOut,
    Briefcase,
    Mail,
    MapPin,
@@ -37,6 +35,7 @@ import {
    BookOpen,
    ToggleLeft,
    Github,
+   ShoppingBag,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
@@ -51,6 +50,8 @@ import { Switch } from "@/components/ui/switch";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useGetOrdersByUserId } from "@/hooks/usePayment";
+import { formatCurrency } from "@/utils/transaction";
 
 interface UserProfile {
    id: string;
@@ -63,71 +64,61 @@ interface UserProfile {
    phoneNumber?: Array<{ number: string }>;
 }
 
-// Mock data for transactions and stats
-const mockTransactions = [
-   {
-      id: "tr_123456",
-      amount: 1250.0,
-      status: "completed",
-      date: "2025-03-28",
-      paymentMethod: "card",
-   },
-   {
-      id: "tr_123457",
-      amount: 799.5,
-      status: "completed",
-      date: "2025-03-25",
-      paymentMethod: "bank",
-   },
-   {
-      id: "tr_123458",
-      amount: 350.0,
-      status: "pending",
-      date: "2025-03-30",
-      paymentMethod: "card",
-   },
-];
+// Status badge component
+const StatusBadge = ({ status }) => {
+  const getColor = () => {
+    switch(status.toUpperCase()) {
+      case "SUCCEEDED":
+      case "COMPLETED": return "bg-green-100 text-green-800";
+      case "PROCESSING": return "bg-blue-100 text-blue-800";
+      case "CANCELLED": 
+      case "FAILED": return "bg-red-100 text-red-800";
+      case "PENDING": return "bg-yellow-100 text-yellow-800";
+      default: return "bg-gray-100 text-gray-800";
+    }
+  };
+  
+  return (
+    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getColor()}`}>
+      {status}
+    </span>
+  );
+};
 
-const mockStats = {
-   totalTransactions: 76,
-   successRate: 98.2,
-   totalVolume: 12750.5,
-   thisMonth: 4950.75,
-   lastMonth: 3840.25,
-   growthRate: 28.9,
+const PaymentMethodBadge = ({ method }) => {
+  const getColor = () => {
+    switch(method) {
+      case "CARD": return "bg-purple-100 text-purple-800";
+      case "BANK": return "bg-blue-100 text-blue-800";
+      default: return "bg-gray-100 text-gray-800";
+    }
+  };
+  
+  return (
+    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getColor()}`}>
+      {method}
+    </span>
+  );
 };
 
 const Account = () => {
   const { data: user, isLoading } = useFetchUserProfile({
-    // Force refetch when navigating to the account page
     enabled: true,
-    // You might want to keep a reasonable staleTime to avoid too many requests
-    staleTime: 60000 // 1 minute
+    staleTime: 60000
   });
+  const { data: orders, isLoading: ordersLoading } = useGetOrdersByUserId();
    const updateProfileMutation = useUpdateProfile();
-   const logoutMutation = useLogout();
    const [isEditing, setIsEditing] = useState(false);
    const [formData, setFormData] = useState<Partial<UserProfile>>({});
    const [isDeveloper, setIsDeveloper] = useState(false);
    const [activeTab, setActiveTab] = useState("profile");
 
-   const handleLogout = async () => {
-      try {
-         await logoutMutation.mutateAsync();
-         toast.success("Logged out successfully");
-      } catch {
-         toast.error("Failed to logout");
-      }
-   };
-
    const handleEditToggle = () => {
       if (isEditing) {
          setIsEditing(false);
-         // Reset form data if canceling
          setFormData({});
       } else {
          setIsEditing(true);
-         // Initialize form data with current user data
          setFormData({
             firstName: user?.firstName,
             lastName: user?.lastName,
@@ -137,8 +128,6 @@ const Account = () => {
          });
       }
    };
-
-   console.log("Mana mfasha kbx", user);
 
    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
@@ -157,6 +146,21 @@ const Account = () => {
          toast.error("Failed to update profile");
       }
    };
+
+   // Format orders for the transactions table (only 5 most recent)
+   const recentOrders = orders?.slice(0, 5).map(order => ({
+      id: order.reference || order.id || order._id,
+      customer: order.customer?.firstname ? `${order.customer.firstname} ${order.customer.lastname}` : "Customer",
+      product: order.description || "Product Purchase",
+      paymentMethod: order.cardPayment ? "CARD" : "BANK",
+      amount: parseFloat(order.amount || 0),
+      status: order.status || "PENDING",
+      date: new Date(order.createdAt).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      })
+    })) || [];
 
    if (isLoading) {
       return <ProfileSkeleton />;
@@ -206,7 +210,7 @@ const Account = () => {
                            {isEditing ? "Cancel" : "Edit Profile"}
                         </span>
                      </Button>
-                     {isEditing ? (
+                     {isEditing && (
                         <Button
                            variant="default"
                            size="sm"
@@ -218,16 +222,6 @@ const Account = () => {
                            <span className="hidden sm:inline">
                               Save Changes
                            </span>
-                        </Button>
-                     ) : (
-                        <Button
-                           variant="ghost"
-                           size="sm"
-                           onClick={handleLogout}
-                           className="flex items-center gap-1 text-destructive"
-                        >
-                           <LogOut size={16} />
-                           <span className="hidden sm:inline">Logout</span>
                         </Button>
                      )}
                   </div>
@@ -646,83 +640,66 @@ const Account = () => {
             >
                <Card>
                   <CardHeader>
-                     <h2 className="text-lg font-semibold">
-                        Recent Transactions
-                     </h2>
+                     <div className="flex items-center gap-2">
+                        <ShoppingBag className="w-5 h-5" />
+                        <h2 className="text-lg font-semibold">
+                           Recent Orders
+                        </h2>
+                     </div>
                      <CardDescription>
-                        Your most recent payment transactions
+                        Your 5 most recent transactions
                      </CardDescription>
                   </CardHeader>
                   <CardContent>
                      <div className="space-y-4">
-                        {mockTransactions.map((transaction) => (
-                           <div
-                              key={transaction.id}
-                              className="flex items-center justify-between border-b pb-4 last:border-0 last:pb-0"
-                           >
-                              <div className="flex items-center gap-3">
-                                 <div
-                                    className={`p-2 rounded-md ${
-                                       transaction.paymentMethod === "card"
-                                          ? "bg-purple-100"
-                                          : "bg-green-100"
-                                    }`}
-                                 >
-                                    {transaction.paymentMethod === "card" ? (
-                                       <CreditCard
-                                          className={`h-4 w-4 ${
-                                             transaction.paymentMethod ===
-                                             "card"
-                                                ? "text-purple-600"
-                                                : "text-green-600"
-                                          }`}
-                                       />
-                                    ) : (
-                                       <DollarSign className="h-4 w-4 text-green-600" />
-                                    )}
+                        {ordersLoading ? (
+                           <div className="text-center py-4">Loading transactions...</div>
+                        ) : recentOrders.length > 0 ? (
+                           recentOrders.map((order) => (
+                              <div
+                                 key={order.id}
+                                 className="flex items-center justify-between border-b pb-4 last:border-0 last:pb-0"
+                              >
+                                 <div className="flex items-center gap-3">
+                                    <div
+                                       className={`p-2 rounded-md ${
+                                          order.paymentMethod === "CARD"
+                                             ? "bg-purple-100"
+                                             : "bg-blue-100"
+                                       }`}
+                                    >
+                                       {order.paymentMethod === "CARD" ? (
+                                          <CreditCard className="h-4 w-4 text-purple-600" />
+                                       ) : (
+                                          <DollarSign className="h-4 w-4 text-blue-600" />
+                                       )}
+                                    </div>
+                                    <div>
+                                       <p className="font-medium">
+                                          ${order.amount.toFixed(2)}
+                                       </p>
+                                       <p className="text-xs text-muted-foreground">
+                                          {order.date} • {order.id}
+                                       </p>
+                                    </div>
                                  </div>
-                                 <div>
-                                    <p className="font-medium">
-                                       ${transaction.amount.toFixed(2)}
-                                    </p>
-                                    <p className="text-xs text-muted-foreground">
-                                       {new Date(
-                                          transaction.date
-                                       ).toLocaleDateString()}{" "}
-                                       • {transaction.id}
-                                    </p>
+                                 <div className="flex items-center gap-2">
+                                    <StatusBadge status={order.status} />
+                                    <Button
+                                       variant="ghost"
+                                       size="icon"
+                                       className="h-8 w-8"
+                                    >
+                                       <ChevronRight className="h-4 w-4" />
+                                    </Button>
                                  </div>
                               </div>
-                              <div className="flex items-center gap-2">
-                                 <span
-                                    className={`text-xs px-2 py-1 rounded-full ${
-                                       transaction.status === "completed"
-                                          ? "bg-green-100 text-green-600"
-                                          : "bg-yellow-100 text-yellow-600"
-                                    }`}
-                                 >
-                                    {transaction.status}
-                                 </span>
-                                 <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="h-8 w-8"
-                                 >
-                                    <ChevronRight className="h-4 w-4" />
-                                 </Button>
-                              </div>
-                           </div>
-                        ))}
+                           ))
+                        ) : (
+                           <div className="text-center py-4">No transactions found</div>
+                        )}
                      </div>
                   </CardContent>
-                  <CardFooter className="border-t pt-4 flex justify-center">
-                     <Button
-                        variant="outline"
-                        className="w-full sm:w-auto"
-                     >
-                        View All Transactions
-                     </Button>
-                  </CardFooter>
                </Card>
             </TabsContent>
 
@@ -735,16 +712,16 @@ const Account = () => {
                      <CardHeader className="pb-2">
                         <CardDescription>Total Volume</CardDescription>
                         <h3 className="text-2xl font-bold">
-                           ${mockStats.totalVolume.toLocaleString()}
+                           ${recentOrders.reduce((sum, order) => sum + order.amount, 0).toLocaleString()}
                         </h3>
                      </CardHeader>
                      <CardContent>
                         <div className="flex items-center text-sm text-muted-foreground">
                            <TrendingUp className="h-4 w-4 mr-1 text-green-500" />
                            <span className="text-green-500 font-medium">
-                              {mockStats.growthRate}%
+                              0.0%
                            </span>
-                           <span className="ml-1">from last month</span>
+                           <span className="ml-1">from last period</span>
                         </div>
                      </CardContent>
                   </Card>
@@ -753,83 +730,54 @@ const Account = () => {
                      <CardHeader className="pb-2">
                         <CardDescription>Success Rate</CardDescription>
                         <h3 className="text-2xl font-bold">
-                           {mockStats.successRate}%
+                           {recentOrders.length > 0 
+                              ? Math.round((recentOrders.filter(o => o.status === 'COMPLETED').length / recentOrders.length) * 100)
+                              : 0}%
                         </h3>
                      </CardHeader>
                      <CardContent>
                         <Progress
-                           value={mockStats.successRate}
+                           value={recentOrders.length > 0 
+                              ? Math.round((recentOrders.filter(o => o.status === 'COMPLETED').length / recentOrders.length) * 100)
+                              : 0}
                            className="h-2"
                         />
                         <p className="text-sm text-muted-foreground mt-2">
-                           {mockStats.totalTransactions} transactions processed
+                           {recentOrders.length} transactions shown
                         </p>
                      </CardContent>
                   </Card>
 
                   <Card>
                      <CardHeader className="pb-2">
-                        <CardDescription>Monthly Comparison</CardDescription>
+                        <CardDescription>Payment Methods</CardDescription>
                      </CardHeader>
                      <CardContent>
                         <div className="space-y-2">
                            <div className="flex justify-between items-center">
-                              <span className="text-sm">This Month</span>
+                              <span className="text-sm">Card Payments</span>
                               <span className="font-medium">
-                                 ${mockStats.thisMonth.toLocaleString()}
+                                 {recentOrders.filter(o => o.paymentMethod === 'CARD').length}
                               </span>
                            </div>
                            <Progress
                               value={
-                                 (mockStats.thisMonth /
-                                    (mockStats.thisMonth +
-                                       mockStats.lastMonth)) *
+                                 (recentOrders.filter(o => o.paymentMethod === 'CARD').length /
+                                    recentOrders.length) *
                                  100
                               }
                               className="h-2"
                            />
                            <div className="flex justify-between items-center">
-                              <span className="text-sm">Last Month</span>
+                              <span className="text-sm">Bank Transfers</span>
                               <span className="font-medium">
-                                 ${mockStats.lastMonth.toLocaleString()}
+                                 {recentOrders.filter(o => o.paymentMethod === 'BANK').length}
                               </span>
                            </div>
                         </div>
                      </CardContent>
                   </Card>
                </div>
-
-               <Card>
-                  <CardHeader>
-                     <h2 className="text-lg font-semibold">
-                        Payment Method Distribution
-                     </h2>
-                  </CardHeader>
-                  <CardContent>
-                     <div className="space-y-4">
-                        <div className="space-y-2">
-                           <div className="flex justify-between">
-                              <span>Credit Card</span>
-                              <span>68%</span>
-                           </div>
-                           <Progress
-                              value={68}
-                              className="h-2"
-                           />
-                        </div>
-                        <div className="space-y-2">
-                           <div className="flex justify-between">
-                              <span>Bank Transfer</span>
-                              <span>32%</span>
-                           </div>
-                           <Progress
-                              value={32}
-                              className="h-2"
-                           />
-                        </div>
-                     </div>
-                  </CardContent>
-               </Card>
             </TabsContent>
 
             <TabsContent
@@ -884,20 +832,6 @@ const Account = () => {
                      </div>
                   </CardContent>
                </Card>
-
-               {/* <Card>
-            <CardHeader>
-              <h2 className="text-lg font-semibold text-destructive">Danger Zone</h2>
-            </CardHeader>
-            <CardContent className="space-y-4 flex gap-6 items-center">
-              <Button variant="outline" className="border-destructive text-destructive">
-                Reset API Keys
-              </Button>
-              <Button variant="destructive">
-                Delete Account
-              </Button>
-            </CardContent>
-          </Card> */}
             </TabsContent>
          </Tabs>
       </div>
