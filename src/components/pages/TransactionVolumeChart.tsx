@@ -5,7 +5,7 @@ import { BarChart3 } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 const TransactionVolumeChart = ({ timeRange, orders }) => {
-  const [displayRange, setDisplayRange] = useState("last6");
+  const [displayRange, setDisplayRange] = useState("all");
 
   // Function to process orders data into chart format
   const processChartData = () => {
