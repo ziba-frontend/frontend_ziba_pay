@@ -5,7 +5,7 @@ import { Shield, AlertCircle, CheckCircle, Clock, Upload, File, X, Mail } from "
 import { useUploadKycDocument } from "@/hooks/useKyc";
 
 const KYCVerificationCard = () => {
-  const [kycStatus, setKycStatus] = useState("pending"); // pending, in-progress, verified
+  const [kycStatus, setKycStatus] = useState("pending"); 
   const [selectedFile, setSelectedFile] = useState(null);
   const uploadMutation = useUploadKycDocument();
   
