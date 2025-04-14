@@ -68,8 +68,9 @@ const formSchema = z
          .max(15, {
             message: "Phone number must be at most 15 characters long.",
          })
-         .regex(/^\+?[0-9]{10,15}$/, {
-            message: "Invalid phone number format.",
+         .regex(/^[0-9]{8,15}$/, {
+            message:
+               "Enter only digits without country code or special characters.",
          }),
       howHear: z.string().optional(),
       agreeTerms: z.literal(true, {
@@ -104,9 +105,22 @@ const references = [
    { value: "other", label: "Other" },
 ];
 
+const countryCodes = [
+   { value: "234", label: "🇳🇬 234" },
+   { value: "250", label: "🇷🇼 250" },
+   { value: "254", label: "🇰🇪 254" },
+   { value: "255", label: "🇹🇿 255" },
+   { value: "27", label: "🇿🇦 27" },
+   { value: "256", label: "🇺🇬 256" },
+   { value: "251", label: "🇪🇹 251" },
+   { value: "20", label: "🇪🇬 20" },
+   { value: "1", label: "🇺🇸 1" },
+];
+
 const SignUp = () => {
    const [isSubmitting, setIsSubmitting] = useState(false);
    const [showPassword, setShowPassword] = useState(false);
+   const [countryCode, setCountryCode] = useState("250");
 
    const form = useForm({
       resolver: zodResolver(formSchema),
@@ -136,9 +150,17 @@ const SignUp = () => {
    const registerUserMutation = useSignup();
    const onSubmit = async (data: any) => {
       setIsSubmitting(true);
+
       const { agreeTerms, confirmPassword } = data;
+      const formattedPhoneNumber = `+${countryCode}${data.phoneNumber.replace(
+         /^0+/,
+         ""
+      )}`;
+      const submissionData = { ...data, phoneNumber: formattedPhoneNumber };
       try {
-         const response = await registerUserMutation.mutateAsync(data);
+         const response = await registerUserMutation.mutateAsync(
+            submissionData
+         );
          if (response.status == "success") {
             toast.success("Registration successful! Please login to continue.");
             location.replace("/login");
@@ -170,6 +192,12 @@ const SignUp = () => {
       } finally {
          setIsSubmitting(false);
       }
+   };
+
+   // Function to get the label for the selected country code
+   const getSelectedCountryCodeLabel = () => {
+      const selectedCode = countryCodes.find(code => code.value === countryCode);
+      return selectedCode ? selectedCode.label : "Code";
    };
 
    return (
@@ -352,16 +380,47 @@ const SignUp = () => {
                            <FormItem>
                               <FormLabel>Phone Number *</FormLabel>
                               <FormControl>
-                                 <Input
-                                    className="bg-white p-6 border pr-10"
-                                    placeholder="Enter your Phone Number"
-                                    type={"text"}
-                                    {...field}
-                                 />
+                                 <div className="flex gap-1 items-center">
+                                    <div className="relative flex items-center">
+                                       <span className="absolute left-2 text-gray-500">
+                                          +
+                                       </span>
+                                       <Select
+                                          value={countryCode}
+                                          onValueChange={setCountryCode}
+                                       >
+                                          <SelectTrigger className="bg-white border w-28 pl-5 py-6">
+                                             <SelectValue>
+                                                {getSelectedCountryCodeLabel()}
+                                             </SelectValue>
+                                          </SelectTrigger>
+                                          <SelectContent className="max-h-60">
+                                             {countryCodes.map((code) => (
+                                                <SelectItem
+                                                   key={code.value}
+                                                   value={code.value}
+                                                >
+                                                   {code.label}
+                                                </SelectItem>
+                                             ))}
+                                          </SelectContent>
+                                       </Select>
+                                    </div>
+                                    <Input
+                                       className="bg-white p-6 border flex-1"
+                                       placeholder="Phone number without country code"
+                                       type="tel"
+                                       inputMode="numeric"
+                                       {...field}
+                                    />
+                                 </div>
                               </FormControl>
                               <FormMessage>
                                  {errors.phoneNumber?.message}
                               </FormMessage>
+                              <p className="text-xs text-gray-500 mt-1">
+                                 Enter only digits (e.g., 712345678)
+                              </p>
                            </FormItem>
                         )}
                      />
@@ -491,7 +550,7 @@ const SignUp = () => {
                                     Terms of Use
                                  </Link>{" "}
                                  and give consent to Ziba pay to process my data
-                                 in line with Ziba pay’s
+                                 in line with Ziba pay's
                                  <Link
                                     href="#"
                                     className="text-main underline ml-1"
