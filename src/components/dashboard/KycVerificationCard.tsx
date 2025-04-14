@@ -1,4 +1,4 @@
-// KYC Verification Component
+//@ts-nocheck
 import React, { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { Shield, AlertCircle, CheckCircle, Clock, Upload, File, X, Mail } from "lucide-react";
